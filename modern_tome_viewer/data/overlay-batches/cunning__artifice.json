@@ -1,0 +1,233 @@
+[
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 0,
+  "expr": ["talentLevel",true],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 1,
+  "expr": ["+",15,["statDamage","cun",12,150]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 2,
+  "expr": ["ceil",["talentScale",3,5]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 3,
+  "expr": ["floor",["talentScale",1,6,"log",0,4]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 4,
+  "expr": ["talentScale",4,7],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 5,
+  "expr": ["*",["weaponDamage",1,1.8],100],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 6,
+  "expr": ["+",["statScale","cun",10,200,0.7],["talentScale",20,200,0.7]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 7,
+  "expr": ["+",["+",["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",["actor","灵巧"],0.75]],["-",5,["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",10,0.75]]]],["+",["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",["talentLevel"],0.75]],["-",5,["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",1,0.75]]]]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 8,
+  "expr": ["floor",["talentScale",1,3,"log"]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 0,
+  "expr": ["talentLevel",true],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 1,
+  "expr": ["+",15,["statDamage","cun",12,150]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 2,
+  "expr": ["ceil",["talentScale",3,5]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 3,
+  "expr": ["floor",["talentScale",1,6,"log",0,4]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 4,
+  "expr": ["talentScale",4,7],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 5,
+  "expr": ["*",["weaponDamage",1,1.8],100],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 6,
+  "expr": ["+",["statScale","cun",10,200,0.7],["talentScale",20,200,0.7]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 7,
+  "expr": ["+",["+",["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",["actor","灵巧"],0.75]],["-",5,["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",10,0.75]]]],["+",["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",["talentLevel"],0.75]],["-",5,["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",1,0.75]]]]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 8,
+  "expr": ["floor",["talentScale",1,3,"log"]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 0,
+  "expr": ["talentLevel",true],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 1,
+  "expr": ["+",15,["statDamage","cun",12,150]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 2,
+  "expr": ["ceil",["talentScale",3,5]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 3,
+  "expr": ["floor",["talentScale",1,6,"log",0,4]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 4,
+  "expr": ["talentScale",4,7],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 5,
+  "expr": ["*",["weaponDamage",1,1.8],100],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 6,
+  "expr": ["+",["statScale","cun",10,200,0.7],["talentScale",20,200,0.7]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 7,
+  "expr": ["+",["+",["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",["actor","灵巧"],0.75]],["-",5,["*",["/",45,["-",["^",100,0.75],["^",10,0.75]]],["^",10,0.75]]]],["+",["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",["talentLevel"],0.75]],["-",5,["*",["/",45,["-",["^",5,0.75],["^",1,0.75]]],["^",1,0.75]]]]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 8,
+  "expr": ["floor",["talentScale",1,3,"log"]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 0,
+  "expr": ["talentLimit",50,20,40],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:672",
+  "note": "Dart Launcher Mastery getSlow = combatTalentLimit(MASTER_ARTIFICER,50,20,40)/100，short_info 再 *100"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 1,
+  "expr": ["+",30,["statDamage","cun",10,150]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:594",
+  "note": "Smokescreen Mastery getDamage = 30 + combatTalentStatDamage(MASTER_ARTIFICER,\"cun\",10,150)"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 2,
+  "expr": ["+",30,["statDamage","cun",15,200]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "Grappling Hook Mastery getSecondaryDamage = 30 + combatTalentStatDamage(MASTER_ARTIFICER,\"cun\",15,200)（damDesc 包裹，取原值）"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 3,
+  "expr": ["+",30,["statDamage","cun",15,200]],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "同上：短说明里物理/自然两个 damDesc 数字相同，均为 getSecondaryDamage"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 4,
+  "expr": ["*",["weaponDamage",1.8,3],100],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:361",
+  "note": "Assassinate getDamage = combatTalentWeaponDamage(MASTER_ARTIFICER,1.8,3.0)，short_info 再 *100"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 5,
+  "expr": ["talentScale",100,600],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:490",
+  "note": "Rogue's Brew Mastery getDieAt = combatTalentScale(MASTER_ARTIFICER,100,600)"
+ }
+]

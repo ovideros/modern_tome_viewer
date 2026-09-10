@@ -1,0 +1,992 @@
+[
+ {
+  "talent": "T_ANOMALY_REARRANGE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius = floor(combatLimit(sp,6,2,20,4,100))"
+ },
+ {
+  "talent": "T_ANOMALY_TELEPORT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TELEPORT",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    80,
+    20,
+    20,
+    40,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:51",
+  "note": "getAnomalyRange = floor(combatLimit(sp,80,20,20,40,100))"
+ },
+ {
+  "talent": "T_ANOMALY_DISPLACEMENT_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "*",
+   2,
+   [
+    "*",
+    [
+     "/",
+     2,
+     3
+    ],
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     20,
+     10,
+     220,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:28",
+  "note": "getShieldAmount(getAnomalyDamage*2), getAnomalyDamage=rng.avg(dam/3,dam,3)~2/3*dam"
+ },
+ {
+  "talent": "T_ANOMALY_PROBABILITY_TRAVEL",
+  "acronym": 0,
+  "expr": [
+   "*",
+   2,
+   [
+    "ceil",
+    [
+     "*",
+     0.75,
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "power",
+        "法术强度"
+       ],
+       [
+        "pmod",
+        [
+         "actor",
+         "paradox"
+        ]
+       ]
+      ],
+      4,
+      10,
+      12,
+      100,
+      0.75
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration*2"
+ },
+ {
+  "talent": "T_ANOMALY_PROBABILITY_TRAVEL",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration = ceil(rng.avg(dam/2,dam,3))~ceil(0.75*dam)"
+ },
+ {
+  "talent": "T_ANOMALY_BLINK",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_BLINK",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_SLOW",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_SLOW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "/",
+     1,
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "ceil",
+        [
+         "*",
+         0.75,
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "power",
+            "法术强度"
+           ],
+           [
+            "pmod",
+            [
+             "actor",
+             "paradox"
+            ]
+           ]
+          ],
+          10,
+          10,
+          50,
+          100,
+          0.75
+         ]
+        ]
+       ],
+       100
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:649",
+  "note": "getSlow*100, getSlow=1-1/(1+effectPower/100)"
+ },
+ {
+  "talent": "T_ANOMALY_HASTE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_HASTE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "/",
+     1,
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "ceil",
+        [
+         "*",
+         0.75,
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "power",
+            "法术强度"
+           ],
+           [
+            "pmod",
+            [
+             "actor",
+             "paradox"
+            ]
+           ]
+          ],
+          10,
+          10,
+          50,
+          100,
+          0.75
+         ]
+        ]
+       ],
+       100
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:699",
+  "note": "getHaste*100 (same as getSlow)"
+ },
+ {
+  "talent": "T_ANOMALY_STOP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_BUBBLE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_INVIGORATE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_GRAVITY_PULL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_DIG",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_ENTROPY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_ENTROPY",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_GRAVITY_WELL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_QUAKE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_FLAWED_DESIGN",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_FLAWED_DESIGN",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     10,
+     10,
+     50,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:39",
+  "note": "getAnomalyEffectPower = ceil(rng.avg(dam/2,dam,3))"
+ },
+ {
+  "talent": "T_ANOMALY_CALCIFY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_CALCIFY",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_DEUS_EX",
+  "acronym": 0,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_MASS_DIG",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_STORM",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "combatScale",
+    [
+     "power",
+     "法术强度",
+     [
+      "*",
+      1,
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ]
+    ],
+    10,
+    10,
+    50,
+    100,
+    0.75
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:1020",
+  "note": "info 里 damage = combatScale(getParadoxSpellpower,10,10,50,100,0.75)，该 acronym 是 damage/3"
+ }
+]

@@ -1,0 +1,837 @@
+[
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "+",
+    0.5,
+    [
+     "*",
+     [
+      "-",
+      0.16,
+      0.5
+     ],
+     [
+      "^",
+      [
+       "/",
+       [
+        "-",
+        0.2,
+        0.5
+       ],
+       [
+        "-",
+        0.16,
+        0.5
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "talentLevel"
+          ],
+          [
+           "max",
+           0.5,
+           [
+            "-",
+            1.5,
+            [
+             "/",
+             [
+              "actor",
+              "psi"
+             ],
+             100
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         6.5
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:48",
+  "note": "getSlow = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),0.50,0.16,0.20)*100；标题 psi 为百分数(psi 50%)，psi/maxPsi=psi/100；combatTalentLimit 按节点表 closed form 展开"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:40",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "max",
+      0.5,
+      [
+       "-",
+       1.5,
+       [
+        "/",
+        [
+         "actor",
+         "psi"
+        ],
+        100
+       ]
+      ]
+     ]
+    ],
+    1.3,
+    1,
+    3.2,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:114",
+  "note": "getDur = ceil(combatTalentScale(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),1.3,3.2))；等级驱动量用 combatScale(L,1.3,1,3.2,5) 展开"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 3,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:110",
+  "note": "getDam = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi)；damDesc(COLD,·) 只是包裹"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:106",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:170",
+  "note": "getDam = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 3,
+  "expr": [
+   "+",
+   100,
+   [
+    "*",
+    [
+     "-",
+     25,
+     100
+    ],
+    [
+     "^",
+     [
+      "/",
+      [
+       "-",
+       50,
+       100
+      ],
+      [
+       "-",
+       25,
+       100
+      ]
+     ],
+     [
+      "/",
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "talentLevel"
+         ],
+         [
+          "max",
+          0.5,
+          [
+           "-",
+           1.5,
+           [
+            "/",
+            [
+             "actor",
+             "psi"
+            ],
+            100
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ],
+      [
+       "-",
+       [
+        "sqrt",
+        6.5
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:174",
+  "note": "getDaze = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),100,25,50)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:166",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:34",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "+",
+    0.5,
+    [
+     "*",
+     [
+      "-",
+      0.16,
+      0.5
+     ],
+     [
+      "^",
+      [
+       "/",
+       [
+        "-",
+        0.2,
+        0.5
+       ],
+       [
+        "-",
+        0.16,
+        0.5
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "talentLevel"
+          ],
+          1.5
+         ]
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         6.5
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:48",
+  "note": "getSlow(self,t,0)*100 = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),0.50,0.16,0.20)*100 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    5,
+    45
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:44",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,5,45)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:40",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:100",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     1.5
+    ],
+    1.3,
+    1,
+    3.2,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:114",
+  "note": "getDur(self,t,0) = ceil(combatTalentScale(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),1.3,3.2))；等级驱动量用 combatScale(L,1.3,1,3.2,5) 展开 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:110",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:106",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:160",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:170",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 4,
+  "expr": [
+   "+",
+   100,
+   [
+    "*",
+    [
+     "-",
+     25,
+     100
+    ],
+    [
+     "^",
+     [
+      "/",
+      [
+       "-",
+       50,
+       100
+      ],
+      [
+       "-",
+       25,
+       100
+      ]
+     ],
+     [
+      "/",
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "talentLevel"
+         ],
+         1.5
+        ]
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ],
+      [
+       "-",
+       [
+        "sqrt",
+        6.5
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:174",
+  "note": "getDaze(self,t,0) = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),100,25,50)；combatTalentLimit 按节点表 closed form 展开 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:166",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 3,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    5,
+    45
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:44",
+  "note": "getDamage = combatTalentMindDamage(t,5,45) * F，F = max(0.5, 1.5 - psi/getMaxPsi())，标题的 psi 是百分数"
+ }
+]

@@ -1,0 +1,1591 @@
+[
+ {
+  "talent": "T_SPRINGRAZOR_TRAP",
+  "acronym": 0,
+  "expr": [
+   "*",
+   25,
+   [
+    "*",
+    [
+     "+",
+     1,
+     [
+      "/",
+      [
+       "combatScale",
+       [
+        "*",
+        [
+         "actor",
+         "陷阱专精 技能等级"
+        ],
+        [
+         "talentLevel"
+        ]
+       ],
+       25,
+       1,
+       100,
+       5
+      ],
+      100
+     ]
+    ],
+    [
+     "statScale",
+     "cun",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:873",
+  "note": "getDamage = trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_SPRINGRAZOR_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    3,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:875",
+  "note": "getPower = floor(trap_effectiveness(cun)*3)"
+ },
+ {
+  "talent": "T_BEAR_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:951",
+  "note": "getDamage = 20 + trap_effectiveness(cun)*10"
+ },
+ {
+  "talent": "T_BEAR_TRAP",
+  "acronym": 1,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:951",
+  "note": "bleed = same getDamage (info prints dam twice)"
+ },
+ {
+  "talent": "T_DISARMING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    30,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1013",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*30"
+ },
+ {
+  "talent": "T_DISARMING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    2.1,
+    1,
+    4.43,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1014",
+  "note": "getDuration = floor(combatTalentScale(tm_lvl, 2.1, 4.43))"
+ },
+ {
+  "talent": "T_PITFALL_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1070",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_FLASH_BANG_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1193",
+  "note": "getDamage = 25 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_FLASH_BANG_TRAP",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "floor",
+    [
+     "*",
+     2,
+     [
+      "sqrt",
+      [
+       "*",
+       [
+        "+",
+        1,
+        [
+         "/",
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "actor",
+            "陷阱专精 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ],
+          25,
+          1,
+          100,
+          5
+         ],
+         100
+        ]
+       ],
+       [
+        "statScale",
+        "cun",
+        1,
+        5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1192",
+  "note": "getDuration = 1 + floor(2*sqrt(trap_effectiveness(cun)))"
+ },
+ {
+  "talent": "T_BLADESTORM_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    0.75,
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "陷阱专精 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      9,
+      1,
+      13,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1269",
+  "note": "getDuration = floor(floor(combatTalentScale(tm,9,13))*0.75)"
+ },
+ {
+  "talent": "T_BEAM_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    3,
+    1,
+    6,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1325",
+  "note": "getDuration = floor(combatTalentScale(tm_lvl, 3, 6))"
+ },
+ {
+  "talent": "T_BEAM_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    15,
+    [
+     "/",
+     [
+      "*",
+      [
+       "statScale",
+       "cun",
+       10,
+       60
+      ],
+      [
+       "combatScale",
+       [
+        "*",
+        [
+         "actor",
+         "陷阱专精 技能等级"
+        ],
+        [
+         "talentLevel"
+        ]
+       ],
+       25,
+       1,
+       100,
+       5
+      ]
+     ],
+     20
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1326",
+  "note": "getDamage = (15 + combatStatScale('cun',10,60)*getTrapMastery/20)/3"
+ },
+ {
+  "talent": "T_POISON_GAS_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1407",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_FREEZING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    15,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1486",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*15"
+ },
+ {
+  "talent": "T_FREEZING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     15,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1486",
+  "note": "vapour = getDamage/3"
+ },
+ {
+  "talent": "T_DRAGONSFIRE_TRAP",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     18,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1576",
+  "note": "per-turn = getDamage/3; getDamage = 10 + trap_effectiveness(cun)*18"
+ },
+ {
+  "talent": "T_DRAGONSFIRE_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     18,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1576",
+  "note": "deflagration = getDamage/2"
+ },
+ {
+  "talent": "T_GRAVITIC_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "mag",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1667",
+  "note": "getDamage = 10 + trap_effectiveness(mag)*10"
+ },
+ {
+  "talent": "T_GRAVITIC_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    10,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            5,
+            10
+           ],
+           [
+            "-",
+            3,
+            10
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "sqrt",
+           1.3
+          ]
+         ]
+        ]
+       ],
+       [
+        "/",
+        [
+         "-",
+         0,
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              5,
+              10
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              5,
+              10
+             ],
+             [
+              "-",
+              3,
+              10
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          1.3
+         ],
+         [
+          "sqrt",
+          6.5
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1668",
+  "note": "getDuration = floor(combatTalentLimit(tm_lvl, 10, 3, 5))"
+ },
+ {
+  "talent": "T_AMBUSH_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    25,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            7,
+            25
+           ],
+           [
+            "-",
+            3,
+            25
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "sqrt",
+           1.3
+          ]
+         ]
+        ]
+       ],
+       [
+        "/",
+        [
+         "-",
+         0,
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              7,
+              25
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              7,
+              25
+             ],
+             [
+              "-",
+              3,
+              25
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          1.3
+         ],
+         [
+          "sqrt",
+          6.5
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1788",
+  "note": "getDuration = floor(combatTalentLimit(tm_lvl, 25, 3, 7))"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "wil",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "mana = getDamage = 25 + trap_effectiveness(wil)*25"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "vim = base/2"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "positive = base/4"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 3,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "negative = base/4"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 4,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "wil",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "arcane = base (rounded; mana is %d-truncated)"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 5,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    2.5,
+    1,
+    4.5,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1859",
+  "note": "getDuration = floor(combatTalentScale(tm, 2.5, 4.5))"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 6,
+  "expr": [
+   "floor",
+   [
+    "+",
+    1,
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       3,
+       1
+      ],
+      [
+       "log10",
+       5
+      ]
+     ],
+     [
+      "log10",
+      [
+       "*",
+       [
+        "actor",
+        "陷阱专精 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1858",
+  "note": "getNb = floor(combatTalentScale(tm, 1, 3, 'log'))"
+ },
+ {
+  "talent": "T_EXPLOSION_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   30,
+   [
+    "*",
+    35,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1984",
+  "note": "getDamage = 30 + trap_effectiveness(cun)*35"
+ },
+ {
+  "talent": "T_CATAPULT_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   1,
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "actor",
+       "陷阱专精 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     2,
+     1,
+     6,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2055",
+  "note": "getDistance = 1 + floor(combatTalentScale(tm_lvl, 2, 6))"
+ },
+ {
+  "talent": "T_NIGHTSHADE_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    35,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2175",
+  "note": "getDamage = 20 + trap_effectiveness(cun)*35"
+ },
+ {
+  "talent": "T_NIGHTSHADE_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    20,
+    [
+     "*",
+     35,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   10
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2175",
+  "note": "poison/turn = getDamage/10"
+ }
+]

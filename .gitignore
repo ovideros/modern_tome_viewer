@@ -1,0 +1,25 @@
+# --- 依赖与构建产物 ---
+modern_tome_viewer/node_modules/
+modern_tome_viewer/dist/
+
+# --- 本机缓存 / 浏览器二进制 ---
+.npm-cache/
+.pw-browsers/
+
+# --- 生成物的文件系统快照（重建前留档；项目策略是生成物不入库）---
+.snapshots/
+
+# --- macOS ---
+.DS_Store
+
+# --- 上游 vendored 树：只保留构建真正读取的部分，媒体体量不进历史 ---
+# tome-src-full 的语言包是 16MB 翻译数据，构建不读
+tome-src-full/data/locales/
+
+# dlc-src 337M 里只有 14M 是 Lua（其余是美术/音频）；构建只读 data/talents/**/*.lua 与 hooks/*.lua
+dlc-src/**/*.*
+!dlc-src/**/*.lua
+
+# starsapphirex.github.io 64M 里只有 6.5M 是导出 JSON；构建只读 tometips/data/master/*.json
+starsapphirex.github.io/**/*.*
+!starsapphirex.github.io/tometips/data/master/*.json

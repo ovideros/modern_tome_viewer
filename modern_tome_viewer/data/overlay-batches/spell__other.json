@@ -1,0 +1,234 @@
+[
+ {
+  "talent": "T_QUICKEN_SPELLS",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "min",
+    0.3,
+    [
+     "max",
+     0.05,
+     [
+      "/",
+      [
+       "talentLevel",
+       true
+      ],
+      15
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3974",
+  "note": "getCooldownReduction = util.bound(self:getTalentLevelRaw(t) / 15, 0.05, 0.3)，info 里 ×100；三套完全相同 → 原始等级；导出按截断读数"
+ },
+ {
+  "talent": "T_DWARVEN_HALF_EARTHEN_MISSILES",
+  "acronym": 0,
+  "expr": [
+   "+",
+   2,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/dwarven-nature.lua:59",
+  "note": "info 里 count = 2，若 self:getTalentLevel(t) >= 5 则 +1；节点表没有比较运算，用 min(1, floor(level/5)) 等价表达 0/1"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.5,
+    4.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3722",
+  "note": "radius = math.floor(self:combatTalentScale(t, 2.5, 4.5))"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "/",
+    [
+     "spellDamage",
+     2,
+     15
+    ],
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3748",
+  "note": "info 的 tformat 第 2 个值 = 1 + (damage / 4)，damage = getDamage = combatTalentSpellDamage(t, 2, 15)"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    4,
+    8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3720",
+  "note": "getDuration = math.floor(self:combatTalentScale(t, 4, 8))"
+ },
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     20,
+     500
+    ],
+    1,
+    0.2,
+    0,
+    0.584,
+    384
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3540",
+  "note": "getHealth = combatLimit(combatTalentSpellDamage(t, 20, 500), 1, 0.2, 0, 0.584, 384)，info 里 ×100（生命上限百分比）。标题过度声明 [法术强度, 灵巧]，本值只用 法术强度（闸门放宽后 consumed⊆declared 即 PASS）"
+ },
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     10,
+     500
+    ],
+    1.6,
+    0.4,
+    0,
+    0.761,
+    361
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3541",
+  "note": "getDam = combatLimit(combatTalentSpellDamage(t, 10, 500), 1.6, 0.4, 0, 0.761, 361)，info 里 ×100（伤害加成百分比）。标题过度声明 [法术强度, 灵巧]，本值只用 法术强度"
+ },
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 3,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    15,
+    [
+     "talentLevel"
+    ]
+   ],
+   25,
+   0,
+   100,
+   75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3538",
+  "note": "getStealthPower = combatScale(getCun(15, true) * getTalentLevel(t), 25, 0, 100, 75)。getCun(15, true) 是「无加成基准值」getter，源码本身不吃标题声明的输入；导出基准下实测该驱动常量恒为 15（拟合可行区间 [14.801, 15.047]），故按导出基准冻结成常数 15（写成 [\"actor\",\"灵巧\"]=100 会让 15 点全错）。标题过度声明 [法术强度, 灵巧]，本值两者都未用到"
+ },
+ {
+  "talent": "T_WATER_BOLT",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "power",
+     "法术强度"
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   12,
+   0,
+   78.25,
+   265,
+   0.67
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:568",
+  "note": "getDamage = combatScale(combatSpellpower() * getTalentLevel(t), 12, 0, 78.25, 265, 0.67)"
+ },
+ {
+  "talent": "T_VOID_BLAST",
+  "acronym": 0,
+  "expr": [
+   "spellDamage",
+   15,
+   240
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:747",
+  "note": "info = tformat(damDesc(self, DamageType.ARCANE, combatTalentSpellDamage(t, 15, 240)))；damDesc 是包裹"
+ },
+ {
+  "talent": "T_BLIGHT_BOLT",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   7,
+   25,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:680",
+  "note": "getCritChance = combatTalentScale(t, 7, 25, 0.75)，info 用 %0.2f 输出"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   2,
+   15
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3719",
+  "note": "getDamage = combatTalentSpellDamage(t, 2, 15)（光伤）"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 3,
+  "expr": [
+   "spellDamage",
+   2,
+   15
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3719",
+  "note": "同 #2（火伤，数值相同）"
+ }
+]

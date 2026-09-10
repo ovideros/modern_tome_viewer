@@ -1,0 +1,1286 @@
+[
+ {
+  "talent": "T_DREDGE_FRENZY",
+  "acronym": 4,
+  "expr": [
+   "*",
+   -100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     10,
+     50
+    ],
+    1,
+    0,
+    0,
+    0.329,
+    32.9
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1672",
+  "note": "getPower = combatLimit(combatTalentSpellDamage(t,10,50),1,0,0,0.329,32.9)；info 用 power*100，文本是 'prevent death until -%d%% life'，导出值本身为负"
+ },
+ {
+  "talent": "T_SEVER_LIFELINE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   10000,
+   [
+    "spellDamage",
+    20,
+    220,
+    [
+     "power",
+     "法术强度",
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1722",
+  "note": "getDamage = combatTalentSpellDamage(t,20,220,getParadoxSpellpower(self,t)) * 10000"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      6,
+      1,
+      10,
+      5,
+      0.5
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "嵌套描述取 T_WARP_MINES.getDuration = getExtensionModifier(t, floor(combatTalentScale(t,6,10)))；等级 = 时空地雷有效等级 = 原始等级×系数，故 combatTalentScale 展开为 combatScale(L,6,1,10,5,0.5)"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      6,
+      1,
+      10,
+      5,
+      0.5
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "同 T_WARP_MINE_TOWARD #4（共用 T_WARP_MINES.getDuration）"
+ },
+ {
+  "talent": "T_SPACETIME_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    10,
+    [
+     "*",
+     0.8,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             0.8
+            ],
+            [
+             "-",
+             0.1,
+             0.8
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               0.5,
+               0.8
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               0.5,
+               0.8
+              ],
+              [
+               "-",
+               0.1,
+               0.8
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:188",
+  "note": "cdred(self,t,10) = floor(10*combatTalentLimit(t,0.8,0.1,0.5))；combatTalentLimit 按 Lua 运算顺序手工展开（exp/log），否则 1.3 套第 5 点会因浮点误差进位到 5"
+ },
+ {
+  "talent": "T_SPACETIME_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    20,
+    [
+     "*",
+     0.8,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             0.8
+            ],
+            [
+             "-",
+             0.1,
+             0.8
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               0.5,
+               0.8
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               0.5,
+               0.8
+              ],
+              [
+               "-",
+               0.1,
+               0.8
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:188",
+  "note": "cdred(self,t,20) = floor(20*combatTalentLimit(t,0.8,0.1,0.5))，同上手工展开"
+ },
+ {
+  "talent": "T_REPULSION_FIELD",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      4,
+      8
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:493",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,8)))"
+ },
+ {
+  "talent": "T_TEMPORAL_CLONE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      6,
+      12
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:537",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,12)))"
+ },
+ {
+  "talent": "T_DAMAGE_SMEARING",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      3,
+      6
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:611",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,6)))"
+ },
+ {
+  "talent": "T_PHASE_SHIFT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentLimit",
+      25,
+      3,
+      7,
+      true
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:645",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,25,3,7,true)))，raw=true 用原始等级"
+ },
+ {
+  "talent": "T_SWAP",
+  "acronym": 1,
+  "expr": [
+   "min",
+   50,
+   [
+    "*",
+    [
+     "talentLevel",
+     true
+    ],
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:669",
+  "note": "getConfuseEfficency = min(50, getTalentLevelRaw(t)*10)；三套数字相同 → 原始等级"
+ },
+ {
+  "talent": "T_TEMPORAL_WAKE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      3,
+      7
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:738",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（physical 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（temporal 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ],
+   0.8
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))，combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15，故 = 75·√(L·魔力·0.15/75)；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 3,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "时空地雷 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))；combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（physical 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（temporal 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ],
+   0.8
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))，combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15，故 = 75·√(L·魔力·0.15/75)；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 3,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "时空地雷 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))；combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_SLOW",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.25,
+    3.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:144",
+  "note": "radius = math.floor(combatTalentScale(t,2.25,3.25))"
+ },
+ {
+  "talent": "T_SLOW",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    6,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:152",
+  "note": "getDuration = math.floor(combatTalentScale(t,6,10))"
+ },
+ {
+  "talent": "T_REPULSION_FIELD",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1.5,
+    3.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:488",
+  "note": "radius = math.floor(combatTalentScale(t,1.5,3.5))"
+ },
+ {
+  "talent": "T_DAMAGE_SMEARING",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "/",
+    [
+     "*",
+     50,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             30,
+             50
+            ],
+            [
+             "-",
+             10,
+             50
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               30,
+               50
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               30,
+               50
+              ],
+              [
+               "-",
+               10,
+               50
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    100
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:610",
+  "note": "percent = getPercent*100 = combatTalentLimit(t,50,10,30)/100*100；combatTalentLimit 按 Lua 运算顺序手工展开（锚点 sqrt(1.3)/sqrt(6.5) 的 exp/log 分支），并保留源码的 /100*100，否则 1.3 套第 1/5 点会因浮点误差整成 10/30 而导出为 9/29"
+ },
+ {
+  "talent": "T_CARBON_SPIKES",
+  "acronym": 1,
+  "expr": [
+   "spellDamage",
+   1,
+   150,
+   [
+    "*",
+    [
+     "power",
+     "法术强度"
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:801",
+  "note": "damage = combatTalentSpellDamage(t, 1, 150, getParadoxSpellpower(self,t))；导出对 ≥10 的值按「先 2 位小数渲染再取整」显示，判分器已按该读数匹配"
+ }
+]

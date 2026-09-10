@@ -1,0 +1,86 @@
+[
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 0,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info: tformat(stat/2, stat, stat/2)，stat = t.getStatBonus(self,t) → T_THOUGHT_FORMS.getStatBonus = combatTalentMindDamage(t,5,50)（thought-forms.lua:481）。展开为 mindDamage 任意等级式，L = getTalentLevel(T_THOUGHT_FORMS) = 0（导出基准），P = 精神强度"
+ },
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 1,
+  "expr": ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info 第 2 个参数 = stat = combatTalentMindDamage(T_THOUGHT_FORMS,5,50)，等级基准 0"
+ },
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 2,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info 第 3 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 0,
+  "expr": ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info: tformat(stat, stat/2, stat/2)，stat 同 TF_BOWMAN"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 1,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info 第 2 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 2,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info 第 3 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 0,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info: tformat(stat/2, stat/2, stat)，stat 同 TF_BOWMAN"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 1,
+  "expr": ["/", ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04], 2],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info 第 2 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 2,
+  "expr": ["^", ["*", ["/", ["*", ["+", 5, ["power", "精神强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", ["talentRef", "T_THOUGHT_FORMS"]], 1]]]], ["*", 105, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 50], 1.04],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info 第 3 个参数 = stat"
+ },
+ {
+  "talent": "T_PERFECT_CONTROL",
+  "acronym": 0,
+  "expr": ["combatScale", ["*", ["talentLevel"], ["^", ["+", 1, ["*", 8, ["+", ["*", 0.5, ["/", ["power", "精神强度"], 100]], ["*", 0.5, ["/", ["talentLevel"], 6.5]]]]], 1.04]], 15, 0, 49, 34],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2533",
+  "note": "getBoost = combatScale(getTalentLevel(t)*combatStatTalentIntervalDamage(t,\"combatMindpower\",1,9), 15, 0, 49, 34)；combatStatTalentIntervalDamage = rescaleDamage(1 + 8*(0.5*精神强度/100 + 0.5*tl/6.5))（Combat.lua:2186），rescaleDamage = ^1.04"
+ },
+ {
+  "talent": "T_TELEKINETIC_THROW",
+  "acronym": 1,
+  "expr": ["floor", ["mindDamage", 10, 170]],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2635",
+  "note": "info: tformat(range, dam, dam/2, kbpen)，dam = damDesc(self, DamageType.PHYSICAL, t.getDamage(self,t))，damDesc 只取 v；getDamage = math.floor(combatTalentMindDamage(t, 10, 170))（npcs.lua:2635）。标题多声明了「力量」（本值只用精神强度），属标题超集→覆盖通过"
+ },
+ {
+  "talent": "T_TELEKINETIC_THROW",
+  "acronym": 2,
+  "expr": ["/", ["mindDamage", 10, 170], 2],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2635",
+  "note": "info 第 3 个参数 = dam/2（npcs.lua:2679 tformat(range, dam, dam/2, kbpen)）；源码是在 info 里先除 2 再显示，不在 getter 内取整，故不写 floor。含 68.5→69、113.72→114 等四舍五入点。标题多声明「力量」→覆盖通过"
+ }
+]

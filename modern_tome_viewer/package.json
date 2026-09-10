@@ -1,0 +1,38 @@
+{
+  "name": "modern-tome-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Modern web viewer for Tales of Maj'Eyal (ToME4) talents, with advanced multi-level search and faceted filtering.",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "dev": "vite",
+    "build": "npm run data && vite build",
+    "build:app": "vite build",
+    "preview": "vite preview",
+    "serve": "node scripts/serve.mjs dist 4173",
+    "typecheck": "tsc --noEmit",
+    "verify": "node scripts/verify.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "check": "npm run typecheck && npm run test:scaling && npm run verify && npm run build:app && npm run smoke",
+    "data:lua": "node scripts/extract-lua-coefficients.mjs",
+    "test:scaling": "node --test scripts/scaling.test.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "esbuild": "^0.25.0",
+    "happy-dom": "^20.14.0",
+    "playwright-core": "^1.50.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6"
+  }
+}

@@ -1,0 +1,16 @@
+[
+ {
+  "talent": "T_TRICKY_DEFENSES",
+  "acronym": 0,
+  "expr": ["*", 100, ["statScale", "cun", 0.1, 0.5]],
+  "source": "tome-src-full/data/talents/uber/cun.lua:77",
+  "note": "shieldmult = self:combatStatScale(\"cun\", 0.1, 0.5); info: tformat(t.shieldmult(self)*100)"
+ },
+ {
+  "talent": "T_MASTER_OF_DISASTERS",
+  "acronym": 0,
+  "expr": ["floor", ["+", 20, ["/", ["*", 60, ["actor", "灵巧"]], 100]]],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/uber/cun.lua:25",
+  "note": "getPower = math.floor(20 + self:getCun(60))；getCun(60) = 灵巧 x 60/100"
+ }
+]

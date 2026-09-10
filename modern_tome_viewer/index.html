@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToME 技能查看器 · 高级搜索</title>
+    <meta
+      name="description"
+      content="Tales of Maj'Eyal 技能查看器：按技能大系、技能名、技能文本进行多层级高级搜索，并按使用模式、冷却、使用速度、射程、资源消耗等条件筛选。"
+    />
+    <script>
+      // Apply the stored theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem('tome-theme');
+          var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

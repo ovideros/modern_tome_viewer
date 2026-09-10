@@ -1,0 +1,100 @@
+[
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:110",
+  "note": "summonTime = floor(combatScale(getTalentLevel(t), 5, 0, 10, 5)) + callTalent(T_RESILIENCE,\"incDur\")；combatScale 缺省 power=0.5。导出侧 resilience 未点亮，incDur 在数字上表现为常数 -1（见报告疑点）"
+ },
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 1,
+  "expr": ["+", 15, ["+", ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:114",
+  "note": "incStats.str = 15 + mp*2*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)；info 传 fake=true，故 mp 直接取精神强度（不做 mindCrit）"
+ },
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 2,
+  "expr": ["+", 15, ["+", ["*", ["power", "精神强度"], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:115",
+  "note": "incStats.dex = 15 + mp*1*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:219",
+  "note": "summonTime 同 T_WAR_HOUND（5,0,10,5），导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 1,
+  "expr": ["+", 10, ["*", ["*", ["power", "精神强度"], 1.6], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:223",
+  "note": "incStats.con = 10 + mp*1.6*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:224",
+  "note": "incStats.str = 10 + combatTalentScale(t,2,10,0.75)；不含精神强度，故标题未声明该输入"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 2, 0, 7, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:339",
+  "note": "summonTime = floor(combatScale(tl, 2, 0, 7, 5)) + incDur；米诺陶专用锚点 (2→7)，导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 1,
+  "expr": ["+", 25, ["+", ["*", ["*", ["power", "精神强度"], 2.1], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:343",
+  "note": "incStats.str = 25 + mp*2.1*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:345",
+  "note": "incStats.con = 10 + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 3,
+  "expr": ["+", 10, ["+", ["*", ["*", ["power", "精神强度"], 1.8], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:344",
+  "note": "incStats.dex = 10 + mp*1.8*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:458",
+  "note": "summonTime 同 T_WAR_HOUND（5,0,10,5），导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 1,
+  "expr": ["+", 15, ["+", ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:462",
+  "note": "incStats.str = 15 + mp*2*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)（与战争猎犬同系数）"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:464",
+  "note": "incStats.con = 10 + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 3,
+  "expr": ["+", 15, ["+", ["*", ["*", ["power", "精神强度"], 1.9], ["talentScale", 0.2, 1, 0.75]], ["talentScale", 2, 10, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:463",
+  "note": "incStats.dex = 15 + mp*1.9*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ }
+]

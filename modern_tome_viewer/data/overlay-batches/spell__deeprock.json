@@ -1,0 +1,360 @@
+[
+ {
+  "talent": "T_DEEPROCK_FORM",
+  "acronym": 3,
+  "expr": [
+   "talentScale",
+   7.3,
+   11.5,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:35",
+  "note": "getArmor = combatTalentScale(t, 7.3, 11.5, 0.75)"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 2,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:76",
+  "note": "嵌套描述里 Volcano 的『有效技能等级』= getTalentLevelRaw(t) * 2；三套导出一致，故用原始等级"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ],
+    5,
+    1,
+    9,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1550",
+  "note": "Volcano getDuration = floor(combatTalentScale(t, 5, 9))，等级 = 2×原始；combatTalentScale 展开为 combatScale(L, low, 1, high, 5, power)"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "+",
+    1,
+    [
+     "*",
+     [
+      "/",
+      4,
+      [
+       "log10",
+       5
+      ]
+     ],
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "talentLevel",
+        true
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1551",
+  "note": "Volcano nbProj = floor(combatTalentScale(t, 1, 5, \"log\"))，等级 = 2×原始；log 版展开"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 5,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        15,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "*",
+            2,
+            [
+             "talentLevel",
+             true
+            ]
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       115,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     80
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1552",
+  "note": "Volcano getDamage = combatTalentSpellDamage(t, 15, 80)，等级 = 2×原始，火山弹伤害取一半；power 家族公式手工展开"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 6,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        15,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "*",
+            2,
+            [
+             "talentLevel",
+             true
+            ]
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       115,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     80
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1552",
+  "note": "同 #5（物理伤害一份，数值相同）"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 2,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:92",
+  "note": "嵌套描述里 Throw Boulder 的『有效技能等级』= getTalentLevelRaw(t) * 2"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ],
+    4,
+    1,
+    8,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1168",
+  "note": "Throw Boulder getDist = floor(combatTalentScale(t, 4, 8))，等级 = 2×原始"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 0,
+  "expr": [
+   "+",
+   5,
+   [
+    "/",
+    [
+     "spellDamage",
+     10,
+     250
+    ],
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:86",
+  "note": "getDam = 5 + combatTalentSpellDamage(t, 10, 250)/10。标题声明 [力量, 法术强度] 是四个 acronym 的并集，本值只用法术强度 → 闸门放宽后按覆盖判定"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 3,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "actor",
+     "力量"
+    ],
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ]
+   ],
+   12,
+   0,
+   262,
+   500
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1167",
+  "note": "嵌套描述里 Throw Boulder 的 getDam = combatScale(getStr()*getTalentLevel(t), 12, 0, 262, 500)，等级 = 2×原始；只用力量，法术强度属标题过度声明"
+ },
+ {
+  "talent": "T_DEEPROCK_FORM",
+  "acronym": 2,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:34",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)；导出对 ≥10 的点打印整数部分（12.561→13），判分器按该读数匹配"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:71",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:87",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)"
+ }
+]

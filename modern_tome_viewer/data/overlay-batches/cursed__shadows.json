@@ -1,0 +1,93 @@
+[
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 0,
+  "expr": ["min", 4, ["max", 1, ["floor", ["*", 0.55, ["talentLevel"]]]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:350",
+  "note": "getMaxShadows = min(4, max(1, floor(getTalentLevel(t) * 0.55)))"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 2,
+  "expr": ["talentLevel", true],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:362",
+  "note": "getHealLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 3,
+  "expr": ["talentLevel", true],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:359",
+  "note": "getBlindsideLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 4,
+  "expr": ["max", 0, ["min", 100, ["combatScale", ["talentLevel"], 5, 1, 85, 5]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:353",
+  "note": "getAvoidMasterDamage = util.bound(combatTalentScale(t, 5, 85), 0, 100)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 0,
+  "expr": ["floor", ["*", 23, ["-", ["sqrt", ["talentLevel"]], 0.5]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:482",
+  "note": "getCombatAtk = floor((sqrt(getTalentLevel(t)) - 0.5) * 23)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 1,
+  "expr": ["floor", ["*", 35, ["-", ["sqrt", ["talentLevel"]], 0.5]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:479",
+  "note": "getIncDamage = floor((sqrt(getTalentLevel(t)) - 0.5) * 35)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 2,
+  "expr": ["talentLevel", true],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:485",
+  "note": "getDominateLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 3,
+  "expr": ["combatLimit", ["^", ["talentLevel"], 0.5], 100, 7, 1, 15.65, 2.23],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:491",
+  "note": "getDominateChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) (raw>0)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 4,
+  "expr": ["max", 3, ["-", 8, ["talentLevel", true]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:525",
+  "note": "fadeCooldown = max(3, 8 - getTalentLevelRaw(t))"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 1,
+  "expr": ["talentLevel", true],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:550",
+  "note": "getLightningLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 2,
+  "expr": ["combatLimit", ["^", ["talentLevel"], 0.5], 100, 7, 1, 15.65, 2.23],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:536",
+  "note": "getCloseAttackSpellChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) (floor(tl)>0)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 3,
+  "expr": ["*", ["talentLevel", true], ["max", 0, ["min", 1, ["-", ["floor", ["talentLevel"]], 2]]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:553",
+  "note": "getFlamesLevel = getTalentLevelRaw(t) when getTalentLevel(t)>=3 else 0 (门槛用 floor(tl)-2 夹成 0/1)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 4,
+  "expr": ["*", ["combatLimit", ["^", ["talentLevel"], 0.5], 100, 7, 1, 15.65, 2.23], ["max", 0, ["min", 1, ["-", ["floor", ["talentLevel"]], 2]]]],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:543",
+  "note": "getFarAttackSpellChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) when floor(tl)>=3 else 0"
+ }
+]

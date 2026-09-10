@@ -1,0 +1,9268 @@
+[
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     20,
+     500
+    ],
+    1,
+    0.2,
+    0,
+    0.584,
+    384
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3540",
+  "note": "getHealth = combatLimit(combatTalentSpellDamage(t, 20, 500), 1, 0.2, 0, 0.584, 384)，info 里 ×100（生命上限百分比）。标题过度声明 [法术强度, 灵巧]，本值只用 法术强度（闸门放宽后 consumed⊆declared 即 PASS）"
+ },
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     10,
+     500
+    ],
+    1.6,
+    0.4,
+    0,
+    0.761,
+    361
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3541",
+  "note": "getDam = combatLimit(combatTalentSpellDamage(t, 10, 500), 1.6, 0.4, 0, 0.761, 361)，info 里 ×100（伤害加成百分比）。标题过度声明 [法术强度, 灵巧]，本值只用 法术强度"
+ },
+ {
+  "talent": "T_AMBUSCADE",
+  "acronym": 3,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    15,
+    [
+     "talentLevel"
+    ]
+   ],
+   25,
+   0,
+   100,
+   75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3538",
+  "note": "getStealthPower = combatScale(getCun(15, true) * getTalentLevel(t), 25, 0, 100, 75)。getCun(15, true) 是「无加成基准值」getter，源码本身不吃标题声明的输入；导出基准下实测该驱动常量恒为 15（拟合可行区间 [14.801, 15.047]），故按导出基准冻结成常数 15（写成 [\"actor\",\"灵巧\"]=100 会让 15 点全错）。标题过度声明 [法术强度, 灵巧]，本值两者都未用到"
+ },
+ {
+  "talent": "T_AMBUSH_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    25,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            7,
+            25
+           ],
+           [
+            "-",
+            3,
+            25
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "sqrt",
+           1.3
+          ]
+         ]
+        ]
+       ],
+       [
+        "/",
+        [
+         "-",
+         0,
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              7,
+              25
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              7,
+              25
+             ],
+             [
+              "-",
+              3,
+              25
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          1.3
+         ],
+         [
+          "sqrt",
+          6.5
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1788",
+  "note": "getDuration = floor(combatTalentLimit(tm_lvl, 25, 3, 7))"
+ },
+ {
+  "talent": "T_ANOMALY_BLINK",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_BLINK",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_CALCIFY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_CALCIFY",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_DEUS_EX",
+  "acronym": 0,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_DIG",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_DISPLACEMENT_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "*",
+   2,
+   [
+    "*",
+    [
+     "/",
+     2,
+     3
+    ],
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     20,
+     10,
+     220,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:28",
+  "note": "getShieldAmount(getAnomalyDamage*2), getAnomalyDamage=rng.avg(dam/3,dam,3)~2/3*dam"
+ },
+ {
+  "talent": "T_ANOMALY_ENTROPY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_ENTROPY",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration"
+ },
+ {
+  "talent": "T_ANOMALY_FLAWED_DESIGN",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_FLAWED_DESIGN",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     10,
+     10,
+     50,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:39",
+  "note": "getAnomalyEffectPower = ceil(rng.avg(dam/2,dam,3))"
+ },
+ {
+  "talent": "T_ANOMALY_GRAVITY_PULL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_GRAVITY_WELL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_HASTE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_HASTE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "/",
+     1,
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "ceil",
+        [
+         "*",
+         0.75,
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "power",
+            "法术强度"
+           ],
+           [
+            "pmod",
+            [
+             "actor",
+             "paradox"
+            ]
+           ]
+          ],
+          10,
+          10,
+          50,
+          100,
+          0.75
+         ]
+        ]
+       ],
+       100
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:699",
+  "note": "getHaste*100 (same as getSlow)"
+ },
+ {
+  "talent": "T_ANOMALY_INVIGORATE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_MASS_DIG",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_PROBABILITY_TRAVEL",
+  "acronym": 0,
+  "expr": [
+   "*",
+   2,
+   [
+    "ceil",
+    [
+     "*",
+     0.75,
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "power",
+        "法术强度"
+       ],
+       [
+        "pmod",
+        [
+         "actor",
+         "paradox"
+        ]
+       ]
+      ],
+      4,
+      10,
+      12,
+      100,
+      0.75
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration*2"
+ },
+ {
+  "talent": "T_ANOMALY_PROBABILITY_TRAVEL",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.75,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "power",
+       "法术强度"
+      ],
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ],
+     4,
+     10,
+     12,
+     100,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:44",
+  "note": "getAnomalyDuration = ceil(rng.avg(dam/2,dam,3))~ceil(0.75*dam)"
+ },
+ {
+  "talent": "T_ANOMALY_QUAKE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_REARRANGE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius = floor(combatLimit(sp,6,2,20,4,100))"
+ },
+ {
+  "talent": "T_ANOMALY_SLOW",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_SLOW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "/",
+     1,
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "ceil",
+        [
+         "*",
+         0.75,
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "power",
+            "法术强度"
+           ],
+           [
+            "pmod",
+            [
+             "actor",
+             "paradox"
+            ]
+           ]
+          ],
+          10,
+          10,
+          50,
+          100,
+          0.75
+         ]
+        ]
+       ],
+       100
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:649",
+  "note": "getSlow*100, getSlow=1-1/(1+effectPower/100)"
+ },
+ {
+  "talent": "T_ANOMALY_STOP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TELEPORT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TELEPORT",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    80,
+    20,
+    20,
+    40,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:51",
+  "note": "getAnomalyRange = floor(combatLimit(sp,80,20,20,40,100))"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_BUBBLE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ],
+    6,
+    2,
+    20,
+    4,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:57",
+  "note": "getAnomalyRadius"
+ },
+ {
+  "talent": "T_ANOMALY_TEMPORAL_STORM",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "combatScale",
+    [
+     "power",
+     "法术强度",
+     [
+      "*",
+      1,
+      [
+       "pmod",
+       [
+        "actor",
+        "paradox"
+       ]
+      ]
+     ]
+    ],
+    10,
+    10,
+    50,
+    100,
+    0.75
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/anomalies.lua:1020",
+  "note": "info 里 damage = combatScale(getParadoxSpellpower,10,10,50,100,0.75)，该 acronym 是 damage/3"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     8,
+     1,
+     16,
+     5,
+     0.5
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:406",
+  "note": "info 里的 range/2"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "talentLevel"
+    ],
+    8,
+    1,
+    16,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:406",
+  "note": "getTeleport = floor(combatTalentScale(t,8,16))；标题声明 paradox 但公式不读"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      2,
+      4
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:407",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,4)))"
+ },
+ {
+  "talent": "T_BEAM_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    3,
+    1,
+    6,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1325",
+  "note": "getDuration = floor(combatTalentScale(tm_lvl, 3, 6))"
+ },
+ {
+  "talent": "T_BEAM_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    15,
+    [
+     "/",
+     [
+      "*",
+      [
+       "statScale",
+       "cun",
+       10,
+       60
+      ],
+      [
+       "combatScale",
+       [
+        "*",
+        [
+         "actor",
+         "陷阱专精 技能等级"
+        ],
+        [
+         "talentLevel"
+        ]
+       ],
+       25,
+       1,
+       100,
+       5
+      ]
+     ],
+     20
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1326",
+  "note": "getDamage = (15 + combatStatScale('cun',10,60)*getTrapMastery/20)/3"
+ },
+ {
+  "talent": "T_BEAR_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:951",
+  "note": "getDamage = 20 + trap_effectiveness(cun)*10"
+ },
+ {
+  "talent": "T_BEAR_TRAP",
+  "acronym": 1,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:951",
+  "note": "bleed = same getDamage (info prints dam twice)"
+ },
+ {
+  "talent": "T_BLADESTORM_TRAP",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    0.75,
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "陷阱专精 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      9,
+      1,
+      13,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1269",
+  "note": "getDuration = floor(floor(combatTalentScale(tm,9,13))*0.75)"
+ },
+ {
+  "talent": "T_BLIGHT_BOLT",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   7,
+   25,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:680",
+  "note": "getCritChance = combatTalentScale(t, 7, 25, 0.75)，info 用 %0.2f 输出"
+ },
+ {
+  "talent": "T_BLOODRAGE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    6,
+    [
+     "talentLevel"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2439",
+  "note": "info: math.floor(self:getTalentLevel(t) * 6)"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.1,
+    1.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2293",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.1,1.8) + getStrikingStyle(...); info: damage = getDamage*100; Striking Style inactive -> 0"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 1,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2328",
+  "note": "info: drain = self:getTalentLevel(t) * 2"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.25,
+    [
+     "talentScale",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2294",
+  "note": "getDuration(t,0) = ceil(combatTalentScale(t,1,5) * (0.25+0/5))"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 3,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    1.25,
+    [
+     "talentScale",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2294",
+  "note": "getDuration(t,5) = ceil(combatTalentScale(t,1,5) * (0.25+5/5))"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 0,
+  "expr": [
+   "+",
+   5,
+   [
+    "/",
+    [
+     "spellDamage",
+     10,
+     250
+    ],
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:86",
+  "note": "getDam = 5 + combatTalentSpellDamage(t, 10, 250)/10。标题声明 [力量, 法术强度] 是四个 acronym 的并集，本值只用法术强度 → 闸门放宽后按覆盖判定"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:87",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 2,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:92",
+  "note": "嵌套描述里 Throw Boulder 的『有效技能等级』= getTalentLevelRaw(t) * 2"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 3,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "actor",
+     "力量"
+    ],
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ]
+   ],
+   12,
+   0,
+   262,
+   500
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1167",
+  "note": "嵌套描述里 Throw Boulder 的 getDam = combatScale(getStr()*getTalentLevel(t), 12, 0, 262, 500)，等级 = 2×原始；只用力量，法术强度属标题过度声明"
+ },
+ {
+  "talent": "T_BOULDER_ROCK",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ],
+    4,
+    1,
+    8,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1168",
+  "note": "Throw Boulder getDist = floor(combatTalentScale(t, 4, 8))，等级 = 2×原始"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "-",
+    30,
+    [
+     "*",
+     20,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             12,
+             10
+            ],
+            [
+             "-",
+             30,
+             10
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              [
+               "-",
+               30,
+               12
+              ],
+              [
+               "-",
+               30,
+               10
+              ]
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              12,
+              10
+             ],
+             [
+              "-",
+              30,
+              10
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "sqrt",
+           1.3
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:132",
+  "note": "getEvery = floor(combatTalentLimit(t, 10, 30, 12))；low>high 分支按 Combat.lua:1616-1619 的字面运算顺序展开（x_low=sqrt(1.3), x_high=sqrt(6.5)）。必须保留 a/b 形式：closed form 在有效等级 1.3 处恰好得 30，而 Lua 的 exp(a*sqrt(tl)+b) 因消去误差得 29.99 → 导出 29"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 1,
+  "expr": [
+   "max",
+   1,
+   [
+    "+",
+    [
+     "actor",
+     "角色等级"
+    ],
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "talentLevel"
+      ],
+      -6,
+      0.9,
+      2,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:134",
+  "note": "info 第 2 个值 = math.max(1, self.level + getLevel)；getLevel = floor(combatScale(getTalentLevel(t), -6, 0.9, 2, 5))"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 2,
+  "expr": [
+   "max",
+   1,
+   [
+    "floor",
+    [
+     "talentScale",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:127",
+  "note": "getNb = max(1, floor(combatTalentScale(t, 1, 5)))，随后 `if nb > 6 then floor(6+(nb-6)^0.7)`；有效等级 ≤7.5 时该守卫不触发"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    5,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:133",
+  "note": "getTurns = floor(combatTalentScale(t, 5, 10))"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 0,
+  "expr": [
+   "min",
+   4,
+   [
+    "max",
+    1,
+    [
+     "floor",
+     [
+      "*",
+      0.55,
+      [
+       "talentLevel"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:350",
+  "note": "getMaxShadows = min(4, max(1, floor(getTalentLevel(t) * 0.55)))"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 2,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:362",
+  "note": "getHealLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 3,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:359",
+  "note": "getBlindsideLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_CALL_SHADOWS",
+  "acronym": 4,
+  "expr": [
+   "max",
+   0,
+   [
+    "min",
+    100,
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     5,
+     1,
+     85,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:353",
+  "note": "getAvoidMasterDamage = util.bound(combatTalentScale(t, 5, 85), 0, 100)"
+ },
+ {
+  "talent": "T_CARBON_SPIKES",
+  "acronym": 1,
+  "expr": [
+   "spellDamage",
+   1,
+   150,
+   [
+    "*",
+    [
+     "power",
+     "法术强度"
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:801",
+  "note": "damage = combatTalentSpellDamage(t, 1, 150, getParadoxSpellpower(self,t))；导出对 ≥10 的值按「先 2 位小数渲染再取整」显示，判分器已按该读数匹配"
+ },
+ {
+  "talent": "T_CATAPULT_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   1,
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "actor",
+       "陷阱专精 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     2,
+     1,
+     6,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2055",
+  "note": "getDistance = 1 + floor(combatTalentScale(tm_lvl, 2, 6))"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:160",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:170",
+  "note": "getDam = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:170",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 3,
+  "expr": [
+   "+",
+   100,
+   [
+    "*",
+    [
+     "-",
+     25,
+     100
+    ],
+    [
+     "^",
+     [
+      "/",
+      [
+       "-",
+       50,
+       100
+      ],
+      [
+       "-",
+       25,
+       100
+      ]
+     ],
+     [
+      "/",
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "talentLevel"
+         ],
+         [
+          "max",
+          0.5,
+          [
+           "-",
+           1.5,
+           [
+            "/",
+            [
+             "actor",
+             "psi"
+            ],
+            100
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ],
+      [
+       "-",
+       [
+        "sqrt",
+        6.5
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:174",
+  "note": "getDaze = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),100,25,50)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 4,
+  "expr": [
+   "+",
+   100,
+   [
+    "*",
+    [
+     "-",
+     25,
+     100
+    ],
+    [
+     "^",
+     [
+      "/",
+      [
+       "-",
+       50,
+       100
+      ],
+      [
+       "-",
+       25,
+       100
+      ]
+     ],
+     [
+      "/",
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "talentLevel"
+         ],
+         1.5
+        ]
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ],
+      [
+       "-",
+       [
+        "sqrt",
+        6.5
+       ],
+       [
+        "sqrt",
+        1.3
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:174",
+  "note": "getDaze(self,t,0) = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),100,25,50)；combatTalentLimit 按节点表 closed form 展开 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:166",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_CHARGE_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:166",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.5,
+    4.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3722",
+  "note": "radius = math.floor(self:combatTalentScale(t, 2.5, 4.5))"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "/",
+    [
+     "spellDamage",
+     2,
+     15
+    ],
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3748",
+  "note": "info 的 tformat 第 2 个值 = 1 + (damage / 4)，damage = getDamage = combatTalentSpellDamage(t, 2, 15)"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   2,
+   15
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3719",
+  "note": "getDamage = combatTalentSpellDamage(t, 2, 15)（光伤）"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 3,
+  "expr": [
+   "spellDamage",
+   2,
+   15
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3719",
+  "note": "同 #2（火伤，数值相同）"
+ },
+ {
+  "talent": "T_CIRCLE_OF_BLAZING_LIGHT",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    4,
+    8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3720",
+  "note": "getDuration = math.floor(self:combatTalentScale(t, 4, 8))"
+ },
+ {
+  "talent": "T_COMBO_STRING",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "+",
+     5,
+     [
+      "/",
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       5
+      ],
+      100
+     ]
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   100,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2344",
+  "note": "getChance = combatLimit(getTalentLevel(t) * (5 + getCun(5,true)), 100, 0,0, 50,50); getCun(5,true)=灵巧*5/100 (raw stat)"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    3,
+    [
+     "/",
+     [
+      "*",
+      5,
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       1
+      ]
+     ],
+     [
+      "-",
+      [
+       "sqrt",
+       5
+      ],
+      1
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:256",
+  "note": "getDur = floor(combatTalentScale(t, 3, 8))；展开为 low+(high-low)(√tl-1)/(√5-1)。写成除法在后的形式，避免 talentScale 节点里 m*(√5-1) 的浮点消去误差（那会得 7.9999→7，导出是 8）"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 1,
+  "expr": [
+   "spellDamage",
+   40,
+   200
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:257",
+  "note": "getDamage = combatTalentSpellDamage(t, 40, 200)；damDesc 只是包裹"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   5,
+   28
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:258",
+  "note": "getDiseasePower = combatTalentSpellDamage(t, 5, 28)（说明文本里『reduces one attribute by %d』那一个值）"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 3,
+  "expr": [
+   "spellDamage",
+   40,
+   200
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:272",
+  "note": "info 里 blight 伤害参数是 t:_getDamage(self)（源码此处用的就是 getDamage，不是 getDiseasePower）"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 1,
+  "expr": [
+   "+",
+   15,
+   [
+    "statDamage",
+    "cun",
+    12,
+    150
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "talentScale",
+    3,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    6,
+    "log",
+    0,
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 4,
+  "expr": [
+   "talentScale",
+   4,
+   7
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "weaponDamage",
+    1,
+    1.8
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 6,
+  "expr": [
+   "+",
+   [
+    "statScale",
+    "cun",
+    10,
+    200,
+    0.7
+   ],
+   [
+    "talentScale",
+    20,
+    200,
+    0.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 7,
+  "expr": [
+   "+",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        100,
+        0.75
+       ],
+       [
+        "^",
+        10,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         100,
+         0.75
+        ],
+        [
+         "^",
+         10,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       10,
+       0.75
+      ]
+     ]
+    ]
+   ],
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.75
+       ],
+       [
+        "^",
+        1,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         5,
+         0.75
+        ],
+        [
+         "^",
+         1,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       1,
+       0.75
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_CUNNING_TOOLS",
+  "acronym": 8,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    3,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_DAMAGE_SMEARING",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "/",
+    [
+     "*",
+     50,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             30,
+             50
+            ],
+            [
+             "-",
+             10,
+             50
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               30,
+               50
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               30,
+               50
+              ],
+              [
+               "-",
+               10,
+               50
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    100
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:610",
+  "note": "percent = getPercent*100 = combatTalentLimit(t,50,10,30)/100*100；combatTalentLimit 按 Lua 运算顺序手工展开（锚点 sqrt(1.3)/sqrt(6.5) 的 exp/log 分支），并保留源码的 /100*100，否则 1.3 套第 1/5 点会因浮点误差整成 10/30 而导出为 9/29"
+ },
+ {
+  "talent": "T_DAMAGE_SMEARING",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      3,
+      6
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:611",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,6)))"
+ },
+ {
+  "talent": "T_DEEPROCK_FORM",
+  "acronym": 2,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:34",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)；导出对 ≥10 的点打印整数部分（12.561→13），判分器按该读数匹配"
+ },
+ {
+  "talent": "T_DEEPROCK_FORM",
+  "acronym": 3,
+  "expr": [
+   "talentScale",
+   7.3,
+   11.5,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:35",
+  "note": "getArmor = combatTalentScale(t, 7.3, 11.5, 0.75)"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "+",
+     5,
+     [
+      "/",
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       5
+      ],
+      100
+     ]
+    ]
+   ],
+   100,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3376",
+  "note": "getchance = combatLimit(getTalentLevel(t) * (5 + getCun(5,true)), 100, 0,0, 50,50); getCun(5,true)=灵巧*5/100"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 1,
+  "expr": [
+   "physicalDamage",
+   5,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3373",
+  "note": "getDamage = combatTalentPhysicalDamage(t,5,50)*getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 2,
+  "expr": [
+   "physicalDamage",
+   10,
+   75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3374",
+  "note": "getDamageTwo = combatTalentPhysicalDamage(t,10,75)*getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_DEMON_SEED_BLIGHTED_PATH",
+  "acronym": 0,
+  "expr": [
+   "+",
+   4,
+   [
+    "*",
+    2,
+    [
+     "floor",
+     [
+      "talentLevel"
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:249",
+  "note": "getMaxCharges = 4 + math.floor(self:getTalentLevel(t)) * 2"
+ },
+ {
+  "talent": "T_DEMON_SEED_BLIGHTED_PATH",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   3,
+   10,
+   0.5
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:248",
+  "note": "getVim = combatTalentScale(t, 3, 10, 0.5)"
+ },
+ {
+  "talent": "T_DEMON_SEED_BLIGHTED_PATH",
+  "acronym": 3,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    50,
+    500
+   ],
+   9
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:246",
+  "note": "t:_getShield(self) -> getShield = combatTalentSpellDamage(t, 50, 500) / 9"
+ },
+ {
+  "talent": "T_DEMON_SEED_BLOOD_DRINKER",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.9,
+    2
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1026",
+  "note": "info: 100 * t:_getDam(self)，getDam = combatTalentWeaponDamage(t, 0.9, 2)"
+ },
+ {
+  "talent": "T_DEMON_SEED_CURSED_ARM",
+  "acronym": 0,
+  "expr": [
+   "*",
+   50,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       -0.4918259386509031,
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ]
+      ],
+      0.33762429736186633
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:878",
+  "note": "t:_getChance(self) -> combatTalentLimit(t, 50, 10, 30)，按 Lua 的 exp 形式手工展开"
+ },
+ {
+  "talent": "T_DEMON_SEED_CURSED_ARM",
+  "acronym": 1,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:889",
+  "note": "info: tformat(t:_getChance(self), self:getTalentLevelRaw(t))；第二个值为原始等级"
+ },
+ {
+  "talent": "T_DEMON_SEED_DISEASED_BODY",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       -0.695952146309044,
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ]
+      ],
+      0.570363982952362
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1223",
+  "note": "t:_getChance(self) -> combatTalentLimit(t, 100, 20, 70)，按 Lua 的 exp 形式手工展开"
+ },
+ {
+  "talent": "T_DEMON_SEED_DISEASED_BODY",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   5,
+   10
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1224",
+  "note": "t:_getDur(self) -> combatTalentScale(t, 5, 10)"
+ },
+ {
+  "talent": "T_DEMON_SEED_DISEASED_BODY",
+  "acronym": 2,
+  "expr": [
+   "+",
+   5,
+   [
+    "spellDamage",
+    5,
+    30
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1225",
+  "note": "t:_getDamage(self) -> 5 + combatTalentSpellDamage(t, 5, 30)"
+ },
+ {
+  "talent": "T_DEMON_SEED_DISEASED_BODY",
+  "acronym": 3,
+  "expr": [
+   "spellDamage",
+   5,
+   28
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1226",
+  "note": "getDiseasePower = combatTalentSpellDamage(t, 5, 28)"
+ },
+ {
+  "talent": "T_DEMON_SEED_FIRE_BOLTS",
+  "acronym": 0,
+  "expr": [
+   "+",
+   [
+    "*",
+    5,
+    [
+     "talentLevel"
+    ]
+   ],
+   20
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:58",
+  "note": "info: tformat(self:getTalentLevel(t) * 5 + 20, ...)"
+ },
+ {
+  "talent": "T_DEMON_SEED_FIRE_BOLTS",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "ceil",
+    [
+     "/",
+     [
+      "talentLevel"
+     ],
+     2
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:58",
+  "note": "info: 1+math.ceil(self:getTalentLevel(t) / 2)"
+ },
+ {
+  "talent": "T_DEMON_SEED_HEXED_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:869",
+  "note": "info: tformat(self:getTalentLevelRaw(t))；三套导出一致 -> 原始等级"
+ },
+ {
+  "talent": "T_DEMON_SEED_METEOR_SLAM",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.5,
+    2.2
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1064",
+  "note": "info: 100 * t:_getDam(self)，getDam = combatTalentWeaponDamage(t, 1.5, 2.2)"
+ },
+ {
+  "talent": "T_DEMON_SEED_SHADOWMELD",
+  "acronym": 1,
+  "expr": [
+   "*",
+   50,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       -0.4918259386509031,
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ]
+      ],
+      0.33762429736186633
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:361",
+  "note": "t:_getChance(self) -> combatTalentLimit(t, 50, 10, 30)，按 Lua 的 exp 形式手工展开（见报告「发现的写法模式」）"
+ },
+ {
+  "talent": "T_DEMON_SEED_VOLCANIC_SKIN",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       -0.695952146309044,
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ]
+      ],
+      0.570363982952362
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demon-seeds.lua:1254",
+  "note": "t:_getChance(self) -> combatTalentLimit(t, 100, 20, 70)，按 Lua 的 exp 形式手工展开"
+ },
+ {
+  "talent": "T_DIMENSIONAL_ANCHOR",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      6,
+      10
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:462",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))"
+ },
+ {
+  "talent": "T_DISARMING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    30,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1013",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*30"
+ },
+ {
+  "talent": "T_DISARMING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    2.1,
+    1,
+    4.43,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1014",
+  "note": "getDuration = floor(combatTalentScale(tm_lvl, 2.1, 4.43))"
+ },
+ {
+  "talent": "T_DISCARDED_REFUSE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    1,
+    [
+     "/",
+     [
+      "*",
+      5,
+      [
+       "-",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       1
+      ]
+     ],
+     [
+      "-",
+      [
+       "sqrt",
+       5
+      ],
+      1
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:402",
+  "note": "getNb = floor(combatTalentScale(t, 1, 6))；与 T_CORPSE_EXPLOSION#0 同样的除法在后展开（talentScale 节点在等级 5 会因浮点消去得 5.9999→5）"
+ },
+ {
+  "talent": "T_DRAGONSFIRE_TRAP",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     18,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1576",
+  "note": "per-turn = getDamage/3; getDamage = 10 + trap_effectiveness(cun)*18"
+ },
+ {
+  "talent": "T_DRAGONSFIRE_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     18,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1576",
+  "note": "deflagration = getDamage/2"
+ },
+ {
+  "talent": "T_DREDGE_FRENZY",
+  "acronym": 4,
+  "expr": [
+   "*",
+   -100,
+   [
+    "combatLimit",
+    [
+     "spellDamage",
+     10,
+     50
+    ],
+    1,
+    0,
+    0,
+    0.329,
+    32.9
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1672",
+  "note": "getPower = combatLimit(combatTalentSpellDamage(t,10,50),1,0,0,0.329,32.9)；info 用 power*100，文本是 'prevent death until -%d%% life'，导出值本身为负"
+ },
+ {
+  "talent": "T_DWARVEN_HALF_EARTHEN_MISSILES",
+  "acronym": 0,
+  "expr": [
+   "+",
+   2,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/dwarven-nature.lua:59",
+  "note": "info 里 count = 2，若 self:getTalentLevel(t) >= 5 则 +1；节点表没有比较运算，用 min(1, floor(level/5)) 等价表达 0/1"
+ },
+ {
+  "talent": "T_EXPLOSION_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   30,
+   [
+    "*",
+    35,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1984",
+  "note": "getDamage = 30 + trap_effectiveness(cun)*35"
+ },
+ {
+  "talent": "T_FLASH_BANG_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1193",
+  "note": "getDamage = 25 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_FLASH_BANG_TRAP",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "floor",
+    [
+     "*",
+     2,
+     [
+      "sqrt",
+      [
+       "*",
+       [
+        "+",
+        1,
+        [
+         "/",
+         [
+          "combatScale",
+          [
+           "*",
+           [
+            "actor",
+            "陷阱专精 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ],
+          25,
+          1,
+          100,
+          5
+         ],
+         100
+        ]
+       ],
+       [
+        "statScale",
+        "cun",
+        1,
+        5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1192",
+  "note": "getDuration = 1 + floor(2*sqrt(trap_effectiveness(cun)))"
+ },
+ {
+  "talent": "T_FREEZING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    15,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1486",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*15"
+ },
+ {
+  "talent": "T_FREEZING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    10,
+    [
+     "*",
+     15,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   3
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1486",
+  "note": "vapour = getDamage/3"
+ },
+ {
+  "talent": "T_GNASHING_MAW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   3,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:83",
+  "note": "info: 3 * self:getTalentLevel(t) (accuracy reduction)"
+ },
+ {
+  "talent": "T_GRAVITIC_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    10,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "mag",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1667",
+  "note": "getDamage = 10 + trap_effectiveness(mag)*10"
+ },
+ {
+  "talent": "T_GRAVITIC_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    10,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            5,
+            10
+           ],
+           [
+            "-",
+            3,
+            10
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "sqrt",
+           1.3
+          ]
+         ]
+        ]
+       ],
+       [
+        "/",
+        [
+         "-",
+         0,
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              5,
+              10
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              5,
+              10
+             ],
+             [
+              "-",
+              3,
+              10
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          1.3
+         ],
+         [
+          "sqrt",
+          6.5
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1668",
+  "note": "getDuration = floor(combatTalentLimit(tm_lvl, 10, 3, 5))"
+ },
+ {
+  "talent": "T_INFECTIOUS_BITE",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   12,
+   150
+  ],
+  "source": "tome-src-full/data/talents/corruptions/rot.lua:30",
+  "note": "getPoisonDamage = combatTalentSpellDamage(t, 12, 150)"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 1,
+  "expr": [
+   "+",
+   15,
+   [
+    "statDamage",
+    "cun",
+    12,
+    150
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "talentScale",
+    3,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    6,
+    "log",
+    0,
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 4,
+  "expr": [
+   "talentScale",
+   4,
+   7
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "weaponDamage",
+    1,
+    1.8
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 6,
+  "expr": [
+   "+",
+   [
+    "statScale",
+    "cun",
+    10,
+    200,
+    0.7
+   ],
+   [
+    "talentScale",
+    20,
+    200,
+    0.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 7,
+  "expr": [
+   "+",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        100,
+        0.75
+       ],
+       [
+        "^",
+        10,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         100,
+         0.75
+        ],
+        [
+         "^",
+         10,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       10,
+       0.75
+      ]
+     ]
+    ]
+   ],
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.75
+       ],
+       [
+        "^",
+        1,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         5,
+         0.75
+        ],
+        [
+         "^",
+         1,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       1,
+       0.75
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_INTRICATE_TOOLS",
+  "acronym": 8,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    3,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 0,
+  "expr": [
+   "-",
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     5,
+     0,
+     10,
+     5
+    ]
+   ],
+   1
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:219",
+  "note": "summonTime 同 T_WAR_HOUND（5,0,10,5），导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 1,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    [
+     "*",
+     [
+      "power",
+      "精神强度"
+     ],
+     1.6
+    ],
+    [
+     "talentScale",
+     0.2,
+     1,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:223",
+  "note": "incStats.con = 10 + mp*1.6*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_JELLY",
+  "acronym": 2,
+  "expr": [
+   "+",
+   10,
+   [
+    "talentScale",
+    2,
+    10,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:224",
+  "note": "incStats.str = 10 + combatTalentScale(t,2,10,0.75)；不含精神强度，故标题未声明该输入"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:34",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "+",
+    0.5,
+    [
+     "*",
+     [
+      "-",
+      0.16,
+      0.5
+     ],
+     [
+      "^",
+      [
+       "/",
+       [
+        "-",
+        0.2,
+        0.5
+       ],
+       [
+        "-",
+        0.16,
+        0.5
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "talentLevel"
+          ],
+          [
+           "max",
+           0.5,
+           [
+            "-",
+            1.5,
+            [
+             "/",
+             [
+              "actor",
+              "psi"
+             ],
+             100
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         6.5
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:48",
+  "note": "getSlow = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),0.50,0.16,0.20)*100；标题 psi 为百分数(psi 50%)，psi/maxPsi=psi/100；combatTalentLimit 按节点表 closed form 展开"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "+",
+    0.5,
+    [
+     "*",
+     [
+      "-",
+      0.16,
+      0.5
+     ],
+     [
+      "^",
+      [
+       "/",
+       [
+        "-",
+        0.2,
+        0.5
+       ],
+       [
+        "-",
+        0.16,
+        0.5
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "*",
+          [
+           "talentLevel"
+          ],
+          1.5
+         ]
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         6.5
+        ],
+        [
+         "sqrt",
+         1.3
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:48",
+  "note": "getSlow(self,t,0)*100 = combatTalentLimit(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),0.50,0.16,0.20)*100 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 3,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    5,
+    45
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:44",
+  "note": "getDamage = combatTalentMindDamage(t,5,45) * F，F = max(0.5, 1.5 - psi/getMaxPsi())，标题的 psi 是百分数"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    5,
+    45
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:44",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,5,45)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:40",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_KINETIC_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:40",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_MAIM",
+  "acronym": 0,
+  "expr": [
+   "physicalDamage",
+   10,
+   100
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2382",
+  "note": "getDamage = combatTalentPhysicalDamage(t,10,100) * getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   50,
+   20,
+   40
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:672",
+  "note": "Dart Launcher Mastery getSlow = combatTalentLimit(MASTER_ARTIFICER,50,20,40)/100，short_info 再 *100"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 1,
+  "expr": [
+   "+",
+   30,
+   [
+    "statDamage",
+    "cun",
+    10,
+    150
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:594",
+  "note": "Smokescreen Mastery getDamage = 30 + combatTalentStatDamage(MASTER_ARTIFICER,\"cun\",10,150)"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 2,
+  "expr": [
+   "+",
+   30,
+   [
+    "statDamage",
+    "cun",
+    15,
+    200
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "Grappling Hook Mastery getSecondaryDamage = 30 + combatTalentStatDamage(MASTER_ARTIFICER,\"cun\",15,200)（damDesc 包裹，取原值）"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 3,
+  "expr": [
+   "+",
+   30,
+   [
+    "statDamage",
+    "cun",
+    15,
+    200
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "同上：短说明里物理/自然两个 damDesc 数字相同，均为 getSecondaryDamage"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "weaponDamage",
+    1.8,
+    3
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:361",
+  "note": "Assassinate getDamage = combatTalentWeaponDamage(MASTER_ARTIFICER,1.8,3.0)，short_info 再 *100"
+ },
+ {
+  "talent": "T_MASTER_ARTIFICER",
+  "acronym": 5,
+  "expr": [
+   "talentScale",
+   100,
+   600
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:490",
+  "note": "Rogue's Brew Mastery getDieAt = combatTalentScale(MASTER_ARTIFICER,100,600)"
+ },
+ {
+  "talent": "T_MASTER_OF_DISASTERS",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    20,
+    [
+     "/",
+     [
+      "*",
+      60,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     100
+    ]
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/uber/cun.lua:25",
+  "note": "getPower = math.floor(20 + self:getCun(60))；getCun(60) = 灵巧 x 60/100"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 0,
+  "expr": [
+   "-",
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     2,
+     0,
+     7,
+     5
+    ]
+   ],
+   1
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:339",
+  "note": "summonTime = floor(combatScale(tl, 2, 0, 7, 5)) + incDur；米诺陶专用锚点 (2→7)，导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 1,
+  "expr": [
+   "+",
+   25,
+   [
+    "+",
+    [
+     "*",
+     [
+      "*",
+      [
+       "power",
+       "精神强度"
+      ],
+      2.1
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:343",
+  "note": "incStats.str = 25 + mp*2.1*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 2,
+  "expr": [
+   "+",
+   10,
+   [
+    "talentScale",
+    2,
+    10,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:345",
+  "note": "incStats.con = 10 + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_MINOTAUR",
+  "acronym": 3,
+  "expr": [
+   "+",
+   10,
+   [
+    "+",
+    [
+     "*",
+     [
+      "*",
+      [
+       "power",
+       "精神强度"
+      ],
+      1.8
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:344",
+  "note": "incStats.dex = 10 + mp*1.8*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_NIGHTSHADE_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   20,
+   [
+    "*",
+    35,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2175",
+  "note": "getDamage = 20 + trap_effectiveness(cun)*35"
+ },
+ {
+  "talent": "T_NIGHTSHADE_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    20,
+    [
+     "*",
+     35,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   10
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:2175",
+  "note": "poison/turn = getDamage/10"
+ },
+ {
+  "talent": "T_PERFECT_CONTROL",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "^",
+     [
+      "+",
+      1,
+      [
+       "*",
+       8,
+       [
+        "+",
+        [
+         "*",
+         0.5,
+         [
+          "/",
+          [
+           "power",
+           "精神强度"
+          ],
+          100
+         ]
+        ],
+        [
+         "*",
+         0.5,
+         [
+          "/",
+          [
+           "talentLevel"
+          ],
+          6.5
+         ]
+        ]
+       ]
+      ]
+     ],
+     1.04
+    ]
+   ],
+   15,
+   0,
+   49,
+   34
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2533",
+  "note": "getBoost = combatScale(getTalentLevel(t)*combatStatTalentIntervalDamage(t,\"combatMindpower\",1,9), 15, 0, 49, 34)；combatStatTalentIntervalDamage = rescaleDamage(1 + 8*(0.5*精神强度/100 + 0.5*tl/6.5))（Combat.lua:2186），rescaleDamage = ^1.04"
+ },
+ {
+  "talent": "T_PHASE_SHIFT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentLimit",
+      25,
+      3,
+      7,
+      true
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:645",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,25,3,7,true)))，raw=true 用原始等级"
+ },
+ {
+  "talent": "T_PITFALL_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1070",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_POISON_GAS_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1407",
+  "note": "getDamage = 10 + trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "wil",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "mana = getDamage = 25 + trap_effectiveness(wil)*25"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "vim = base/2"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "positive = base/4"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 3,
+  "expr": [
+   "/",
+   [
+    "+",
+    25,
+    [
+     "*",
+     25,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "combatScale",
+         [
+          "*",
+          [
+           "actor",
+           "陷阱专精 技能等级"
+          ],
+          [
+           "talentLevel"
+          ]
+         ],
+         25,
+         1,
+         100,
+         5
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "wil",
+       1,
+       5
+      ]
+     ]
+    ]
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "negative = base/4"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 4,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    25,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "wil",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1860",
+  "note": "arcane = base (rounded; mana is %d-truncated)"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 5,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "陷阱专精 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    2.5,
+    1,
+    4.5,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1859",
+  "note": "getDuration = floor(combatTalentScale(tm, 2.5, 4.5))"
+ },
+ {
+  "talent": "T_PURGING_TRAP",
+  "acronym": 6,
+  "expr": [
+   "floor",
+   [
+    "+",
+    1,
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       3,
+       1
+      ],
+      [
+       "log10",
+       5
+      ]
+     ],
+     [
+      "log10",
+      [
+       "*",
+       [
+        "actor",
+        "陷阱专精 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1858",
+  "note": "getNb = floor(combatTalentScale(tm, 1, 3, 'log'))"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 0,
+  "expr": [
+   "max",
+   1,
+   [
+    "floor",
+    [
+     "talentLimit",
+     3.1,
+     1,
+     3
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:289",
+  "note": "getNb = max(1, floor(combatTalentLimit(t, 3.1, 1, 3)))；high>=low 分支，talentLimit 节点在此方向与源码一致，15 点全中"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    2
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:290",
+  "note": "getIncrease = floor(combatTalentScale(t, 1, 2))"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 3,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    40,
+    400
+   ],
+   5
+  ],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:291",
+  "note": "getDamage = combatTalentSpellDamage(t, 40, 400) / 5"
+ },
+ {
+  "talent": "T_QUICKEN_SPELLS",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "min",
+    0.3,
+    [
+     "max",
+     0.05,
+     [
+      "/",
+      [
+       "talentLevel",
+       true
+      ],
+      15
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3974",
+  "note": "getCooldownReduction = util.bound(self:getTalentLevelRaw(t) / 15, 0.05, 0.3)，info 里 ×100；三套完全相同 → 原始等级；导出按截断读数"
+ },
+ {
+  "talent": "T_RELAXED_SHOT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   12,
+   [
+    "*",
+    8,
+    [
+     "talentLevel"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/archery.lua:735",
+  "note": "info tformat(..., 12 + self:getTalentLevel(t) * 8)"
+ },
+ {
+  "talent": "T_REPULSION_FIELD",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1.5,
+    3.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:488",
+  "note": "radius = math.floor(combatTalentScale(t,1.5,3.5))"
+ },
+ {
+  "talent": "T_REPULSION_FIELD",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      4,
+      8
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:493",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,8)))"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:146",
+  "note": "info: tformat(self:getTalentLevelRaw(t), descs) → 原始等级（三套导出数字相同）"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 1,
+  "expr": [
+   "+",
+   15,
+   [
+    "statDamage",
+    "cun",
+    12,
+    150
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:620",
+  "note": "Dart Launcher getDamage = 15 + combatTalentStatDamage(t,\"cun\",12,150)，short_info 的 slot_talent 等级"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "talentScale",
+    3,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:519",
+  "note": "Smokescreen getDuration = math.ceil(combatTalentScale(t,3,5))"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    6,
+    "log",
+    0,
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:520",
+  "note": "Smokescreen getSightLoss = math.floor(combatTalentScale(t,1,6,\"log\",0,4))"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 4,
+  "expr": [
+   "talentScale",
+   4,
+   7
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:687",
+  "note": "Grappling Hook range = combatTalentScale(t,4,7)"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "weaponDamage",
+    1,
+    1.8
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:305",
+  "note": "Hidden Blades getDamage = combatTalentWeaponDamage(slot_talent,1.0,1.8)，short_info 再 *100"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 6,
+  "expr": [
+   "+",
+   [
+    "statScale",
+    "cun",
+    10,
+    200,
+    0.7
+   ],
+   [
+    "talentScale",
+    20,
+    200,
+    0.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:427",
+  "note": "Rogue's Brew getHeal = combatStatScale(\"cun\",10,200,0.7) + combatTalentScale(t,20,200,0.7)"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 7,
+  "expr": [
+   "+",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        100,
+        0.75
+       ],
+       [
+        "^",
+        10,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         100,
+         0.75
+        ],
+        [
+         "^",
+         10,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       10,
+       0.75
+      ]
+     ]
+    ]
+   ],
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      45,
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.75
+       ],
+       [
+        "^",
+        1,
+        0.75
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.75
+     ]
+    ],
+    [
+     "-",
+     5,
+     [
+      "*",
+      [
+       "/",
+       45,
+       [
+        "-",
+        [
+         "^",
+         5,
+         0.75
+        ],
+        [
+         "^",
+         1,
+         0.75
+        ]
+       ]
+      ],
+      [
+       "^",
+       1,
+       0.75
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:430",
+  "note": "Rogue's Brew getStam = combatStatScale(\"cun\",5,50,0.75) + combatTalentScale(t,5,50,0.75)。这里按 Lua 的运算顺序手工展开：Lua 是 m*(x)^p + (low - m*x_low^p)，而 statScale/talentScale 节点是 slope*(x^p - x_low^p) + low；两者代数等价但在两个锚点（tl=1→55、tl=5→100）上浮点结果分别是 54.99999999999999/99.99999999999999，%d 截断成 54/99（导出值），用节点写法会得到整 55/100 而差 1。"
+ },
+ {
+  "talent": "T_ROGUE_S_TOOLS",
+  "acronym": 8,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    3,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:432",
+  "note": "Rogue's Brew getCure = math.floor(combatTalentScale(t,1,3,\"log\"))"
+ },
+ {
+  "talent": "T_ROUNDHOUSE_KICK",
+  "acronym": 0,
+  "expr": [
+   "physicalDamage",
+   15,
+   150
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3433",
+  "note": "getDamage = combatTalentPhysicalDamage(t, 15, 150) * getUnarmedTrainingBonus(self)；导出基准角色下 unarmed 加成为 1"
+ },
+ {
+  "talent": "T_SEVER_LIFELINE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   10000,
+   [
+    "spellDamage",
+    20,
+    220,
+    [
+     "power",
+     "法术强度",
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1722",
+  "note": "getDamage = combatTalentSpellDamage(t,20,220,getParadoxSpellpower(self,t)) * 10000"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 1,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:550",
+  "note": "getLightningLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 2,
+  "expr": [
+   "combatLimit",
+   [
+    "^",
+    [
+     "talentLevel"
+    ],
+    0.5
+   ],
+   100,
+   7,
+   1,
+   15.65,
+   2.23
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:536",
+  "note": "getCloseAttackSpellChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) (floor(tl)>0)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 3,
+  "expr": [
+   "*",
+   [
+    "talentLevel",
+    true
+   ],
+   [
+    "max",
+    0,
+    [
+     "min",
+     1,
+     [
+      "-",
+      [
+       "floor",
+       [
+        "talentLevel"
+       ]
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:553",
+  "note": "getFlamesLevel = getTalentLevelRaw(t) when getTalentLevel(t)>=3 else 0 (门槛用 floor(tl)-2 夹成 0/1)"
+ },
+ {
+  "talent": "T_SHADOW_MAGES",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "combatLimit",
+    [
+     "^",
+     [
+      "talentLevel"
+     ],
+     0.5
+    ],
+    100,
+    7,
+    1,
+    15.65,
+    2.23
+   ],
+   [
+    "max",
+    0,
+    [
+     "min",
+     1,
+     [
+      "-",
+      [
+       "floor",
+       [
+        "talentLevel"
+       ]
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:543",
+  "note": "getFarAttackSpellChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) when floor(tl)>=3 else 0"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    23,
+    [
+     "-",
+     [
+      "sqrt",
+      [
+       "talentLevel"
+      ]
+     ],
+     0.5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:482",
+  "note": "getCombatAtk = floor((sqrt(getTalentLevel(t)) - 0.5) * 23)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    35,
+    [
+     "-",
+     [
+      "sqrt",
+      [
+       "talentLevel"
+      ]
+     ],
+     0.5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:479",
+  "note": "getIncDamage = floor((sqrt(getTalentLevel(t)) - 0.5) * 35)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 2,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:485",
+  "note": "getDominateLevel = getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 3,
+  "expr": [
+   "combatLimit",
+   [
+    "^",
+    [
+     "talentLevel"
+    ],
+    0.5
+   ],
+   100,
+   7,
+   1,
+   15.65,
+   2.23
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:491",
+  "note": "getDominateChance = combatLimit(getTalentLevel(t)^.5, 100, 7, 1, 15.65, 2.23) (raw>0)"
+ },
+ {
+  "talent": "T_SHADOW_WARRIORS",
+  "acronym": 4,
+  "expr": [
+   "max",
+   3,
+   [
+    "-",
+    8,
+    [
+     "talentLevel",
+     true
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cursed/shadows.lua:525",
+  "note": "fadeCooldown = max(3, 8 - getTalentLevelRaw(t))"
+ },
+ {
+  "talent": "T_SLOW",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.25,
+    3.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:144",
+  "note": "radius = math.floor(combatTalentScale(t,2.25,3.25))"
+ },
+ {
+  "talent": "T_SLOW",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    6,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:152",
+  "note": "getDuration = math.floor(combatTalentScale(t,6,10))"
+ },
+ {
+  "talent": "T_SPACETIME_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    10,
+    [
+     "*",
+     0.8,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             0.8
+            ],
+            [
+             "-",
+             0.1,
+             0.8
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               0.5,
+               0.8
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               0.5,
+               0.8
+              ],
+              [
+               "-",
+               0.1,
+               0.8
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:188",
+  "note": "cdred(self,t,10) = floor(10*combatTalentLimit(t,0.8,0.1,0.5))；combatTalentLimit 按 Lua 运算顺序手工展开（exp/log），否则 1.3 套第 5 点会因浮点误差进位到 5"
+ },
+ {
+  "talent": "T_SPACETIME_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    20,
+    [
+     "*",
+     0.8,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             0.8
+            ],
+            [
+             "-",
+             0.1,
+             0.8
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "-",
+          0,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               0.5,
+               0.8
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              [
+               "-",
+               0.5,
+               0.8
+              ],
+              [
+               "-",
+               0.1,
+               0.8
+              ]
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:188",
+  "note": "cdred(self,t,20) = floor(20*combatTalentLimit(t,0.8,0.1,0.5))，同上手工展开"
+ },
+ {
+  "talent": "T_SPATIAL_TETHER",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      6,
+      8
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:258",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,8)))"
+ },
+ {
+  "talent": "T_SPATIAL_TETHER",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "talentLevel"
+    ],
+    1,
+    1,
+    2,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:257",
+  "note": "radius = floor(combatTalentScale(t,1,2))；标题声明 paradox 但公式不读"
+ },
+ {
+  "talent": "T_SPRINGRAZOR_TRAP",
+  "acronym": 0,
+  "expr": [
+   "*",
+   25,
+   [
+    "*",
+    [
+     "+",
+     1,
+     [
+      "/",
+      [
+       "combatScale",
+       [
+        "*",
+        [
+         "actor",
+         "陷阱专精 技能等级"
+        ],
+        [
+         "talentLevel"
+        ]
+       ],
+       25,
+       1,
+       100,
+       5
+      ],
+      100
+     ]
+    ],
+    [
+     "statScale",
+     "cun",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:873",
+  "note": "getDamage = trap_effectiveness(cun)*25"
+ },
+ {
+  "talent": "T_SPRINGRAZOR_TRAP",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    3,
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "combatScale",
+        [
+         "*",
+         [
+          "actor",
+          "陷阱专精 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ],
+        25,
+        1,
+        100,
+        5
+       ],
+       100
+      ]
+     ],
+     [
+      "statScale",
+      "cun",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:875",
+  "note": "getPower = floor(trap_effectiveness(cun)*3)"
+ },
+ {
+  "talent": "T_STEADY_MIND",
+  "acronym": 0,
+  "expr": [
+   "statDamage",
+   "dex",
+   5,
+   35
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2359",
+  "note": "getDefense = combatTalentStatDamage(t, \"dex\", 5, 35); info tformat(defense, saves); Unarmed Training absent -> bonus 1"
+ },
+ {
+  "talent": "T_STEADY_MIND",
+  "acronym": 1,
+  "expr": [
+   "statDamage",
+   "cun",
+   5,
+   35
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2360",
+  "note": "getMental = combatTalentStatDamage(t, \"cun\", 5, 35); info tformat(defense, saves)"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 0,
+  "expr": [
+   "-",
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     5,
+     0,
+     10,
+     5
+    ]
+   ],
+   1
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:458",
+  "note": "summonTime 同 T_WAR_HOUND（5,0,10,5），导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 1,
+  "expr": [
+   "+",
+   15,
+   [
+    "+",
+    [
+     "*",
+     [
+      "*",
+      [
+       "power",
+       "精神强度"
+      ],
+      2
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:462",
+  "note": "incStats.str = 15 + mp*2*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)（与战争猎犬同系数）"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 2,
+  "expr": [
+   "+",
+   10,
+   [
+    "talentScale",
+    2,
+    10,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:464",
+  "note": "incStats.con = 10 + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_STONE_GOLEM",
+  "acronym": 3,
+  "expr": [
+   "+",
+   15,
+   [
+    "+",
+    [
+     "*",
+     [
+      "*",
+      [
+       "power",
+       "精神强度"
+      ],
+      1.9
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:463",
+  "note": "incStats.dex = 15 + mp*1.9*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_SWAP",
+  "acronym": 1,
+  "expr": [
+   "min",
+   50,
+   [
+    "*",
+    [
+     "talentLevel",
+     true
+    ],
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:669",
+  "note": "getConfuseEfficency = min(50, getTalentLevelRaw(t)*10)；三套数字相同 → 原始等级"
+ },
+ {
+  "talent": "T_TELEKINETIC_THROW",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "mindDamage",
+    10,
+    170
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2635",
+  "note": "info: tformat(range, dam, dam/2, kbpen)，dam = damDesc(self, DamageType.PHYSICAL, t.getDamage(self,t))，damDesc 只取 v；getDamage = math.floor(combatTalentMindDamage(t, 10, 170))（npcs.lua:2635）。标题多声明了「力量」（本值只用精神强度），属标题超集→覆盖通过"
+ },
+ {
+  "talent": "T_TELEKINETIC_THROW",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "mindDamage",
+    10,
+    170
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2635",
+  "note": "info 第 3 个参数 = dam/2（npcs.lua:2679 tformat(range, dam, dam/2, kbpen)）；源码是在 info 里先除 2 再显示，不在 getter 内取整，故不写 floor。含 68.5→69、113.72→114 等四舍五入点。标题多声明「力量」→覆盖通过"
+ },
+ {
+  "talent": "T_TEMPORAL_CLONE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      6,
+      12
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:537",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,12)))"
+ },
+ {
+  "talent": "T_TEMPORAL_WAKE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      3,
+      7
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/other.lua:738",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))"
+ },
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info: tformat(stat/2, stat, stat/2)，stat = t.getStatBonus(self,t) → T_THOUGHT_FORMS.getStatBonus = combatTalentMindDamage(t,5,50)（thought-forms.lua:481）。展开为 mindDamage 任意等级式，L = getTalentLevel(T_THOUGHT_FORMS) = 0（导出基准），P = 精神强度"
+ },
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 1,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "精神强度"
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_THOUGHT_FORMS"
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "*",
+      105,
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    50
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info 第 2 个参数 = stat = combatTalentMindDamage(T_THOUGHT_FORMS,5,50)，等级基准 0"
+ },
+ {
+  "talent": "T_TF_BOWMAN",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:259",
+  "note": "TF_BOWMAN info 第 3 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info: tformat(stat/2, stat/2, stat)，stat 同 TF_BOWMAN"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info 第 2 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_DEFENDER",
+  "acronym": 2,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "精神强度"
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_THOUGHT_FORMS"
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "*",
+      105,
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    50
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:465",
+  "note": "TF_DEFENDER info 第 3 个参数 = stat"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 0,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "精神强度"
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_THOUGHT_FORMS"
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "*",
+      105,
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    50
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info: tformat(stat, stat/2, stat/2)，stat 同 TF_BOWMAN"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info 第 2 个参数 = stat/2"
+ },
+ {
+  "talent": "T_TF_WARRIOR",
+  "acronym": 2,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        5,
+        [
+         "power",
+         "精神强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_THOUGHT_FORMS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       105,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     50
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/thought-forms.lua:361",
+  "note": "TF_WARRIOR info 第 3 个参数 = stat/2"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "+",
+    [
+     "*",
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ],
+     [
+      "^",
+      [
+       "talentLevel"
+      ],
+      0.5
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "-",
+       4,
+       1
+      ],
+      [
+       "-",
+       [
+        "^",
+        5,
+        0.5
+       ],
+       [
+        "^",
+        1,
+        0.5
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:100",
+  "note": "radius = math.floor(self:combatTalentScale(t,1,4))；combatScale 的浮点结合序按 Lua 原文展开：m=(4-1)/(5^0.5-1^0.5), b=1-m*1^0.5, floor(m*tl^0.5+b)。Lua 在 系数1/等级5 得 3.9999999999999996（导出 3），节点表的 talentScale/combatScale 按 m*(x-lo)+low 结合得 4.0，故不用节点。标题 psi 为超集，本值不读任何输入。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "max",
+      0.5,
+      [
+       "-",
+       1.5,
+       [
+        "/",
+        [
+         "actor",
+         "psi"
+        ],
+        100
+       ]
+      ]
+     ]
+    ],
+    1.3,
+    1,
+    3.2,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:114",
+  "note": "getDur = ceil(combatTalentScale(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),1.3,3.2))；等级驱动量用 combatScale(L,1.3,1,3.2,5) 展开"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     1.5
+    ],
+    1.3,
+    1,
+    3.2,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:114",
+  "note": "getDur(self,t,0) = ceil(combatTalentScale(getTalentLevel(t)*max(0.5,1.5-psi/maxPsi),1.3,3.2))；等级驱动量用 combatScale(L,1.3,1,3.2,5) 展开 （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 3,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:110",
+  "note": "getDam = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi)；damDesc(COLD,·) 只是包裹"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 4,
+  "expr": [
+   "*",
+   [
+    "mindDamage",
+    20,
+    130
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:110",
+  "note": "getDam(self,t,0) = combatTalentMindDamage(t,20,130)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 5,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   [
+    "max",
+    0.5,
+    [
+     "-",
+     1.5,
+     [
+      "/",
+      [
+       "actor",
+       "psi"
+      ],
+      100
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:106",
+  "note": "getLeech = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi)"
+ },
+ {
+  "talent": "T_THERMAL_LEECH",
+  "acronym": 6,
+  "expr": [
+   "*",
+   [
+    "talentScale",
+    10,
+    20
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/psionic/voracity.lua:106",
+  "note": "getLeech(self,t,0) = combatTalentScale(t,10,20)*max(0.5,1.5-psi/maxPsi) （max 档）源码 info 显式传 psi=0（Lua 里 0 为真值），因子 max(0.5,1.5-psi/maxPsi)=1.5 是常量，故冻结成 1.5；标题的 psi 50% 是整份 tooltip 的参数并集，为超集。"
+ },
+ {
+  "talent": "T_THROW_PEEBLE",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "actor",
+     "力量"
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   12,
+   0,
+   262,
+   500
+  ],
+  "source": "dlc-src/cults/tome-cults/data/talents/misc/misc.lua:319",
+  "note": "getDam = combatScale(getStr() * getTalentLevel(t), 12, 0, 262, 500)"
+ },
+ {
+  "talent": "T_TRICKY_DEFENSES",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "statScale",
+    "cun",
+    0.1,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/uber/cun.lua:77",
+  "note": "shieldmult = self:combatStatScale(\"cun\", 0.1, 0.5); info: tformat(t.shieldmult(self)*100)"
+ },
+ {
+  "talent": "T_VENOMOUS_AMMUNITION",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        20,
+        [
+         "power",
+         "physical power"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_EXOTIC_MUNITIONS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       120,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     180
+    ],
+    1.04
+   ],
+   5
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:219",
+  "note": "info: damDesc(NATURE, getPoisonDamage/5); getPoisonDamage = callTalent(T_EXOTIC_MUNITIONS.getPoisonDamage) = combatTalentPhysicalDamage(t,20,180) at that talent level (export baseline 0); power family expanded to allow level 0"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "*",
+    [
+     "+",
+     50,
+     [
+      "actor",
+      "灵巧"
+     ]
+    ],
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "*",
+       0.8,
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "talentRef",
+          "T_VENOMOUS_STRIKE"
+         ]
+        ],
+        1
+       ]
+      ]
+     ],
+     [
+      "/",
+      550,
+      [
+       "*",
+       150,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "-",
+    1,
+    [
+     "/",
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "*",
+        [
+         "+",
+         50,
+         [
+          "actor",
+          "灵巧"
+         ]
+        ],
+        [
+         "*",
+         [
+          "+",
+          1,
+          [
+           "*",
+           0.8,
+           [
+            "-",
+            [
+             "sqrt",
+             [
+              "talentRef",
+              "T_VENOMOUS_STRIKE"
+             ]
+            ],
+            1
+           ]
+          ]
+         ],
+         [
+          "/",
+          550,
+          [
+           "*",
+           150,
+           [
+            "+",
+            1,
+            [
+             "*",
+             0.8,
+             [
+              "-",
+              [
+               "sqrt",
+               5
+              ],
+              1
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:301",
+  "note": "T_VENOMOUS_STRIKE.getSecondaryDamage = combatTalentStatDamage(t, cun, 50, 550); info of THROW renders it via effectsDescription; that talent is at export baseline level 0; statDamage expanded manually (sqrt/log10 DR) to allow level 0"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "*",
+    [
+     "+",
+     50,
+     [
+      "actor",
+      "灵巧"
+     ]
+    ],
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "*",
+       0.8,
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "talentRef",
+          "T_VENOMOUS_STRIKE"
+         ]
+        ],
+        1
+       ]
+      ]
+     ],
+     [
+      "/",
+      550,
+      [
+       "*",
+       150,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "-",
+    1,
+    [
+     "/",
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "*",
+        [
+         "+",
+         50,
+         [
+          "actor",
+          "灵巧"
+         ]
+        ],
+        [
+         "*",
+         [
+          "+",
+          1,
+          [
+           "*",
+           0.8,
+           [
+            "-",
+            [
+             "sqrt",
+             [
+              "talentRef",
+              "T_VENOMOUS_STRIKE"
+             ]
+            ],
+            1
+           ]
+          ]
+         ],
+         [
+          "/",
+          550,
+          [
+           "*",
+           150,
+           [
+            "+",
+            1,
+            [
+             "*",
+             0.8,
+             [
+              "-",
+              [
+               "sqrt",
+               5
+              ],
+              1
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:301",
+  "note": "T_VENOMOUS_STRIKE.getSecondaryDamage = combatTalentStatDamage(t, cun, 50, 550); Leeching Poison heal in effectsDescription; same expansion as acronym#0"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 2,
+  "expr": [
+   "*",
+   0.6,
+   [
+    "*",
+    [
+     "*",
+     [
+      "+",
+      50,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_VENOMOUS_STRIKE"
+          ]
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       550,
+       [
+        "*",
+        150,
+        [
+         "+",
+         1,
+         [
+          "*",
+          0.8,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "log10",
+       [
+        "*",
+        2,
+        [
+         "*",
+         [
+          "+",
+          50,
+          [
+           "actor",
+           "灵巧"
+          ]
+         ],
+         [
+          "*",
+          [
+           "+",
+           1,
+           [
+            "*",
+            0.8,
+            [
+             "-",
+             [
+              "sqrt",
+              [
+               "talentRef",
+               "T_VENOMOUS_STRIKE"
+              ]
+             ],
+             1
+            ]
+           ]
+          ],
+          [
+           "/",
+           550,
+           [
+            "*",
+            150,
+            [
+             "+",
+             1,
+             [
+              "*",
+              0.8,
+              [
+               "-",
+               [
+                "sqrt",
+                5
+               ],
+               1
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      7
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:324",
+  "note": "vdam = getSecondaryDamage(self,t) * 0.6（含 statDamage 的 DR 项）；T_VENOMOUS_STRIKE 在导出里等级 0"
+ },
+ {
+  "talent": "T_VOID_BLAST",
+  "acronym": 0,
+  "expr": [
+   "spellDamage",
+   15,
+   240
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:747",
+  "note": "info = tformat(damDesc(self, DamageType.ARCANE, combatTalentSpellDamage(t, 15, 240)))；damDesc 是包裹"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   100,
+   6.6,
+   13
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:71",
+  "note": "getPen = combatTalentLimit(t, 100, 6.6, 13)"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 2,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/spells/deeprock.lua:76",
+  "note": "嵌套描述里 Volcano 的『有效技能等级』= getTalentLevelRaw(t) * 2；三套导出一致，故用原始等级"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     2,
+     [
+      "talentLevel",
+      true
+     ]
+    ],
+    5,
+    1,
+    9,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1550",
+  "note": "Volcano getDuration = floor(combatTalentScale(t, 5, 9))，等级 = 2×原始；combatTalentScale 展开为 combatScale(L, low, 1, high, 5, power)"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "+",
+    1,
+    [
+     "*",
+     [
+      "/",
+      4,
+      [
+       "log10",
+       5
+      ]
+     ],
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "talentLevel",
+        true
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1551",
+  "note": "Volcano nbProj = floor(combatTalentScale(t, 1, 5, \"log\"))，等级 = 2×原始；log 版展开"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 5,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        15,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "*",
+            2,
+            [
+             "talentLevel",
+             true
+            ]
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       115,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     80
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1552",
+  "note": "Volcano getDamage = combatTalentSpellDamage(t, 15, 80)，等级 = 2×原始，火山弹伤害取一半；power 家族公式手工展开"
+ },
+ {
+  "talent": "T_VOLCANIC_ROCK",
+  "acronym": 6,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        15,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "*",
+            2,
+            [
+             "talentLevel",
+             true
+            ]
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       115,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     80
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:1552",
+  "note": "同 #5（物理伤害一份，数值相同）"
+ },
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 0,
+  "expr": [
+   "-",
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "talentLevel"
+     ],
+     5,
+     0,
+     10,
+     5
+    ]
+   ],
+   1
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:110",
+  "note": "summonTime = floor(combatScale(getTalentLevel(t), 5, 0, 10, 5)) + callTalent(T_RESILIENCE,\"incDur\")；combatScale 缺省 power=0.5。导出侧 resilience 未点亮，incDur 在数字上表现为常数 -1（见报告疑点）"
+ },
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 1,
+  "expr": [
+   "+",
+   15,
+   [
+    "+",
+    [
+     "*",
+     [
+      "*",
+      [
+       "power",
+       "精神强度"
+      ],
+      2
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:114",
+  "note": "incStats.str = 15 + mp*2*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)；info 传 fake=true，故 mp 直接取精神强度（不做 mindCrit）"
+ },
+ {
+  "talent": "T_WAR_HOUND",
+  "acronym": 2,
+  "expr": [
+   "+",
+   15,
+   [
+    "+",
+    [
+     "*",
+     [
+      "power",
+      "精神强度"
+     ],
+     [
+      "talentScale",
+      0.2,
+      1,
+      0.75
+     ]
+    ],
+    [
+     "talentScale",
+     2,
+     10,
+     0.75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-melee.lua:115",
+  "note": "incStats.dex = 15 + mp*1*combatTalentScale(t,0.2,1,0.75) + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（physical 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（temporal 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ],
+   0.8
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))，combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15，故 = 75·√(L·魔力·0.15/75)；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 3,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "时空地雷 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))；combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_AWAY",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      6,
+      1,
+      10,
+      5,
+      0.5
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "同 T_WARP_MINE_TOWARD #4（共用 T_WARP_MINES.getDuration）"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（physical 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "*",
+        [
+         "power",
+         "法术强度"
+        ],
+        [
+         "pmod",
+         [
+          "actor",
+          "paradox"
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "时空地雷 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "/",
+      200,
+      [
+       "*",
+       [
+        "+",
+        20,
+        100
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "damage = self:callTalent(T_WARP_MINES,\"getDamage\")/2 = combatTalentSpellDamage(t,20,200,getParadoxSpellpower)/2；T_WARP_MINES 有效等级 L = 时空地雷 技能等级 × 技能系数，combatTalentSpellDamage@L 按 docs 手工展开（含 rescaleDamage 的 ^1.04）（temporal 那一份）"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ],
+   0.8
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))，combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15，故 = 75·√(L·魔力·0.15/75)；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 3,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "时空地雷 技能等级"
+      ],
+      [
+       "talentLevel"
+      ]
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower = max(1, combatScale(T_WARP_MINES 有效等级 × getMag(15,true), 0,0,75,75))；combatScale 默认 power=0.5，getMag(15,true)=魔力×0.15；info 用 %d 截断显示"
+ },
+ {
+  "talent": "T_WARP_MINE_TOWARD",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "actor",
+        "时空地雷 技能等级"
+       ],
+       [
+        "talentLevel"
+       ]
+      ],
+      6,
+      1,
+      10,
+      5,
+      0.5
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "嵌套描述取 T_WARP_MINES.getDuration = getExtensionModifier(t, floor(combatTalentScale(t,6,10)))；等级 = 时空地雷有效等级 = 原始等级×系数，故 combatTalentScale 展开为 combatScale(L,6,1,10,5,0.5)"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    20,
+    200,
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "getDamage = combatTalentSpellDamage(t,20,200,getParadoxSpellpower(self,t))，info 取一半；标题多声明了 魔力（公式用的是有效法术强度）——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    20,
+    200,
+    [
+     "*",
+     [
+      "power",
+      "法术强度"
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ]
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "同 #0（temporal 一半，数值相同）"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "max",
+     1,
+     [
+      "combatScale",
+      [
+       "*",
+       [
+        "talentLevel"
+       ],
+       [
+        "*",
+        [
+         "actor",
+         "魔力"
+        ],
+        0.15
+       ]
+      ],
+      0,
+      0,
+      75,
+      75
+     ]
+    ],
+    0.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1,combatScale(getTalentLevel(t)*getMag(15,true),0,0,75,75))，导出基准下 getMag(15,true)=魔力*0.15"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 3,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower 本体；标题多声明了 法术强度/paradox——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "talentScale",
+      6,
+      10
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))，getExtensionModifier 做 floor(value*pmod)"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 5,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "talentLevel"
+    ],
+    5,
+    1,
+    9,
+    5,
+    0.5,
+    0,
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:214",
+  "note": "getRange = floor(combatTalentScale(t,5,9,0.5,0,1))；标题声明了 paradox 但公式不读它——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_WATER_BOLT",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "power",
+     "法术强度"
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   12,
+   0,
+   78.25,
+   265,
+   0.67
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:568",
+  "note": "getDamage = combatScale(combatSpellpower() * getTalentLevel(t), 12, 0, 78.25, 265, 0.67)"
+ }
+]

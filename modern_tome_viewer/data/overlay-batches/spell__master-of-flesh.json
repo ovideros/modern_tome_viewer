@@ -1,0 +1,86 @@
+[
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 0,
+  "expr": ["floor",["-",30,["*",20,["-",1,["exp",["+",["*",["sqrt",["talentLevel"]],["/",["log",["/",["-",12,10],["-",30,10]]],["-",["sqrt",6.5],["sqrt",1.3]]]],["/",["-",["*",["-",["sqrt",6.5],["sqrt",1.3]],["log",["-",1,["/",["-",30,12],["-",30,10]]]]],["*",["sqrt",6.5],["log",["/",["-",12,10],["-",30,10]]]]],["-",["sqrt",6.5],["sqrt",1.3]]]]]]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:132",
+  "note": "getEvery = floor(combatTalentLimit(t, 10, 30, 12))；low>high 分支按 Combat.lua:1616-1619 的字面运算顺序展开（x_low=sqrt(1.3), x_high=sqrt(6.5)）。必须保留 a/b 形式：closed form 在有效等级 1.3 处恰好得 30，而 Lua 的 exp(a*sqrt(tl)+b) 因消去误差得 29.99 → 导出 29"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 1,
+  "expr": ["max", 1, ["+", ["actor", "角色等级"], ["floor", ["combatScale", ["talentLevel"], -6, 0.9, 2, 5]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:134",
+  "note": "info 第 2 个值 = math.max(1, self.level + getLevel)；getLevel = floor(combatScale(getTalentLevel(t), -6, 0.9, 2, 5))"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 2,
+  "expr": ["max", 1, ["floor", ["talentScale", 1, 5]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:127",
+  "note": "getNb = max(1, floor(combatTalentScale(t, 1, 5)))，随后 `if nb > 6 then floor(6+(nb-6)^0.7)`；有效等级 ≤7.5 时该守卫不触发"
+ },
+ {
+  "talent": "T_CALL_OF_THE_MAUSOLEUM",
+  "acronym": 3,
+  "expr": ["floor", ["talentScale", 5, 10]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:133",
+  "note": "getTurns = floor(combatTalentScale(t, 5, 10))"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 0,
+  "expr": ["floor", ["+", 3, ["/", ["*", 5, ["-", ["sqrt", ["talentLevel"]], 1]], ["-", ["sqrt", 5], 1]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:256",
+  "note": "getDur = floor(combatTalentScale(t, 3, 8))；展开为 low+(high-low)(√tl-1)/(√5-1)。写成除法在后的形式，避免 talentScale 节点里 m*(√5-1) 的浮点消去误差（那会得 7.9999→7，导出是 8）"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 1,
+  "expr": ["spellDamage", 40, 200],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:257",
+  "note": "getDamage = combatTalentSpellDamage(t, 40, 200)；damDesc 只是包裹"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 2,
+  "expr": ["spellDamage", 5, 28],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:258",
+  "note": "getDiseasePower = combatTalentSpellDamage(t, 5, 28)（说明文本里『reduces one attribute by %d』那一个值）"
+ },
+ {
+  "talent": "T_CORPSE_EXPLOSION",
+  "acronym": 3,
+  "expr": ["spellDamage", 40, 200],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:272",
+  "note": "info 里 blight 伤害参数是 t:_getDamage(self)（源码此处用的就是 getDamage，不是 getDiseasePower）"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["talentLimit", 3.1, 1, 3]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:289",
+  "note": "getNb = max(1, floor(combatTalentLimit(t, 3.1, 1, 3)))；high>=low 分支，talentLimit 节点在此方向与源码一致，15 点全中"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 1, 2]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:290",
+  "note": "getIncrease = floor(combatTalentScale(t, 1, 2))"
+ },
+ {
+  "talent": "T_PUTRESCENT_LIQUEFACTION",
+  "acronym": 3,
+  "expr": ["/", ["spellDamage", 40, 400], 5],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:291",
+  "note": "getDamage = combatTalentSpellDamage(t, 40, 400) / 5"
+ },
+ {
+  "talent": "T_DISCARDED_REFUSE",
+  "acronym": 0,
+  "expr": ["floor", ["+", 1, ["/", ["*", 5, ["-", ["sqrt", ["talentLevel"]], 1]], ["-", ["sqrt", 5], 1]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-flesh.lua:402",
+  "note": "getNb = floor(combatTalentScale(t, 1, 6))；与 T_CORPSE_EXPLOSION#0 同样的除法在后展开（talentScale 节点在等级 5 会因浮点消去得 5.9999→5）"
+ }
+]

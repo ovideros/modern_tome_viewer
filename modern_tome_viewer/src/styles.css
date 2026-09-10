@@ -1,0 +1,249 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Both themes expose the same variable names so components
+   never need a `dark:` variant for ordinary surfaces.
+--------------------------------------------------------------------------- */
+:root {
+  --surface: #ffffff;
+  --surface-raised: #f8fafc;
+  --surface-sunken: #f1f5f9;
+  --surface-hover: #eef2f7;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --fg: #0f172a;
+  --fg-muted: #4a5a71;
+  --fg-subtle: #64748b;
+  --accent: #0f766e;
+  --accent-strong: #115e59;
+  --accent-soft: #ccfbf1;
+  --accent-contrast: #ffffff;
+  --ring: #14b8a6;
+  --chip: #f1f5f9;
+  --shadow: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px -12px rgb(15 23 42 / 0.18);
+  /* Kept in sync at runtime by useHeaderHeight (the header wraps on mobile). */
+  --header-h: 57px;
+  /* Height of the sticky search bar; kept in sync by SearchPage. */
+  --searchbar-h: 92px;
+}
+
+.dark {
+  --surface: #131a26;
+  --surface-raised: #1a2332;
+  --surface-sunken: #0e141e;
+  --surface-hover: #223046;
+  --line: #26334a;
+  --line-strong: #38495f;
+  --fg: #e6edf7;
+  --fg-muted: #9fb0c8;
+  --fg-subtle: #7488a3;
+  --accent: #5eead4;
+  --accent-strong: #99f6e4;
+  --accent-soft: #123a38;
+  --accent-contrast: #042f2e;
+  --ring: #2dd4bf;
+  --chip: #1f2a3c;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.8);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-raised: var(--surface-raised);
+  --color-sunken: var(--surface-sunken);
+  --color-hover: var(--surface-hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-chip: var(--chip);
+  --color-ring: var(--ring);
+  --shadow-panel: var(--shadow);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    background: var(--surface-sunken);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+      'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+}
+
+@layer components {
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--fg);
+    padding: 0.375rem 0.625rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
+  .btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--line-strong);
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+  }
+  .btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--fg-muted);
+  }
+  .btn-ghost:hover {
+    background: var(--surface-hover);
+    color: var(--fg);
+  }
+  .btn[aria-pressed='true'] {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-strong);
+    font-weight: 600;
+  }
+
+  .input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    color: var(--fg);
+    padding: 0.375rem 0.625rem;
+    font-size: 0.8125rem;
+    outline: none;
+  }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    background: var(--chip);
+    color: var(--fg-muted);
+    padding: 0.0625rem 0.5rem;
+    font-size: 0.6875rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .mark {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    color: inherit;
+    border-radius: 0.125rem;
+    padding: 0 0.05em;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Talent description markup (from the game) — keep it readable in both themes
+--------------------------------------------------------------------------- */
+.talent-text {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--fg);
+}
+.talent-text p {
+  margin: 0 0 0.5rem;
+}
+.talent-text ul {
+  margin: 0 0 0.5rem;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+.talent-text li {
+  margin: 0.125rem 0;
+}
+.talent-text strong,
+.talent-text b {
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+.talent-text .tstr-font-bold {
+  font-weight: 700;
+}
+.talent-text .tstr-font-italic {
+  font-style: italic;
+}
+.talent-text acronym,
+.talent-text .tome-value {
+  border-bottom: 1px dotted color-mix(in srgb, var(--accent) 70%, transparent);
+  cursor: help;
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 140ms ease-out;
+}

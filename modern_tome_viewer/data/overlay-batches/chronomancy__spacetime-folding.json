@@ -1,0 +1,86 @@
+[
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 4,
+  "expr": ["floor", ["*", ["floor", ["talentScale", 6, 10]], ["pmod", ["actor", "paradox"]]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:216",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))，getExtensionModifier 做 floor(value*pmod)"
+ },
+ {
+  "talent": "T_SPATIAL_TETHER",
+  "acronym": 0,
+  "expr": ["floor", ["*", ["floor", ["talentScale", 6, 8]], ["pmod", ["actor", "paradox"]]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:258",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,8)))"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 2,
+  "expr": ["floor", ["*", ["floor", ["talentScale", 2, 4]], ["pmod", ["actor", "paradox"]]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:407",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,4)))"
+ },
+ {
+  "talent": "T_DIMENSIONAL_ANCHOR",
+  "acronym": 0,
+  "expr": ["floor", ["*", ["floor", ["talentScale", 6, 10]], ["pmod", ["actor", "paradox"]]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:462",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 0,
+  "expr": ["/", ["spellDamage", 20, 200, ["*", ["power", "法术强度"], ["pmod", ["actor", "paradox"]]]], 2],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "getDamage = combatTalentSpellDamage(t,20,200,getParadoxSpellpower(self,t))，info 取一半；标题多声明了 魔力（公式用的是有效法术强度）——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 1,
+  "expr": ["/", ["spellDamage", 20, 200, ["*", ["power", "法术强度"], ["pmod", ["actor", "paradox"]]]], 2],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:215",
+  "note": "同 #0（temporal 一半，数值相同）"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 2,
+  "expr": ["floor", ["*", ["max", 1, ["combatScale", ["*", ["talentLevel"], ["*", ["actor", "魔力"], 0.15]], 0, 0, 75, 75]], 0.8]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "detect = trapPower*0.8；trapPower = max(1,combatScale(getTalentLevel(t)*getMag(15,true),0,0,75,75))，导出基准下 getMag(15,true)=魔力*0.15"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 3,
+  "expr": ["max", 1, ["combatScale", ["*", ["talentLevel"], ["*", ["actor", "魔力"], 0.15]], 0, 0, 75, 75]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:217",
+  "note": "disarm = trapPower 本体；标题多声明了 法术强度/paradox——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_WARP_MINES",
+  "acronym": 5,
+  "expr": ["floor", ["combatScale", ["talentLevel"], 5, 1, 9, 5, 0.5, 0, 1]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:214",
+  "note": "getRange = floor(combatTalentScale(t,5,9,0.5,0,1))；标题声明了 paradox 但公式不读它——闸门改为覆盖判定后可收"
+ },
+ {
+  "talent": "T_SPATIAL_TETHER",
+  "acronym": 3,
+  "expr": ["floor", ["combatScale", ["talentLevel"], 1, 1, 2, 5, 0.5]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:257",
+  "note": "radius = floor(combatTalentScale(t,1,2))；标题声明 paradox 但公式不读"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 1,
+  "expr": ["floor", ["combatScale", ["talentLevel"], 8, 1, 16, 5, 0.5]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:406",
+  "note": "getTeleport = floor(combatTalentScale(t,8,16))；标题声明 paradox 但公式不读"
+ },
+ {
+  "talent": "T_BANISH",
+  "acronym": 0,
+  "expr": ["/", ["floor", ["combatScale", ["talentLevel"], 8, 1, 16, 5, 0.5]], 2],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-folding.lua:406",
+  "note": "info 里的 range/2"
+ }
+]

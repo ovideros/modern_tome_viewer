@@ -1,0 +1,775 @@
+[
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.1,
+    1.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2293",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.1,1.8) + getStrikingStyle(...); info: damage = getDamage*100; Striking Style inactive -> 0"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 1,
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2328",
+  "note": "info: drain = self:getTalentLevel(t) * 2"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    0.25,
+    [
+     "talentScale",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2294",
+  "note": "getDuration(t,0) = ceil(combatTalentScale(t,1,5) * (0.25+0/5))"
+ },
+ {
+  "talent": "T_BODY_SHOT",
+  "acronym": 3,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    1.25,
+    [
+     "talentScale",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2294",
+  "note": "getDuration(t,5) = ceil(combatTalentScale(t,1,5) * (0.25+5/5))"
+ },
+ {
+  "talent": "T_MAIM",
+  "acronym": 0,
+  "expr": [
+   "physicalDamage",
+   10,
+   100
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2382",
+  "note": "getDamage = combatTalentPhysicalDamage(t,10,100) * getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_BLOODRAGE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    6,
+    [
+     "talentLevel"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2439",
+  "note": "info: math.floor(self:getTalentLevel(t) * 6)"
+ },
+ {
+  "talent": "T_COMBO_STRING",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "+",
+     5,
+     [
+      "/",
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       5
+      ],
+      100
+     ]
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   100,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2344",
+  "note": "getChance = combatLimit(getTalentLevel(t) * (5 + getCun(5,true)), 100, 0,0, 50,50); getCun(5,true)=灵巧*5/100 (raw stat)"
+ },
+ {
+  "talent": "T_RELAXED_SHOT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   12,
+   [
+    "*",
+    8,
+    [
+     "talentLevel"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/archery.lua:735",
+  "note": "info tformat(..., 12 + self:getTalentLevel(t) * 8)"
+ },
+ {
+  "talent": "T_GNASHING_MAW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   3,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:83",
+  "note": "info: 3 * self:getTalentLevel(t) (accuracy reduction)"
+ },
+ {
+  "talent": "T_THROW_PEEBLE",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "actor",
+     "力量"
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   12,
+   0,
+   262,
+   500
+  ],
+  "source": "dlc-src/cults/tome-cults/data/talents/misc/misc.lua:319",
+  "note": "getDam = combatScale(getStr() * getTalentLevel(t), 12, 0, 262, 500)"
+ },
+ {
+  "talent": "T_VENOMOUS_AMMUNITION",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        20,
+        [
+         "power",
+         "physical power"
+        ]
+       ],
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "talentRef",
+            "T_EXOTIC_MUNITIONS"
+           ]
+          ],
+          1
+         ]
+        ]
+       ]
+      ],
+      [
+       "*",
+       120,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ],
+     180
+    ],
+    1.04
+   ],
+   5
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:219",
+  "note": "info: damDesc(NATURE, getPoisonDamage/5); getPoisonDamage = callTalent(T_EXOTIC_MUNITIONS.getPoisonDamage) = combatTalentPhysicalDamage(t,20,180) at that talent level (export baseline 0); power family expanded to allow level 0"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "*",
+    [
+     "+",
+     50,
+     [
+      "actor",
+      "灵巧"
+     ]
+    ],
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "*",
+       0.8,
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "talentRef",
+          "T_VENOMOUS_STRIKE"
+         ]
+        ],
+        1
+       ]
+      ]
+     ],
+     [
+      "/",
+      550,
+      [
+       "*",
+       150,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "-",
+    1,
+    [
+     "/",
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "*",
+        [
+         "+",
+         50,
+         [
+          "actor",
+          "灵巧"
+         ]
+        ],
+        [
+         "*",
+         [
+          "+",
+          1,
+          [
+           "*",
+           0.8,
+           [
+            "-",
+            [
+             "sqrt",
+             [
+              "talentRef",
+              "T_VENOMOUS_STRIKE"
+             ]
+            ],
+            1
+           ]
+          ]
+         ],
+         [
+          "/",
+          550,
+          [
+           "*",
+           150,
+           [
+            "+",
+            1,
+            [
+             "*",
+             0.8,
+             [
+              "-",
+              [
+               "sqrt",
+               5
+              ],
+              1
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:301",
+  "note": "T_VENOMOUS_STRIKE.getSecondaryDamage = combatTalentStatDamage(t, cun, 50, 550); info of THROW renders it via effectsDescription; that talent is at export baseline level 0; statDamage expanded manually (sqrt/log10 DR) to allow level 0"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "*",
+    [
+     "+",
+     50,
+     [
+      "actor",
+      "灵巧"
+     ]
+    ],
+    [
+     "*",
+     [
+      "+",
+      1,
+      [
+       "*",
+       0.8,
+       [
+        "-",
+        [
+         "sqrt",
+         [
+          "talentRef",
+          "T_VENOMOUS_STRIKE"
+         ]
+        ],
+        1
+       ]
+      ]
+     ],
+     [
+      "/",
+      550,
+      [
+       "*",
+       150,
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           5
+          ],
+          1
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "-",
+    1,
+    [
+     "/",
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "*",
+        [
+         "+",
+         50,
+         [
+          "actor",
+          "灵巧"
+         ]
+        ],
+        [
+         "*",
+         [
+          "+",
+          1,
+          [
+           "*",
+           0.8,
+           [
+            "-",
+            [
+             "sqrt",
+             [
+              "talentRef",
+              "T_VENOMOUS_STRIKE"
+             ]
+            ],
+            1
+           ]
+          ]
+         ],
+         [
+          "/",
+          550,
+          [
+           "*",
+           150,
+           [
+            "+",
+            1,
+            [
+             "*",
+             0.8,
+             [
+              "-",
+              [
+               "sqrt",
+               5
+              ],
+              1
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:301",
+  "note": "T_VENOMOUS_STRIKE.getSecondaryDamage = combatTalentStatDamage(t, cun, 50, 550); Leeching Poison heal in effectsDescription; same expansion as acronym#0"
+ },
+ {
+  "talent": "T_STEADY_MIND",
+  "acronym": 0,
+  "expr": [
+   "statDamage",
+   "dex",
+   5,
+   35
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2359",
+  "note": "getDefense = combatTalentStatDamage(t, \"dex\", 5, 35); info tformat(defense, saves); Unarmed Training absent -> bonus 1"
+ },
+ {
+  "talent": "T_STEADY_MIND",
+  "acronym": 1,
+  "expr": [
+   "statDamage",
+   "cun",
+   5,
+   35
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:2360",
+  "note": "getMental = combatTalentStatDamage(t, \"cun\", 5, 35); info tformat(defense, saves)"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "+",
+     5,
+     [
+      "/",
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       5
+      ],
+      100
+     ]
+    ]
+   ],
+   100,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3376",
+  "note": "getchance = combatLimit(getTalentLevel(t) * (5 + getCun(5,true)), 100, 0,0, 50,50); getCun(5,true)=灵巧*5/100"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 1,
+  "expr": [
+   "physicalDamage",
+   5,
+   50
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3373",
+  "note": "getDamage = combatTalentPhysicalDamage(t,5,50)*getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_DEFENSIVE_THROW",
+  "acronym": 2,
+  "expr": [
+   "physicalDamage",
+   10,
+   75
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3374",
+  "note": "getDamageTwo = combatTalentPhysicalDamage(t,10,75)*getUnarmedTrainingBonus(self); Unarmed Mastery absent -> bonus 1; info wraps in damDesc"
+ },
+ {
+  "talent": "T_ROUNDHOUSE_KICK",
+  "acronym": 0,
+  "expr": [
+   "physicalDamage",
+   15,
+   150
+  ],
+  "source": "tome-src-full/data/talents/misc/npcs.lua:3433",
+  "note": "getDamage = combatTalentPhysicalDamage(t, 15, 150) * getUnarmedTrainingBonus(self)；导出基准角色下 unarmed 加成为 1"
+ },
+ {
+  "talent": "T_INFECTIOUS_BITE",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   12,
+   150
+  ],
+  "source": "tome-src-full/data/talents/corruptions/rot.lua:30",
+  "note": "getPoisonDamage = combatTalentSpellDamage(t, 12, 150)"
+ },
+ {
+  "talent": "T_VENOMOUS_THROW",
+  "acronym": 2,
+  "expr": [
+   "*",
+   0.6,
+   [
+    "*",
+    [
+     "*",
+     [
+      "+",
+      50,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_VENOMOUS_STRIKE"
+          ]
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       550,
+       [
+        "*",
+        150,
+        [
+         "+",
+         1,
+         [
+          "*",
+          0.8,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "log10",
+       [
+        "*",
+        2,
+        [
+         "*",
+         [
+          "+",
+          50,
+          [
+           "actor",
+           "灵巧"
+          ]
+         ],
+         [
+          "*",
+          [
+           "+",
+           1,
+           [
+            "*",
+            0.8,
+            [
+             "-",
+             [
+              "sqrt",
+              [
+               "talentRef",
+               "T_VENOMOUS_STRIKE"
+              ]
+             ],
+             1
+            ]
+           ]
+          ],
+          [
+           "/",
+           550,
+           [
+            "*",
+            150,
+            [
+             "+",
+             1,
+             [
+              "*",
+              0.8,
+              [
+               "-",
+               [
+                "sqrt",
+                5
+               ],
+               1
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      7
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:324",
+  "note": "vdam = getSecondaryDamage(self,t) * 0.6（含 statDamage 的 DR 项）；T_VENOMOUS_STRIKE 在导出里等级 0"
+ }
+]
