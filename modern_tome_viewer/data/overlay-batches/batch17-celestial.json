@@ -1,0 +1,992 @@
+[
+ {
+  "talent": "T_HYMN_ACOLYTE",
+  "acronym": 0,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       20,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    50
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:59",
+  "note": "moveSpeed = combatTalentSpellDamage(t,20,50) @ 有效等级 L=0：导出把圣诗/赞歌的子技能等级渲染为 0（入门 tooltip 里子圣诗未学习），按 docs/expression-overlay.md 的「任意等级驱动」等价展开并代入 L=0，故 (√L−1)·0.8+1 = 0.2"
+ },
+ {
+  "talent": "T_HYMN_ACOLYTE",
+  "acronym": 1,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       7,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       7,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    20
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:60",
+  "note": "castSpeed = combatTalentSpellDamage(t,7,20) @ 有效等级 L=0：导出把圣诗/赞歌的子技能等级渲染为 0（入门 tooltip 里子圣诗未学习），按 docs/expression-overlay.md 的「任意等级驱动」等价展开并代入 L=0，故 (√L−1)·0.8+1 = 0.2"
+ },
+ {
+  "talent": "T_HYMN_ACOLYTE",
+  "acronym": 2,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       2,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       2,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    25
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:160",
+  "note": "getSeeStealth = combatTalentSpellDamage(t,2,25) @ 有效等级 L=0：导出把圣诗/赞歌的子技能等级渲染为 0（入门 tooltip 里子圣诗未学习），按 docs/expression-overlay.md 的「任意等级驱动」等价展开并代入 L=0，故 (√L−1)·0.8+1 = 0.2"
+ },
+ {
+  "talent": "T_HYMN_ACOLYTE",
+  "acronym": 3,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       2,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       2,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    25
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:159",
+  "note": "getSeeInvisible = combatTalentSpellDamage(t,2,25) @ 有效等级 L=0：导出把圣诗/赞歌的子技能等级渲染为 0（入门 tooltip 里子圣诗未学习），按 docs/expression-overlay.md 的「任意等级驱动」等价展开并代入 L=0，故 (√L−1)·0.8+1 = 0.2"
+ },
+ {
+  "talent": "T_HYMN_ACOLYTE",
+  "acronym": 4,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       10,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       10,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    50
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:161",
+  "note": "critPower = combatTalentSpellDamage(t,10,50) @ 有效等级 L=0：导出把圣诗/赞歌的子技能等级渲染为 0（入门 tooltip 里子圣诗未学习），按 docs/expression-overlay.md 的「任意等级驱动」等价展开并代入 L=0，故 (√L−1)·0.8+1 = 0.2"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 0,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       5,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    60
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:37",
+  "note": "Chant of Fortitude getResists = combatTalentSpellDamage(t,5,60) @ L=0"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 1,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       5,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    60
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:98",
+  "note": "Chant of Fortress getResists = combatTalentSpellDamage(t,5,60) @ L=0"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        8,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       0.2
+      ],
+      [
+       "*",
+       [
+        "+",
+        8,
+        100
+       ],
+       1.9888543819998319
+      ]
+     ],
+     25
+    ],
+    1.04
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:97",
+  "note": "Chant of Fortress getPhysicalResistance = floor(combatTalentSpellDamage(t,8,25)) @ L=0"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "^",
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       [
+        "+",
+        8,
+        [
+         "power",
+         "法术强度"
+        ]
+       ],
+       0.2
+      ],
+      [
+       "*",
+       [
+        "+",
+        8,
+        100
+       ],
+       1.9888543819998319
+      ]
+     ],
+     25
+    ],
+    1.04
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:97",
+  "note": "Chant of Fortress getPhysicalResistance (armour) = floor(combatTalentSpellDamage(t,8,25)) @ L=0"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 4,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       5,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       5,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    60
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:163",
+  "note": "Chant of Resistance getSpellResists = combatTalentSpellDamage(t,5,60) @ L=0"
+ },
+ {
+  "talent": "T_CHANT_ACOLYTE",
+  "acronym": 5,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       10,
+       [
+        "power",
+        "法术强度"
+       ]
+      ],
+      0.2
+     ],
+     [
+      "*",
+      [
+       "+",
+       10,
+       100
+      ],
+      1.9888543819998319
+     ]
+    ],
+    30
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:159",
+  "note": "Chant of Resistance getResists = combatTalentSpellDamage(t,10,30) @ L=0"
+ },
+ {
+  "talent": "T_GLYPH_OF_PARALYSIS",
+  "acronym": 1,
+  "expr": [
+   "*",
+   0.8,
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "talentLevel"
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:125",
+  "note": "trapPower = max(1, combatScale(tl*getMag(15,true),0,0,75,75))；getMag(15,true)=魔力×0.15；#1 = trapPower×0.8（info 的 %d detection 参数）"
+ },
+ {
+  "talent": "T_GLYPH_OF_PARALYSIS",
+  "acronym": 2,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:125",
+  "note": "trapPower = max(1, combatScale(tl*getMag(15,true),0,0,75,75))；源写法 self:getTalentLevel(t) * self:getMag(15, true)"
+ },
+ {
+  "talent": "T_GLYPH_OF_REPULSION",
+  "acronym": 1,
+  "expr": [
+   "*",
+   0.8,
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "talentLevel"
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "魔力"
+       ],
+       0.15
+      ]
+     ],
+     0,
+     0,
+     75,
+     75
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:198",
+  "note": "getDamage 之外的 getMag 路径同 Paralysis；#1 = trapPower×0.8"
+ },
+ {
+  "talent": "T_GLYPH_OF_REPULSION",
+  "acronym": 2,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:198",
+  "note": "trapPower = max(1, combatScale(tl*getMag(15,true),0,0,75,75))"
+ },
+ {
+  "talent": "T_GLYPH_OF_FATIGUE",
+  "acronym": 1,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:368",
+  "note": "trapPower = max(1, combatScale(tl*getMag(15,true),0,0,75,75))（info 两次打印同一值）"
+ },
+ {
+  "talent": "T_GLYPH_OF_FATIGUE",
+  "acronym": 2,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "魔力"
+      ],
+      0.15
+     ]
+    ],
+    0,
+    0,
+    75,
+    75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/other.lua:368",
+  "note": "trapPower = max(1, combatScale(tl*getMag(15,true),0,0,75,75))"
+ },
+ {
+  "talent": "T_GLYPHS",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   6,
+   2,
+   5
+  ],
+  "source": "tome-src-full/data/talents/celestial/glyphs.lua:43",
+  "note": "getDuration = combatTalentLimit(t,6,2,5)（导出基准未学习 T_GLYPHS_OF_FURY，故不加 persistent duration）"
+ },
+ {
+  "talent": "T_BRANDISH",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.5,
+    4.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/guardian.lua:79",
+  "note": "radius = min(floor(combatTalentScale(t,2.5,4.5)),8)；本阶梯始终 ≤5，min 不生效"
+ },
+ {
+  "talent": "T_SUN_BEAM",
+  "acronym": 0,
+  "expr": [
+   "spellDamage",
+   20,
+   220
+  ],
+  "source": "tome-src-full/data/talents/celestial/sun.lua:44",
+  "note": "getDamage = combatTalentSpellDamage(t,20,220) * mult；导出基准无 amplify_sun_beam，mult=1"
+ },
+ {
+  "talent": "T_RADIANCE",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   14,
+   4,
+   10
+  ],
+  "source": "tome-src-full/data/talents/celestial/radiance.lua:30",
+  "note": "radius = combatTalentLimit(t,14,4,10)，radianceRadius() = getTalentRadius()"
+ },
+ {
+  "talent": "T_JUDGEMENT",
+  "acronym": 0,
+  "expr": [
+   "spellDamage",
+   3,
+   50
+  ],
+  "source": "tome-src-full/data/talents/celestial/radiance.lua:61",
+  "note": "getMoveDamage = combatTalentSpellDamage(t,3,50)"
+ },
+ {
+  "talent": "T_JUDGEMENT",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   6,
+   50
+  ],
+  "source": "tome-src-full/data/talents/celestial/radiance.lua:63",
+  "note": "getSavePen = combatTalentSpellDamage(t,6,50)（与 #0 在此 SP 基准下同值）"
+ },
+ {
+  "talent": "T_ILLUMINATION",
+  "acronym": 0,
+  "expr": [
+   "+",
+   15,
+   [
+    "spellDamage",
+    1,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/radiance.lua:171",
+  "note": "getPower = math.ceil(15 + combatTalentSpellDamage(t,1,100))；导出按 %d 截断，故省略 ceil"
+ },
+ {
+  "talent": "T_TWILIGHT",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "*",
+     [
+      "actor",
+      "灵巧"
+     ],
+     0.4
+    ]
+   ],
+   24,
+   4,
+   220,
+   200,
+   0.5,
+   0,
+   40
+  ],
+  "source": "tome-src-full/data/talents/celestial/twilight.lua:31",
+  "note": "getNegativeGain = max(0, combatScale(tl*getCun(40,true),24,4,220,200,nil,nil,40))；getCun(40,true)=灵巧×0.4"
+ },
+ {
+  "talent": "T_SHADOW_SIMULACRUM",
+  "acronym": 1,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "*",
+     [
+      "actor",
+      "灵巧"
+     ],
+     0.1
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   90,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/celestial/twilight.lua:206",
+  "note": "getPercent = combatLimit(getCun(10,true)*getTalentLevel(t),90,0,0,50,50)；getCun(10,true)=灵巧×0.1"
+ },
+ {
+  "talent": "T_DIRGE_ADEPT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/dirge.lua:292",
+  "note": "getDuration = math.floor(self:getTalentLevel(t))"
+ },
+ {
+  "talent": "T_DIRGE_ACOLYTE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "combatScale",
+    0.1,
+    2,
+    1,
+    6,
+    5,
+    0.75
+   ],
+   [
+    "sqrt",
+    [
+     "actor",
+     "角色等级"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/dirge.lua:63",
+  "note": "Dirge of Famine getRegen = combatTalentScale(t,2,6,0.75) * sqrt(self.level)；导出子挽歌等级为 0 → combatTalentScale 内 tl<=0 守卫置 tl=0.1，按等价展开 combatScale(0.1,2,1,6,5,0.75)"
+ },
+ {
+  "talent": "T_DIRGE_ACOLYTE",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   100,
+   33,
+   67
+  ],
+  "source": "tome-src-full/data/talents/celestial/dirge.lua:102",
+  "note": "Dirge of Conquest getKillEnergy = combatTalentLimit(t,100,33,67)；info 里传的是入门技能 t，故轴为入门等级"
+ },
+ {
+  "talent": "T_WEAPON_OF_LIGHT",
+  "acronym": 0,
+  "expr": [
+   "+",
+   7,
+   [
+    "*",
+    [
+     "power",
+     "法术强度",
+     0.092
+    ],
+    [
+     "talentScale",
+     1,
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:72",
+  "note": "getDamage = 7 + combatSpellpower(0.092) * combatTalentScale(t,1,7)"
+ },
+ {
+  "talent": "T_WEAPON_OF_LIGHT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   7,
+   [
+    "*",
+    [
+     "power",
+     "法术强度",
+     0.092
+    ],
+    [
+     "talentScale",
+     1,
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:73",
+  "note": "getShieldFlat = getDamage（同一公式，导出侧 #0 四舍五入 / #1 截断）"
+ },
+ {
+  "talent": "T_WAVE_OF_POWER",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.9,
+    2
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:135",
+  "note": "getDamage(t) = combatTalentWeaponDamage(t,0.9,2)，info 里乘 100"
+ },
+ {
+  "talent": "T_WAVE_OF_POWER",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "*",
+    [
+     "weaponDamage",
+     0.9,
+     2
+    ],
+    [
+     "talentLimit",
+     1,
+     0.4,
+     0.65
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:135",
+  "note": "getDamage(t,true) = combatTalentWeaponDamage(t,0.9,2) * combatTalentLimit(t,1.0,0.4,0.65)"
+ },
+ {
+  "talent": "T_WAVE_OF_POWER",
+  "acronym": 2,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    2
+   ],
+   100,
+   15,
+   4,
+   70,
+   50
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:132",
+  "note": "SecondStrikeChance = combatLimit(getTalentLevel(t)*range,100,15,4,70,50)，取 range=2"
+ },
+ {
+  "talent": "T_HYMN_ADEPT",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   20,
+   30
+  ],
+  "source": "tome-src-full/data/talents/celestial/hymns.lua:437",
+  "note": "invisPower = math.ceil(combatTalentSpellDamage(t,20,30))；导出按 %d 截断，故省略 ceil"
+ },
+ {
+  "talent": "T_CHANT_OF_FORTITUDE",
+  "acronym": 2,
+  "expr": [
+   "*",
+   1000,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       -0.10937836137264567
+      ],
+      -0.008820872949819132
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/chants.lua:38",
+  "note": "info 第三参 life*self.max_life，life = combatTalentLimit(t,1,0.125,0.25)；导出基准 max_life=1000（标题未声明，冻结为常数）；按源码 limit*(1-exp(sqrt(tl)*a+b)) 手工展开以复现锚点 0.1249999 的截断"
+ },
+ {
+  "talent": "T_SECOND_LIFE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   1500,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       -0.18616183439704276
+      ],
+      0.06915630503021047
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/celestial/combat.lua:235",
+  "note": "getLife = self.max_life * combatTalentLimit(t,1.5,0.2,0.5)；导出基准 max_life=1000（标题未声明，冻结为常数），故整体系数 1500；按源码 limit*(1-exp(sqrt(tl)*a+b)) 手工展开以复现 6.5 锚点的 499.9999 截断"
+ }
+]

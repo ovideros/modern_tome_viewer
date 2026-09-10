@@ -1,0 +1,261 @@
+[
+ {
+  "talent": "T_MEDITATION",
+  "acronym": 0,
+  "expr": ["+", 2, ["/", ["mindDamage", 20, 120], 10]],
+  "source": "tome-src-full/data/talents/gifts/call.lua:78",
+  "note": "info: pt = -t.drain_equilibrium(self,t) = (2 + combatTalentMindDamage(t,20,120)/10) * boost；boost = 1+(enhance_meditate or 0) 在导出基准为 1"
+ },
+ {
+  "talent": "T_MEDITATION",
+  "acronym": 1,
+  "expr": ["+", 5, ["mindDamage", 10, 40]],
+  "source": "tome-src-full/data/talents/gifts/call.lua:79",
+  "note": "info: save = (5 + combatTalentMindDamage(t,10,40)) * boost，boost=1"
+ },
+ {
+  "talent": "T_MEDITATION",
+  "acronym": 2,
+  "expr": ["+", 5, ["mindDamage", 12, 30]],
+  "source": "tome-src-full/data/talents/gifts/call.lua:80",
+  "note": "info: heal = (5 + combatTalentMindDamage(t,12,30)) * boost，boost=1；导出按 %d%% 显示"
+ },
+ {
+  "talent": "T_NATURE_S_BALANCE",
+  "acronym": 1,
+  "expr": ["talentLevel"],
+  "source": "tome-src-full/data/talents/gifts/call.lua:190",
+  "note": "getMaxLevel = self:getTalentLevel(t)；info 的 %d 对有效等级取整（1.3/1.5 套的 2.6/3.9/4.5/6.5 走截断读数）"
+ },
+ {
+  "talent": "T_GRASPING_MOSS",
+  "acronym": 0,
+  "expr": ["combatScale", ["talentLevel", true], 2.35, 1, 4.25, 5],
+  "source": "tome-src-full/data/talents/gifts/moss.lua:43",
+  "note": "radius = math.floor(combatTalentScale(t, 2.35, 4.25))。导出三套同值 2/3/3/4/4 → 只能按原始等级驱动，且读数为四舍五入（floor(原始) 会得 2/2/3/3/4）；故此处不写 floor，疑点见报告"
+ },
+ {
+  "talent": "T_NOURISHING_MOSS",
+  "acronym": 0,
+  "expr": ["combatScale", ["talentLevel", true], 2.35, 1, 4.25, 5],
+  "source": "tome-src-full/data/talents/gifts/moss.lua:93",
+  "note": "radius 同 T_GRASPING_MOSS（2.35,4.25），导出三套同值 2/3/3/4/4"
+ },
+ {
+  "talent": "T_SLIPPERY_MOSS",
+  "acronym": 0,
+  "expr": ["combatScale", ["talentLevel", true], 2.35, 1, 4.25, 5],
+  "source": "tome-src-full/data/talents/gifts/moss.lua:141",
+  "note": "radius 同 T_GRASPING_MOSS（2.35,4.25），导出三套同值 2/3/3/4/4"
+ },
+ {
+  "talent": "T_HALLUCINOGENIC_MOSS",
+  "acronym": 0,
+  "expr": ["combatScale", ["talentLevel", true], 2.35, 1, 4.25, 5],
+  "source": "tome-src-full/data/talents/gifts/moss.lua:190",
+  "note": "radius 同 T_GRASPING_MOSS（2.35,4.25），导出三套同值 2/3/3/4/4"
+ },
+ {
+  "talent": "T_TORNADO",
+  "acronym": 1,
+  "expr": ["floor", ["combatScale", ["talentLevel", true], 2, 1, 4, 5]],
+  "source": "tome-src-full/data/talents/gifts/storm-drake.lua:132",
+  "note": "rad = math.floor(combatTalentScale(t, 2, 4))；导出三套同值 2/2/3/3/4 → 按原始等级驱动（floor 会对，故保留 floor）"
+ },
+ {
+  "talent": "T_LIGHTNING_BREATH",
+  "acronym": 1,
+  "expr": ["/", ["statDamage", "str", 30, 670], 3],
+  "source": "tome-src-full/data/talents/gifts/storm-drake.lua:260",
+  "note": "damage = combatTalentStatDamage(t,\"str\",30,670) + (knowTalent(T_CHROMATIC_FURY) and ... or 0)；#1 = damage/3"
+ },
+ {
+  "talent": "T_LIGHTNING_BREATH",
+  "acronym": 2,
+  "expr": ["statDamage", "str", 30, 670],
+  "source": "tome-src-full/data/talents/gifts/storm-drake.lua:261",
+  "note": "#2 = damage 本体；T_CHROMATIC_FURY 在导出基准未点亮，bonus=0"
+ },
+ {
+  "talent": "T_LIGHTNING_BREATH",
+  "acronym": 3,
+  "expr": ["/", ["+", ["statDamage", "str", 30, 670], ["/", ["statDamage", "str", 30, 670], 3]], 2],
+  "source": "tome-src-full/data/talents/gifts/storm-drake.lua:262",
+  "note": "#3 = (damage + damage/3)/2（平均伤害），damage 整段重复而非折进常数"
+ },
+ {
+  "talent": "T_DETONATE",
+  "acronym": 0,
+  "expr": ["floor", ["combatScale", ["talentLevel", true], 4, 1, 8, 5]],
+  "source": "tome-src-full/data/talents/gifts/summon-augmentation.lua:43",
+  "note": "radius = math.floor(combatTalentScale(t, 4, 8))；导出三套同值 4/5/6/7/8 → 原始等级驱动"
+ },
+ {
+  "talent": "T_DETONATE",
+  "acronym": 11,
+  "expr": ["+", 15, ["*", ["talentLevel"], 7.7]],
+  "source": "tome-src-full/data/talents/gifts/summon-augmentation.lua:60",
+  "note": "golemHardiness = 15 + self:getTalentLevel(t)*7.7（有效等级，三套不同）"
+ },
+ {
+  "talent": "T_DETONATE",
+  "acronym": 13,
+  "expr": ["+", 1, ["floor", ["talentLevel"]]],
+  "source": "tome-src-full/data/talents/gifts/summon-augmentation.lua:62",
+  "note": "spiderKnockback = 1 + math.floor(self:getTalentLevel(t))"
+ },
+ {
+  "talent": "T_CORROSIVE_NATURE",
+  "acronym": 1,
+  "expr": ["/", ["talentScale", 5, 15, 0.75], 2.23],
+  "source": "tome-src-full/data/talents/gifts/corrosive-blades.lua:66",
+  "note": "getAcidDamage(t,level) = combatTalentScale(t,5,15,0.75) * min(5,level)^0.5/2.23；#1 传 level=1 → 因子 1/2.23"
+ },
+ {
+  "talent": "T_CORROSIVE_NATURE",
+  "acronym": 3,
+  "expr": ["/", ["*", ["talentScale", 5, 15, 0.75], ["sqrt", 5]], 2.23],
+  "source": "tome-src-full/data/talents/gifts/corrosive-blades.lua:66",
+  "note": "同 getAcidDamage，#3 传 level=5 → 因子 sqrt(5)/2.23（5 层叠满上限）"
+ },
+ {
+  "talent": "T_CORROSIVE_SEEDS",
+  "acronym": 0,
+  "expr": ["min", 4, ["floor", ["/", ["+", ["talentLevel"], 3], 2]]],
+  "source": "tome-src-full/data/talents/gifts/corrosive-blades.lua:126",
+  "note": "getNb 是分段：l<3→2、l<5→3、else→4；等价闭式 min(4, floor((l+3)/2))，在 l∈[1,7.5] 与源码逐点一致（含 1.3/1.5 套的有效等级）"
+ },
+ {
+  "talent": "T_NATURAL_ACID",
+  "acronym": 1,
+  "expr": ["/", ["talentScale", 5, 15, 0.75], 2.23],
+  "source": "tome-src-full/data/talents/gifts/oozing-blades.lua:67",
+  "note": "getNatureDamage(t,1) = combatTalentScale(t,5,15,0.75) * 1^0.5/2.23（与 T_CORROSIVE_NATURE 同式，只是元素相反）"
+ },
+ {
+  "talent": "T_NATURAL_ACID",
+  "acronym": 3,
+  "expr": ["/", ["*", ["talentScale", 5, 15, 0.75], ["sqrt", 5]], 2.23],
+  "source": "tome-src-full/data/talents/gifts/oozing-blades.lua:67",
+  "note": "getNatureDamage(t,5) = combatTalentScale(t,5,15,0.75) * sqrt(5)/2.23"
+ },
+ {
+  "talent": "T_MITOSIS",
+  "acronym": 0,
+  "expr": ["+", 50, ["+", ["mindDamage", 30, 250], ["*", 1000, ["talentLimit", 0.25, 0.035, 0.125]]]],
+  "source": "tome-src-full/data/talents/gifts/ooze.lua:33",
+  "note": "getMaxHP = 50 + combatTalentMindDamage(t,30,250) + self.max_life * combatTalentLimit(t,0.25,.035,.125)；导出基准角色 max_life=1000（常数冻结，非标题声明输入）"
+ },
+ {
+  "talent": "T_MITOSIS",
+  "acronym": 2,
+  "expr": ["max", 1, ["floor", ["talentLimit", 6, 1.1, 4.1]]],
+  "source": "tome-src-full/data/talents/gifts/ooze.lua:36",
+  "note": "getMax = min(checkMaxSummon上限, max(1, floor(combatTalentLimit(t,6,1.1,4.1))))；召唤上限在导出基准不咬合，15 点验证"
+ },
+ {
+  "talent": "T_CALL_OF_THE_OOZE",
+  "acronym": 0,
+  "expr": ["*", ["+", 50, ["+", ["^", ["*", ["/", ["*", ["+", 30, ["power", "精神强度"]], 0.2], 258.55104], 250], 1.04], ["*", 1000, ["combatLimit", ["pow", 0.5, ["/", 2, 3]], 0.25, 0.035, ["pow", 1.3, ["/", 2, 3]], 0.125, ["pow", 6.5, ["/", 2, 3]]]]]], ["talentLimit", 1, 0.46, 0.7]],
+  "source": "tome-src-full/data/talents/gifts/ooze.lua:183",
+  "note": "getLife = callTalent(T_MITOSIS,\"getMaxHP\") * getModHP(t)。导出基准未学 Mitosis（getTalentLevel=0）：内层 combatTalentMindDamage 按 tl=0（因子 0.2）展开、combatTalentLimit 按源码 tl<=0→0.5 用 combatLimit 等价锚点（x^0.75=sqrt(tl)，xLow=1.3^(2/3)、xHigh=6.5^(2/3)）还原；max_life=1000 同上"
+ },
+ {
+  "talent": "T_ICE_WALL",
+  "acronym": 0,
+  "expr": ["+", 3, ["*", 2, ["floor", ["/", ["talentLevel"], 2]]]],
+  "source": "tome-src-full/data/talents/gifts/cold-drake.lua:205",
+  "note": "info 里长度 = 3 + math.floor(self:getTalentLevel(t)/2)*2（不走 getLength，getLength 是战斗用；导出与 info 一致）"
+ },
+ {
+  "talent": "T_ICE_BREATH",
+  "acronym": 1,
+  "expr": ["statDamage", "str", 30, 500],
+  "source": "tome-src-full/data/talents/gifts/cold-drake.lua:262",
+  "note": "damage = combatTalentStatDamage(t,\"str\",30,500) + (knowTalent(T_CHROMATIC_FURY) and ... or 0)；基准未点亮 → bonus=0"
+ },
+ {
+  "talent": "T_BELLOWING_ROAR",
+  "acronym": 1,
+  "expr": ["+", 20, ["*", 6, ["talentLevel"]]],
+  "source": "tome-src-full/data/talents/gifts/fire-drake.lua:118",
+  "note": "info: power = 20 + 6 * self:getTalentLevel(t)（困惑强度 %）"
+ },
+ {
+  "talent": "T_FIRE_BREATH",
+  "acronym": 1,
+  "expr": ["statDamage", "str", 30, 650],
+  "source": "tome-src-full/data/talents/gifts/fire-drake.lua:221",
+  "note": "getDamage = combatTalentStatDamage(t,\"str\",30,650) + T_CHROMATIC_FURY 分支（基准未点亮 = 0）"
+ },
+ {
+  "talent": "T_CORROSIVE_BREATH",
+  "acronym": 1,
+  "expr": ["statDamage", "str", 30, 520],
+  "source": "tome-src-full/data/talents/gifts/venom-drake.lua:206",
+  "note": "getDamage = combatTalentStatDamage(t,\"str\",30,520) + T_CHROMATIC_FURY 分支（基准未点亮 = 0）"
+ },
+ {
+  "talent": "T_VENOMOUS_BREATH",
+  "acronym": 1,
+  "expr": ["/", ["statDamage", "str", 60, 750], 6],
+  "source": "tome-src-full/data/talents/gifts/higher-draconic.lua:162",
+  "note": "info: damDesc(NATURE, getDamage/6)，getDamage = combatTalentStatDamage(t,\"str\",60,750)（+ 未点亮的 T_CHROMATIC_FURY 分支）"
+ },
+ {
+  "talent": "T_SLIME_ROOTS",
+  "acronym": 1,
+  "expr": ["min", 4, ["max", 1, ["-", 4, ["/", ["talentLevel"], 2]]]],
+  "source": "tome-src-full/data/talents/gifts/slime.lua:139",
+  "note": "radius = util.bound(4 - getTalentLevel(t)/2, 1, 4) → min(4,max(1,…))；非整数半径按截断读数显示"
+ },
+ {
+  "talent": "T_SLIME_ROOTS",
+  "acronym": 2,
+  "expr": ["min", 3, ["floor", ["/", ["+", ["talentLevel"], 2], 3]]],
+  "source": "tome-src-full/data/talents/gifts/slime.lua:141",
+  "note": "getNbTalents 分段：tl<4→1、tl<7→2、else→3；等价闭式 min(3, floor((tl+2)/3))，在 tl∈[1,7.5] 逐点一致"
+ },
+ {
+  "talent": "T_SUDDEN_GROWTH",
+  "acronym": 1,
+  "expr": ["*", 0.25, ["talentScale", 2, 5]],
+  "source": "tome-src-full/data/talents/gifts/fungus.lua:131",
+  "note": "info: self.life_regen * mult，mult = combatTalentScale(t,2,5)；导出基准 life_regen=0.25（运行时角色状态，冻结常数，非标题声明输入；区间 [0.226,0.265) 内任意值同解）"
+ },
+ {
+  "talent": "T_ACID_SPLASH",
+  "acronym": 0,
+  "expr": ["+", 2, ["min", 1, ["floor", ["/", ["talentLevel"], 5]]]],
+  "source": "tome-src-full/data/talents/gifts/mucus.lua:96",
+  "note": "radius = 2 + (getTalentLevel(t) >= 5 and 1 or 0)；等价闭式 2 + min(1, floor(tl/5))"
+ },
+ {
+  "talent": "T_POWER_CORE",
+  "acronym": 0,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/gifts/dwarven-nature.lua:200",
+  "note": "info: tformat(math.floor(self:getTalentLevel(t)))（半身学到技能的等级）"
+ },
+ {
+  "talent": "T_DWARVEN_UNITY",
+  "acronym": 1,
+  "expr": ["talentLevel", true],
+  "source": "tome-src-full/data/talents/gifts/dwarven-nature.lua:258",
+  "note": "info 第 2 个参数 = self:getTalentLevelRaw(t)；导出三套同值 1..5 证实按原始等级"
+ },
+ {
+  "talent": "T_MASTER_SUMMONER",
+  "acronym": 0,
+  "expr": ["*", 100, ["min", 0.3, ["max", 0.05, ["/", ["talentLevel", true], 15]]]],
+  "source": "tome-src-full/data/talents/gifts/summon-advanced.lua:30",
+  "note": "getCooldownReduction = util.bound(getTalentLevelRaw(t)/15, 0.05, 0.3)，info 乘 100；原始等级驱动（三套同值）"
+ },
+ {
+  "talent": "T_NATURE_CYCLE",
+  "acronym": 0,
+  "expr": ["min", 100, ["+", 30, ["*", 15, ["talentLevel"]]]],
+  "source": "tome-src-full/data/talents/gifts/summon-advanced.lua:96",
+  "note": "getChance = math.min(100, 30 + getTalentLevel(t)*15)"
+ }
+]

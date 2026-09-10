@@ -1,0 +1,331 @@
+[
+ {
+  "talent": "T_FOLD_FATE",
+  "acronym": 0,
+  "expr": ["*", 40, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]]], -0.7795256696436654], 0.6011139393098757]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:274",
+  "note": "getChance = combatTalentLimit(t,40,10,30)，t 是 T_WEAPON_MANIFOLD（callTalent 间接调用，行 51），tl=轴×技能系数；按 combatTalentLimit 指数式 limit*(1-exp(sqrt(tl)*a+b)) 手工展开"
+ },
+ {
+  "talent": "T_FOLD_FATE",
+  "acronym": 1,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:50",
+  "note": "radius = getTalentLevel(T_WEAPON_MANIFOLD) >= 4 and 2 or 1：无比较节点，用 1+floor(tl/4) 上限 2 的阶梯复刻"
+ },
+ {
+  "talent": "T_FOLD_FATE",
+  "acronym": 2,
+  "expr": ["+", 7, ["*", ["power", "法术强度", ["*", 0.092, ["pmod", ["actor", "paradox"]]]], ["combatScale", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 1, 1, 7, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:273",
+  "note": "getDamage = 7 + getParadoxSpellpower(self,t,0.092) * combatTalentScale(t,1,7)"
+ },
+ {
+  "talent": "T_FOLD_WARP",
+  "acronym": 0,
+  "expr": ["*", 40, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]]], -0.7795256696436654], 0.6011139393098757]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:274",
+  "note": "getChance = combatTalentLimit(t,40,10,30)，t=T_WEAPON_MANIFOLD"
+ },
+ {
+  "talent": "T_FOLD_WARP",
+  "acronym": 1,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:98",
+  "note": "radius = getTalentLevel(T_WEAPON_MANIFOLD) >= 4 and 2 or 1"
+ },
+ {
+  "talent": "T_FOLD_WARP",
+  "acronym": 2,
+  "expr": ["/", ["+", 7, ["*", ["power", "法术强度", ["*", 0.092, ["pmod", ["actor", "paradox"]]]], ["combatScale", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 1, 1, 7, 5]]], 2],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:130",
+  "note": "info: damDesc(TEMPORAL, damage/2)"
+ },
+ {
+  "talent": "T_FOLD_WARP",
+  "acronym": 3,
+  "expr": ["/", ["+", 7, ["*", ["power", "法术强度", ["*", 0.092, ["pmod", ["actor", "paradox"]]]], ["combatScale", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 1, 1, 7, 5]]], 2],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:130",
+  "note": "info: damDesc(PHYSICAL, damage/2)"
+ },
+ {
+  "talent": "T_FOLD_GRAVITY",
+  "acronym": 0,
+  "expr": ["*", 40, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]]], -0.7795256696436654], 0.6011139393098757]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:274",
+  "note": "getChance = combatTalentLimit(t,40,10,30)，t=T_WEAPON_MANIFOLD"
+ },
+ {
+  "talent": "T_FOLD_GRAVITY",
+  "acronym": 1,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:141",
+  "note": "radius = getTalentLevel(T_WEAPON_MANIFOLD) >= 4 and 2 or 1"
+ },
+ {
+  "talent": "T_FOLD_GRAVITY",
+  "acronym": 2,
+  "expr": ["+", 7, ["*", ["power", "法术强度", ["*", 0.092, ["pmod", ["actor", "paradox"]]]], ["combatScale", ["*", ["actor", "多态武器 技能等级"], ["/", ["talentLevel"], ["talentLevel", true]]], 1, 1, 7, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:273",
+  "note": "getDamage = 7 + getParadoxSpellpower(self,t,0.092) * combatTalentScale(t,1,7)"
+ },
+ {
+  "talent": "T_INVIGORATE",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["*", 14, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["talentLevel"]], -0.3624587951042149], 0.07679437416765682]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:232",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,14,4,8)))，paradox=300 时 pm=1；手工按 limit*(1-exp(sqrt(tl)*a+b)) 展开（内置 talentLimit 节点在 tl=1.3 锚点给 4，Lua 浮点给 3.9999999999999982→3）"
+ },
+ {
+  "talent": "T_WEAPON_MANIFOLD",
+  "acronym": 1,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["talentLevel"], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:271",
+  "note": "radius = getTalentLevel(t) >= 4 and 2 or 1"
+ },
+ {
+  "talent": "T_WEAPON_MANIFOLD",
+  "acronym": 3,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["talentLevel"], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:271",
+  "note": "radius = getTalentLevel(t) >= 4 and 2 or 1"
+ },
+ {
+  "talent": "T_WEAPON_MANIFOLD",
+  "acronym": 6,
+  "expr": ["min", 2, ["+", 1, ["floor", ["/", ["talentLevel"], 4]]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:271",
+  "note": "radius = getTalentLevel(t) >= 4 and 2 or 1"
+ },
+ {
+  "talent": "T_BREACH",
+  "acronym": 1,
+  "expr": ["floor", ["combatScale", ["talentLevel"], 3, 1, 7, 5]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:312",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1 时只余 floor()"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 4,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.str+1，incStats = 10 + combatTalentStatDamage(t,\"mag\",10,150)"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 5,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.dex+1"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 6,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.con+1"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 7,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.mag+1"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 8,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.wil+1"
+ },
+ {
+  "talent": "T_TEMPORAL_HOUNDS",
+  "acronym": 9,
+  "expr": ["+", 11, ["statDamage", "mag", 10, 150]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:238",
+  "note": "info: incStats.cun+1"
+ },
+ {
+  "talent": "T_TEMPORAL_VIGOUR",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 1, 1, 3, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:347",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,3)))，pm=1 时 = max(1,floor(...))"
+ },
+ {
+  "talent": "T_CHRONO_TIME_SHIELD",
+  "acronym": 1,
+  "expr": ["min", 15, ["max", 5, ["+", 5, ["floor", ["talentLevel"]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/stasis.lua:52",
+  "note": "getDuration = getExtensionModifier(self,t,util.bound(5+floor(getTalentLevel(t)),5,15))，pm=1"
+ },
+ {
+  "talent": "T_CHRONO_TIME_SHIELD",
+  "acronym": 2,
+  "expr": ["+", 25, ["min", 35, ["max", 15, ["+", 15, ["floor", ["*", ["talentLevel"], 2]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/stasis.lua:53",
+  "note": "getTimeReduction = 25 + util.bound(15+floor(getTalentLevel(t)*2),15,35)"
+ },
+ {
+  "talent": "T_STOP",
+  "acronym": 2,
+  "expr": ["max", 1, ["ceil", ["combatScale", ["talentLevel"], 2.3, 1, 4.3, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/stasis.lua:87",
+  "note": "getDuration = getExtensionModifier(self,t,ceil(combatTalentScale(t,2.3,4.3)))，pm=1"
+ },
+ {
+  "talent": "T_STATIC_HISTORY",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["+", 1, ["max", 0, ["+", ["*", ["/", 6, ["-", ["sqrt", 5], 1]], ["sqrt", ["talentLevel"]]], ["-", 1, ["/", 6, ["-", ["sqrt", 5], 1]]]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/stasis.lua:129",
+  "note": "getDuration = getExtensionModifier(self,t,floor(1+combatTalentScale(t,1,7)))。按 Lua 结合次序 m*sqrt(tl)+(1-m) 展开：内置 combatScale 在 tl=5 给 7.0→8，Lua 给 6.999999999999999→7"
+ },
+ {
+  "talent": "T_DIMENSIONAL_SHIFT",
+  "acronym": 0,
+  "expr": ["ceil", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-weaving.lua:99",
+  "note": "getReduction = ceil(getTalentLevel(t))"
+ },
+ {
+  "talent": "T_WORMHOLE",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 6, 1, 10, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-weaving.lua:140",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))，pm=1"
+ },
+ {
+  "talent": "T_PHASE_PULSE",
+  "acronym": 2,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 2, 1, 4, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/spacetime-weaving.lua:258",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,4)))，pm=1"
+ },
+ {
+  "talent": "T_CELERITY",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 1, 1, 2, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:27",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,2)))，pm=1"
+ },
+ {
+  "talent": "T_TIME_DILATION",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 1, 1, 2, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:50",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,2)))，pm=1"
+ },
+ {
+  "talent": "T_TIME_STOP",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["*", 4, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["talentLevel"]], -0.7795256696436654], 0.6011139393098757]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:102",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,4,1,3)))，pm=1；手工指数式展开"
+ },
+ {
+  "talent": "T_TEMPORAL_FUGUE_OLD",
+  "acronym": 1,
+  "expr": ["min", 50, ["*", ["talentLevel", true], 10]],
+  "source": "tome-src-full/data/talents/chronomancy/age-manipulation.lua:68",
+  "note": "getConfuseEfficency = min(50, getTalentLevelRaw(t)*10)：按原始等级算，故三套数字相同"
+ },
+ {
+  "talent": "T_ASHES_TO_ASHES",
+  "acronym": 2,
+  "expr": ["+", 5, ["ceil", ["talentLevel"]]],
+  "source": "tome-src-full/data/talents/chronomancy/age-manipulation.lua:104",
+  "note": "getDuration = 5 + ceil(getTalentLevel(t))"
+ },
+ {
+  "talent": "T_PRECOGNITION",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 2, 1, 10, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/chronomancy.lua:30",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,10)))，pm=1"
+ },
+ {
+  "talent": "T_SEE_THE_THREADS",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["max", 0, ["+", ["*", ["/", 12, ["-", ["sqrt", 5], 1]], ["sqrt", ["talentLevel"]]], ["-", 4, ["/", 12, ["-", ["sqrt", 5], 1]]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/chronomancy.lua:172",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,16)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(4-m) 展开：内置 combatScale 在 tl=5 给 16.0→16，Lua 给 15.999999999999998→15"
+ },
+ {
+  "talent": "T_TIME_SKIP",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["+", 2, ["ceil", ["combatScale", ["talentLevel"], 0.3, 1, 2.3, 5]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/timetravel.lua:132",
+  "note": "getDuration = getExtensionModifier(self,t,2+ceil(combatTalentScale(t,0.3,2.3)))，pm=1"
+ },
+ {
+  "talent": "T_TEMPORAL_REPRIEVE",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 2, 1, 6, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/timetravel.lua:223",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,6)))，pm=1"
+ },
+ {
+  "talent": "T_TEMPORAL_FUGUE",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["max", 0, ["+", ["*", ["/", 5, ["-", ["sqrt", 5], 1]], ["sqrt", ["talentLevel"]]], ["-", 3, ["/", 5, ["-", ["sqrt", 5], 1]]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/timeline-threading.lua:120",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,8)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(3-m) 展开：内置 combatScale 在 tl=5 给 7.999999999999999→7，Lua 给 8"
+ },
+ {
+  "talent": "T_BRAID_LIFELINES",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 3, 1, 7, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/timeline-threading.lua:197",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1"
+ },
+ {
+  "talent": "T_ENERGY_ABSORPTION",
+  "acronym": 0,
+  "expr": ["+", 1, ["floor", ["*", 3, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["talentLevel"]], -0.7795256696436654], 0.8887960117616567]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/energy.lua:73",
+  "note": "getTalentCount = 1 + floor(combatTalentLimit(t,3,0.1,2,false,1.0))【疑点】：本源码快照的 (low=0.1,mastery=1.0) 在 1级/系数1.0 给 1+floor→1，导出是 0；导出 15 点由老参数化 combatTalentLimit(t,3,0,2)（low=0、mastery 默认 1.3）精确复现，此处按导出版本写"
+ },
+ {
+  "talent": "T_ENTROPY",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["max", 0, ["+", ["*", ["/", 6, ["-", ["sqrt", 5], 1]], ["sqrt", ["talentLevel"]]], ["-", 1, ["/", 6, ["-", ["sqrt", 5], 1]]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/energy.lua:167",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,7)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(1-m) 展开：内置 combatScale 在 tl=5 给 7.0→7，Lua 给 6.999999999999999→6，导出为 6"
+ },
+ {
+  "talent": "T_STRENGTH_OF_PURPOSE",
+  "acronym": 0,
+  "expr": ["*", 100, ["/", ["sqrt", ["/", ["talentLevel"], 5]], 1.5]],
+  "source": "tome-src-full/data/talents/chronomancy/guardian.lua:26",
+  "note": "info: 100*getPercentInc，getPercentInc = sqrt(getTalentLevel(t)/5)/1.5"
+ },
+ {
+  "talent": "T_TWIST_FATE",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["max", 0, ["+", ["*", ["/", 5, ["-", ["sqrt", 5], 1]], ["sqrt", ["talentLevel"]]], ["-", 1, ["/", 5, ["-", ["sqrt", 5], 1]]]]]]],
+  "source": "tome-src-full/data/talents/chronomancy/flux.lua:156",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,6)))，pm=1；按 Lua 结合次序展开"
+ },
+ {
+  "talent": "T_BLENDED_THREADS",
+  "acronym": 0,
+  "expr": ["ceil", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/chronomancy/threaded-combat.lua:150",
+  "note": "getCount = ceil(getTalentLevel(t))"
+ },
+ {
+  "talent": "T_WARP_BLADE",
+  "acronym": 1,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 3, 1, 7, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/blade-threading.lua:36",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1"
+ },
+ {
+  "talent": "T_GRAVITY_WELL",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["combatScale", ["talentLevel"], 4, 1, 8, 5]]],
+  "source": "tome-src-full/data/talents/chronomancy/gravity.lua:233",
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,8)))，pm=1"
+ }
+]

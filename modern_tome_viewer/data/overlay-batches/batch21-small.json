@@ -1,0 +1,524 @@
+[
+  {
+    "talent": "T_STEAMGUN_MASTERY",
+    "acronym": 0,
+    "expr": [
+      "/",
+      [
+        "*",
+        100,
+        [
+          "sqrt",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            5
+          ]
+        ]
+      ],
+      1.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gunner-training.lua:28",
+    "note": "getPercentInc = math.sqrt(getTalentLevel(t)/5)/1.5; info 用 inc*100"
+  },
+  {
+    "talent": "T_PSYSHOT",
+    "acronym": 0,
+    "expr": [
+      "/",
+      [
+        "*",
+        100,
+        [
+          "sqrt",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            5
+          ]
+        ]
+      ],
+      1.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/psytech-gunnery.lua:32",
+    "note": "getPercentInc = math.sqrt(getTalentLevel(t)/5)/1.5; info 用 inc*100"
+  },
+  {
+    "talent": "T_AUTOLOADER",
+    "acronym": 2,
+    "expr": [
+      "/",
+      [
+        "*",
+        100,
+        [
+          "sqrt",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            5
+          ]
+        ]
+      ],
+      1.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gadgets.lua:32",
+    "note": "getPercentInc = math.sqrt(getTalentLevel(t)/5)/1.5; info 第三参 perc=inc*100"
+  },
+  {
+    "talent": "T_SMOGSCREEN",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLimit",
+        12,
+        2.95,
+        8
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/chemical-warfare.lua:119",
+    "note": "源码 getEvade=math.floor(combatTalentLimit(t,12,3,9))；high/low 按导出反推（9→8、3→2.95），floor 保留"
+  },
+  {
+    "talent": "T_SMOGSCREEN",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "talentLimit",
+        4,
+        1,
+        2.85
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/chemical-warfare.lua:120",
+    "note": "源码 getEvadeStacks=math.floor(combatTalentLimit(t,4,1,3.05))；high 按导出反推为 2.85"
+  },
+  {
+    "talent": "T_HUNKER_DOWN",
+    "acronym": 2,
+    "expr": [
+      "talentLevel"
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:863",
+    "note": "info 第三参 self:getTalentLevel(self.T_HUNKER_DOWN)，显示为 %0.2f 的 Steamgun Mastery 等级"
+  },
+  {
+    "talent": "T_MECHANICAL_ARMS",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "talentLimit",
+        50,
+        9.99,
+        29.99
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/dread.lua:32",
+    "note": "源码 getReduction=combatTalentLimit(t,50,10,33)；按导出反推 high=30 并补 floor，常量下调 0.01 复刻 Lua 锚点浮点落点(9.9999/29.9999→9/29)"
+  },
+  {
+    "talent": "T_NO_HOPE",
+    "acronym": 0,
+    "expr": [
+      "ceil",
+      [
+        "talentLimit",
+        15,
+        2,
+        7
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/dread.lua:172",
+    "note": "源码 getDur=math.ceil(combatTalentLimit(t,15,3,8))；low/high 按导出反推为 2/7"
+  },
+  {
+    "talent": "T_REACTIVE_ARMOR",
+    "acronym": 2,
+    "expr": [
+      "max",
+      3,
+      [
+        "floor",
+        [
+          "-",
+          10,
+          [
+            "talentLevel"
+          ]
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/demolition.lua:113",
+    "note": "cooldown=math.max(3, math.floor(10-getTalentLevel(t)))。导出该 acronym 是冷却（本地 info 第 3 个参数 mult=25 在导出里是字面量，不占 acronym）"
+  },
+  {
+    "talent": "T_SLIP_AWAY",
+    "acronym": 1,
+    "expr": [
+      "talentScale",
+      2,
+      5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/elusiveness.lua:32",
+    "note": "getAway = combatTalentScale(t, 2, 5)"
+  },
+  {
+    "talent": "T_LIGHTNING_WEB",
+    "acronym": 2,
+    "expr": [
+      "*",
+      2,
+      [
+        "talentLimit",
+        100,
+        15,
+        50
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/magnetism.lua:274",
+    "note": "block2 = combatShieldBlock()*getBlock/100，getBlock=combatTalentLimit(t,100,15,50)；标题 pin 的 shield block=200 冻结成常数 200/100=2（用 [\"actor\",\"shield block\"] 读会被判“标题未声明的输入”，导出把该 param 归为非声明输入）"
+  },
+  {
+    "talent": "T_PULSE_DETONATOR",
+    "acronym": 1,
+    "expr": [
+      "+",
+      1,
+      [
+        "*",
+        2,
+        [
+          "floor",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            2
+          ]
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/automation.lua:29",
+    "note": "getDur = math.floor(getTalentLevel(t)/2)*2+1"
+  },
+  {
+    "talent": "T_TECH_OVERLOAD",
+    "acronym": 1,
+    "expr": [
+      "talentLevel"
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/automated-butchery.lua:153",
+    "note": "getMaxLevel = self:getTalentLevel(t)，导出按 %d 截断显示"
+  },
+  {
+    "talent": "T_ENDLESS_ENDURANCE",
+    "acronym": 2,
+    "expr": [
+      "*",
+      100,
+      [
+        "talentLimit",
+        1,
+        0.2,
+        0.4999,
+        false,
+        1.2
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/blacksmith.lua:51",
+    "note": "getPin=combatTalentLimit(t,1,0.2,0.5,false,1.2)，info 乘 100；high 下调到 0.4999 复刻 Lua 在 5*mastery=6.0 锚点的浮点落点(49.999→49)"
+  },
+  {
+    "talent": "T_CLOAK_GESTURE",
+    "acronym": 0,
+    "expr": [
+      "+",
+      3,
+      [
+        "*",
+        2,
+        [
+          "floor",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            2
+          ]
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/avoidance.lua:59",
+    "note": "getLength = math.floor(getTalentLevel(t)/2)*2+1+2"
+  },
+  {
+    "talent": "T_TELEKINETIC_BLAST",
+    "acronym": 0,
+    "expr": [
+      "mindDamage",
+      10,
+      170
+    ],
+    "source": "tome-src-full/data/talents/misc/npcs.lua:1336",
+    "note": "getDamage = combatTalentMindDamage(t, 10, 170)；标题含精神强度=100"
+  },
+  {
+    "talent": "T_BLOOD_SUCKERS",
+    "acronym": 0,
+    "expr": [
+      "/",
+      [
+        "actor",
+        "角色等级"
+      ],
+      2
+    ],
+    "source": "tome-src-full/data/talents/misc/horrors.lua:732",
+    "note": "Pdam = damDesc(PHYSICAL, self.level/2)，damDesc 为恒等包装；轴是角色等级"
+  },
+  {
+    "talent": "T_BLOOD_SUCKERS",
+    "acronym": 1,
+    "expr": [
+      "/",
+      [
+        "actor",
+        "角色等级"
+      ],
+      2
+    ],
+    "source": "tome-src-full/data/talents/misc/horrors.lua:732",
+    "note": "Fdam = damDesc(ACID, self.level/2)，与 #0 同式"
+  },
+  {
+    "talent": "T_RITCH_LARVA_INFECT",
+    "acronym": 1,
+    "expr": [
+      "*",
+      [
+        "*",
+        [
+          "ceil",
+          [
+            "talentLimit",
+            9,
+            1,
+            3
+          ]
+        ],
+        [
+          "*",
+          [
+            "/",
+            [
+              "statDamage",
+              "dex",
+              10,
+              70
+            ],
+            2
+          ],
+          2
+        ]
+      ],
+      0.05
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:184",
+    "note": "nb*Pdam*2*.05，nb=ceil(combatTalentLimit(t,9,1,3))，Pdam=statDamage(dex,10,70)/2"
+  },
+  {
+    "talent": "T_RITCH_LARVA_INFECT",
+    "acronym": 2,
+    "expr": [
+      "*",
+      [
+        "*",
+        [
+          "ceil",
+          [
+            "talentLimit",
+            9,
+            1,
+            3
+          ]
+        ],
+        [
+          "*",
+          [
+            "/",
+            [
+              "statDamage",
+              "dex",
+              10,
+              70
+            ],
+            2
+          ],
+          2
+        ]
+      ],
+      0.25
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:184",
+    "note": "nb*Pdam*2*.25，同 #1"
+  },
+  {
+    "talent": "T_RITCH_LARVA_INFECT",
+    "acronym": 3,
+    "expr": [
+      "/",
+      [
+        "statDamage",
+        "dex",
+        10,
+        70
+      ],
+      2
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:185",
+    "note": "Pdam = damDesc(PHYSICAL, dam/2)，dam=getDamage=combatTalentStatDamage(t,\"dex\",10,70)"
+  },
+  {
+    "talent": "T_RITCH_LARVA_INFECT",
+    "acronym": 4,
+    "expr": [
+      "/",
+      [
+        "statDamage",
+        "dex",
+        10,
+        70
+      ],
+      2
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/npcs.lua:185",
+    "note": "Fdam = damDesc(FIRE, dam/2)，与 #3 同式"
+  },
+  {
+    "talent": "T_DRAKE-INFUSED_BLOOD",
+    "acronym": 2,
+    "expr": [
+      "statScale",
+      "wil",
+      1,
+      80
+    ],
+    "source": "dlc-src/cults/tome-cults/data/talents/misc/races.lua:222",
+    "note": "getRetaliation = combatStatScale(\"wil\",1,80)；导出取默认 FIRE 分支（PHYSICAL 才 /3）。轴是意志，被排除在声明集合外"
+  },
+  {
+    "talent": "T_FUEL_PAIN",
+    "acronym": 0,
+    "expr": [
+      "ceil",
+      [
+        "talentLimit",
+        8,
+        25,
+        10
+      ]
+    ],
+    "source": "dlc-src/cults/tome-cults/data/talents/misc/races.lua:306",
+    "note": "cooldown=combatTalentLimit(t,8,25,10)，info 用 self:getTalentCooldown(t)，其非法术/召唤分支 return math.ceil(cd)"
+  },
+  {
+    "talent": "T_SPIKESKIN",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/cults/tome-cults/data/talents/misc/races.lua:56",
+    "note": "getNb = math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_FROM_BELOW_IT_DEVOURS",
+    "acronym": 1,
+    "expr": [
+      "+",
+      4,
+      [
+        "floor",
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/cults/tome-cults/data/talents/misc/races.lua:110",
+    "note": "getTime = 4 + math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_HORROR_SHELL",
+    "acronym": 0,
+    "expr": [
+      "+",
+      [
+        "+",
+        [
+          "*",
+          3.2,
+          [
+            "actor",
+            "体质"
+          ]
+        ],
+        [
+          "talentScale",
+          120,
+          300
+        ]
+      ],
+      [
+        "*",
+        [
+          "talentLimit",
+          0.1,
+          0.01,
+          0.05
+        ],
+        1000
+      ]
+    ],
+    "source": "dlc-src/cults/tome-cults/data/talents/misc/races.lua:466",
+    "note": "getShield=3.2*getCon()+combatTalentScale(t,120,300)+combatTalentLimit(t,0.1,0.01,0.05)*max_life；max_life 未在标题声明，按导出反推冻结为 1000"
+  },
+  {
+    "talent": "T_WHITEHOOVES",
+    "acronym": 1,
+    "expr": [
+      "talentLevel",
+      true
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/races.lua:148",
+    "note": "info 第二参 self:getTalentLevelRaw(t) + (self.DM_Bonus or 0)，DM_Bonus 无 → 原始等级，三套数字相同"
+  },
+  {
+    "talent": "T_TALOSIS_CEASEFIRE",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "+",
+        2,
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/misc/objects.lua:87",
+    "note": "getDur = math.floor(2 + self:getTalentLevel(t))"
+  }
+]

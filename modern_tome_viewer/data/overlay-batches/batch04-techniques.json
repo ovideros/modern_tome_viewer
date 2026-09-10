@@ -1,0 +1,1701 @@
+[
+ {
+  "talent": "T_UPPERCUT",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.1,
+    1.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:35",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.1,1.8) + getStrikingStyle(self,dam); info: damage=getDamage*100; Striking Style inactive -> 0"
+ },
+ {
+  "talent": "T_UPPERCUT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   2,
+   [
+    "ceil",
+    [
+     "*",
+     0.25,
+     [
+      "talentScale",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:36",
+  "note": "getDuration(self,t,0) = 2 + ceil(combatTalentScale(t,1,5) * (0.25 + 0/5))"
+ },
+ {
+  "talent": "T_UPPERCUT",
+  "acronym": 2,
+  "expr": [
+   "+",
+   2,
+   [
+    "ceil",
+    [
+     "*",
+     1.25,
+     [
+      "talentScale",
+      1,
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:36",
+  "note": "getDuration(self,t,5) = 2 + ceil(combatTalentScale(t,1,5) * (0.25 + 5/5))"
+ },
+ {
+  "talent": "T_CONCUSSIVE_PUNCH",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.6,
+    1.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:92",
+  "note": "getDamage = combatTalentWeaponDamage(t,0.6,1.5) + getStrikingStyle(self,dam); Striking Style inactive -> 0; info damage=getDamage*100"
+ },
+ {
+  "talent": "T_CONCUSSIVE_PUNCH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   0.25,
+   [
+    "statDamage",
+    "str",
+    10,
+    450
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:93",
+  "note": "getAreaDamage = combatTalentStatDamage(t,\"str\",10,450) * (1 + getStrikingStyle(self,dam)); info area = getAreaDamage*0.25, damDesc wraps only"
+ },
+ {
+  "talent": "T_CONCUSSIVE_PUNCH",
+  "acronym": 2,
+  "expr": [
+   "*",
+   1.25,
+   [
+    "statDamage",
+    "str",
+    10,
+    450
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:93",
+  "note": "info areamax = getAreaDamage * 1.25 (combo 5)"
+ },
+ {
+  "talent": "T_BUTTERFLY_KICK",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1,
+    1.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:149",
+  "note": "getDamage = combatTalentWeaponDamage(t,1,1.5) + getStrikingStyle(self,dam); info tformat(getDamage*100)"
+ },
+ {
+  "talent": "T_HAYMAKER",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.2,
+    3
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:214",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.2,3) + getStrikingStyle; info damage = getDamage*100"
+ },
+ {
+  "talent": "T_HAYMAKER",
+  "acronym": 1,
+  "expr": [
+   "*",
+   200,
+   [
+    "weaponDamage",
+    1.2,
+    3
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:259",
+  "note": "info maxDamage = damage*2 = getDamage*200"
+ },
+ {
+  "talent": "T_HAYMAKER",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "talentLevel"
+    ],
+    0.5,
+    0,
+    0,
+    0.2,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:216",
+  "note": "stamina% = getStamina(t,0)/max_stamina*100; getStamina = combatLimit(getTalentLevel(t)+comb,0.5,0,0,0.2,10)*max_stamina"
+ },
+ {
+  "talent": "T_HAYMAKER",
+  "acronym": 3,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatLimit",
+    [
+     "+",
+     5,
+     [
+      "talentLevel"
+     ]
+    ],
+    0.5,
+    0,
+    0,
+    0.2,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/finishing-moves.lua:216",
+  "note": "staminamax = getStamina(t,5)/max_stamina*100"
+ },
+ {
+  "talent": "T_ARMOUR_TRAINING",
+  "acronym": 0,
+  "expr": [
+   "*",
+   1.5,
+   [
+    "talentScale",
+    1,
+    7,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:59",
+  "note": "getArmor = combatTalentScale(t,1,7,0.75) * t.ArmorEffect(self,t); ArmorEffect frozen at 1.5 (heavy mail in the export baseline body slot)"
+ },
+ {
+  "talent": "T_ARMOUR_TRAINING",
+  "acronym": 1,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    7.5,
+    [
+     "talentLevel"
+    ]
+   ],
+   100,
+   5,
+   3.75,
+   50,
+   37.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:62",
+  "note": "max(0, combatLimit(getTalentLevel(t)*5*ArmorEffect, 100, 5, 3.75, 50, 37.5)); ArmorEffect=1.5 -> 5*1.5=7.5"
+ },
+ {
+  "talent": "T_ARMOUR_TRAINING",
+  "acronym": 2,
+  "expr": [
+   "*",
+   1.5,
+   [
+    "talentScale",
+    1,
+    9
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:65",
+  "note": "getCriticalChanceReduction = combatTalentScale(t,1,9) * ArmorEffect(1.5)"
+ },
+ {
+  "talent": "T_LIGHT_ARMOUR_TRAINING",
+  "acronym": 2,
+  "expr": [
+   "*",
+   50,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       [
+        "/",
+        [
+         "log",
+         0.625
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        0,
+        [
+         "-",
+         [
+          "*",
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ],
+          [
+           "log",
+           0.5
+          ]
+         ],
+         [
+          "*",
+          [
+           "sqrt",
+           5
+          ],
+          [
+           "log",
+           0.625
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        1,
+        [
+         "sqrt",
+         5
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:132",
+  "note": "getFatigue(fake=true) = combatTalentLimit(t,50,10,25,false,1.0) written out longhand (limit*(1-exp(sqrt(tl)*a+b))) so that the level-1 value lands at 9.999999999999998 as the game does; the closed talentLimit form returns exactly 10 and the export reads 9"
+ },
+ {
+  "talent": "T_WEAPONS_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:184",
+  "note": "getPercentInc = sqrt(getTalentLevel(t)/5)/1.5; info tformat(100*inc)"
+ },
+ {
+  "talent": "T_KNIFE_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:202",
+  "note": "getPercentInc = sqrt(getTalentLevel(t)/5)/1.5; info tformat(100*inc)"
+ },
+ {
+  "talent": "T_EXOTIC_WEAPONS_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-training.lua:220",
+  "note": "getPercentInc = sqrt(getTalentLevel(t)/5)/1.5; info tformat(100*inc)"
+ },
+ {
+  "talent": "T_EXOTIC_MUNITIONS",
+  "acronym": 1,
+  "expr": [
+   "min",
+   2,
+   [
+    "+",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:42",
+  "note": "getIncendiaryRadius = if getTalentLevel(t)>=3 then 2 else 1; the discrete branch is encoded exactly as min(2, 1+floor(tl/3))"
+ },
+ {
+  "talent": "T_EXOTIC_MUNITIONS",
+  "acronym": 5,
+  "expr": [
+   "talentLimit",
+   30,
+   5,
+   25,
+   true
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:45",
+  "note": "getArmorSaveReduction = combatTalentLimit(t,30,5,25,0.75): the 5th arg is raw (truthy), mastery defaults to 1.3 -> raw talent level"
+ },
+ {
+  "talent": "T_ALLOYED_MUNITIONS",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   30,
+   5,
+   25,
+   true
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:432",
+  "note": "getArmorSaveReduction = combatTalentLimit(t,30,5,25,0.75) (raw=true, mastery 1.3)"
+ },
+ {
+  "talent": "T_ALLOYED_MUNITIONS",
+  "acronym": 3,
+  "expr": [
+   "min",
+   2,
+   [
+    "+",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:429",
+  "note": "getPoisonRadius = if getTalentLevel(t)>=3 then 2 else 1"
+ },
+ {
+  "talent": "T_EXPLOSIVE_SHOT",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1.3,
+    2.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:295",
+  "note": "radius = floor(combatTalentScale(t,1.3,2.7)); info acronym 1 = radius"
+ },
+ {
+  "talent": "T_EXPLOSIVE_SHOT",
+  "acronym": 6,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1.3,
+    2.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:295",
+  "note": "info tformat repeats radius at position 7 (acronym 6)"
+ },
+ {
+  "talent": "T_EXPLOSIVE_SHOT",
+  "acronym": 10,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1.3,
+    2.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:295",
+  "note": "info tformat repeats radius at position 11 (acronym 10)"
+ },
+ {
+  "talent": "T_DISENGAGE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentLimit",
+    10,
+    3.5,
+    7.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/mobility.lua:62",
+  "note": "getDist = floor(combatTalentLimit(t,10,3.5,7.5)/(1+combatFatigue/100)); export baseline fatigue 0"
+ },
+ {
+  "talent": "T_DISENGAGE",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   100,
+   200,
+   "log"
+  ],
+  "source": "tome-src-full/data/talents/techniques/mobility.lua:50",
+  "note": "getSpeed = combatTalentScale(t,100,200,\"log\")/(1+2*combatFatigue/100); fatigue 0"
+ },
+ {
+  "talent": "T_EVASION",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "+",
+    [
+     "*",
+     5,
+     [
+      "talentLevel"
+     ]
+    ],
+    [
+     "/",
+     [
+      "*",
+      [
+       "actor",
+       "敏捷"
+      ],
+      50
+     ],
+     100
+    ]
+   ],
+   50,
+   10,
+   10,
+   37.5,
+   75
+  ],
+  "source": "tome-src-full/data/talents/techniques/mobility.lua:220",
+  "note": "getChanceDef chance = combatLimit(5*getTalentLevel(t) + getDex(50,true), 50, 10, 10, 37.5, 75); getDex(50,true) = 敏捷/2"
+ },
+ {
+  "talent": "T_TRAINED_REACTIONS",
+  "acronym": 1,
+  "expr": [
+   "*",
+   12,
+   [
+    "max",
+    0.1,
+    [
+     "talentLimit",
+     0.8,
+     0.25,
+     0.45
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/mobility.lua:306",
+  "note": "getStamina = 12*(1+combatFatigue/100)*max(0.1, combatTalentLimit(t,0.8,0.25,0.45)); fatigue 0"
+ },
+ {
+  "talent": "T_TRAINED_REACTIONS",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "*",
+    [
+     "max",
+     0.1,
+     [
+      "talentLimit",
+      0.8,
+      0.25,
+      0.6
+     ]
+    ],
+    [
+     "combatLimit",
+     [
+      "floor",
+      [
+       "min",
+       [
+        "+",
+        [
+         "*",
+         [
+          "-",
+          [
+           "actor",
+           "敏捷"
+          ],
+          10
+         ],
+         0.7
+        ],
+        [
+         "*",
+         [
+          "-",
+          [
+           "actor",
+           "幸运"
+          ],
+          50
+         ],
+         0.4
+        ]
+       ],
+       [
+        "+",
+        20,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          20
+         ],
+         2
+        ]
+       ],
+       [
+        "+",
+        40,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          60
+         ],
+         3
+        ]
+       ],
+       [
+        "+",
+        60,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          120
+         ],
+         4
+        ]
+       ],
+       [
+        "+",
+        80,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          200
+         ],
+         5
+        ]
+       ],
+       [
+        "+",
+        100,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          300
+         ],
+         6
+        ]
+       ],
+       [
+        "+",
+        120,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          420
+         ],
+         7
+        ]
+       ],
+       [
+        "+",
+        140,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          560
+         ],
+         8
+        ]
+       ],
+       [
+        "+",
+        160,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          720
+         ],
+         9
+        ]
+       ],
+       [
+        "+",
+        180,
+        [
+         "/",
+         [
+          "-",
+          [
+           "+",
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ],
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "幸运"
+             ],
+             50
+            ],
+            0.4
+           ]
+          ],
+          900
+         ],
+         10
+        ]
+       ]
+      ]
+     ],
+     1,
+     0.25,
+     0,
+     0.55,
+     50
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/mobility.lua:303",
+  "note": "getReduction(self,t,true)*100 = max(0.1, combatTalentLimit(t,0.8,0.25,0.6)) * combatLimit(combatDefense(true), 1.0, 0.25, 0, 0.55, 50); combatDefense expanded inline (rescaleCombatStats open-coded as the same running min) with combat_def=0"
+ },
+ {
+  "talent": "T_ARCANE_COMBAT",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "+",
+     1,
+     [
+      "/",
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       9
+      ],
+      100
+     ]
+    ]
+   ],
+   100,
+   20,
+   0,
+   70,
+   50
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:31",
+  "note": "getChance = combatLimit(getTalentLevel(t) * (1 + getCun(9,true)), 100, 20, 0, 70, 50); getCun(9,true) = 灵巧*9/100"
+ },
+ {
+  "talent": "T_ARCANE_CUNNING",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "*",
+    [
+     "actor",
+     "灵巧"
+    ],
+    [
+     "talentScale",
+     20,
+     40,
+     0.75
+    ]
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:190",
+  "note": "info bonus = getCun()*getSpellpower(t)/100 with getSpellpower = combatTalentScale(t,20,40,0.75); getCun() = 灵巧 (100 in the export baseline, so bonus numerically equals the spellpower percent)"
+ },
+ {
+  "talent": "T_ARCANE_FEED",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "talentScale",
+    1,
+    5,
+    0.75
+   ],
+   7
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:209",
+  "note": "getManaRegen = combatTalentScale(t,1/7,5/7,0.75) = combatTalentScale(t,1,5,0.75)/7 (scale is linear in low/high)"
+ },
+ {
+  "talent": "T_ARCANE_DESTRUCTION",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "/",
+    [
+     "talentScale",
+     1,
+     5
+    ],
+    7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:239",
+  "note": "info = getSPMult(t)*100; getSPMult = combatTalentScale(t,1/7,5/7) (power default 0.5)"
+ },
+ {
+  "talent": "T_ARCANE_DESTRUCTION",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "actor",
+    "魔力"
+   ],
+   [
+    "/",
+    [
+     "talentScale",
+     1,
+     5
+    ],
+    7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:239",
+  "note": "info = self:getMag() * getSPMult(t); getMag() = 魔力 (100 in the export baseline)"
+ },
+ {
+  "talent": "T_ARCANE_DESTRUCTION",
+  "acronym": 2,
+  "expr": [
+   "min",
+   2,
+   [
+    "+",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/magical-combat.lua:237",
+  "note": "getTalentRadius = getTalentLevel(t) < 5 and 1 or 2"
+ },
+ {
+  "talent": "T_SKIRMISHER_BREATHING_ROOM",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   1.5,
+   6,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/techniques/tireless-combatant.lua:25",
+  "note": "getRestoreRate = applyMult(combatTalentScale(t,1.5,6,0.75)); T_THE_ETERNAL_WARRIOR absent -> mult 1"
+ },
+ {
+  "talent": "T_SKIRMISHER_DAUNTLESS_CHALLENGER",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   0.3,
+   1.5,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/techniques/tireless-combatant.lua:140",
+  "note": "getStaminaRate = applyMult(combatTalentScale(t,0.3,1.5,0.75)); Eternal Warrior absent -> 1"
+ },
+ {
+  "talent": "T_SKIRMISHER_DAUNTLESS_CHALLENGER",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   1,
+   5,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/techniques/tireless-combatant.lua:143",
+  "note": "getLifeRate = applyMult(combatTalentScale(t,1,5,0.75)); Eternal Warrior absent -> 1"
+ },
+ {
+  "talent": "T_DOUBLE_STRIKE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.5,
+    0.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:86",
+  "note": "getDamage = combatTalentWeaponDamage(t,0.5,0.8) + getStrikingStyle(self,dam); info damage=getDamage*100"
+ },
+ {
+  "talent": "T_SPINNING_BACKHAND",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1,
+    1.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:172",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.0,1.7) + getStrikingStyle; info damage=getDamage*100"
+ },
+ {
+  "talent": "T_SPINNING_BACKHAND",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatScale",
+    [
+     "-",
+     [
+      "ceil",
+      [
+       "+",
+       2,
+       [
+        "talentScale",
+        2.2,
+        4.3
+       ]
+      ]
+     ],
+     1
+    ],
+    0.15,
+    1,
+    0.5,
+    5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:167",
+  "note": "info charge = chargeBonus(self,t,t.range(t)-1)*100; range = ceil(2+combatTalentScale(t,2.2,4.3)); chargeBonus = combatScale(dist,0.15,1,0.50,5)"
+ },
+ {
+  "talent": "T_AXE_KICK",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.8,
+    2
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:285",
+  "note": "getDamage = combatTalentWeaponDamage(t,0.8,2) + getStrikingStyle; info damage=getDamage*100"
+ },
+ {
+  "talent": "T_FLURRY_OF_FISTS",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.3,
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:337",
+  "note": "getDamage = combatTalentWeaponDamage(t,0.3,1) + getStrikingStyle; info damage=getDamage*100"
+ },
+ {
+  "talent": "T_COUP_DE_GRACE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1,
+    1.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/assassination.lua:32",
+  "note": "getDamage = combatTalentWeaponDamage(t,1.0,1.5); info tformat(getDamage*100) (Stealth slash bonus not part of the tooltip)"
+ },
+ {
+  "talent": "T_MARKED_FOR_DEATH",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   15,
+   40
+  ],
+  "source": "tome-src-full/data/talents/techniques/assassination.lua:167",
+  "note": "getPower = combatTalentScale(t,15,40); info tformat(power, dam, perc)"
+ },
+ {
+  "talent": "T_MARKED_FOR_DEATH",
+  "acronym": 1,
+  "expr": [
+   "statDamage",
+   "dex",
+   15,
+   180
+  ],
+  "source": "tome-src-full/data/talents/techniques/assassination.lua:169",
+  "note": "getDamage = combatTalentStatDamage(t,\"dex\",15,180); damDesc wraps only; info arg 2"
+ },
+ {
+  "talent": "T_MARKED_FOR_DEATH",
+  "acronym": 2,
+  "expr": [
+   "talentLimit",
+   50,
+   20,
+   40
+  ],
+  "source": "tome-src-full/data/talents/techniques/assassination.lua:168",
+  "note": "getPercent = combatTalentLimit(t,50,20,40); info arg 3"
+ },
+ {
+  "talent": "T_SKIRMISHER_PACE_YOURSELF",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "floor",
+     [
+      "min",
+      [
+       "+",
+       [
+        "+",
+        39,
+        [
+         "*",
+         [
+          "-",
+          [
+           "actor",
+           "敏捷"
+          ],
+          10
+         ],
+         0.7
+        ]
+       ],
+       [
+        "*",
+        [
+         "-",
+         [
+          "actor",
+          "幸运"
+         ],
+         50
+        ],
+        0.4
+       ]
+      ],
+      [
+       "+",
+       20,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         20
+        ],
+        2
+       ]
+      ],
+      [
+       "+",
+       40,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         60
+        ],
+        3
+       ]
+      ],
+      [
+       "+",
+       60,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         120
+        ],
+        4
+       ]
+      ],
+      [
+       "+",
+       80,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         200
+        ],
+        5
+       ]
+      ],
+      [
+       "+",
+       100,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         300
+        ],
+        6
+       ]
+      ],
+      [
+       "+",
+       120,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         420
+        ],
+        7
+       ]
+      ],
+      [
+       "+",
+       140,
+       [
+        "/",
+        [
+         "-",
+         [
+          "+",
+          [
+           "+",
+           39,
+           [
+            "*",
+            [
+             "-",
+             [
+              "actor",
+              "敏捷"
+             ],
+             10
+            ],
+            0.7
+           ]
+          ],
+          [
+           "*",
+           [
+            "-",
+            [
+             "actor",
+             "幸运"
+            ],
+            50
+           ],
+           0.4
+          ]
+         ],
+         560
+        ],
+        8
+       ]
+      ]
+     ]
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   10,
+   30,
+   550
+  ],
+  "source": "tome-src-full/data/talents/techniques/tireless-combatant.lua:101",
+  "note": "getReduction = combatScale(combatDefense()*getTalentLevel(t), 5, 10, 30, 550); combatDefense expanded inline = rescaleCombatStats(combat_def + (dex-10)*0.7 + (lck-50)*0.4) with the running-min hull open-coded and combat_def frozen at 39 (export baseline gear; any value in [37,41) gives the same rescale 60). Note the '+' node takes exactly two operands, so sums must be nested."
+ }
+]

@@ -278,9 +278,17 @@ await page.waitForTimeout(300);
 const sourceTooltip = await tooltipText();
 check('source provenance survives the production data loader', sourceTooltip.includes('源码公式') && sourceTooltip.includes('spells/fire.lua'), sourceTooltip.replace(/\n/g, ' | ').slice(0, 120));
 await resetPointer();
-await simPanel.getByTestId('estimated-value').first().hover();
+// The approximate fallback is rare now that most values are backed by a source
+// formula — it survives only where the Lua is not in this checkout (the psionic
+// addon trees). Visit one of those instead of assuming this talent has one.
+await page.goto(`${url}#/search?talent=T_SHOCKSTAR`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(900);
+await page.locator('[data-testid="talent-detail"]:visible').first().getByTestId('estimated-value').first().hover();
 await page.waitForTimeout(300);
 check('approximate fallback is labelled in the detail', (await tooltipText()).includes('反解估算'));
+await resetPointer();
+await page.goto(`${url}#/search?talent=T_FLAMESHOCK`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(900);
 check('computed damage ladder rendered', /^[\d.,\s]+$/.test(baseline) && baseline.split(',').length === 5, baseline);
 
 // Raising the power stat must raise the numbers.
@@ -354,13 +362,30 @@ check(
 // describes the export's condition instead of the current one would say 1.5 and
 // 100 — that is exactly what must not happen.
 check('tooltip reports the coefficient the slider is at', tip.includes('技能系数 1.3'), tip.replace(/\n/g, ' | ').slice(0, 110));
-check('tooltip separates the export condition from the current one', tip.includes('导出条件') && tip.includes('技能系数 1.5'), tip.replace(/\n/g, ' | ').slice(0, 110));
-// The damage value is the one that reads power, so ask it directly.
+// The sliders sit at coefficient 1.3 and power 200 just above. A tooltip that
+// describes the export's condition instead of the current one would say 1.5 and
+// 100 — that is exactly what must not happen. (This trigger is a source value,
+// so it drops the export lines entirely; the fallback keeps them, and the
+// estimated tooltip further down asserts that.)
+check(
+  'tooltip separates the current condition from the export one',
+  tip.includes('技能系数 1.3') && !tip.includes('技能系数 1.5'),
+  tip.replace(/\n/g, ' | ').slice(0, 130),
+);
+// The first source value in the text is the radius, which does not read power,
+// so find the value that does instead of trusting their order.
 await resetPointer();
-await simPanel.getByTestId('source-value').first().hover();
-await page.waitForTimeout(300);
-const damageTip = await page.locator('body > [role="tooltip"]').first().innerText();
-check('tooltip reports the power the slider is at', damageTip.includes('法术强度 200'), damageTip.replace(/\n/g, ' | ').slice(0, 110));
+const sourceValues = simPanel.getByTestId('source-value');
+const sourceCount = await sourceValues.count();
+let damageTip = '';
+for (let index = 0; index < sourceCount; index += 1) {
+  await resetPointer();
+  await sourceValues.nth(index).hover();
+  await page.waitForTimeout(250);
+  const tip = await page.locator('body > [role="tooltip"]').first().innerText();
+  if (tip.includes('法术强度')) { damageTip = tip; break; }
+}
+check('a source value that reads the power slider is present', damageTip.includes('法术强度 200'), `${sourceCount} source values | ${damageTip.replace(/\n/g, ' | ').slice(0, 120)}`);
 check('and the coefficient on the same value', damageTip.includes('技能系数 1.3'), damageTip.replace(/\n/g, ' | ').slice(0, 110));
 // A source value needs no export reference: the formula already defines it.
 check(
@@ -369,7 +394,11 @@ check(
   damageTip.replace(/\n/g, ' | ').slice(0, 130),
 );
 await resetPointer();
-await simPanel.getByTestId('estimated-value').first().hover();
+// Same reason as above: the export reference only survives on the fallback,
+// which now exists only where the Lua is missing from this checkout.
+await page.goto(`${url}#/search?talent=T_SHOCKSTAR`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(900);
+await page.locator('[data-testid="talent-detail"]:visible').first().getByTestId('estimated-value').first().hover();
 await page.waitForTimeout(300);
 const estimatedTip = await page.locator('body > [role="tooltip"]').first().innerText();
 check(

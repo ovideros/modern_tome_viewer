@@ -1,0 +1,647 @@
+[
+ {
+  "talent": "T_NEVERENDING_UNLIFE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   -1,
+   [
+    "ceil",
+    [
+     "talentLimit",
+     150,
+     20,
+     100
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/lich.lua:27",
+  "note": "getDieAt = math.ceil(self:combatTalentLimit(t, 150, 20, 100))；passives 里 die_at = -getDieAt，info 显示 die_at（负值）"
+ },
+ {
+  "talent": "T_DOOMED_FOR_ETERNITY",
+  "acronym": 0,
+  "expr": [
+   "min",
+   4,
+   [
+    "max",
+    1,
+    [
+     "floor",
+     [
+      "*",
+      [
+       "talentLevel"
+      ],
+      0.55
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/lich.lua:323",
+  "note": "getMaxShadows = math.min(4, math.max(1, math.floor(self:getTalentLevel(t) * 0.55)))，info 第 1 个 tformat 参数"
+ },
+ {
+  "talent": "T_DOOMED_FOR_ETERNITY",
+  "acronym": 2,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/undeads/lich.lua:335",
+  "note": "getHealLevel = self:getTalentLevelRaw(t)（info 第 3 个参数；第 2 个参数 level=self.level 恒定被导出跳过，故导出序号比 Lua 少 1）"
+ },
+ {
+  "talent": "T_DOOMED_FOR_ETERNITY",
+  "acronym": 3,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/undeads/lich.lua:332",
+  "note": "getBlindsideLevel = self:getTalentLevelRaw(t)，info 第 4 个 tformat 参数"
+ },
+ {
+  "talent": "T_DOOMED_FOR_ETERNITY",
+  "acronym": 4,
+  "expr": [
+   "min",
+   100,
+   [
+    "talentScale",
+    5,
+    85
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/lich.lua:326",
+  "note": "getAvoidMasterDamage = util.bound(self:combatTalentScale(t, 5, 85), 0, 100)，info 用 %d%% 直接打印（值本身即百分点）"
+ },
+ {
+  "talent": "T_BONE_ARMOUR",
+  "acronym": 0,
+  "expr": [
+   "+",
+   [
+    "+",
+    [
+     "*",
+     3.5,
+     [
+      "actor",
+      "敏捷"
+     ]
+    ],
+    [
+     "talentScale",
+     120,
+     400
+    ]
+   ],
+   [
+    "*",
+    1000,
+    [
+     "talentLimit",
+     0.1,
+     0.01,
+     0.05
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/skeleton.lua:44",
+  "note": "getShield = 3.5*self:getDex() + self:combatTalentScale(t,120,400) + self:combatTalentLimit(t,0.1,0.01,0.05)*self.max_life；info 再套 getShieldAmount（×shield_factor，恒 0）。max_life 是运行时角色状态、标题未声明，按导出基准冻结为常数 1000（15/15 精确命中）"
+ },
+ {
+  "talent": "T_RESILIENT_BONES",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "talentLimit",
+    1,
+    0.1,
+    0.4166666666666667,
+    false,
+    1.1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/skeleton.lua:69",
+  "note": "durresist = self:combatTalentLimit(t, 1, 0.1, 5/12, false, 1.1)；info 里 tformat(100 * t.durresist(self, t))。high 必须是字面数字 5/12（talentLimit 节点不递归求值 high）"
+ },
+ {
+  "talent": "T_SKELETON_REASSEMBLE",
+  "acronym": 0,
+  "expr": [
+   "+",
+   [
+    "talentScale",
+    100,
+    500
+   ],
+   [
+    "*",
+    1000,
+    [
+     "talentLimit",
+     0.1,
+     0.01,
+     0.05,
+     false,
+     1.1
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/undeads/skeleton.lua:82",
+  "note": "getHeal = self:combatTalentScale(t,100,500) + self:combatTalentLimit(t,0.1,0.01,0.05,false,1.1)*self.max_life；max_life 未在标题声明，冻结为常数 1000（与 T_BONE_ARMOUR 同一基准，15/15 命中）"
+ },
+ {
+  "talent": "T_METATEMPORAL_SPINNER",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   10,
+   50
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/occult-technomancy.lua:40",
+  "note": "getSpellpower = self:combatTalentScale(t,10,50) * perc（info 用 o=5 调用，perc=0.5+5/10=1.0）；info 第 1 个参数"
+ },
+ {
+  "talent": "T_METATEMPORAL_SPINNER",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   3,
+   10
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/occult-technomancy.lua:41",
+  "note": "getSpellCrit = self:combatTalentScale(t,3,10) * perc（o=5 → perc=1.0）；info 第 2 个参数"
+ },
+ {
+  "talent": "T_METATEMPORAL_SPINNER",
+  "acronym": 2,
+  "expr": [
+   "talentScale",
+   0.5,
+   4
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/occult-technomancy.lua:39",
+  "note": "getRegen = self:combatTalentScale(t,0.5,4) * perc（o=5 → perc=1.0）；info 第 3 个参数，%0.1f 显示"
+ },
+ {
+  "talent": "T_METATEMPORAL_SPINNER",
+  "acronym": 4,
+  "expr": [
+   "*",
+   100,
+   [
+    "/",
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ],
+    1.5
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/occult-technomancy.lua:37",
+  "note": "getPercentInc = math.sqrt(getTalentLevel/5)/1.5，info 里 *100（%d%% 显示）。第 4 个参数（getRetaliationDamage*100）已被自动提取覆盖，导出序号跳到 4"
+ },
+ {
+  "talent": "T_REALITY_BREACH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "min",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     0.05
+    ],
+    0.5
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/occult-technomancy.lua:131",
+  "note": "getSlow = math.min(self:getTalentLevel(t)*0.05, 0.5)，info 里 tformat 用 100*slow；#0（damage）已有自动公式，故导出序号从 1 开始"
+ },
+ {
+  "talent": "T_NECROTIC_BREATH",
+  "acronym": 1,
+  "expr": [
+   "statDamage",
+   "mag",
+   30,
+   550
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/spells/undead-drake.lua:152",
+  "note": "getDamage = self:combatTalentStatDamage(t,\"mag\",30,550) + (已知 T_CHROMATIC_FURY 时加的 wil 加成，模拟基准为 0)；info 第 2 个参数（第 1 个是半径，已被自动提取）"
+ },
+ {
+  "talent": "T_SOLAR_ORB",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "/",
+    [
+     "talentLimit",
+     3,
+     10,
+     6
+    ],
+    2
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/celestial/sol.lua:29",
+  "note": "getCooldownReduction = math.ceil(math.max(getRealCooldown(t)/2, (talents_cd[t.id] or 0)/2))；getRealCooldown = combatTalentLimit(t,3,10,6)（sol.lua:26）。talents_cd 为运行时冷却，基准 0 故省略"
+ },
+ {
+  "talent": "T_SOLAR_WIND",
+  "acronym": 1,
+  "expr": [
+   "-",
+   100,
+   [
+    "/",
+    100,
+    [
+     "-",
+     2,
+     [
+      "/",
+      1,
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "spellDamage",
+         20,
+         120
+        ],
+        100
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/celestial/sol.lua:121",
+  "note": "getSlow = getSlowFromSpeed(getSpeed) = 100 - 100/(2 - 1/(1+speed/100))，speed = combatTalentSpellDamage(t,20,120)（sol.lua:119/120）；info 第 2 个参数（第 1 个是速度本身，已被自动提取）"
+ },
+ {
+  "talent": "T_SUPERNOVA",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    40,
+    260
+   ],
+   2
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/celestial/cosmic.lua:174",
+  "note": "getDamage = combatTalentSpellDamage(t,40,260) * (1/2 + self:getNegative()/100)；self:getNegative() 是运行时负能量（标题未声明），导出基准为 0，故系数冻结为 1/2"
+ },
+ {
+  "talent": "T_PLASMA_BOLT",
+  "acronym": 0,
+  "expr": [
+   "spellDamage",
+   50,
+   270
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/celestial/energies.lua:170",
+  "note": "getRawDam = combatTalentSpellDamage(t,50,270)；info 第 1 个参数 dam*(1-negpart)，negpart=0（负能量基准 0）"
+ },
+ {
+  "talent": "T_CONDENSATE",
+  "acronym": 0,
+  "expr": [
+   "ceil",
+   [
+    "talentLimit",
+    4,
+    1,
+    3
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/psionic/action-at-a-distance.lua:33",
+  "note": "radius = math.ceil(self:combatTalentLimit(t, 4, 1, 3.3))。仓库源码写 high=3.3，但导出三套 15 点只在 high=3.0 时全中（见报告疑点 1），此处按导出取值"
+ },
+ {
+  "talent": "T_SUPERCONDUCTION",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "talentLimit",
+    4,
+    1,
+    3
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/psionic/action-at-a-distance.lua:161",
+  "note": "radius = math.ceil(self:combatTalentLimit(t, 4, 1, 3.3))，同上按导出 high=3.0；info 第 3 个参数"
+ },
+ {
+  "talent": "T_NEGATIVE_BIOFEEDBACK",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/psionic/action-at-a-distance.lua:227",
+  "note": "getNb = self:getTalentLevelRaw(t)，info 第 1 个参数（原始等级，三套数字相同）"
+ },
+ {
+  "talent": "T_FUNGAL_BLOOD",
+  "acronym": 0,
+  "expr": [
+   "+",
+   [
+    "*",
+    2,
+    [
+     "actor",
+     "体质"
+    ]
+   ],
+   [
+    "*",
+    1000,
+    [
+     "combatLimit",
+     [
+      "actor",
+      "体质"
+     ],
+     0.05,
+     0.005,
+     9.999968579229511,
+     0.01,
+     100.00094193111524
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/uber/const.lua:144",
+  "note": "fungalPower = self:getCon()*2 + self.max_life*self:combatStatLimit(\"con\",0.05,0.005,0.01)。combatStatLimit 等价于 combatLimit(stat,limit,low,10,high,100)（Lua 里 x_low=5.6234、x_high=31.623 是字面常量），故把 10/100 换成 5.6234^(4/3)/31.623^(4/3) 以复刻这两个字面量（否则体质 100 端点差 1）。max_life 为运行时角色状态、标题未声明，冻结为常数 1000（导出基准）"
+ },
+ {
+  "talent": "T_FUNGAL_BLOOD",
+  "acronym": 1,
+  "expr": [
+   "*",
+   1000,
+   [
+    "combatLimit",
+    [
+     "actor",
+     "体质"
+    ],
+    0.5,
+    0.1,
+    9.999968579229511,
+    0.25,
+    100.00094193111524
+   ]
+  ],
+  "source": "tome-src-full/data/talents/uber/const.lua:143",
+  "note": "healmax = self.max_life*self:combatStatLimit(\"con\",0.5,0.1,0.25)；同上用字面量锚点，max_life 冻结 1000"
+ },
+ {
+  "talent": "T_MYSTICAL_CUNNING",
+  "acronym": 0,
+  "expr": [
+   "statScale",
+   "mag",
+   20,
+   50,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:574",
+  "note": "嵌套说明：T_VULNERABILITY_POISON.info 的 damage = combatStatScale(\"mag\",20,50,0.75)（mag.lua:103 的 info 用 callTalent 渲染该技能说明），轴是魔力"
+ },
+ {
+  "talent": "T_MYSTICAL_CUNNING",
+  "acronym": 1,
+  "expr": [
+   "+",
+   10,
+   [
+    "*",
+    10,
+    [
+     "statScale",
+     "mag",
+     1,
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:1667",
+  "note": "嵌套说明：T_GRAVITIC_TRAP.getDamage = 10 + trap_effectiveness(self,t,\"mag\")*10，trap_effectiveness = (1 + TrapMastery/100)*combatStatScale(stat,1,5)（traps.lua:102）；陷阱专精等级基准 0 故前半为 1"
+ },
+ {
+  "talent": "T_TINKER_ROCKET_BOOTS",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "+",
+    0.5,
+    [
+     "/",
+     [
+      "talentLevel"
+     ],
+     2
+    ]
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:474",
+  "note": "info 第 1 个参数 = 100*(0.5 + getTalentLevel/2)；浮点序使 1.3 系数首点 1.15*100=114.9999 截断为 114，与导出一致"
+ },
+ {
+  "talent": "T_TINKER_IRON_GRIP",
+  "acronym": 0,
+  "expr": [
+   "+",
+   3,
+   [
+    "min",
+    1,
+    [
+     "max",
+     0,
+     [
+      "-",
+      [
+       "talentLevel",
+       true
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:489",
+  "note": "getDur = 3 + ((getTalentLevelRaw >= 3) and 1 or 0)，用 min/max 展开成阶跃；info 第 1 个参数"
+ },
+ {
+  "talent": "T_TINKER_SPRING_GRAPPLE",
+  "acronym": 1,
+  "expr": [
+   "+",
+   3,
+   [
+    "min",
+    1,
+    [
+     "max",
+     0,
+     [
+      "-",
+      [
+       "talentLevel",
+       true
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:526",
+  "note": "getDur = 3 + ((getTalentLevelRaw >= 3) and 1 or 0)，用 min/max 展开成阶跃；info 第 2 个参数（第 1 个是 weaponDamage*100，已被自动提取）"
+ },
+ {
+  "talent": "T_TINKER_ARCANE_DISRUPTION_WAVE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentLimit",
+    10,
+    3.5,
+    5.6
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:925",
+  "note": "getduration = math.floor(self:combatTalentLimit(t, 10, 3.5, 6.25))；仓库源码 high=6.25 与导出 15 点不符，按导出拟合为 high=5.6（见报告疑点 2）"
+ },
+ {
+  "talent": "T_TINKER_INCENDIARY_SHELL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:1459",
+  "note": "info 第 1 个参数 = math.floor(self:getTalentLevel(t))（爆炸弹数）"
+ },
+ {
+  "talent": "T_TINKER_VOLTAIC_SHELL",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:1695",
+  "note": "info 第 1 个参数 = math.floor(self:getTalentLevel(t))（至多 N 个邻近敌人）"
+ },
+ {
+  "talent": "T_TURRET_FLAMETHROWER",
+  "acronym": 0,
+  "expr": [
+   "steamDamage",
+   10,
+   100
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:449",
+  "note": "getBaseDamage = self:combatTalentSteamDamage(t,10,100)（无 EFF_UPGRADE 时 getDamage 即此值）；info 第 2 个参数（第 1 个半径恒 3 被导出跳过）"
+ },
+ {
+  "talent": "T_TURRET_FLAME_VORTEX",
+  "acronym": 0,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       10,
+       [
+        "power",
+        "steampower"
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_TURRET_FLAMETHROWER"
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "*",
+      110,
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    100
+   ],
+   1.04
+  ],
+  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:495",
+  "note": "getDamage 转发到 T_TURRET_FLAMETHROWER 的 getDamage → combatTalentSteamDamage(t,10,100)，但等级取的是火焰喷射器的等级（talentRef 基准 0）；按文档「已验证的等价展开」把等级 0 代入 damage 家族（sqrt0=0 → 因子 0.2）"
+ }
+]

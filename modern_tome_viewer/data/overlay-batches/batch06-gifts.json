@@ -1,0 +1,345 @@
+[
+ {
+  "talent": "T_RITCH_FLAMESPITTER",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:426",
+  "note": "summonTime = floor(combatScale(getTalentLevel(t), 5, 0, 10, 5)) + callTalent(T_RESILIENCE,\"incDur\")；combatScale 缺省 power=0.5。导出基准未点亮 Resilience，incDur 数字上恒为 -1（同 summon-melee，见报告疑点）"
+ },
+ {
+  "talent": "T_RITCH_FLAMESPITTER",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:421",
+  "note": "incStats.wil = 15 + mp*2*combatTalentScale(t,0.2,1,0.75)；info 传 fake=true 旁路 mindCrit，mp 即精神强度"
+ },
+ {
+  "talent": "T_RITCH_FLAMESPITTER",
+  "acronym": 2,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 1.7], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:422",
+  "note": "incStats.cun = 15 + mp*1.7*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_HYDRA",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:543",
+  "note": "summonTime 同 T_RITCH_FLAMESPITTER（5,0,10,5），导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_HYDRA",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 1.6], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:547",
+  "note": "incStats.wil = 15 + mp*1.6*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_HYDRA",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:549",
+  "note": "incStats.con = 10 + combatTalentScale(t,2,10,0.75)；不含精神强度，标题亦未声明"
+ },
+ {
+  "talent": "T_RIMEBARK",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:660",
+  "note": "summonTime 同 T_RITCH_FLAMESPITTER（5,0,10,5）"
+ },
+ {
+  "talent": "T_RIMEBARK",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:664",
+  "note": "incStats.wil = 15 + mp*2*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_RIMEBARK",
+  "acronym": 2,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 1.6], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:665",
+  "note": "incStats.cun = 15 + mp*1.6*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_FIRE_DRAKE",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 2, 0, 7, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:822",
+  "note": "summonTime 用火龙专用锚点 combatScale(tl, 2, 0, 7, 5)，与同文件其它召唤 (5,0,10,5) 不同；导出侧 incDur 仍为 -1"
+ },
+ {
+  "talent": "T_FIRE_DRAKE",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:826",
+  "note": "incStats.str = 15 + mp*2*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_FIRE_DRAKE",
+  "acronym": 2,
+  "expr": ["+", 20, ["*", ["*", ["power", "精神强度"], 1.5], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-distance.lua:828",
+  "note": "incStats.con = 20 + mp*1.5*combatTalentScale(t,0.2,1,0.75)"
+ },
+ {
+  "talent": "T_TURTLE",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:119",
+  "note": "summonTime = floor(combatScale(tl, 5, 0, 10, 5)) + incDur；导出侧 incDur 表现为常数 -1"
+ },
+ {
+  "talent": "T_TURTLE",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 2.1], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:123",
+  "note": "incStats.con = 15 + mp*2.1*combatTalentScale(t,0.2,1,0.75)；info:tformat(summonTime, con, dex)"
+ },
+ {
+  "talent": "T_TURTLE",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:125",
+  "note": "incStats.dex = 10 + combatTalentScale(t,2,10,0.75)；不含精神强度"
+ },
+ {
+  "talent": "T_SPIDER",
+  "acronym": 0,
+  "expr": ["-", ["floor", ["combatScale", ["talentLevel"], 5, 0, 10, 5]], 1],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:249",
+  "note": "summonTime 同 T_TURTLE（5,0,10,5）"
+ },
+ {
+  "talent": "T_SPIDER",
+  "acronym": 1,
+  "expr": ["+", 15, ["*", ["*", ["power", "精神强度"], 2], ["talentScale", 0.2, 1, 0.75]]],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:253",
+  "note": "incStats.dex = 15 + mp*2*combatTalentScale(t,0.2,1,0.75)；info:tformat(summonTime, dex, str, con)，con=10 为常数故导出未列为 acronym"
+ },
+ {
+  "talent": "T_SPIDER",
+  "acronym": 2,
+  "expr": ["+", 10, ["talentScale", 2, 10, 0.75]],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:255",
+  "note": "incStats.str = 10 + combatTalentScale(t,2,10,0.75)"
+ },
+ {
+  "talent": "T_PSIBLADES",
+  "acronym": 0,
+  "expr": ["+", 1.076, ["*", 0.324, ["sqrt", ["talentLevel"]]]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:38",
+  "note": "getStatmult = 1.076 + 0.324*sqrt(getTalentLevel(t))（有效等级，三套系数不同）"
+ },
+ {
+  "talent": "T_PSIBLADES",
+  "acronym": 1,
+  "expr": ["+", 0.65, ["*", 0.51, ["sqrt", ["talentLevel"]]]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:39",
+  "note": "getAPRmult = 0.65 + 0.51*sqrt(getTalentLevel(t))"
+ },
+ {
+  "talent": "T_PSIBLADES",
+  "acronym": 2,
+  "expr": ["+", 1.076, ["*", 0.324, ["sqrt", ["talentLevel"]]]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:37",
+  "note": "getPowermult 与 getStatmult 同式（1.076 + 0.324*sqrt(tl)）"
+ },
+ {
+  "talent": "T_PSIBLADES",
+  "acronym": 3,
+  "expr": ["*", 100, ["/", ["sqrt", ["/", ["talentLevel"], 5]], 1.5]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:41",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_THORN_GRAB",
+  "acronym": 1,
+  "expr": ["/", ["mindDamage", 15, 250], 10],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:104",
+  "note": "combatTalentMindDamage(t,15,250)/10 * get_mindstar_power_mult(self)；导出基准未装备双精神法杖，mult 恒为 1（get_mindstar_power_mult 在 hasPsiblades 为空时 return 1），故冻结为系数 1"
+ },
+ {
+  "talent": "T_LEAVES_TIDE",
+  "acronym": 0,
+  "expr": ["+", 5, ["mindDamage", 5, 35]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:121",
+  "note": "getDamage = 5 + combatTalentMindDamage(t,5,35)*get_mindstar_power_mult(self)，mult=1（无精神法杖）"
+ },
+ {
+  "talent": "T_LEAVES_TIDE",
+  "acronym": 1,
+  "expr": ["min", 40, ["max", 10, ["+", 10, ["mindDamage", 3, 25]]]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:122",
+  "note": "getChance = util.bound(10 + combatTalentMindDamage(t,3,25), 10, 40) * get_mindstar_power_mult(self,90)；mult(div=90)=1。1.5 系数最后一点点被上限 40 夹住，故 bound 必须保留"
+ },
+ {
+  "talent": "T_NATURE_S_EQUILIBRIUM",
+  "acronym": 1,
+  "expr": ["+", 50, ["mindDamage", 5, 250]],
+  "source": "tome-src-full/data/talents/gifts/mindstar-mastery.lua:168",
+  "note": "getMaxDamage = 50 + combatTalentMindDamage(t,5,250)*get_mindstar_power_mult(self)，mult=1"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 2,
+  "expr": ["combatLimit", ["*", 3, ["talentLevel"]], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=1,Tiny) = combatLimit(tl*size_category/size, 50, 13, 1, 25, 5)；size_category 是玩家运行时尺寸，导出基准为 3（Medium），故系数冻结为 3/1"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 3,
+  "expr": ["combatLimit", ["*", 1.5, ["talentLevel"]], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=2,Small)，size_category=3 → 3/2=1.5"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 4,
+  "expr": ["combatLimit", ["talentLevel"], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=3,Medium)，size_category=3 → 3/3=1"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 5,
+  "expr": ["combatLimit", ["*", 0.75, ["talentLevel"]], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=4,Big) → 3/4=0.75"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 6,
+  "expr": ["combatLimit", ["*", 0.6, ["talentLevel"]], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=5,Huge) → 3/5=0.6"
+ },
+ {
+  "talent": "T_SWALLOW",
+  "acronym": 7,
+  "expr": ["combatLimit", ["*", 0.5, ["talentLevel"]], 50, 13, 1, 25, 5],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:35",
+  "note": "maxSwallow(size=6,Gargantuan) → 3/6=0.5"
+ },
+ {
+  "talent": "T_SAND_BREATH",
+  "acronym": 1,
+  "expr": ["statDamage", "str", 10, 400],
+  "source": "tome-src-full/data/talents/gifts/sand-drake.lua:191",
+  "note": "getDamage = combatTalentStatDamage(t,\"str\",10,400) + (knowTalent(T_CHROMATIC_FURY) and combatTalentStatDamage(t,\"wil\",10,400) or 0)。导出基准未点亮 Chromatic Fury（标题只声明「力量」、无「意志」），bonus 项为 0 故省略"
+ },
+ {
+  "talent": "T_RESOLVE",
+  "acronym": 0,
+  "expr": ["+", 5, ["max", ["mindDamage", 15, 30], ["physicalDamage", 15, 30]]],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:31",
+  "note": "getResist = 5 + combatTalentPhysicalMindDamage(t,15,30)，后者 = max(combatTalentMindDamage, combatTalentPhysicalDamage)（antimagic.lua:20-22）。导出基准两项强度均为 100，故 max 两支等值"
+ },
+ {
+  "talent": "T_AURA_OF_SILENCE",
+  "acronym": 0,
+  "expr": ["max", ["mindDamage", 1, 110], ["physicalDamage", 1, 110]],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:77",
+  "note": "getDamage = combatTalentPhysicalMindDamage(self,t,1,110)"
+ },
+ {
+  "talent": "T_ANTIMAGIC_SHIELD",
+  "acronym": 0,
+  "expr": ["max", ["mindDamage", 20, 85], ["physicalDamage", 20, 85]],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:134",
+  "note": "getMax = combatTalentPhysicalMindDamage(self,t,20,85)，再乘 (1+T_TRICKY_DEFENSES.shieldmult)；导出基准未点亮 Tricky Defenses（标题未声明该输入），乘数为 1"
+ },
+ {
+  "talent": "T_MANA_CLASH",
+  "acronym": 0,
+  "expr": ["max", ["mindDamage", 10, 460], ["physicalDamage", 10, 460]],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:194",
+  "note": "base = combatTalentPhysicalMindDamage(self,t,10,460)；info:tformat(mana=base, vim=base/2, positive=base/4, is_adept)"
+ },
+ {
+  "talent": "T_MANA_CLASH",
+  "acronym": 1,
+  "expr": ["/", ["max", ["mindDamage", 10, 460], ["physicalDamage", 10, 460]], 2],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:222",
+  "note": "vim = base / 2（源码先算 base 再除，信息不丢；不可写成 mindDamage(5,230)/2 之类）"
+ },
+ {
+  "talent": "T_MANA_CLASH",
+  "acronym": 2,
+  "expr": ["/", ["max", ["mindDamage", 10, 460], ["physicalDamage", 10, 460]], 4],
+  "source": "tome-src-full/data/talents/gifts/antimagic.lua:223",
+  "note": "positive = base / 4（negative 与 positive 同值，导出只列一个 acronym）"
+ },
+ {
+  "talent": "T_STONESHIELD",
+  "acronym": 0,
+  "expr": ["*", 100, ["talentLimit", 1, 0.08, 0.165]],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:35",
+  "note": "getValues 第 1 个 m = combatTalentLimit(t, 1, 0.08, 0.165)；info 取 100*m"
+ },
+ {
+  "talent": "T_STONESHIELD",
+  "acronym": 1,
+  "expr": ["talentScale", 6, 10],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:36",
+  "note": "getValues 第 2 个 mm = combatTalentScale(t, 6, 10)（power 缺省 0.5）"
+ },
+ {
+  "talent": "T_STONESHIELD",
+  "acronym": 2,
+  "expr": ["*", 100, ["talentLimit", 0.5, 0.075, 0.2]],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:37",
+  "note": "getValues 第 3 个 e = combatTalentLimit(t, 0.5, 0.075, 0.2)；info 取 100*e"
+ },
+ {
+  "talent": "T_STONESHIELD",
+  "acronym": 3,
+  "expr": ["talentScale", 5, 9, "log"],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:38",
+  "note": "getValues 第 4 个 em = combatTalentScale(t, 5, 9, \"log\")"
+ },
+ {
+  "talent": "T_STONESHIELD",
+  "acronym": 4,
+  "expr": ["*", 100, ["/", ["sqrt", ["/", ["talentLevel"], 5]], 1.5]],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:41",
+  "note": "getPercentInc = sqrt(tl/5)/1.5，info 取 inc*100；与 T_PSIBLADES#3 同式。tformat 里 damage=30 是常数，不占 acronym 槽"
+ },
+ {
+  "talent": "T_STONE_FORTRESS",
+  "acronym": 0,
+  "expr": ["talentScale", 60, 100, "log"],
+  "source": "tome-src-full/data/talents/gifts/earthen-power.lua:59",
+  "note": "getPercent = combatTalentScale(t, 60, 100, \"log\")（旧版 combatTalentLimit 写法已被注释掉）"
+ },
+ {
+  "talent": "T_STONE_VINES",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 4.5, 6.5]],
+  "source": "tome-src-full/data/talents/gifts/earthen-vines.lua:30",
+  "note": "getTalentRadius = floor(combatTalentScale(t, 4.5, 6.5))，info 第 1 个参数"
+ },
+ {
+  "talent": "T_STONE_VINES",
+  "acronym": 1,
+  "expr": ["statDamage", "wil", 6, 80],
+  "source": "tome-src-full/data/talents/gifts/earthen-vines.lua:31",
+  "note": "getValues 第 2 个 dam = combatTalentStatDamage(t, \"wil\", 6, 80)"
+ },
+ {
+  "talent": "T_STONE_VINES",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 5, 9]],
+  "source": "tome-src-full/data/talents/gifts/earthen-vines.lua:31",
+  "note": "getValues 第 1 个 turns = floor(combatTalentScale(t, 5, 9))。info 的 xs（奥术伤害串）在导出基准为 nil（未点亮 Eldritch Vines），未占 acronym 槽"
+ },
+ {
+  "talent": "T_STONE_VINES",
+  "acronym": 3,
+  "expr": ["+", 4, ["floor", ["talentScale", 4.5, 6.5]]],
+  "source": "tome-src-full/data/talents/gifts/earthen-vines.lua:74",
+  "note": "info 第 5 个参数 = rad + 4（脱离距离）"
+ }
+]

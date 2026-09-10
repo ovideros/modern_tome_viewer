@@ -1,0 +1,1278 @@
+[
+ {
+  "talent": "T_BLOODBATH",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   1.7,
+   5
+  ],
+  "source": "tome-src-full/data/talents/techniques/bloodthirst.lua:59",
+  "note": "getRegen = combatTalentScale(t,1.7,5)"
+ },
+ {
+  "talent": "T_BLOODBATH",
+  "acronym": 5,
+  "expr": [
+   "talentScale",
+   1.7,
+   5
+  ],
+  "source": "tome-src-full/data/talents/techniques/bloodthirst.lua:60",
+  "note": "max_regen/5 = 5*combatTalentScale(t,1.7,5)/5"
+ },
+ {
+  "talent": "T_BOW_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/bow.lua:26",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_SLING_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/sling.lua:26",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_SLING_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "/",
+    [
+     "talentLevel"
+    ],
+    2
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/sling.lua:27",
+  "note": "ammo_mastery_reload = floor(getTalentLevel(t)/2)"
+ },
+ {
+  "talent": "T_MASTER_MARKSMAN",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/marksmanship.lua:33",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_SKIRMISHER_SLING_SUPREMACY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/skirmisher-slings.lua:24",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_UNARMED_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    100,
+    [
+     "sqrt",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   1.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/unarmed-training.lua:67",
+  "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_BLOODY_BUTCHER",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      5,
+      [
+       "actor",
+       "力量"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   0,
+   40,
+   35
+  ],
+  "source": "tome-src-full/data/talents/techniques/bloodthirst.lua:84",
+  "note": "getDam = combatScale(getStr(5,true)*tl,5,0,40,35)；导出模型 getStr(base,true)=base*stat/100"
+ },
+ {
+  "talent": "T_MULTISHOT",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   2.8,
+   4.3,
+   "log"
+  ],
+  "source": "tome-src-full/data/talents/techniques/sling.lua:124",
+  "note": "getShots(fake=true) = combatTalentScale(t,2.8,4.3,'log')"
+ },
+ {
+  "talent": "T_SLOW_MOTION",
+  "acronym": 0,
+  "expr": [
+   "min",
+   90,
+   [
+    "+",
+    15,
+    [
+     "*",
+     [
+      "/",
+      [
+       "*",
+       10,
+       [
+        "actor",
+        "敏捷"
+       ]
+      ],
+      100
+     ],
+     [
+      "talentLevel"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/field-control.lua:140",
+  "note": "math.min(90, 15 + getDex(10,true)*tl)"
+ },
+ {
+  "talent": "T_THROWING_KNIVES",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "talentLimit",
+    10,
+    4,
+    7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:127",
+  "note": "range = floor(combatTalentLimit(t,10,4,7))"
+ },
+ {
+  "talent": "T_SUNDER_ARMS",
+  "acronym": 1,
+  "expr": [
+   "*",
+   3,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/2hweapon.lua:353",
+  "note": "power = 3*self:getTalentLevel(t)"
+ },
+ {
+  "talent": "T_BULL_SHOT",
+  "acronym": 1,
+  "expr": [
+   "+",
+   1,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/agility.lua:199",
+  "note": "getDist = tl>=3 ? 2 : 1；阶跃用 1+min(1,floor(tl/3)) 展开"
+ },
+ {
+  "talent": "T_SKIRMISHER_BASH_AND_SMASH",
+  "acronym": 1,
+  "expr": [
+   "+",
+   2,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/buckler-training.lua:89",
+  "note": "getDist = tl>=3 ? 3 : 2；阶跃展开同 Bull Shot"
+ },
+ {
+  "talent": "T_UNFLINCHING_RESOLVE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   [
+    "combatLimit",
+    [
+     "actor",
+     "体质"
+    ],
+    1,
+    0.28,
+    10,
+    0.745,
+    100
+   ],
+   [
+    "talentLimit",
+    100,
+    45,
+    80
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/conditioning.lua:56",
+  "note": "combatStatLimit('con',1,.28,.745)*combatTalentLimit(t,100,45,80)"
+ },
+ {
+  "talent": "T_GRAPPLING_STANCE",
+  "acronym": 0,
+  "expr": [
+   "/",
+   [
+    "*",
+    20,
+    [
+     "actor",
+     "力量"
+    ]
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/grappling.lua:32",
+  "note": "getSave = getStr(20,true)"
+ },
+ {
+  "talent": "T_GRAPPLING_STANCE",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "*",
+    10,
+    [
+     "actor",
+     "力量"
+    ]
+   ],
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/grappling.lua:33",
+  "note": "getDamage = getStr(10,true)"
+ },
+ {
+  "talent": "T_STEADY_SHOT",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.0,
+    1.8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/archery.lua:152",
+  "note": "100*getDamage = 100*combatTalentWeaponDamage(t,1.0,1.8)"
+ },
+ {
+  "talent": "T_STEADY_SHOT",
+  "acronym": 1,
+  "expr": [
+   "min",
+   100,
+   [
+    "+",
+    20,
+    [
+     "floor",
+     [
+      "talentScale",
+      2,
+      10
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/archery.lua:155",
+  "note": "min(100, 15+getBonusMark), getBonusMark = 5+floor(combatTalentScale(t,2,10))"
+ },
+ {
+  "talent": "T_CRIPPLING_SHOT",
+  "acronym": 1,
+  "expr": [
+   "min",
+   40,
+   [
+    "max",
+    10,
+    [
+     "*",
+     15,
+     [
+      "talentLevel"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/archery.lua:764",
+  "note": "bound(combatAttack()*0.15*tl,0.1,0.4)*100；导出模型 combatAttack()=精准=100，标题未把精准算作已声明输入，故冻结为 15*tl"
+ },
+ {
+  "talent": "T_VENOMOUS_AMMUNITION",
+  "acronym": 1,
+  "expr": [
+   "^",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      [
+       "+",
+       20,
+       [
+        "power",
+        "physical power"
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          [
+           "talentRef",
+           "T_EXOTIC_MUNITIONS"
+          ]
+         ],
+         1
+        ]
+       ]
+      ]
+     ],
+     [
+      "*",
+      120,
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          5
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    180
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/techniques/munitions.lua:220",
+  "note": "damDesc(NATURE,getPoisonDamage); getPoisonDamage=callTalent(T_EXOTIC_MUNITIONS.getPoisonDamage)=combatTalentPhysicalDamage(t,20,180) at that talent level（导出基准 0）"
+ },
+ {
+  "talent": "T_CRUSHING_HOLD",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ],
+   [
+    "*",
+    100,
+    [
+     "^",
+     [
+      "*",
+      [
+       "/",
+       [
+        "*",
+        [
+         "+",
+         0.05,
+         100
+        ],
+        [
+         "+",
+         1,
+         [
+          "*",
+          0.8,
+          [
+           "-",
+           [
+            "sqrt",
+            [
+             "talentLevel"
+            ]
+           ],
+           1
+          ]
+         ]
+        ]
+       ],
+       [
+        "*",
+        [
+         "+",
+         0.05,
+         100
+        ],
+        [
+         "+",
+         1,
+         [
+          "*",
+          0.8,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
+        ]
+       ]
+      ],
+      0.45
+     ],
+     1.04
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/grappling.lua:120",
+  "note": "tl>=5 时 slow*100 = 100*combatTalentPhysicalDamage(t,0.05,0.45)；标题未声明 physical power，按导出默认 100 冻结并手动展开"
+ },
+ {
+  "talent": "T_TAKE_DOWN",
+  "acronym": 1,
+  "expr": [
+   "physicalDamage",
+   10,
+   400
+  ],
+  "source": "tome-src-full/data/talents/techniques/grappling.lua:241",
+  "note": "damDesc(PHYSICAL,getSlam)，getSlam = combatTalentPhysicalDamage(t,10,400)*getUnarmedTrainingBonus；未学 T_UNARMED_MASTERY 时 bonus=1"
+ },
+ {
+  "talent": "T_QUICK_RECOVERY",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   0.6,
+   2.5,
+   0.75
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-techniques.lua:188",
+  "note": "getStamRecover = combatTalentScale(t,0.6,2.5,0.75)"
+ },
+ {
+  "talent": "T_UNENDING_FRENZY",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   5,
+   20,
+   0.5
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-techniques.lua:244",
+  "note": "getStamRecover = combatTalentScale(t,5,20,0.5)"
+ },
+ {
+  "talent": "T_HEARTSEEKER",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    1.0,
+    1.7
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/dualweapon.lua:307",
+  "note": "dam = 100*getDamage = 100*combatTalentWeaponDamage(t,1.0,1.7)"
+ },
+ {
+  "talent": "T_HEARTSEEKER",
+  "acronym": 1,
+  "expr": [
+   "*",
+   50,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       [
+        "/",
+        [
+         "log",
+         [
+          "/",
+          [
+           "-",
+           30,
+           50
+          ],
+          [
+           "-",
+           10,
+           50
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          6.5
+         ],
+         [
+          "sqrt",
+          1.3
+         ]
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        0,
+        [
+         "-",
+         [
+          "*",
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ],
+          [
+           "log",
+           [
+            "-",
+            1,
+            [
+             "/",
+             30,
+             50
+            ]
+           ]
+          ]
+         ],
+         [
+          "*",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             30,
+             50
+            ],
+            [
+             "-",
+             10,
+             50
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         1.3
+        ],
+        [
+         "sqrt",
+         6.5
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/dualweapon.lua:308",
+  "note": "getCrit = combatTalentLimit(t,50,10,30)，按 Lua 原式 exp/log 展开：锚点 tl=1.3/6.5 处 Lua 浮点给出 9.999999999999998，导出 %d 截断为 9/29；sim 的 talentLimit 节点是等价闭式但恰好得 10/30，故用原式"
+ },
+ {
+  "talent": "T_DUAL_WEAPON_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "-",
+   100,
+   [
+    "*",
+    100,
+    [
+     "talentLimit",
+     1,
+     0.6,
+     0.85
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/duelist.lua:60",
+  "note": "info: 100 - getoffmult*100，getoffmult = combatTalentLimit(t,1,0.6,0.85)"
+ },
+ {
+  "talent": "T_DUAL_WEAPON_MASTERY",
+  "acronym": 2,
+  "expr": [
+   "min",
+   100,
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "actor",
+      "敏捷"
+     ]
+    ],
+    90,
+    15,
+    20,
+    60,
+    250
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/duelist.lua:39",
+  "note": "min(100, combatLimit(tl*getDex(),90,15,20,60,250))；导出基线无 EFF_FEINT"
+ },
+ {
+  "talent": "T_BERSERKER",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      7,
+      [
+       "actor",
+       "敏捷"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   0,
+   40,
+   35
+  ],
+  "source": "tome-src-full/data/talents/techniques/2hweapon.lua:73",
+  "note": "getAtk = combatScale(getDex(7,true)*tl,5,0,40,35)"
+ },
+ {
+  "talent": "T_BERSERKER",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      7,
+      [
+       "actor",
+       "力量"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   0,
+   40,
+   35
+  ],
+  "source": "tome-src-full/data/talents/techniques/2hweapon.lua:72",
+  "note": "getDam = combatScale(getStr(7,true)*tl,5,0,40,35)"
+ },
+ {
+  "talent": "T_BERSERKER_RAGE",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      7,
+      [
+       "actor",
+       "敏捷"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   0,
+   40,
+   35
+  ],
+  "source": "tome-src-full/data/talents/techniques/strength-of-the-berserker.lua:72",
+  "note": "getAtk = combatScale(getDex(7,true)*tl,5,0,40,35)"
+ },
+ {
+  "talent": "T_BERSERKER_RAGE",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      7,
+      [
+       "actor",
+       "力量"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   5,
+   0,
+   40,
+   35
+  ],
+  "source": "tome-src-full/data/talents/techniques/strength-of-the-berserker.lua:71",
+  "note": "getDam = combatScale(getStr(7,true)*tl,5,0,40,35)"
+ },
+ {
+  "talent": "T_CLOSE_COMBAT_MANAGEMENT",
+  "acronym": 0,
+  "expr": [
+   "combatScale",
+   [
+    "*",
+    [
+     "/",
+     [
+      "*",
+      25,
+      [
+       "actor",
+       "敏捷"
+      ]
+     ],
+     100
+    ],
+    [
+     "talentLevel"
+    ]
+   ],
+   0,
+   0,
+   35,
+   125,
+   0.5,
+   0,
+   1
+  ],
+  "source": "tome-src-full/data/talents/techniques/dualweapon.lua:113",
+  "note": "getReflectArmour = combatScale(tl*getDex(25,true),0,0,35,125,0.5,0,1)"
+ },
+ {
+  "talent": "T_PRECISE_STRIKES",
+  "acronym": 1,
+  "expr": [
+   "+",
+   [
+    "+",
+    [
+     "statScale",
+     "dex",
+     0.4,
+     4,
+     0.75
+    ],
+    4
+   ],
+   [
+    "*",
+    [
+     "*",
+     [
+      "/",
+      4,
+      [
+       "-",
+       [
+        "sqrt",
+        5
+       ],
+       1
+      ]
+     ],
+     [
+      "statScale",
+      "dex",
+      0.4,
+      4,
+      0.75
+     ]
+    ],
+    [
+     "-",
+     [
+      "sqrt",
+      [
+       "talentLevel"
+      ]
+     ],
+     1
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/combat-techniques.lua:106",
+  "note": "getCrit = combatTalentScale(t, dex, dex*5, 0.5, 4)，dex = combatStatScale('dex',10/25,100/25,0.75)；因 talentScale 的 low/high 不吃嵌套表达式，手写展开"
+ },
+ {
+  "talent": "T_TOUCH_OF_DEATH",
+  "acronym": 1,
+  "expr": [
+   "*",
+   20,
+   [
+    "+",
+    1,
+    [
+     "+",
+     [
+      "^",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "talentLimit",
+         100,
+         25,
+         40
+        ],
+        100
+       ]
+      ],
+      2
+     ],
+     [
+      "+",
+      [
+       "^",
+       [
+        "+",
+        1,
+        [
+         "/",
+         [
+          "talentLimit",
+          100,
+          25,
+          40
+         ],
+         100
+        ]
+       ],
+       3
+      ],
+      [
+       "^",
+       [
+        "+",
+        1,
+        [
+         "/",
+         [
+          "talentLimit",
+          100,
+          25,
+          40
+         ],
+         100
+        ]
+       ],
+       4
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/unarmed-discipline.lua:175",
+  "note": "finaldam = damage+damage*u^2+damage*u^3+damage*u^4，u=1+getMult/100；damage=getDamage*100=20（getStrikingStyle 未开姿态时为 0，常数）"
+ },
+ {
+  "talent": "T_LAST_STAND",
+  "acronym": 1,
+  "expr": [
+   "+",
+   [
+    "statDamage",
+    "con",
+    30,
+    500
+   ],
+   [
+    "*",
+    1000,
+    [
+     "talentLimit",
+     1,
+     0.02,
+     0.1
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/weaponshield.lua:321",
+  "note": "lifebonus = combatTalentStatDamage(t,'con',30,500) + max_life*combatTalentLimit(t,1,0.02,0.10)；max_life 未在标题声明，按导出角色 1000 冻结"
+ },
+ {
+  "talent": "T_LAST_STAND",
+  "acronym": 2,
+  "expr": [
+   "-",
+   0,
+   [
+    "+",
+    [
+     "statDamage",
+     "con",
+     30,
+     500
+    ],
+    [
+     "*",
+     1000,
+     [
+      "talentLimit",
+      1,
+      0.02,
+      0.1
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/weaponshield.lua:362",
+  "note": "info 里 die_at 打印 -lifebonus"
+ },
+ {
+  "talent": "T_RIPOSTE",
+  "acronym": 2,
+  "expr": [
+   "*",
+   [
+    "+",
+    10,
+    [
+     "*",
+     40,
+     [
+      "+",
+      [
+       "*",
+       0.5,
+       [
+        "/",
+        [
+         "actor",
+         "敏捷"
+        ],
+        100
+       ]
+      ],
+      [
+       "*",
+       0.5,
+       [
+        "/",
+        [
+         "talentLevel"
+        ],
+        6.5
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    "-",
+    1,
+    [
+     "/",
+     [
+      "log10",
+      [
+       "*",
+       2,
+       [
+        "+",
+        10,
+        [
+         "*",
+         40,
+         [
+          "+",
+          [
+           "*",
+           0.5,
+           [
+            "/",
+            [
+             "actor",
+             "敏捷"
+            ],
+            100
+           ]
+          ],
+          [
+           "*",
+           0.5,
+           [
+            "/",
+            [
+             "talentLevel"
+            ],
+            6.5
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     7
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/weaponshield.lua:82",
+  "note": "combatTalentIntervalDamage(t,'dex',10,50)：v=10+40*(0.5*stat/100+0.5*tl/6.5)，再 v*(1-log10(2v)/7)；后两步 ^(1/1.04)+rescaleDamage(^1.04) 相消"
+ },
+ {
+  "talent": "T_STEP_UP",
+  "acronym": 0,
+  "expr": [
+   "min",
+   100,
+   [
+    "*",
+    [
+     "talentLevel",
+     true
+    ],
+    20
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/battle-tactics.lua:52",
+  "note": "math.min(100, getTalentLevelRaw(t)*20)，用原始等级"
+ },
+ {
+  "talent": "T_BATTLE_CRY",
+  "acronym": 1,
+  "expr": [
+   "*",
+   7,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/warcries.lua:123",
+  "note": "power = 7*self:getTalentLevel(t)"
+ }
+]

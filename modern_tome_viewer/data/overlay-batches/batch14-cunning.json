@@ -1,0 +1,1868 @@
+[
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "min",
+   3,
+   [
+    "max",
+    1,
+    [
+     "talentLevel",
+     true
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:566",
+  "note": "getNbTraps = util.bound(getTalentLevelRaw(t),1,3)"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "min",
+   5,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:665",
+  "note": "info: math.min(5, self:getTalentLevelRaw(t))"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 2,
+  "expr": [
+   "max",
+   1,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.25
+     ]
+    ],
+    10,
+    3.75,
+    75,
+    125,
+    0.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:73",
+  "note": "detect_power = getPower = trapPower = max(1, combatScale(tl*getCun(25,true),10,3.75,75,125,0.25))"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 3,
+  "expr": [
+   "*",
+   1.25,
+   [
+    "max",
+    1,
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "talentLevel"
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       0.25
+      ]
+     ],
+     10,
+     3.75,
+     75,
+     125,
+     0.25
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:636",
+  "note": "disarm_power = t.getPower(self,t)*1.25"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 4,
+  "expr": [
+   "talentScale",
+   25,
+   100
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:564",
+  "note": "getTrapMastery = combatTalentScale(t,25,100)"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 5,
+  "expr": [
+   "min",
+   100,
+   [
+    "max",
+    0,
+    [
+     "*",
+     10,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "talentScale",
+         25,
+         100
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:102",
+  "note": "trap_effectiveness(cun)*10 = (1+getTrapMastery/100)*combatStatScale(\"cun\",1,5)*10"
+ },
+ {
+  "talent": "T_TRAP_MASTERY",
+  "acronym": 6,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    9,
+    13
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:567",
+  "note": "getDuration = floor(combatTalentScale(t,9,13))"
+ },
+ {
+  "talent": "T_LURE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    4,
+    8
+   ]
+  ],
+  "source": "tome-src-full/data/talents/gifts/summon-utility.lua:28",
+  "note": "info rad = self.T_TAUNT.radius(self,t) -> floor(combatTalentScale(t,4,8)) (technique/other Taunt)"
+ },
+ {
+  "talent": "T_TRAP_LAUNCHER",
+  "acronym": 1,
+  "expr": [
+   "min",
+   25,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:763",
+  "note": "trapStealth = math.min(25, self:getTalentLevel(t))"
+ },
+ {
+  "talent": "T_TRAP_PRIMING",
+  "acronym": 0,
+  "expr": [
+   "talentLevel",
+   true
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:850",
+  "note": "info: self:getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_TRAP_PRIMING",
+  "acronym": 1,
+  "expr": [
+   "+",
+   [
+    "*",
+    38.83281572999747,
+    [
+     "sqrt",
+     [
+      "talentLevel"
+     ]
+    ]
+   ],
+   -26.83281572999747
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:777",
+  "note": "getTrapMastery = combatTalentScale(t,12,60); expanded in Lua order (m=48/(sqrt5-1), b=12-m) so TL5 truncates to 59"
+ },
+ {
+  "talent": "T_TRAP_PRIMING",
+  "acronym": 2,
+  "expr": [
+   "min",
+   100,
+   [
+    "max",
+    0,
+    [
+     "*",
+     10,
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "/",
+        [
+         "talentScale",
+         12,
+         60
+        ],
+        100
+       ]
+      ],
+      [
+       "statScale",
+       "cun",
+       1,
+       5
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/traps.lua:102",
+  "note": "stealth_chance = trap_effectiveness(cun)*10 with Trap Priming mastery"
+ },
+ {
+  "talent": "T_NUMBING_POISON",
+  "acronym": 0,
+  "expr": [
+   "*",
+   35,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "actor",
+          "邪恶毒素 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ]
+       ],
+       -0.4918259386509031
+      ],
+      0.001152060740653239
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:417",
+  "note": "Numbing getEffect = combatTalentLimit(getTalentLevel(T_VILE_POISONS),35,15,25)"
+ },
+ {
+  "talent": "T_INSIDIOUS_POISON",
+  "acronym": 0,
+  "expr": [
+   "*",
+   150,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "actor",
+          "邪恶毒素 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ]
+       ],
+       -0.20412620765814088
+      ],
+      -0.17272542251766873
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:449",
+  "note": "Insidious getEffect = combatTalentLimit(getTalentLevel(T_VILE_POISONS),150,50,75)"
+ },
+ {
+  "talent": "T_CRIPPLING_POISON",
+  "acronym": 0,
+  "expr": [
+   "*",
+   35,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "actor",
+          "邪恶毒素 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ]
+       ],
+       -0.4918259386509031
+      ],
+      0.001152060740653239
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:481",
+  "note": "Crippling getEffect = combatTalentLimit(getTalentLevel(T_VILE_POISONS),35,15,25)"
+ },
+ {
+  "talent": "T_LEECHING_POISON",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "actor",
+          "邪恶毒素 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ]
+       ],
+       -0.22164697049986795
+      ],
+      0.05426549008778476
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:513",
+  "note": "Leeching getEffect = combatTalentLimit(getTalentLevel(T_VILE_POISONS),100,18,40)"
+ },
+ {
+  "talent": "T_VOLATILE_POISON",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "*",
+         [
+          "actor",
+          "邪恶毒素 技能等级"
+         ],
+         [
+          "talentLevel"
+         ]
+        ]
+       ],
+       -0.31552897794373086
+      ],
+      0.11129702725959031
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:550",
+  "note": "Volatile getEffect = combatTalentLimit(getTalentLevel(T_VILE_POISONS),100,22,50)"
+ },
+ {
+  "talent": "T_STONING_POISON",
+  "acronym": 0,
+  "expr": [
+   "+",
+   8,
+   [
+    "*",
+    0.4,
+    [
+     "*",
+     [
+      "*",
+      [
+       "+",
+       10,
+       [
+        "actor",
+        "灵巧"
+       ]
+      ],
+      [
+       "*",
+       [
+        "+",
+        1,
+        [
+         "*",
+         0.8,
+         [
+          "-",
+          [
+           "sqrt",
+           [
+            "*",
+            [
+             "actor",
+             "邪恶毒素 技能等级"
+            ],
+            [
+             "talentLevel"
+            ]
+           ]
+          ],
+          1
+         ]
+        ]
+       ],
+       [
+        "/",
+        30,
+        [
+         "*",
+         [
+          "+",
+          10,
+          100
+         ],
+         1.9888543819998319
+        ]
+       ]
+      ]
+     ],
+     [
+      "-",
+      1,
+      [
+       "/",
+       [
+        "log10",
+        [
+         "*",
+         2,
+         [
+          "*",
+          [
+           "+",
+           10,
+           [
+            "actor",
+            "灵巧"
+           ]
+          ],
+          [
+           "*",
+           [
+            "+",
+            1,
+            [
+             "*",
+             0.8,
+             [
+              "-",
+              [
+               "sqrt",
+               [
+                "*",
+                [
+                 "actor",
+                 "邪恶毒素 技能等级"
+                ],
+                [
+                 "talentLevel"
+                ]
+               ]
+              ],
+              1
+             ]
+            ]
+           ],
+           [
+            "/",
+            30,
+            [
+             "*",
+             [
+              "+",
+              10,
+              100
+             ],
+             1.9888543819998319
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       7
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:610",
+  "note": "getDOT = 8 + combatTalentStatDamage(T_VILE_POISONS,\"cun\",10,30)*0.4"
+ },
+ {
+  "talent": "T_STONING_POISON",
+  "acronym": 1,
+  "expr": [
+   "*",
+   4,
+   [
+    "+",
+    8,
+    [
+     "*",
+     0.4,
+     [
+      "*",
+      [
+       "*",
+       [
+        "+",
+        10,
+        [
+         "actor",
+         "灵巧"
+        ]
+       ],
+       [
+        "*",
+        [
+         "+",
+         1,
+         [
+          "*",
+          0.8,
+          [
+           "-",
+           [
+            "sqrt",
+            [
+             "*",
+             [
+              "actor",
+              "邪恶毒素 技能等级"
+             ],
+             [
+              "talentLevel"
+             ]
+            ]
+           ],
+           1
+          ]
+         ]
+        ],
+        [
+         "/",
+         30,
+         [
+          "*",
+          [
+           "+",
+           10,
+           100
+          ],
+          1.9888543819998319
+         ]
+        ]
+       ]
+      ],
+      [
+       "-",
+       1,
+       [
+        "/",
+        [
+         "log10",
+         [
+          "*",
+          2,
+          [
+           "*",
+           [
+            "+",
+            10,
+            [
+             "actor",
+             "灵巧"
+            ]
+           ],
+           [
+            "*",
+            [
+             "+",
+             1,
+             [
+              "*",
+              0.8,
+              [
+               "-",
+               [
+                "sqrt",
+                [
+                 "*",
+                 [
+                  "actor",
+                  "邪恶毒素 技能等级"
+                 ],
+                 [
+                  "talentLevel"
+                 ]
+                ]
+               ],
+               1
+              ]
+             ]
+            ],
+            [
+             "/",
+             30,
+             [
+              "*",
+              [
+               "+",
+               10,
+               100
+              ],
+              1.9888543819998319
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        7
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:639",
+  "note": "info prints dam*4"
+ },
+ {
+  "talent": "T_STONING_POISON",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "邪恶毒素 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    6,
+    1,
+    8,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:609",
+  "note": "getDuration = floor(combatTalentScale(getTalentLevel(T_VILE_POISONS),6,8))"
+ },
+ {
+  "talent": "T_STONING_POISON",
+  "acronym": 3,
+  "expr": [
+   "ceil",
+   [
+    "-",
+    7,
+    [
+     "*",
+     [
+      "-",
+      7,
+      1
+     ],
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "*",
+           [
+            "actor",
+            "邪恶毒素 技能等级"
+           ],
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
+         -1.2713516082945684
+        ],
+        1.449563860437732
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:611",
+  "note": "stoneTime = ceil(combatTalentLimit(getTalentLevel(T_VILE_POISONS),1,7,2))"
+ },
+ {
+  "talent": "T_STONING_POISON",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "actor",
+      "邪恶毒素 技能等级"
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    3,
+    1,
+    4,
+    5,
+    0.5
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:612",
+  "note": "getEffect = floor(combatTalentScale(getTalentLevel(T_VILE_POISONS),3,4))"
+ },
+ {
+  "talent": "T_VILE_POISONS",
+  "acronym": 0,
+  "expr": [
+   "*",
+   20,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:285",
+  "note": "info: self:getTalentLevel(t)*20"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 1,
+  "expr": [
+   "talentLimit",
+   50,
+   20,
+   35
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:303",
+  "note": "getPower = combatTalentLimit(t,50,20,35)/100, printed *100"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 2,
+  "expr": [
+   "statDamage",
+   "cun",
+   50,
+   550
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:301",
+  "note": "getSecondaryDamage = combatTalentStatDamage(t,\"cun\",50,550)"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    4,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:302",
+  "note": "getNb = floor(combatTalentScale(t,1,4,\"log\"))"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 4,
+  "expr": [
+   "floor",
+   [
+    "*",
+    1.5,
+    [
+     "floor",
+     [
+      "talentScale",
+      1,
+      4,
+      "log"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:384",
+  "note": "effectsDescription: floor(nb*1.5)"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 5,
+  "expr": [
+   "statDamage",
+   "cun",
+   50,
+   550
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:376",
+  "note": "heal = getSecondaryDamage (info prints damDesc idam again)"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 6,
+  "expr": [
+   "*",
+   0.6,
+   [
+    "statDamage",
+    "cun",
+    50,
+    550
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:377",
+  "note": "vdam = getSecondaryDamage*0.6"
+ },
+ {
+  "talent": "T_VENOMOUS_STRIKE",
+  "acronym": 7,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    1,
+    4,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/poisons.lua:384",
+  "note": "nb printed a second time"
+ },
+ {
+  "talent": "T_HEIGHTENED_SENSES",
+  "acronym": 1,
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.15
+     ]
+    ],
+    10,
+    1,
+    80,
+    75,
+    0.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:28",
+  "note": "seePower = max(0, combatScale(getCun(15,true)*getTalentLevel(t),10,1,80,75,0.25))"
+ },
+ {
+  "talent": "T_HEIGHTENED_SENSES",
+  "acronym": 2,
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.25
+     ]
+    ],
+    10,
+    3.75,
+    75,
+    125,
+    0.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:29",
+  "note": "trapDetect = max(0, combatScale(tl*getCun(25,true),10,3.75,75,125,0.25))"
+ },
+ {
+  "talent": "T_DEVICE_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.25
+     ]
+    ],
+    10,
+    3.75,
+    90,
+    125,
+    0.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:66",
+  "note": "trapDisarm = max(0, combatScale(tl*getCun(25,true),10,3.75,90,125,0.25)) (disarm_bonus 0)"
+ },
+ {
+  "talent": "T_TRACK",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.1
+     ]
+    ],
+    5,
+    0,
+    35,
+    55
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:84",
+  "note": "radius = floor(combatScale(getCun(10,true)*getTalentLevel(t),5,0,35,55)) [power 0.5]"
+ },
+ {
+  "talent": "T_DANGER_SENSE",
+  "acronym": 0,
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.25
+     ]
+    ],
+    5,
+    3.75,
+    35,
+    125,
+    0.25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:110",
+  "note": "trapDetect = max(0, combatScale(tl*getCun(25,true),5,3.75,35,125,0.25))"
+ },
+ {
+  "talent": "T_DANGER_SENSE",
+  "acronym": 3,
+  "expr": [
+   "-",
+   0,
+   [
+    "combatLimit",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.25
+     ]
+    ],
+    5,
+    20,
+    0,
+    10,
+    125
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/survival.lua:113",
+  "note": "info prints -savePenalty; savePenalty = combatLimit(tl*getCun(25,true),5,20,0,10,125)"
+ },
+ {
+  "talent": "T_STEALTH",
+  "acronym": 0,
+  "expr": [
+   "max",
+   0,
+   [
+    "floor",
+    [
+     "combatScale",
+     [
+      "*",
+      [
+       "talentLevel"
+      ],
+      [
+       "*",
+       [
+        "actor",
+        "灵巧"
+       ],
+       0.1
+      ]
+     ],
+     15,
+     1,
+     64,
+     50,
+     0.25
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/stealth.lua:61",
+  "note": "getStealthPower = max(0, combatScale(getCun(10,true)*getTalentLevel(t),15,1,64,50,0.25)); source says ceil but all 15 export points are floor/trunc"
+ },
+ {
+  "talent": "T_STEALTH",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "-",
+    8.5,
+    [
+     "*",
+     [
+      "-",
+      8.5,
+      0
+     ],
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         -0.5348424326459262
+        ],
+        0.6098141980031261
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/stealth.lua:42",
+  "note": "stealthRadius base = ceil(combatTalentLimit(t,0,8.5,4)); Lua-order expansion (anchor 6.5 is 4+1ulp -> ceil 5)"
+ },
+ {
+  "talent": "T_SHADOWSTRIKE",
+  "acronym": 1,
+  "expr": [
+   "+",
+   3,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/stealth.lua:164",
+  "note": "getDuration = getTalentLevel(t) >= 3 and 4 or 3 (floor(tl/3) clamps to 0/1)"
+ },
+ {
+  "talent": "T_SOOTHING_DARKNESS",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "*",
+    10,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "sqrt",
+         [
+          "talentLevel"
+         ]
+        ],
+        -0.33349335120482915
+       ],
+       0.15709737216349257
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/stealth.lua:187",
+  "note": "getRadius(fake=true) = floor(combatTalentLimit(t,10,2,5)); Lua-order expansion (anchors 1.3/6.5 land 1 ulp low)"
+ },
+ {
+  "talent": "T_SOOTHING_DARKNESS",
+  "acronym": 3,
+  "expr": [
+   "+",
+   3,
+   [
+    "min",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      3
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/stealth.lua:191",
+  "note": "getDuration = getTalentLevel(t) >= 3 and 4 or 3"
+ },
+ {
+  "talent": "T_SMOKESCREEN_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "+",
+   30,
+   [
+    "*",
+    [
+     "*",
+     [
+      "+",
+      10,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          0
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       150,
+       [
+        "*",
+        [
+         "+",
+         10,
+         100
+        ],
+        1.9888543819998319
+       ]
+      ]
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "log10",
+       [
+        "*",
+        2,
+        [
+         "*",
+         [
+          "+",
+          10,
+          [
+           "actor",
+           "灵巧"
+          ]
+         ],
+         [
+          "*",
+          [
+           "+",
+           1,
+           [
+            "*",
+            0.8,
+            [
+             "-",
+             [
+              "sqrt",
+              0
+             ],
+             1
+            ]
+           ]
+          ],
+          [
+           "/",
+           150,
+           [
+            "*",
+            [
+             "+",
+             10,
+             100
+            ],
+            1.9888543819998319
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      7
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:594",
+  "note": "getDamage = 30 + combatTalentStatDamage(getTalentFromId(T_MASTER_ARTIFICER),\"cun\",10,150); 万能工匠 level is 0 in the export"
+ },
+ {
+  "talent": "T_GRAPPLING_HOOK_MASTERY",
+  "acronym": 0,
+  "expr": [
+   "+",
+   30,
+   [
+    "*",
+    [
+     "*",
+     [
+      "+",
+      15,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          0
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       200,
+       [
+        "*",
+        [
+         "+",
+         15,
+         100
+        ],
+        1.9888543819998319
+       ]
+      ]
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "log10",
+       [
+        "*",
+        2,
+        [
+         "*",
+         [
+          "+",
+          15,
+          [
+           "actor",
+           "灵巧"
+          ]
+         ],
+         [
+          "*",
+          [
+           "+",
+           1,
+           [
+            "*",
+            0.8,
+            [
+             "-",
+             [
+              "sqrt",
+              0
+             ],
+             1
+            ]
+           ]
+          ],
+          [
+           "/",
+           200,
+           [
+            "*",
+            [
+             "+",
+             15,
+             100
+            ],
+            1.9888543819998319
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      7
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "getSecondaryDamage = 30 + combatTalentStatDamage(T_MASTER_ARTIFICER,\"cun\",15,200); 万能工匠 level 0"
+ },
+ {
+  "talent": "T_GRAPPLING_HOOK_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "+",
+   30,
+   [
+    "*",
+    [
+     "*",
+     [
+      "+",
+      15,
+      [
+       "actor",
+       "灵巧"
+      ]
+     ],
+     [
+      "*",
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.8,
+        [
+         "-",
+         [
+          "sqrt",
+          0
+         ],
+         1
+        ]
+       ]
+      ],
+      [
+       "/",
+       200,
+       [
+        "*",
+        [
+         "+",
+         15,
+         100
+        ],
+        1.9888543819998319
+       ]
+      ]
+     ]
+    ],
+    [
+     "-",
+     1,
+     [
+      "/",
+      [
+       "log10",
+       [
+        "*",
+        2,
+        [
+         "*",
+         [
+          "+",
+          15,
+          [
+           "actor",
+           "灵巧"
+          ]
+         ],
+         [
+          "*",
+          [
+           "+",
+           1,
+           [
+            "*",
+            0.8,
+            [
+             "-",
+             [
+              "sqrt",
+              0
+             ],
+             1
+            ]
+           ]
+          ],
+          [
+           "/",
+           200,
+           [
+            "*",
+            [
+             "+",
+             15,
+             100
+            ],
+            1.9888543819998319
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      7
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/artifice.lua:814",
+  "note": "info prints the same getSecondaryDamage as nature damage"
+ },
+ {
+  "talent": "T_SKIRMISHER_SLING_SNIPER",
+  "acronym": 0,
+  "expr": [
+   "talentScale",
+   3,
+   10
+  ],
+  "source": "tome-src-full/data/talents/cunning/called-shots.lua:23",
+  "note": "sniper_bonuses crit_chance = combatTalentScale(T_SKIRMISHER_SLING_SNIPER,3,10)"
+ },
+ {
+  "talent": "T_SKIRMISHER_SLING_SNIPER",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "talentScale",
+    0.1,
+    0.2,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/called-shots.lua:24",
+  "note": "crit_power = combatTalentScale(t,0.1,0.2,0.75), printed *100"
+ },
+ {
+  "talent": "T_SKIRMISHER_SLING_SNIPER",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "^",
+        [
+         "actor",
+         "灵巧"
+        ],
+        0.75
+       ],
+       [
+        "/",
+        [
+         "log",
+         [
+          "/",
+          [
+           "-",
+           50,
+           100
+          ],
+          [
+           "-",
+           15,
+           100
+          ]
+         ]
+        ],
+        [
+         "-",
+         31.623,
+         5.6234
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        [
+         "*",
+         31.623,
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            50,
+            100
+           ],
+           [
+            "-",
+            15,
+            100
+           ]
+          ]
+         ]
+        ],
+        [
+         "*",
+         [
+          "-",
+          31.623,
+          5.6234
+         ],
+         [
+          "log",
+          [
+           "-",
+           1,
+           [
+            "/",
+            50,
+            100
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        5.6234,
+        31.623
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/called-shots.lua:27",
+  "note": "resists_pen[PHYSICAL] = combatStatLimit(\"cun\",100,15,50)"
+ },
+ {
+  "talent": "T_SHADOW_CUNNING",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "actor",
+    "灵巧"
+   ],
+   [
+    "/",
+    [
+     "talentScale",
+     20,
+     40,
+     0.75
+    ],
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/shadow-magic.lua:68",
+  "note": "bonus = getCun()*getSpellpower/100, getSpellpower = combatTalentScale(t,20,40,0.75)"
+ },
+ {
+  "talent": "T_SHADOWSTEP",
+  "acronym": 0,
+  "expr": [
+   "min",
+   5,
+   [
+    "+",
+    2,
+    [
+     "ceil",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/shadow-magic.lua:124",
+  "note": "getDuration = math.min(5, 2 + math.ceil(getTalentLevel(t)/2))"
+ },
+ {
+  "talent": "T_COUNTER_ATTACK",
+  "acronym": 0,
+  "expr": [
+   "combatLimit",
+   [
+    "*",
+    [
+     "talentLevel"
+    ],
+    [
+     "+",
+     5,
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.05
+     ]
+    ]
+   ],
+   100,
+   0,
+   0,
+   50,
+   50
+  ],
+  "source": "tome-src-full/data/talents/cunning/tactical.lua:73",
+  "note": "counterchance = combatLimit(getTalentLevel(t)*(5+getCun(5,true)),100,0,0,50,50)"
+ },
+ {
+  "talent": "T_COUNTER_ATTACK",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.5,
+    0.9
+   ]
+  ],
+  "source": "tome-src-full/data/talents/cunning/tactical.lua:72",
+  "note": "getDamage*100, getStrikingStyle is 0 at the export baseline"
+ }
+]

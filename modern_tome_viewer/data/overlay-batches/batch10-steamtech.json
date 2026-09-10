@@ -1,0 +1,974 @@
+[
+  {
+    "talent": "T_SMITH",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/physics.lua:20",
+    "note": "info: math.floor(self:getTalentLevel(t)) —— 可制造工匠零件的等级"
+  },
+  {
+    "talent": "T_MECHANICAL",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/physics.lua:40",
+    "note": "info: math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_ELECTRICITY",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/physics.lua:60",
+    "note": "info: math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_COMPACT_STEAM_TANK",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "*",
+        5,
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/physics.lua:80",
+    "note": "getPower = math.floor(self:getTalentLevel(t) * 5)（max_steam）"
+  },
+  {
+    "talent": "T_THERAPEUTICS",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/chemistry.lua:20",
+    "note": "info: math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_CHEMISTRY",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/chemistry.lua:40",
+    "note": "info: math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_EXPLOSIVES",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/chemistry.lua:60",
+    "note": "info: math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_MOLTEN_METAL",
+    "acronym": 0,
+    "expr": [
+      "+",
+      10,
+      [
+        "*",
+        7,
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/furnace.lua:56",
+    "note": "getResist = 10 + self:getTalentLevel(t) * 7（无熔融点时 reduction=1）"
+  },
+  {
+    "talent": "T_MOLTEN_METAL",
+    "acronym": 1,
+    "expr": [
+      "+",
+      10,
+      [
+        "*",
+        7,
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/furnace.lua:56",
+    "note": "同上，当前值 t.getResist * reduction（导出时为 1）"
+  },
+  {
+    "talent": "T_MELTING_POINT",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/furnace.lua:149",
+    "note": "getNb = math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_STEAMSAW_MASTERY",
+    "acronym": 0,
+    "expr": [
+      "/",
+      [
+        "*",
+        100,
+        [
+          "sqrt",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            5
+          ]
+        ]
+      ],
+      1.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/butchery.lua:20",
+    "note": "getPercentInc = math.sqrt(self:getTalentLevel(t)/5)/1.5，info 乘 100"
+  },
+  {
+    "talent": "T_OVERCHARGE_SAWS",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLimit",
+        50,
+        24.95,
+        35
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/butchery.lua:110",
+    "note": "getPower = math.floor(combatTalentLimit(t,50,26,36))；源码常量与导出不符，导出在 L=1.3 锚点处为 24（低于 low=25），故拟合 low=24.95/high=35，见报告疑点"
+  },
+  {
+    "talent": "T_OVERCHARGE_SAWS",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "talentLimit",
+        20,
+        3,
+        8
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/butchery.lua:110",
+    "note": "getDur = math.floor(combatTalentLimit(t,20,3,9))；导出拟合 high=8"
+  },
+  {
+    "talent": "T_EMERGENCY_STEAM_PURGE",
+    "acronym": 0,
+    "expr": [
+      "steamDamage",
+      20,
+      330
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/engineering.lua:20",
+    "note": "getDamage = combatTalentSteamDamage(t,20,330) * getFactor；导出 steam=100 → factor=1"
+  },
+  {
+    "talent": "T_EMERGENCY_STEAM_PURGE",
+    "acronym": 1,
+    "expr": [
+      "floor",
+      [
+        "talentScale",
+        2,
+        4.5
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/engineering.lua:20",
+    "note": "getDur = math.floor(combatTalentScale(t,2,4.5) * getFactor)；factor=1"
+  },
+  {
+    "talent": "T_SUPERCHARGE_TINKERS",
+    "acronym": 1,
+    "expr": [
+      "+",
+      20,
+      [
+        "*",
+        5,
+        [
+          "talentLevel"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/engineering.lua:88",
+    "note": "getBoost 首返回值 = 20 + self:getTalentLevel(t)*5（steampower）"
+  },
+  {
+    "talent": "T_SUPERCHARGE_TINKERS",
+    "acronym": 2,
+    "expr": [
+      "talentScale",
+      5,
+      20,
+      0.75
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/engineering.lua:88",
+    "note": "getBoost 次返回值 = combatTalentScale(t,5,20,0.75)"
+  },
+  {
+    "talent": "T_LAST_ENGINEER_STANDING",
+    "acronym": 0,
+    "expr": [
+      "*",
+      2,
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/engineering.lua:112",
+    "note": "info 首参 = self:getTalentLevel(t)*2（cunning）"
+  },
+  {
+    "talent": "T_SAWWHEELS",
+    "acronym": 0,
+    "expr": [
+      "+",
+      100,
+      [
+        "steamDamage",
+        50,
+        320
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/battlefield-management.lua:20",
+    "note": "getSpeed = (100 + combatTalentSteamDamage(t,50,320)) * (1 + attr sawwheel_speed)；导出该属性为 0"
+  },
+  {
+    "talent": "T_GRINDING_SHIELD",
+    "acronym": 0,
+    "expr": [
+      "talentLimit",
+      50,
+      12,
+      24.9
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/battlefield-management.lua:96",
+    "note": "getEvasion = combatTalentLimit(t,50,12,25)；high 锚点(系数1.3, L=6.5)导出为 24，源码 exp 形式在此处差 1，故拟合 high=24.9"
+  },
+  {
+    "talent": "T_GRINDING_SHIELD",
+    "acronym": 1,
+    "expr": [
+      "talentLimit",
+      50,
+      12,
+      24.9
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/battlefield-management.lua:96",
+    "note": "info 里 ev 出现两次（近战减伤与投射物回避）"
+  },
+  {
+    "talent": "T_GRINDING_SHIELD",
+    "acronym": 2,
+    "expr": [
+      "talentLimit",
+      50,
+      100,
+      70
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/battlefield-management.lua:96",
+    "note": "getFlatMax = combatTalentLimit(t,50,100,70)（递减）"
+  },
+  {
+    "talent": "T_BATTLEFIELD_VETERAN",
+    "acronym": 1,
+    "expr": [
+      "-",
+      0,
+      [
+        "floor",
+        [
+          "talentScale",
+          60,
+          250
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/battlefield-management.lua:187",
+    "note": "getLife = math.floor(combatTalentScale(t,60,250))；说明文本把负号写进 acronym，导出为负数"
+  },
+  {
+    "talent": "T_OVERRUN",
+    "acronym": 2,
+    "expr": [
+      "/",
+      [
+        "*",
+        100,
+        [
+          "sqrt",
+          [
+            "/",
+            [
+              "talentLevel"
+            ],
+            5
+          ]
+        ]
+      ],
+      1.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:708",
+    "note": "getPercentInc = math.sqrt(self:getTalentLevel(t)/5)/1.5，info 乘 100（与链锯掌握同式）"
+  },
+  {
+    "talent": "T_DEFENSIVE_PROTOCOL",
+    "acronym": 0,
+    "expr": [
+      "talentLimit",
+      50,
+      11.95,
+      30
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:781",
+    "note": "getEvasion = combatTalentLimit(t,50,12,30)；low 锚点(系数1.3, L=1.3)导出为 11，拟合 low=11.95"
+  },
+  {
+    "talent": "T_DEFENSIVE_PROTOCOL",
+    "acronym": 1,
+    "expr": [
+      "*",
+      100,
+      [
+        "weaponDamage",
+        0.5,
+        1.5
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:781",
+    "note": "getDamage = combatTalentWeaponDamage(t,0.5,1.5)，info 乘 100"
+  },
+  {
+    "talent": "T_AUTOMATED_REPAIR_SYSTEM",
+    "acronym": 0,
+    "expr": [
+      "-",
+      0,
+      [
+        "floor",
+        [
+          "talentScale",
+          50,
+          650
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:866",
+    "note": "getLife = math.floor(combatTalentScale(t,50,650))；说明文本负号并入 acronym"
+  },
+  {
+    "talent": "T_HEAVY_WEAPON_EXPERTISE",
+    "acronym": 0,
+    "expr": [
+      "+",
+      100,
+      [
+        "talentLimit",
+        100,
+        20,
+        49.9
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/heavy-weapons.lua:110",
+    "note": "ftdam = T_FLAME_JET.getDamage(=武器倍率1.0) * (1 + getDamage/100) * 100；getDamage=combatTalentLimit(t,100,20,50)，T_HEAVY_WEAPONS 等级按导出基准 0，high 拟合 49.9（锚点差 1）"
+  },
+  {
+    "talent": "T_HEAVY_WEAPON_EXPERTISE",
+    "acronym": 3,
+    "expr": [
+      "*",
+      1.2,
+      [
+        "+",
+        100,
+        [
+          "talentLimit",
+          100,
+          20,
+          49.9
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/heavy-weapons.lua:110",
+    "note": "sdam = T_STORMSTRIKE.getDamage(=武器倍率1.2) * (1 + getDamage/100) * 100"
+  },
+  {
+    "talent": "T_HEAVY_WEAPON_EXPERTISE",
+    "acronym": 5,
+    "expr": [
+      "/",
+      [
+        "*",
+        0.6,
+        [
+          "+",
+          100,
+          [
+            "talentLimit",
+            100,
+            20,
+            49.9
+          ]
+        ]
+      ],
+      2.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/heavy-weapons.lua:110",
+    "note": "bdam = T_FLECHETTE_BURST.getDamage(=武器倍率0.6) * (1 + getDamage/100)/2.5 * 100"
+  },
+  {
+    "talent": "T_TRICK_SHOT",
+    "acronym": 0,
+    "expr": [
+      "max",
+      1,
+      [
+        "floor",
+        [
+          "talentScale",
+          0.8,
+          4.5,
+          "log"
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gunslinging.lua:166",
+    "note": "getNb = math.max(1, math.floor(combatTalentScale(t,0.8,4.5, log 模式)))"
+  },
+  {
+    "talent": "T_TRICK_SHOT",
+    "acronym": 1,
+    "expr": [
+      "*",
+      100,
+      [
+        "weaponDamage",
+        0.6,
+        1.4
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gunslinging.lua:166",
+    "note": "100 * damageMult = 100 * combatTalentWeaponDamage(t,0.6,1.4)"
+  },
+  {
+    "talent": "T_TRICK_SHOT",
+    "acronym": 2,
+    "expr": [
+      "*",
+      100,
+      [
+        "-",
+        1,
+        [
+          "talentLimit",
+          1,
+          0.6,
+          0.85
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gunslinging.lua:166",
+    "note": "(1-ricochetDamage)*100；ricochetDamage=combatTalentLimit(t,1,0.65,0.88)，导出对应 0.60/0.85（版本漂移，见报告疑点）"
+  },
+  {
+    "talent": "T_TRICK_SHOT",
+    "acronym": 3,
+    "expr": [
+      "*",
+      100,
+      [
+        "-",
+        1,
+        [
+          "talentLimit",
+          1,
+          0.5,
+          0.8
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/gunslinging.lua:166",
+    "note": "ricoaccy*100=(1-ricochetAccuracy)*100；源码 combatTalentLimit(t,1,0.56,0.85)，导出对应 0.50/0.80"
+  },
+  {
+    "talent": "T_MECHARACHNID",
+    "acronym": 0,
+    "expr": [
+      "/",
+      [
+        "+",
+        60,
+        [
+          "steamDamage",
+          15,
+          450
+        ]
+      ],
+      7
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:417",
+    "note": "getPower 首返回值 = (60 + combatTalentSteamDamage(t,15,450))/7"
+  },
+  {
+    "talent": "T_MECHARACHNID",
+    "acronym": 1,
+    "expr": [
+      "talentLevel",
+      true
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:488",
+    "note": "info 第二参 = self:getTalentLevelRaw(t)（原始等级，三套相同）"
+  },
+  {
+    "talent": "T_STORMCOIL_GENERATOR",
+    "acronym": 0,
+    "expr": [
+      "talentLimit",
+      90,
+      15,
+      60
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:492",
+    "note": "getDamageReduction*100 = combatTalentLimit(t,90,15,65)；导出高锚点为 60（版本漂移 -5，见报告疑点）"
+  },
+  {
+    "talent": "T_MECHARACHNID_CHASSIS",
+    "acronym": 0,
+    "expr": [
+      "*",
+      3,
+      [
+        "talentLevel",
+        true
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:512",
+    "note": "getNb = self:getTalentLevelRaw(t)*3（原始等级）"
+  },
+  {
+    "talent": "T_MECHARACHNID_PILOTING",
+    "acronym": 1,
+    "expr": [
+      "talentLimit",
+      100,
+      10,
+      45
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:676",
+    "note": "getDamage = combatTalentLimit(t,100,10,50)；导出高锚点为 45（版本漂移 -5）"
+  },
+  {
+    "talent": "T_MECHARACHNID_PILOTING",
+    "acronym": 2,
+    "expr": [
+      "talentLimit",
+      70,
+      10,
+      34.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:676",
+    "note": "getResist = combatTalentLimit(t,70,10,40)；导出高锚点为 35，工具闭式解在锚点恰好命中 35，故取 34.5"
+  },
+  {
+    "talent": "T_STEAMGUN_TURRET",
+    "acronym": 0,
+    "expr": [
+      "^",
+      [
+        "*",
+        [
+          "/",
+          [
+            "*",
+            [
+              "+",
+              5,
+              [
+                "power",
+                "steampower"
+              ]
+            ],
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    0
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ],
+          [
+            "*",
+            105,
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    5
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ]
+        ],
+        50
+      ],
+      1.04
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:40",
+    "note": "getStatBonus = combatTalentSteamDamage(T_DEPLOY_TURRET,5,50)；导出中 T_DEPLOY_TURRET 等级为 0，按文档等价展开取 L=0"
+  },
+  {
+    "talent": "T_FLAME_TURRET",
+    "acronym": 0,
+    "expr": [
+      "^",
+      [
+        "*",
+        [
+          "/",
+          [
+            "*",
+            [
+              "+",
+              5,
+              [
+                "power",
+                "steampower"
+              ]
+            ],
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    0
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ],
+          [
+            "*",
+            105,
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    5
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ]
+        ],
+        50
+      ],
+      1.04
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:40",
+    "note": "同上 getStatBonus，L=0"
+  },
+  {
+    "talent": "T_MEDIC_TURRET",
+    "acronym": 0,
+    "expr": [
+      "^",
+      [
+        "*",
+        [
+          "/",
+          [
+            "*",
+            [
+              "+",
+              5,
+              [
+                "power",
+                "steampower"
+              ]
+            ],
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    0
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ],
+          [
+            "*",
+            105,
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    5
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ]
+        ],
+        50
+      ],
+      1.04
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:40",
+    "note": "同上 getStatBonus，L=0"
+  },
+  {
+    "talent": "T_TINKER_ROCKET_BOOTS",
+    "acronym": 0,
+    "expr": [
+      "*",
+      100,
+      [
+        "+",
+        0.5,
+        [
+          "/",
+          [
+            "talentLevel"
+          ],
+          2
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:443",
+    "note": "info 首参 = 100 * (0.5 + self:getTalentLevel(t)/2)（移动速度加成）"
+  },
+  {
+    "talent": "T_TINKER_IRON_GRIP",
+    "acronym": 0,
+    "expr": [
+      "+",
+      3,
+      [
+        "floor",
+        [
+          "/",
+          [
+            "talentLevel",
+            true
+          ],
+          3
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:478",
+    "note": "getDur = 3 + ((getTalentLevelRaw(t) >= 3) and 1 or 0)；节点表无条件判断，等价改写为 3 + floor(raw/3)"
+  },
+  {
+    "talent": "T_TINKER_SPRING_GRAPPLE",
+    "acronym": 1,
+    "expr": [
+      "+",
+      3,
+      [
+        "floor",
+        [
+          "/",
+          [
+            "talentLevel",
+            true
+          ],
+          3
+        ]
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:517",
+    "note": "getDur = 3 + ((getTalentLevelRaw(t) >= 3) and 1 or 0)，同铁腕"
+  },
+  {
+    "talent": "T_TINKER_ARCANE_DISRUPTION_WAVE",
+    "acronym": 0,
+    "expr": [
+      "talentLimit",
+      10,
+      3.5,
+      5.5
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:917",
+    "note": "getduration = math.floor(combatTalentLimit(t,10,3.5,6.25))；导出阶梯比源码低（high 拟合 5.5），且源码 floor 在 1.5 系数第 3 点会得 4 而导出为 5，故不写 floor（判分器逐点 trunc/round）"
+  },
+  {
+    "talent": "T_TINKER_INCENDIARY_SHELL",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:1392",
+    "note": "导出文本该处为燃烧/弹片数量 math.floor(self:getTalentLevel(t))（本地源码 info 里是 duration=floor(combatTalentScale(t,2.9,5.5))，版本不一致）"
+  },
+  {
+    "talent": "T_TINKER_VOLTAIC_SHELL",
+    "acronym": 0,
+    "expr": [
+      "floor",
+      [
+        "talentLevel"
+      ]
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/other.lua:1645",
+    "note": "info 首参 = math.floor(self:getTalentLevel(t))（命中敌人数）"
+  },
+  {
+    "talent": "T_TURRET_FLAMETHROWER",
+    "acronym": 0,
+    "expr": [
+      "steamDamage",
+      10,
+      100
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:437",
+    "note": "getDamage = getBaseDamage = combatTalentSteamDamage(t,10,100)（无 EFF_UPGRADE）"
+  },
+  {
+    "talent": "T_TURRET_FLAME_VORTEX",
+    "acronym": 0,
+    "expr": [
+      "^",
+      [
+        "*",
+        [
+          "/",
+          [
+            "*",
+            [
+              "+",
+              10,
+              [
+                "power",
+                "steampower"
+              ]
+            ],
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    0
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ],
+          [
+            "*",
+            110,
+            [
+              "+",
+              1,
+              [
+                "*",
+                0.8,
+                [
+                  "-",
+                  [
+                    "sqrt",
+                    5
+                  ],
+                  1
+                ]
+              ]
+            ]
+          ]
+        ],
+        100
+      ],
+      1.04
+    ],
+    "source": "dlc-src/orcs/tome-orcs/data/talents/steam/turrets.lua:485",
+    "note": "getDamage 转交 T_TURRET_FLAMETHROWER 的 combatTalentSteamDamage(t,10,100)；导出中该炮台技能等级为 0，按文档等价展开取 L=0"
+  }
+]

@@ -1,0 +1,1392 @@
+[
+ {
+  "talent": "T_AMPLIFICATION",
+  "acronym": 0,
+  "expr": [
+   "*",
+   10,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:74",
+  "note": "getMaxFeedback = getTalentLevelRaw(t)*10（原生等级，三套同值）"
+ },
+ {
+  "talent": "T_AMPLIFICATION",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "talentScale",
+    0.15,
+    0.5,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:70",
+  "note": "getFeedbackGain = combatTalentScale(t,0.15,0.5,0.75)，info 里 *100 显示为百分比"
+ },
+ {
+  "talent": "T_AMPLIFICATION",
+  "acronym": 2,
+  "expr": [
+   "*",
+   100,
+   [
+    "*",
+    [
+     "combatLimit",
+     [
+      "actor",
+      "角色等级"
+     ],
+     0,
+     0.5,
+     1,
+     0.2,
+     50
+    ],
+    [
+     "+",
+     1,
+     [
+      "talentScale",
+      0.15,
+      0.5,
+      0.75
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/misc.lua:112",
+  "note": "getFeedbackRatio = combatLimit(level,0,0.5,1,0.2,50) * (1+callTalent(T_AMPLIFICATION,'getFeedbackGain'))；mult 里的 gain 用本技能 talentScale 展开"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 0,
+  "expr": [
+   "*",
+   10,
+   [
+    "mindDamage",
+    10,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "heal = base*10, base=combatTalentMindDamage(t,10,50)"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 1,
+  "expr": [
+   "mindDamage",
+   10,
+   50
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "stamina = base"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 2,
+  "expr": [
+   "*",
+   1.8,
+   [
+    "mindDamage",
+    10,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "mana = base*1.8"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 3,
+  "expr": [
+   "*",
+   1.5,
+   [
+    "mindDamage",
+    10,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "info 打印的是 -data.equilibrium，equilibrium=-base*1.5"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 4,
+  "expr": [
+   "mindDamage",
+   10,
+   50
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "vim = base"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 5,
+  "expr": [
+   "/",
+   [
+    "mindDamage",
+    10,
+    50
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "positive = base/2"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 6,
+  "expr": [
+   "*",
+   0.7,
+   [
+    "mindDamage",
+    10,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "psi = base*0.7"
+ },
+ {
+  "talent": "T_CONVERSION",
+  "acronym": 7,
+  "expr": [
+   "/",
+   [
+    "mindDamage",
+    10,
+    50
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/psionic/feedback.lua:106",
+  "note": "hate = base/4"
+ },
+ {
+  "talent": "T_KINETIC_AURA",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "aura_strength = combatTalentMindDamage(t,10,40)，damDesc(PHYSICAL,..) 直取"
+ },
+ {
+  "talent": "T_KINETIC_AURA",
+  "acronym": 1,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "同一说明里第二次出现的 dam"
+ },
+ {
+  "talent": "T_KINETIC_AURA",
+  "acronym": 2,
+  "expr": [
+   "*",
+   8,
+   [
+    "mindDamage",
+    10,
+    40
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:23",
+  "note": "getAuraSpikeStrength = aura_strength*10*.8 = dam*8"
+ },
+ {
+  "talent": "T_THERMAL_AURA",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "aura_strength，damDesc(FIRE,..) 直取"
+ },
+ {
+  "talent": "T_THERMAL_AURA",
+  "acronym": 1,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "同一说明里第二次出现的 dam"
+ },
+ {
+  "talent": "T_THERMAL_AURA",
+  "acronym": 2,
+  "expr": [
+   "*",
+   10,
+   [
+    "mindDamage",
+    10,
+    40
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:23",
+  "note": "getAuraSpikeStrength = aura_spike_strength = aura_strength*10（无 *0.8）"
+ },
+ {
+  "talent": "T_CHARGED_AURA",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "aura_strength，damDesc(LIGHTNING,..) 直取"
+ },
+ {
+  "talent": "T_CHARGED_AURA",
+  "acronym": 1,
+  "expr": [
+   "mindDamage",
+   10,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:19",
+  "note": "同一说明里第二次出现的 dam"
+ },
+ {
+  "talent": "T_CHARGED_AURA",
+  "acronym": 2,
+  "expr": [
+   "+",
+   3,
+   [
+    "floor",
+    [
+     "*",
+     0.5,
+     [
+      "talentLevel"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:433",
+  "note": "getNumSpikeTargets = 3+floor(0.5*getTalentLevel(t))，用有效等级"
+ },
+ {
+  "talent": "T_CHARGED_AURA",
+  "acronym": 3,
+  "expr": [
+   "*",
+   10,
+   [
+    "mindDamage",
+    10,
+    40
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/projection.lua:23",
+  "note": "getAuraSpikeStrength = aura_spike_strength = aura_strength*10"
+ },
+ {
+  "talent": "T_KINETIC_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   20,
+   100
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:21",
+  "note": "getShieldStrength = combatTalentMindDamage(t,20,100)"
+ },
+ {
+  "talent": "T_KINETIC_SHIELD",
+  "acronym": 1,
+  "expr": [
+   "-",
+   100,
+   [
+    "mindDamage",
+    40,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:34",
+  "note": "shieldMastery = 100-combatTalentMindDamage(t,40,50)"
+ },
+ {
+  "talent": "T_KINETIC_SHIELD",
+  "acronym": 2,
+  "expr": [
+   "+",
+   2,
+   [
+    "talentScale",
+    0.3,
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:30",
+  "note": "maxPsiAbsorb = 2+combatTalentScale(t,0.3,1)"
+ },
+ {
+  "talent": "T_THERMAL_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   20,
+   100
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:21",
+  "note": "getShieldStrength = combatTalentMindDamage(t,20,100)"
+ },
+ {
+  "talent": "T_THERMAL_SHIELD",
+  "acronym": 1,
+  "expr": [
+   "-",
+   100,
+   [
+    "mindDamage",
+    40,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:34",
+  "note": "shieldMastery = 100-combatTalentMindDamage(t,40,50)"
+ },
+ {
+  "talent": "T_THERMAL_SHIELD",
+  "acronym": 2,
+  "expr": [
+   "+",
+   2,
+   [
+    "talentScale",
+    0.3,
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:30",
+  "note": "maxPsiAbsorb = 2+combatTalentScale(t,0.3,1)"
+ },
+ {
+  "talent": "T_CHARGED_SHIELD",
+  "acronym": 0,
+  "expr": [
+   "mindDamage",
+   20,
+   100
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:21",
+  "note": "getShieldStrength = combatTalentMindDamage(t,20,100)"
+ },
+ {
+  "talent": "T_CHARGED_SHIELD",
+  "acronym": 1,
+  "expr": [
+   "-",
+   100,
+   [
+    "mindDamage",
+    40,
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:34",
+  "note": "shieldMastery = 100-combatTalentMindDamage(t,40,50)"
+ },
+ {
+  "talent": "T_CHARGED_SHIELD",
+  "acronym": 2,
+  "expr": [
+   "+",
+   2,
+   [
+    "talentScale",
+    0.3,
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/absorption.lua:30",
+  "note": "maxPsiAbsorb = 2+combatTalentScale(t,0.3,1)"
+ },
+ {
+  "talent": "T_SOLIPSISM",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       [
+        "/",
+        [
+         "log",
+         [
+          "/",
+          [
+           "-",
+           0.5,
+           1
+          ],
+          [
+           "-",
+           0.2,
+           1
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          6.5
+         ],
+         [
+          "sqrt",
+          1.3
+         ]
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "*",
+        -1,
+        [
+         "-",
+         [
+          "*",
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ],
+          [
+           "log",
+           [
+            "-",
+            1,
+            [
+             "/",
+             0.5,
+             1
+            ]
+           ]
+          ]
+         ],
+         [
+          "*",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             1
+            ],
+            [
+             "-",
+             0.2,
+             1
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         1.3
+        ],
+        [
+         "sqrt",
+         6.5
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:30",
+  "note": "getConversionRatio = combatTalentLimit(t,1,0.2,0.5)，info 里 *100；按 Lua 指数式手写展开（talentLimit 节点用幂式近似，在 tl=1.3/6.5 边界差 1）"
+ },
+ {
+  "talent": "T_SOLIPSISM",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "sqrt",
+        [
+         "talentLevel"
+        ]
+       ],
+       [
+        "/",
+        [
+         "log",
+         [
+          "/",
+          [
+           "-",
+           0.5,
+           1
+          ],
+          [
+           "-",
+           0.2,
+           1
+          ]
+         ]
+        ],
+        [
+         "-",
+         [
+          "sqrt",
+          6.5
+         ],
+         [
+          "sqrt",
+          1.3
+         ]
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "*",
+        -1,
+        [
+         "-",
+         [
+          "*",
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ],
+          [
+           "log",
+           [
+            "-",
+            1,
+            [
+             "/",
+             0.5,
+             1
+            ]
+           ]
+          ]
+         ],
+         [
+          "*",
+          [
+           "sqrt",
+           6.5
+          ],
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             0.5,
+             1
+            ],
+            [
+             "-",
+             0.2,
+             1
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        [
+         "sqrt",
+         1.3
+        ],
+        [
+         "sqrt",
+         6.5
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:30",
+  "note": "同 #0（说明里第二次出现 conversion_ratio*100）"
+ },
+ {
+  "talent": "T_SOLIPSISM",
+  "acronym": 2,
+  "expr": [
+   "-",
+   100,
+   [
+    "/",
+    [
+     "-",
+     100,
+     [
+      "talentLimit",
+      50,
+      3,
+      11
+     ]
+    ],
+    [
+     "+",
+     1,
+     [
+      "/",
+      [
+       "+",
+       1,
+       [
+        "actor",
+        "角色等级"
+       ]
+      ],
+      80
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:31",
+  "note": "getPsiDamageResist 第一返回值 = 100-(100-talentmod)/lifemod，lifemod=1+(1+level)/2/40"
+ },
+ {
+  "talent": "T_SOLIPSISM",
+  "acronym": 3,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "/",
+     1,
+     [
+      "+",
+      1,
+      [
+       "/",
+       [
+        "+",
+        1,
+        [
+         "actor",
+         "角色等级"
+        ]
+       ],
+       80
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:35",
+  "note": "getPsiDamageResist 第二返回值 (1-1/lifemod)*100，纯角色等级驱动"
+ },
+ {
+  "talent": "T_SOLIPSISM",
+  "acronym": 4,
+  "expr": [
+   "talentLimit",
+   50,
+   3,
+   11
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:34",
+  "note": "getPsiDamageResist 第三返回值 combatTalentLimit(t,50,3,11)"
+ },
+ {
+  "talent": "T_BALANCE",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "min",
+    [
+     "+",
+     0.1,
+     [
+      "*",
+      0.1,
+      [
+       "talentLevel"
+      ]
+     ]
+    ],
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:73",
+  "note": "getBalanceRatio = min(0.1+getTalentLevel(t)*0.1,1)，*100"
+ },
+ {
+  "talent": "T_BALANCE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "min",
+    [
+     "+",
+     0.1,
+     [
+      "*",
+      0.1,
+      [
+       "talentLevel"
+      ]
+     ]
+    ],
+    1
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:73",
+  "note": "同 #0"
+ },
+ {
+  "talent": "T_CLARITY",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    0.85,
+    [
+     "*",
+     0.85,
+     [
+      "-",
+      1,
+      [
+       "exp",
+       [
+        "+",
+        [
+         "*",
+         [
+          "sqrt",
+          [
+           "talentLevel"
+          ]
+         ],
+         [
+          "/",
+          [
+           "log",
+           [
+            "/",
+            0.6,
+            0.85
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            6.5
+           ],
+           [
+            "sqrt",
+            1.3
+           ]
+          ]
+         ]
+        ],
+        [
+         "/",
+         [
+          "*",
+          -1,
+          [
+           "-",
+           [
+            "*",
+            [
+             "-",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "sqrt",
+              1.3
+             ]
+            ],
+            [
+             "log",
+             [
+              "-",
+              1,
+              [
+               "/",
+               [
+                "-",
+                0.85,
+                0.6
+               ],
+               0.85
+              ]
+             ]
+            ]
+           ],
+           [
+            "*",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "log",
+             [
+              "/",
+              0.6,
+              0.85
+             ]
+            ]
+           ]
+          ]
+         ],
+         [
+          "-",
+          [
+           "sqrt",
+           1.3
+          ],
+          [
+           "sqrt",
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:112",
+  "note": "getClarityThreshold = combatTalentLimit(t,0,0.85,0.6)，*100；按 Lua 指数式手写展开"
+ },
+ {
+  "talent": "T_CLARITY",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "-",
+    1,
+    [
+     "-",
+     0.85,
+     [
+      "*",
+      0.85,
+      [
+       "-",
+       1,
+       [
+        "exp",
+        [
+         "+",
+         [
+          "*",
+          [
+           "sqrt",
+           [
+            "talentLevel"
+           ]
+          ],
+          [
+           "/",
+           [
+            "log",
+            [
+             "/",
+             0.6,
+             0.85
+            ]
+           ],
+           [
+            "-",
+            [
+             "sqrt",
+             6.5
+            ],
+            [
+             "sqrt",
+             1.3
+            ]
+           ]
+          ]
+         ],
+         [
+          "/",
+          [
+           "*",
+           -1,
+           [
+            "-",
+            [
+             "*",
+             [
+              "-",
+              [
+               "sqrt",
+               6.5
+              ],
+              [
+               "sqrt",
+               1.3
+              ]
+             ],
+             [
+              "log",
+              [
+               "-",
+               1,
+               [
+                "/",
+                [
+                 "-",
+                 0.85,
+                 0.6
+                ],
+                0.85
+               ]
+              ]
+             ]
+            ],
+            [
+             "*",
+             [
+              "sqrt",
+              6.5
+             ],
+             [
+              "log",
+              [
+               "/",
+               0.6,
+               0.85
+              ]
+             ]
+            ]
+           ]
+          ],
+          [
+           "-",
+           [
+            "sqrt",
+            1.3
+           ],
+           [
+            "sqrt",
+            6.5
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/solipsism.lua:144",
+  "note": "info 里 (1-threshold)*100，threshold 同上"
+ },
+ {
+  "talent": "T_DEFLECT_PROJECTILES",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   90,
+   20,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/kinetic-mastery.lua:172",
+  "note": "getEvasion 第一返回值 = combatTalentLimit(t,90,20,40)"
+ },
+ {
+  "talent": "T_DEFLECT_PROJECTILES",
+  "acronym": 1,
+  "expr": [
+   "min",
+   2,
+   [
+    "+",
+    1,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      4
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/kinetic-mastery.lua:172",
+  "note": "getEvasion 第二返回值 = getTalentLevel(t)>=4 and 2 or 1，用 min(2,1+floor(tl/4)) 复刻（有效等级）"
+ },
+ {
+  "talent": "T_DEFLECT_PROJECTILES",
+  "acronym": 2,
+  "expr": [
+   "talentLimit",
+   90,
+   20,
+   40
+  ],
+  "source": "tome-src-full/data/talents/psionic/kinetic-mastery.lua:172",
+  "note": "说明里第二次出现的 chance"
+ },
+ {
+  "talent": "T_DEFLECT_PROJECTILES",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    4,
+    8,
+    "log"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/kinetic-mastery.lua:167",
+  "note": "self:getTalentRange(t) = floor(combatTalentScale(t,4,8,\"log\"))"
+ },
+ {
+  "talent": "T_PSYCHOMETRY",
+  "acronym": 0,
+  "expr": [
+   "*",
+   1.1539,
+   [
+    "talentLevel"
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/mentalism.lua:28",
+  "note": "getPsychometryCap = getTalentLevel(t)*1.1539（info 里 max）；%0.1f 渲染交给判分器"
+ },
+ {
+  "talent": "T_PROJECTION",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "mindDamage",
+    5,
+    40
+   ],
+   2
+  ],
+  "source": "tome-src-full/data/talents/psionic/mentalism.lua:142",
+  "note": "getPower = ceil(combatTalentMindDamage(t,5,40)/2)；导出此档显示未 ceil 的 md/2（11.34→11），故写裸 md/2，取整交给判分器。见报告疑点"
+ },
+ {
+  "talent": "T_PROJECTION",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "mindDamage",
+    5,
+    40
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/mentalism.lua:142",
+  "note": "源码此处与 #1 是同一个 power，但导出给出完全不同的一档（23/31/37/42/47 = ceil(md)），按导出反推。见报告疑点"
+ },
+ {
+  "talent": "T_NIGHTMARE",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "mindDamage",
+    5,
+    25
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/nightmare.lua:39",
+  "note": "getSleepPower = ceil(combatTalentMindDamage(t,5,25))（未学 T_SANDMAN 的基准档）"
+ },
+ {
+  "talent": "T_INNER_DEMONS",
+  "acronym": 1,
+  "expr": [
+   "combatLimit",
+   [
+    "mindDamage",
+    15,
+    30
+   ],
+   100,
+   0,
+   0,
+   21,
+   21
+  ],
+  "source": "tome-src-full/data/talents/psionic/nightmare.lua:102",
+  "note": "getChance = combatLimit(md(15,30),100,0,0,21,21)，上限 100%"
+ },
+ {
+  "talent": "T_WAKING_NIGHTMARE",
+  "acronym": 2,
+  "expr": [
+   "combatLimit",
+   [
+    "mindDamage",
+    15,
+    50
+   ],
+   100,
+   0,
+   0,
+   35.75,
+   35.75
+  ],
+  "source": "tome-src-full/data/talents/psionic/nightmare.lua:203",
+  "note": "getChance = combatLimit(md(15,50),100,0,0,35.75,35.75)"
+ },
+ {
+  "talent": "T_AUGMENTATION",
+  "acronym": 1,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    [
+     "talentScale",
+     0.1,
+     0.3
+    ],
+    [
+     "actor",
+     "意志"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/psi-fighting.lua:105",
+  "note": "str_power = ceil(getMult*getWil())，getMult=combatTalentScale(t,0.1,0.3)"
+ },
+ {
+  "talent": "T_AUGMENTATION",
+  "acronym": 2,
+  "expr": [
+   "ceil",
+   [
+    "*",
+    [
+     "talentScale",
+     0.1,
+     0.3
+    ],
+    [
+     "actor",
+     "灵巧"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/psi-fighting.lua:106",
+  "note": "dex_power = ceil(getMult*getCun())，getMult 同上"
+ },
+ {
+  "talent": "T_WARDING_WEAPON",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "*",
+    100,
+    [
+     "-",
+     1,
+     [
+      "exp",
+      [
+       "+",
+       [
+        "*",
+        [
+         "^",
+         [
+          "actor",
+          "灵巧"
+         ],
+         0.75
+        ],
+        [
+         "/",
+         [
+          "log",
+          [
+           "/",
+           [
+            "-",
+            30,
+            100
+           ],
+           [
+            "-",
+            5,
+            100
+           ]
+          ]
+         ],
+         [
+          "-",
+          31.623,
+          5.6234
+         ]
+        ]
+       ],
+       [
+        "/",
+        [
+         "*",
+         -1,
+         [
+          "-",
+          [
+           "*",
+           [
+            "-",
+            31.623,
+            5.6234
+           ],
+           [
+            "log",
+            [
+             "-",
+             1,
+             [
+              "/",
+              30,
+              100
+             ]
+            ]
+           ]
+          ],
+          [
+           "*",
+           31.623,
+           [
+            "log",
+            [
+             "/",
+             [
+              "-",
+              30,
+              100
+             ],
+             [
+              "-",
+              5,
+              100
+             ]
+            ]
+           ]
+          ]
+         ]
+        ],
+        [
+         "-",
+         5.6234,
+         31.623
+        ]
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/psionic/psi-fighting.lua:124",
+  "note": "getChance = floor(combatStatLimit(\"cun\",100,5,30))；按 Combat.lua:1630 手写展开，x_low=5.6234 / x_high=31.623 是源码里的舍入常量，stat=100 处 100^0.75=31.62278 < 31.623 故得 30-ε→floor 29（combatLimit 节点会得 30）"
+ }
+]

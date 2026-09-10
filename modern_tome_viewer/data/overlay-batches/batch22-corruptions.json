@@ -1,0 +1,595 @@
+[
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 3,
+  "expr": [
+   "ceil",
+   [
+    "/",
+    [
+     "talentLevel",
+     true
+    ],
+    3
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:200",
+  "note": "info: math.ceil(dest/3), dest = util.bound(getTalentLevelRaw(t),1,5)"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 4,
+  "expr": [
+   "*",
+   10,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:201",
+  "note": "info: 10 * dest"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 5,
+  "expr": [
+   "+",
+   3,
+   [
+    "ceil",
+    [
+     "/",
+     [
+      "talentLevel",
+      true
+     ],
+     2
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:201",
+  "note": "info: 3 + math.ceil(dest/2)"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 6,
+  "expr": [
+   "ceil",
+   [
+    "/",
+    [
+     "talentLevel",
+     true
+    ],
+    4
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:202",
+  "note": "info: math.ceil(dest/4)"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 7,
+  "expr": [
+   "ceil",
+   [
+    "/",
+    [
+     "talentLevel",
+     true
+    ],
+    2
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:203",
+  "note": "info: math.ceil(dest/2)"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 8,
+  "expr": [
+   "+",
+   25,
+   [
+    "*",
+    10,
+    [
+     "talentLevel",
+     true
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:204",
+  "note": "info: 25 + 10 * dest"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 9,
+  "expr": [
+   "*",
+   [
+    "talentLevel",
+    true
+   ],
+   0.4
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:205",
+  "note": "info: dest * 0.4"
+ },
+ {
+  "talent": "T_DESTROYER",
+  "acronym": 10,
+  "expr": [
+   "*",
+   [
+    "talentLevel",
+    true
+   ],
+   10
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/wrath.lua:206",
+  "note": "info: dest * 10"
+ },
+ {
+  "talent": "T_DEMON_SEED",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.6,
+    1.6
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:603",
+  "note": "info: weapon*100, 第二个返回值 combatTalentWeaponDamage(t,0.6,1.6)"
+ },
+ {
+  "talent": "T_DEMON_SEED",
+  "acronym": 1,
+  "expr": [
+   "*",
+   100,
+   [
+    "weaponDamage",
+    0.6,
+    1.4
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:603",
+  "note": "info: shield*100, 第一个返回值 combatTalentWeaponDamage(t,0.6,1.4, getTalentLevel(T_SHIELD_EXPERTISE)=0)"
+ },
+ {
+  "talent": "T_DEMON_SEED",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    2.5,
+    4.5
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:604",
+  "note": "getDazeDuration = floor(combatTalentScale(t,2.5,4.5))"
+ },
+ {
+  "talent": "T_DEMON_SEED",
+  "acronym": 3,
+  "expr": [
+   "floor",
+   [
+    "max",
+    0,
+    [
+     "+",
+     [
+      "*",
+      16.180339887498945,
+      [
+       "^",
+       [
+        "talentLevel"
+       ],
+       0.5
+      ]
+     ],
+     -6.1803398874989455
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:605",
+  "note": "getHeal = floor(combatTalentScale(t,10,30))；按 Lua 的 m*(tl)^p+b 顺序展开，避免工具闭式在 tl=5 差 1 ULP"
+ },
+ {
+  "talent": "T_SUFFUSE_LIFE",
+  "acronym": 0,
+  "expr": [
+   "ceil",
+   [
+    "talentScale",
+    3,
+    8
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:907",
+  "note": "getDur = ceil(combatTalentScale(t,3,8))"
+ },
+ {
+  "talent": "T_SUFFUSE_LIFE",
+  "acronym": 2,
+  "expr": [
+   "+",
+   15,
+   [
+    "spellDamage",
+    10,
+    150
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-pact.lua:906",
+  "note": "getHeal = 15 + combatTalentSpellDamage(t,10,150)"
+ },
+ {
+  "talent": "T_HORRIFYING_BLOWS",
+  "acronym": 2,
+  "expr": [
+   "*",
+   1.25,
+   [
+    "min",
+    1,
+    [
+     "max",
+     0,
+     [
+      "floor",
+      [
+       "/",
+       [
+        "talentLevel"
+       ],
+       3
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/oppression.lua:53",
+  "note": "info: t.getSlowPower(self,t)*100；getSlowPower = (getTalentLevel(t)>=3) and 0.0125 or 0"
+ },
+ {
+  "talent": "T_HORRIFYING_BLOWS",
+  "acronym": 3,
+  "expr": [
+   "min",
+   1,
+   [
+    "max",
+    0,
+    [
+     "floor",
+     [
+      "/",
+      [
+       "talentLevel"
+      ],
+      5
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/oppression.lua:46",
+  "note": "info: self:getTalentRadius(t)；radius = (getTalentLevel(t)>=5) and 1 or 0"
+ },
+ {
+  "talent": "T_FEARSCAPE_SHIFT",
+  "acronym": 3,
+  "expr": [
+   "min",
+   10,
+   [
+    "floor",
+    [
+     "+",
+     7.5,
+     [
+      "/",
+      [
+       "talentLevel",
+       true
+      ],
+      2
+     ]
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/fearfire.lua:38",
+  "note": "getVision = min(10, floor(7.5 + getTalentLevelRaw(t)/2))"
+ },
+ {
+  "talent": "T_SURGE_OF_POWER",
+  "acronym": 2,
+  "expr": [
+   "-",
+   0,
+   [
+    "ceil",
+    [
+     "spellDamage",
+     20,
+     250
+    ]
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/demonic-strength.lua:58",
+  "note": "info 显示 -%d HP，getPower = ceil(combatTalentSpellDamage(t,20,250))，导出把负号算进读数"
+ },
+ {
+  "talent": "T_INCINERATING_BLOWS",
+  "acronym": 4,
+  "expr": [
+   "*",
+   5,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/torture.lua:54",
+  "note": "getPowerbonus = 5 * getTalentLevelRaw(t)"
+ },
+ {
+  "talent": "T_DREAD_END",
+  "acronym": 1,
+  "expr": [
+   "-",
+   0,
+   [
+    "spellDamage",
+    15,
+    60
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/doom-covenant.lua:67",
+  "note": "getDieAt = combatTalentSpellDamage(t,15,60)，说明文本按 -%d 读（效果里取负）"
+ },
+ {
+  "talent": "T_OSMOSIS_SHIELD",
+  "acronym": 1,
+  "expr": [
+   "+",
+   5,
+   [
+    "/",
+    [
+     "*",
+     200,
+     [
+      "*",
+      50,
+      [
+       "-",
+       1,
+       [
+        "exp",
+        [
+         "+",
+         [
+          "*",
+          [
+           "sqrt",
+           [
+            "talentLevel"
+           ]
+          ],
+          -0.8889040310163111
+         ],
+         0.6568315874976276
+        ]
+       ]
+      ]
+     ]
+    ],
+    100
+   ]
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/doom-shield.lua:36",
+  "note": "getAbsorb = 5 + block*combatTalentLimit(t,50,15,40)/100；shield block 未被标题声明故冻结为 200，talentLimit 按 Lua exp 形式展开"
+ },
+ {
+  "talent": "T_GRIM_FUTURE",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    20,
+    200
+   ],
+   10
+  ],
+  "source": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/talents/corruptions/black-magic.lua:81",
+  "note": "getDam = combatTalentSpellDamage(t,20,200)/10；源码里临时把 talents[t.id] 置 1，但导出按真实等级阶梯，故写全等级"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "talentScale",
+    6,
+    10
+   ]
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:165",
+  "note": "getDuration = floor(combatTalentScale(t,6,10))"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 1,
+  "expr": [
+   "/",
+   [
+    "spellDamage",
+    12,
+    130
+   ],
+   4
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:166",
+  "note": "info: dam/4, dam = combatTalentSpellDamage(t,12,130)"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 2,
+  "expr": [
+   "spellDamage",
+   12,
+   130
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:166",
+  "note": "getDamage = combatTalentSpellDamage(t,12,130)"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 3,
+  "expr": [
+   "/",
+   [
+    "*",
+    150,
+    [
+     "talentScale",
+     15,
+     40
+    ]
+   ],
+   [
+    "+",
+    [
+     "talentScale",
+     15,
+     40
+    ],
+    50
+   ]
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:169",
+  "note": "getEffects: heal_factor = 150*power/(power+50), power = combatTalentScale(t,15,40)"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 4,
+  "expr": [
+   "talentScale",
+   15,
+   40
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:169",
+  "note": "getEffects 第一个返回值 power = combatTalentScale(t,15,40)"
+ },
+ {
+  "talent": "T_POISON_STORM",
+  "acronym": 5,
+  "expr": [
+   "/",
+   [
+    "*",
+    50,
+    [
+     "talentScale",
+     15,
+     40
+    ]
+   ],
+   [
+    "+",
+    [
+     "talentScale",
+     15,
+     40
+    ],
+    26
+   ]
+  ],
+  "source": "tome-src-full/data/talents/corruptions/blight.lua:171",
+  "note": "getEffects: fail = 50*power/(power+26)"
+ },
+ {
+  "talent": "T_BLOOD_VENGEANCE",
+  "acronym": 0,
+  "expr": [
+   "talentLimit",
+   5,
+   15,
+   8
+  ],
+  "source": "tome-src-full/data/talents/corruptions/torment.lua:122",
+  "note": "getPower 第一个返回值 = combatTalentLimit(t,5,15,8)"
+ },
+ {
+  "talent": "T_BLOOD_VENGEANCE",
+  "acronym": 1,
+  "expr": [
+   "combatLimit",
+   [
+    "spellDamage",
+    10,
+    90
+   ],
+   100,
+   20,
+   0,
+   50,
+   61.3
+  ],
+  "source": "tome-src-full/data/talents/corruptions/torment.lua:122",
+  "note": "getPower 第二个返回值 = combatLimit(combatTalentSpellDamage(t,10,90),100,20,0,50,61.3)"
+ },
+ {
+  "talent": "T_WRAITHFORM",
+  "acronym": 1,
+  "expr": [
+   "talentScale",
+   5,
+   20
+  ],
+  "source": "tome-src-full/data/talents/corruptions/shadowflame.lua:30",
+  "note": "getDefs 第一个返回值 = combatTalentScale(t,5,20)"
+ },
+ {
+  "talent": "T_WRAITHFORM",
+  "acronym": 2,
+  "expr": [
+   "talentScale",
+   5,
+   16
+  ],
+  "source": "tome-src-full/data/talents/corruptions/shadowflame.lua:30",
+  "note": "getDefs 第二个返回值 = combatTalentScale(t,5,16)"
+ },
+ {
+  "talent": "T_WORM_WALK",
+  "acronym": 0,
+  "expr": [
+   "max",
+   0,
+   [
+    "-",
+    7,
+    [
+     "floor",
+     [
+      "talentLevel"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/corruptions/rot.lua:236",
+  "note": "radius = max(0, 7 - floor(self:getTalentLevel(t)))"
+ }
+]

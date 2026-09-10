@@ -1,0 +1,359 @@
+[
+ {
+  "talent": "T_DREAD",
+  "acronym": 0,
+  "expr": ["max", 1, ["+", ["actor", "角色等级"], ["floor", ["combatScale", ["talentLevel"], -6, 0.9, 2, 5]]]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:122",
+  "note": "getLevel = floor(combatScale(getTalentLevel(t), -6, 0.9, 2, 5))；info/dreadmaster.lua:165 math.max(1, self.level + t:_getLevel(self))"
+ },
+ {
+  "talent": "T_DREAD",
+  "acronym": 1,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:157",
+  "note": "local lvl = math.floor(self:getTalentLevel(t))；Burning Hex at level %d"
+ },
+ {
+  "talent": "T_DREAD",
+  "acronym": 2,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:157",
+  "note": "同 lvl；Empathic Hex at level %d"
+ },
+ {
+  "talent": "T_DREAD",
+  "acronym": 3,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:157",
+  "note": "同 lvl；Pacification Hex at level %d"
+ },
+ {
+  "talent": "T_DREAD",
+  "acronym": 4,
+  "expr": ["+", 2, ["floor", ["talentLevel"]]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:165",
+  "note": "lvl + 2；Blur Sight at level %d"
+ },
+ {
+  "talent": "T_DREAD",
+  "acronym": 5,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:165",
+  "note": "同 lvl；Phase Door at level %d"
+ },
+ {
+  "talent": "T_SOULEATER",
+  "acronym": 0,
+  "expr": ["+", 10, ["spellDamage", 30, 200]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:175",
+  "note": "getHeal = 10 + combatTalentSpellDamage(t, 30, 200)"
+ },
+ {
+  "talent": "T_SOULEATER",
+  "acronym": 1,
+  "expr": ["floor", ["max", 0, ["+", ["*", ["/", ["-", 4, 1], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 1, ["/", ["-", 4, 1], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:176",
+  "note": "getCD = floor(combatTalentScale(t, 1, 4))。此处按源码原运算顺序展开 m*(tl^p)+b（b=low-m*1^p）：工具节点 [\"talentScale\"] 把同一式重排成 m*(tl^p-1)+low，浮点末位不同，系数 1 的 5 级处源码得 3.9999999999999996→floor 3，节点得 4。"
+ },
+ {
+  "talent": "T_SOULEATER",
+  "acronym": 2,
+  "expr": ["floor", ["max", 0, ["+", ["*", ["/", ["-", 8, 2], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 2, ["/", ["-", 8, 2], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:177",
+  "note": "getFoes = floor(combatTalentScale(t, 2, 8))；展开理由同上（5 级处 7.999999999999999→7）"
+ },
+ {
+  "talent": "T_NEVERENDING_PERIL",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 3, 9]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:227",
+  "note": "getTurns = floor(combatTalentScale(t, 3, 9))"
+ },
+ {
+  "talent": "T_DREADMASTER",
+  "acronym": 0,
+  "expr": ["floor", ["talentLevel"]],
+  "source": "tome-src-full/data/talents/spells/dreadmaster.lua:260",
+  "note": "math.floor(self:getTalentLevel(t))（info 未走 getter）"
+ },
+ {
+  "talent": "T_RIME_WRAITH",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 10, 20]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:33",
+  "note": "getDur = floor(combatTalentScale(t, 10, 20))"
+ },
+ {
+  "talent": "T_RIME_WRAITH",
+  "acronym": 1,
+  "expr": ["*", 2, ["floor", ["max", 0, ["+", ["*", ["/", ["-", 15, 5], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 5, ["/", ["-", 15, 5], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:34",
+  "note": "getResist = floor(combatTalentScale(t, 5, 15))，info/rime-wraith.lua:57 取 t:_getResist(self)*2。展开理由见报告「发现的写法模式」：工具节点在 5 级处得 14.999999999999998→14，源码运算顺序得 15。"
+ },
+ {
+  "talent": "T_RIME_WRAITH",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 12, 30]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:35",
+  "note": "getDamageIncrease = floor(combatTalentScale(t, 12, 30))"
+ },
+ {
+  "talent": "T_RIME_WRAITH",
+  "acronym": 3,
+  "expr": ["floor", ["max", 0, ["+", ["*", ["/", ["-", 15, 5], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 5, ["/", ["-", 15, 5], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:34",
+  "note": "getResist = floor(combatTalentScale(t, 5, 15))（敌对方取 -%d%%），展开理由同 #1"
+ },
+ {
+  "talent": "T_RIME_WRAITH",
+  "acronym": 4,
+  "expr": ["floor", ["talentScale", 20, 40]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:36",
+  "note": "getSlow = floor(combatTalentScale(t, 20, 40))"
+ },
+ {
+  "talent": "T_FRIGID_PLUNGE",
+  "acronym": 0,
+  "expr": ["spellDamage", 10, 50],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:68",
+  "note": "getHeal = combatTalentSpellDamage(t, 10, 50)"
+ },
+ {
+  "talent": "T_FRIGID_PLUNGE",
+  "acronym": 1,
+  "expr": ["spellDamage", 15, 100],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:67",
+  "note": "getDamage = combatTalentSpellDamage(t, 15, 100)；damDesc 只是包裹"
+ },
+ {
+  "talent": "T_GELID_HOST",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 5, 10]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:90",
+  "note": "getDur = floor(combatTalentScale(t, 5, 10))"
+ },
+ {
+  "talent": "T_GELID_HOST",
+  "acronym": 1,
+  "expr": ["spellDamage", 20, 220],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:91",
+  "note": "getDamage = combatTalentSpellDamage(t, 20, 220)"
+ },
+ {
+  "talent": "T_PERMAFROST",
+  "acronym": 0,
+  "expr": ["floor", ["max", 0, ["+", ["*", ["/", ["-", 30, 10], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 10, ["/", ["-", 30, 10], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:120",
+  "note": "getSaves = floor(combatTalentScale(t, 10, 30))；展开理由：工具节点 5 级处 29.999999999999996→29，源码顺序得 30"
+ },
+ {
+  "talent": "T_PERMAFROST",
+  "acronym": 1,
+  "expr": ["floor", ["max", 0, ["+", ["*", ["/", ["-", 30, 10], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]], ["^", ["talentLevel"], 0.5]], ["-", 10, ["/", ["-", 30, 10], ["-", ["^", 5, 0.5], ["^", 1, 0.5]]]]]]],
+  "source": "tome-src-full/data/talents/spells/rime-wraith.lua:120",
+  "note": "getSaves（敌方减免），同 #0"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 0,
+  "expr": ["spellDamage", 30, 300],
+  "source": "tome-src-full/data/talents/spells/death.lua:31",
+  "note": "getDamage = combatTalentSpellDamage(t, 30, 300)"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 1,
+  "expr": ["floor", ["talentScale", 1, 9]],
+  "source": "tome-src-full/data/talents/spells/death.lua:32",
+  "note": "getMax = floor(combatTalentScale(t, 1, 9))"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 2,
+  "expr": ["*", ["spellDamage", 30, 300], ["+", 1, ["*", 1.5, ["log10", 2]]]],
+  "source": "tome-src-full/data/talents/spells/death.lua:40",
+  "note": "dam * incFormula(2)，incFormula(nb) = 1 + math.log10(nb)*1.5（nb 是源码字面量常数，非标题输入）"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 3,
+  "expr": ["*", ["spellDamage", 30, 300], ["+", 1, ["*", 1.5, ["log10", 5]]]],
+  "source": "tome-src-full/data/talents/spells/death.lua:40",
+  "note": "dam * incFormula(5)"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 4,
+  "expr": ["*", ["spellDamage", 30, 300], ["+", 1, ["*", 1.5, ["log10", 10]]]],
+  "source": "tome-src-full/data/talents/spells/death.lua:40",
+  "note": "dam * incFormula(10)"
+ },
+ {
+  "talent": "T_RIGOR_MORTIS",
+  "acronym": 5,
+  "expr": ["*", ["spellDamage", 30, 300], ["+", 1, ["*", 1.5, ["log10", 15]]]],
+  "source": "tome-src-full/data/talents/spells/death.lua:40",
+  "note": "dam * incFormula(15)"
+ },
+ {
+  "talent": "T_DRAWN_TO_DEATH",
+  "acronym": 0,
+  "expr": ["ceil", ["talentScale", 2, 6]],
+  "source": "tome-src-full/data/talents/spells/death.lua:88",
+  "note": "getTurns = math.ceil(combatTalentScale(t, 2, 6))"
+ },
+ {
+  "talent": "T_GRIM_SHADOW",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 10, 25]],
+  "source": "tome-src-full/data/talents/spells/death.lua:174",
+  "note": "getResist = floor(combatTalentScale(t, 10, 25))"
+ },
+ {
+  "talent": "T_GRIM_SHADOW",
+  "acronym": 1,
+  "expr": ["floor", ["talentScale", 5, 30]],
+  "source": "tome-src-full/data/talents/spells/death.lua:175",
+  "note": "getArmor = floor(combatTalentScale(t, 5, 30))"
+ },
+ {
+  "talent": "T_GRIM_SHADOW",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 5, 30]],
+  "source": "tome-src-full/data/talents/spells/death.lua:176",
+  "note": "getDef = floor(combatTalentScale(t, 5, 30))"
+ },
+ {
+  "talent": "T_NECROTIC_AURA",
+  "acronym": 0,
+  "expr": ["floor", ["min", 10, ["max", 4, ["+", 3, ["talentLevel"]]]]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:29",
+  "note": "radius = floor(util.bound(3 + getTalentLevel(t), 4, 10))；util.bound = min/max 夹取"
+ },
+ {
+  "talent": "T_NECROTIC_AURA",
+  "acronym": 1,
+  "expr": ["floor", ["talentScale", 8, 18]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:30",
+  "note": "getResists = floor(combatTalentScale(t, 8, 18))"
+ },
+ {
+  "talent": "T_NECROTIC_AURA",
+  "acronym": 2,
+  "expr": ["floor", ["*", 75, ["-", 1, ["exp", ["+", ["*", ["sqrt", ["talentLevel"]], ["/", ["log", ["/", ["-", 40, 75], ["-", 20, 75]]], ["-", ["sqrt", 6.5], ["sqrt", 1.3]]]], ["/", ["-", 0, ["-", ["*", ["-", ["sqrt", 6.5], ["sqrt", 1.3]], ["log", ["-", 1, ["/", 40, 75]]]], ["*", ["sqrt", 6.5], ["log", ["/", ["-", 40, 75], ["-", 20, 75]]]]]], ["-", ["sqrt", 1.3], ["sqrt", 6.5]]]]]]]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:31",
+  "note": "getInherit = floor(combatTalentLimit(t, 75, 20, 40))。按 Combat.lua:1606 原式 limit*(1-exp(sqrt(tl)*a+b)) 展开（x_low=sqrt(1.3)、x_high=sqrt(6.5)，mastery 缺省）。工具节点 [\"talentLimit\"] 的等价重排把系数 1.3 的 1 级算成恰好 20，源码顺序得 19.9996→19。"
+ },
+ {
+  "talent": "T_SURGE_OF_UNDEATH",
+  "acronym": 0,
+  "expr": ["floor", ["talentScale", 2, 5]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:69",
+  "note": "getSpeed = floor(combatTalentScale(t, 2, 5))"
+ },
+ {
+  "talent": "T_SURGE_OF_UNDEATH",
+  "acronym": 1,
+  "expr": ["floor", ["talentScale", 12, 22]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:70",
+  "note": "getHeal = floor(combatTalentScale(t, 12, 22))"
+ },
+ {
+  "talent": "T_SURGE_OF_UNDEATH",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 1, 5]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:72",
+  "note": "getGhoulDur = floor(combatTalentScale(t, 1, 5))"
+ },
+ {
+  "talent": "T_SURGE_OF_UNDEATH",
+  "acronym": 3,
+  "expr": ["floor", ["talentScale", 1, 5]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:72",
+  "note": "getGhoulDur（同一值第二次出现）"
+ },
+ {
+  "talent": "T_SURGE_OF_UNDEATH",
+  "acronym": 4,
+  "expr": ["floor", ["talentScale", 4, 10]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:71",
+  "note": "getDaze = floor(combatTalentScale(t, 4, 10))"
+ },
+ {
+  "talent": "T_RECALL_MINIONS",
+  "acronym": 0,
+  "expr": ["ceil", ["talentLimit", 8, 1, 6]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:123",
+  "note": "getNb = math.ceil(combatTalentLimit(t, 8, 1, 6))"
+ },
+ {
+  "talent": "T_SUFFER_FOR_ME",
+  "acronym": 0,
+  "expr": ["min", 40, ["max", 5, ["/", ["spellDamage", 20, 330], 10]]],
+  "source": "tome-src-full/data/talents/spells/master-necromancer.lua:170",
+  "note": "getPower = util.bound(combatTalentSpellDamage(t, 20, 330)/10, 5, 40)"
+ },
+ {
+  "talent": "T_CALL_OF_THE_CRYPT",
+  "acronym": 0,
+  "expr": ["max", 1, ["floor", ["talentScale", 1, 2, "log"]]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:180",
+  "note": "getNb = math.max(1, math.floor(combatTalentScale(t, 1, 2, \"log\")))"
+ },
+ {
+  "talent": "T_CALL_OF_THE_CRYPT",
+  "acronym": 1,
+  "expr": ["max", 1, ["+", ["actor", "角色等级"], ["floor", ["combatScale", ["talentLevel"], -6, 0.9, 2, 5]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:212",
+  "note": "getLevel = floor(combatScale(getTalentLevel(t), -6, 0.9, 2, 5))；info/master-of-bones.lua:285 math.max(1, self.level + t:_getLevel(self))"
+ },
+ {
+  "talent": "T_CALL_OF_THE_CRYPT",
+  "acronym": 2,
+  "expr": ["max", 1, ["floor", ["talentScale", 1, 4.5]]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:183",
+  "note": "getMax = math.max(1, math.floor(combatTalentScale(t, 1, 4.5)))，info 传 ignore=true"
+ },
+ {
+  "talent": "T_SHATTERED_REMAINS",
+  "acronym": 1,
+  "expr": ["spellDamage", 30, 200],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:299",
+  "note": "getDamage = combatTalentSpellDamage(t, 30, 200)"
+ },
+ {
+  "talent": "T_SHATTERED_REMAINS",
+  "acronym": 2,
+  "expr": ["floor", ["talentScale", 30, 130]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:298",
+  "note": "getHealth = floor(combatTalentScale(t, 30, 130))"
+ },
+ {
+  "talent": "T_SHATTERED_REMAINS",
+  "acronym": 3,
+  "expr": ["floor", ["talentScale", 6, 15]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:297",
+  "note": "getArmor = floor(combatTalentScale(t, 6, 15))"
+ },
+ {
+  "talent": "T_SHATTERED_REMAINS",
+  "acronym": 4,
+  "expr": ["talentScale", 3, 50],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:296",
+  "note": "getRetaliation = combatTalentScale(t, 3, 50)（无 floor，info 用 %0.2f）"
+ },
+ {
+  "talent": "T_ASSEMBLE",
+  "acronym": 0,
+  "expr": ["max", 1, ["+", ["actor", "角色等级"], ["floor", ["combatScale", ["talentLevel"], -6, 0.9, 2, 5]]]],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:445",
+  "note": "getLevel = floor(combatScale(getTalentLevel(t), -6, 0.9, 2, 5))；info/master-of-bones.lua:498 math.max(1, self.level + t:_getLevel(self))"
+ },
+ {
+  "talent": "T_LORD_OF_SKULLS",
+  "acronym": 0,
+  "expr": ["talentScale", 30, 80],
+  "source": "tome-src-full/data/talents/spells/master-of-bones.lua:511",
+  "note": "getLife = combatTalentScale(t, 30, 80)"
+ }
+]

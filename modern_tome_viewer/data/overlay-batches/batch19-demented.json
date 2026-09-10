@@ -1,0 +1,163 @@
+[
+  {
+    "talent": "T_JINXED_TOUCH",
+    "acronym": 0,
+    "expr": ["max", 1, ["min", 3, ["floor", ["/", ["+", ["talentLevel", true], 2], 2]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:37",
+    "note": "getSaves: raw>=4 -> 3, raw>=2 -> 2, else 1；按原始等级"
+  },
+  {
+    "talent": "T_JINXED_TOUCH",
+    "acronym": 1,
+    "expr": ["+", 1, ["*", 0.5, ["floor", ["/", ["-", ["talentLevel", true], 1], 2]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:28",
+    "note": "getCrit: raw>=5 -> 2, raw>=3 -> 1.5, else 1；按原始等级"
+  },
+  {
+    "talent": "T_PREORDAIN",
+    "acronym": 0,
+    "expr": ["min", 7, ["+", 1, ["talentLevel"]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:83",
+    "note": "getChance = math.min(7, 1 + self:getTalentLevel(t))；有效等级"
+  },
+  {
+    "talent": "T_LUCKDRINKER",
+    "acronym": 1,
+    "expr": ["max", 1, ["min", 3, ["floor", ["/", ["+", ["talentLevel", true], 2], 2]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:107",
+    "note": "getSaves: raw>=4 -> 3, raw>=2 -> 2, else 1；按原始等级"
+  },
+  {
+    "talent": "T_LUCKDRINKER",
+    "acronym": 2,
+    "expr": ["+", 1, ["*", 0.5, ["floor", ["/", ["-", ["talentLevel", true], 1], 2]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:98",
+    "note": "getCrit: raw>=5 -> 2, raw>=3 -> 1.5, else 1；按原始等级"
+  },
+  {
+    "talent": "T_LUCKDRINKER",
+    "acronym": 3,
+    "expr": ["min", 6, ["+", 2, ["floor", ["/", ["talentLevel"], 2]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/calamity.lua:116",
+    "note": "getAvoid = math.min(6, 2 + math.floor(self:getTalentLevel(t)/2))；有效等级"
+  },
+  {
+    "talent": "T_MUTATED_HERERAGEGAND",
+    "acronym": 0,
+    "expr": ["*", 100, ["/", ["sqrt", ["/", ["talentLevel"], 5]], 2]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/writhing-body.lua:31",
+    "note": "100*getPercentInc = 100 * math.sqrt(self:getTalentLevel(t)/5)/2；有效等级"
+  },
+  {
+    "talent": "T_MUTATED_HERERAGEGAND",
+    "acronym": 2,
+    "expr": ["talentScale", 0, 10],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/writhing-body.lua:44",
+    "note": "getTentacleCombat.apr = self:combatTalentScale(t, 0, 10)"
+  },
+  {
+    "talent": "T_MUTATED_HERERAGEGAND",
+    "acronym": 3,
+    "expr": ["talentLimit", 25, 2, 12],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/writhing-body.lua:47",
+    "note": "getTentacleCombat.physcrit = self:combatTalentLimit(t, 25, 2, 12)"
+  },
+  {
+    "talent": "T_NULLMAIL",
+    "acronym": 0,
+    "expr": ["statDamage", "mag", 10, 50],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/void.lua:151",
+    "note": "getArmor = combatTalentStatDamage(t,\"mag\",10,50) * ArmorEffect；ArmorEffect 是装备条件（布甲=1），导出按布甲渲染，冻结为 1"
+  },
+  {
+    "talent": "T_NULLMAIL",
+    "acronym": 1,
+    "expr": ["+", 50, ["spellDamage", 30, 200]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/void.lua:152",
+    "note": "getAbsorb = (50 + combatTalentSpellDamage(t,30,200)) * ArmorEffect；ArmorEffect 冻结为 1（布甲）"
+  },
+  {
+    "talent": "T_BLACK_MONOLITH",
+    "acronym": 2,
+    "expr": ["*", 70, ["-", 1, ["exp", ["+", ["*", ["^", ["actor", "魔力"], 0.75], ["/", ["log", ["/", ["-", 40, 70], ["-", 15, 70]]], ["-", 31.623, 5.6234]]], ["/", ["-", ["*", ["-", 31.623, 5.6234], ["log", ["-", 1, ["/", 40, 70]]]], ["*", 31.623, ["log", ["/", ["-", 40, 70], ["-", 15, 70]]]]], ["-", 31.623, 5.6234]]]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/void.lua:203",
+    "note": "getResist = combatStatLimit(\"mag\",70,15,40)；节点表 combatLimit 内取 10^0.75/100^0.75，而 Lua 用定点 5.6234/31.623，故按 Combat.lua:1631 原式展开（x_low=5.6234, x_high=31.623）"
+  },
+  {
+    "talent": "T_MAGGOT_BREATH",
+    "acronym": 1,
+    "expr": ["statDamage", "mag", 30, 550],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/scourge-drake.lua:170",
+    "note": "getDamage = combatTalentStatDamage(t,\"mag\",30,550) + (knowTalent(T_CHROMATIC_FURY) and combatTalentStatDamage(t,\"wil\",30,550) or 0)；导出未学该技能，bonus 冻结为 0（标题也未声明 意志）"
+  },
+  {
+    "talent": "T_MAGGOT_BREATH",
+    "acronym": 3,
+    "expr": ["*", 0.075, ["statDamage", "mag", 30, 550]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/scourge-drake.lua:174",
+    "note": "getDiseaseDamage = getDamage * 0.75 / 10"
+  },
+  {
+    "talent": "T_DECAYED_DEVOURERS",
+    "acronym": 3,
+    "expr": ["floor", ["talentLevel"]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/controlled-horrors.lua:160",
+    "note": "info 第 4 个参数 = math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_DECAYED_BLADE_HORROR",
+    "acronym": 3,
+    "expr": ["floor", ["talentLevel"]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/controlled-horrors.lua:270",
+    "note": "info 第 4 个参数 = math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_TWOFOLD_CURSE",
+    "acronym": 0,
+    "expr": ["talentLevel"],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/doom.lua:376",
+    "note": "info 第 1 个参数 = self:getTalentLevel(t)（未取整，%d 由显示层截断）"
+  },
+  {
+    "talent": "T_WORM_THAT_WALKS",
+    "acronym": 0,
+    "expr": ["/", ["+", 60, ["spellDamage", 15, 450]], 7],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/friend-of-the-worm.lua:348",
+    "note": "getPower 多返回值 (60 + combatTalentSpellDamage(t,15,450))/7, 7, combatTalentLimit(...)；info 的 tformat(t.getPower(...)) 只取第 1 个"
+  },
+  {
+    "talent": "T_SHARED_INSANITY",
+    "acronym": 1,
+    "expr": ["floor", ["/", ["talentLevel", true], 2]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/friend-of-the-worm.lua:528",
+    "note": "getInscriptions = math.floor(self:getTalentLevelRaw(t) / 2)；原始等级"
+  },
+  {
+    "talent": "T_MUTATED_HAND",
+    "acronym": 0,
+    "expr": ["*", 100, ["/", ["sqrt", ["/", ["talentLevel"], 5]], 1.5]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/tentacles.lua:36",
+    "note": "100*getPercentInc = 100 * math.sqrt(self:getTalentLevel(t)/5)/1.5；有效等级"
+  },
+  {
+    "talent": "T_MUTATED_HAND",
+    "acronym": 2,
+    "expr": ["talentLimit", 25, 2, 12],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/tentacles.lua:53",
+    "note": "getTentacleCombat.physcrit = self:combatTalentLimit(t, 25, 2, 12)"
+  },
+  {
+    "talent": "T_CHAOS_ORBS",
+    "acronym": 1,
+    "expr": ["*", -1, ["+", 5, ["*", 20, ["exp", ["+", ["*", ["sqrt", ["talentLevel"]], ["/", ["log", ["/", ["-", 9, 5], ["-", 25, 5]]], ["-", ["sqrt", 6.5], ["sqrt", 1.3]]]], ["/", ["-", ["*", ["-", ["sqrt", 6.5], ["sqrt", 1.3]], ["log", ["-", 1, ["/", ["-", 25, 9], ["-", 25, 5]]]]], ["*", ["sqrt", 6.5], ["log", ["/", ["-", 9, 5], ["-", 25, 5]]]]], ["-", ["sqrt", 6.5], ["sqrt", 1.3]]]]]]]],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/beyond-sanity.lua:27",
+    "note": "info 第二个 %d 渲染成 -getTrigger（文本为 \"lower than -%d\"），故取负；combatTalentLimit(t,5,25,9) 按 Combat.lua:1606 的指数原式展开（节点表 talentLimit 的幂式在 tl=1.3 处给 25，而导出为 24.999999999999996→24）"
+  },
+  {
+    "talent": "T_PROPHECY_OF_RUIN",
+    "acronym": 0,
+    "expr": ["^", ["*", ["/", ["*", ["+", 1, ["power", "法术强度"]], ["+", 1, ["*", 0.8, ["-", ["sqrt", 0], 1]]]], ["*", 101, ["+", 1, ["*", 0.8, ["-", ["sqrt", 5], 1]]]]], 120], 1.04],
+    "source": "dlc-src/cults/tome-cults/data/talents/demented/doom.lua:29",
+    "note": "getDamage -> T_PROPHECY.getRuinDamage = combatTalentSpellDamage(t,1,120)；导出把该 tooltip 按原始等级 0 渲染（等级因子 (sqrt(0)-1)*0.8+1 = 0.2 冻结为常数；标题只声明 法术强度，未声明技能等级）。等价说法：max=24、等级 1 —— 两者数值完全相同"
+  }
+]

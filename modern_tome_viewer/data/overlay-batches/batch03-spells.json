@@ -1,0 +1,331 @@
+[
+  {
+    "talent": "T_FLAMESHOCK",
+    "acronym": 0,
+    "expr": ["floor", ["combatScale", ["talentLevel", true], 4, 1, 8, 5]],
+    "source": "tome-src-full/data/talents/spells/fire.lua:102",
+    "note": "radius = math.floor(self:combatTalentScale(t, 4, 8))；三套导出同值，故用原始等级展开 combatTalentScale"
+  },
+  {
+    "talent": "T_FIREFLASH",
+    "acronym": 1,
+    "expr": ["combatScale", ["talentLevel", true], 2, 1, 5.5, 5],
+    "source": "tome-src-full/data/talents/spells/fire.lua:149",
+    "note": "radius = math.floor(self:combatTalentScale(t, 2, 5.5))；导出按原始等级 + 四舍五入渲染（2.875→3 … 5.5→6）"
+  },
+  {
+    "talent": "T_FEATHER_WIND",
+    "acronym": 5,
+    "expr": ["floor", ["*", 2.5, ["talentLevel"]]],
+    "source": "tome-src-full/data/talents/spells/air.lua:165",
+    "note": "getFatigue = math.floor(2.5 * self:getTalentLevel(t))，用有效等级"
+  },
+  {
+    "talent": "T_THUNDERSTORM",
+    "acronym": 0,
+    "expr": ["floor", ["talentLevel"]],
+    "source": "tome-src-full/data/talents/spells/air.lua:215",
+    "note": "getTargetCount = math.floor(self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_GEM_GOLEM",
+    "acronym": 0,
+    "expr": ["talentLevel", true],
+    "source": "tome-src-full/data/talents/spells/advanced-golemancy.lua:73",
+    "note": "tformat(self:getTalentLevelRaw(t)) —— 可用宝石等级，原始等级"
+  },
+  {
+    "talent": "T_RUNIC_GOLEM",
+    "acronym": 0,
+    "expr": ["talentLevel", true],
+    "source": "tome-src-full/data/talents/spells/advanced-golemancy.lua:166",
+    "note": "tformat(self:getTalentLevelRaw(t)) —— 傀儡回复量，原始等级"
+  },
+  {
+    "talent": "T_SUPERCHARGE_GOLEM",
+    "acronym": 0,
+    "expr": ["/", ["+", 60, ["spellDamage", 15, 450]], 7],
+    "source": "tome-src-full/data/talents/spells/advanced-golemancy.lua:86",
+    "note": "getPower 第 1 返回值 regen = (60 + combatTalentSpellDamage(t,15,450)) / 7"
+  },
+  {
+    "talent": "T_SUPERCHARGE_GOLEM",
+    "acronym": 1,
+    "expr": ["talentLimit", 100, 30, 55],
+    "source": "tome-src-full/data/talents/spells/advanced-golemancy.lua:86",
+    "note": "getPower 第 3 返回值 hp = self:combatTalentLimit(t, 100, 30, 55)"
+  },
+  {
+    "talent": "T_BLACK_ICE",
+    "acronym": 1,
+    "expr": ["talentScale", 10, 30],
+    "source": "tome-src-full/data/talents/spells/grave.lua:39",
+    "note": "getMinionsInc = math.floor(self:combatTalentScale(t, 10, 30))；不写 floor，端点 30.0000 因浮点会掉到 29，取整交给显示层"
+  },
+  {
+    "talent": "T_CHILL_OF_THE_TOMB",
+    "acronym": 2,
+    "expr": ["talentScale", 5, 25],
+    "source": "tome-src-full/data/talents/spells/grave.lua:86",
+    "note": "getFlatResist = math.floor(self:combatTalentScale(t, 5, 25))；同上不写 floor"
+  },
+  {
+    "talent": "T_CORPSELIGHT",
+    "acronym": 1,
+    "expr": ["floor", ["talentScale", 3, 7.5]],
+    "source": "tome-src-full/data/talents/spells/grave.lua:118",
+    "note": "getMaxStacks = math.floor(self:combatTalentScale(t, 3, 7.5))"
+  },
+  {
+    "talent": "T_CONGEAL_TIME",
+    "acronym": 0,
+    "expr": ["min", ["*", 8, ["talentLevel"]], 60],
+    "source": "tome-src-full/data/talents/spells/temporal.lua:34",
+    "note": "info 里是 100*slow，slow = math.min(getTalentLevel(t)*0.08, 0.6)"
+  },
+  {
+    "talent": "T_TIME_SHIELD",
+    "acronym": 1,
+    "expr": ["+", 5, ["floor", ["talentLevel"]]],
+    "source": "tome-src-full/data/talents/spells/temporal.lua:68",
+    "note": "getDuration = bound(5 + floor(getTalentLevel(t)), 5, 15)；getShieldDuration 只是 +attr(shield_dur)=0"
+  },
+  {
+    "talent": "T_ESSENCE_OF_SPEED",
+    "acronym": 0,
+    "expr": ["*", 100, ["combatScale", ["talentLevel"], 0.075, 1, 0.26, 5, 0.3333333333333333]],
+    "source": "tome-src-full/data/talents/spells/temporal.lua:129",
+    "note": "getHaste = combatTalentScale(t, 0.075, 0.26, 1/3)，info 显示 100*haste"
+  },
+  {
+    "talent": "T_BLURRED_MORTALITY",
+    "acronym": 0,
+    "expr": ["-", 0, ["statDamage", "con", 30, 1000]],
+    "source": "tome-src-full/data/talents/spells/necrosis.lua:34",
+    "note": "getLifeBonus = combatTalentStatDamage(t, \"con\", 30, 1000)，标题里体质=100；导出把 “-%d” 的负号算进读数"
+  },
+  {
+    "talent": "T_RUNESKIN",
+    "acronym": 0,
+    "expr": ["-", 0, ["talentScale", 8, 30]],
+    "source": "tome-src-full/data/talents/spells/necrosis.lua:111",
+    "note": "getLifeBonus = combatTalentScale(t, 8, 30)，导出读数为负（“-%d”）"
+  },
+  {
+    "talent": "T_RUNESKIN",
+    "acronym": 1,
+    "expr": ["talentScale", 1, 1.8],
+    "source": "tome-src-full/data/talents/spells/necrosis.lua:112",
+    "note": "getCrit = combatTalentScale(t, 1, 1.8)，%0.1f 精度"
+  },
+  {
+    "talent": "T_CLEANSING_FLAMES",
+    "acronym": 0,
+    "expr": ["ceil", ["talentScale", 6, 15]],
+    "source": "tome-src-full/data/talents/spells/wildfire.lua:119",
+    "note": "getDur = math.ceil(self:combatTalentScale(t, 6, 15))"
+  },
+  {
+    "talent": "T_CLEANSING_FLAMES",
+    "acronym": 2,
+    "expr": ["*", 10, ["talentLevel", true]],
+    "source": "tome-src-full/data/talents/spells/wildfire.lua:120",
+    "note": "getChance = self:getTalentLevelRaw(t) * 10（三套同值，原始等级）"
+  },
+  {
+    "talent": "T_WILDFIRE",
+    "acronym": 2,
+    "expr": ["min", 100, ["*", 14, ["talentLevel"]]],
+    "source": "tome-src-full/data/talents/spells/wildfire.lua:148",
+    "note": "getResistSelf = math.min(100, self:getTalentLevel(t) * 14)"
+  },
+  {
+    "talent": "T_EARTHEN_MISSILES",
+    "acronym": 0,
+    "expr": ["+", 2, ["min", 1, ["floor", ["/", ["talentLevel"], 5]]]],
+    "source": "tome-src-full/data/talents/spells/stone.lua:62",
+    "note": "count = 2，且 self:getTalentLevel(t) >= 5 时 +1（阈值等价展开）"
+  },
+  {
+    "talent": "T_BODY_OF_STONE",
+    "acronym": 4,
+    "expr": ["*", 10, ["talentLevel"]],
+    "source": "tome-src-full/data/talents/spells/stone.lua:87",
+    "note": "info 显示 100*getStunRes，getStunRes = self:getTalentLevel(t)/10"
+  },
+  {
+    "talent": "T_CRYSTALLINE_FOCUS",
+    "acronym": 2,
+    "expr": ["*", 5, ["talentLevel"]],
+    "source": "tome-src-full/data/talents/spells/stone.lua:196",
+    "note": "getSaves = self:getTalentLevel(t) * 5"
+  },
+  {
+    "talent": "T_SHATTER",
+    "acronym": 1,
+    "expr": ["ceil", ["+", 2, ["talentLevel"]]],
+    "source": "tome-src-full/data/talents/spells/ice.lua:110",
+    "note": "getTargetCount = math.ceil(self:getTalentLevel(t) + 2)"
+  },
+  {
+    "talent": "T_UTTERCOLD",
+    "acronym": 2,
+    "expr": ["min", 100, ["*", 20, ["talentLevel", true]]],
+    "source": "tome-src-full/data/talents/spells/ice.lua:172",
+    "note": "getPierce = math.min(100, self:getTalentLevelRaw(t) * 20)（三套同值）"
+  },
+  {
+    "talent": "T_ILLUMINATE",
+    "acronym": 2,
+    "expr": ["+", 3, ["min", 1, ["floor", ["/", ["talentLevel"], 5]]]],
+    "source": "tome-src-full/data/talents/spells/phantasm.lua:41",
+    "note": "getBlindPower = getTalentLevel(t) >= 5 and 4 or 3（阈值等价展开）"
+  },
+  {
+    "talent": "T_INVISIBILITY",
+    "acronym": 0,
+    "expr": ["spellDamage", 10, 50],
+    "source": "tome-src-full/data/talents/spells/phantasm.lua:131",
+    "note": "getInvisibilityPower = math.ceil(combatTalentSpellDamage(t, 10, 50))；源码 ceil 与导出不符（28.59→导出 28），不套 ceil 由显示层截断"
+  },
+  {
+    "talent": "T_DISPLACEMENT_SHIELD",
+    "acronym": 0,
+    "expr": ["min", 100, ["+", 40, ["*", 5, ["talentLevel"]]]],
+    "source": "tome-src-full/data/talents/spells/conveyance.lua:296",
+    "note": "getTransferChange = math.min(40 + self:getTalentLevel(t) * 5, 100)"
+  },
+  {
+    "talent": "T_DISPLACEMENT_SHIELD",
+    "acronym": 2,
+    "expr": ["min", 25, ["+", 10, ["floor", ["*", 3, ["talentLevel"]]]]],
+    "source": "tome-src-full/data/talents/spells/conveyance.lua:298",
+    "note": "getDuration = util.bound(10 + math.floor(getTalentLevel(t) * 3), 10, 25)"
+  },
+  {
+    "talent": "T_PROBABILITY_TRAVEL",
+    "acronym": 1,
+    "expr": ["*", 100, ["+", 2, ["/", ["-", 5, ["min", 5, ["talentLevel", true]]], 2]]],
+    "source": "tome-src-full/data/talents/spells/conveyance.lua:353",
+    "note": "info 显示 (2 + (5 - math.min(getTalentLevelRaw(t), 5)) / 2) * 100，原始等级"
+  },
+  {
+    "talent": "T_SPECTRAL_SIGHT",
+    "acronym": 1,
+    "expr": ["min", 10, ["floor", ["+", 7.5, ["/", ["talentLevel"], 2]]]],
+    "source": "tome-src-full/data/talents/spells/spectre.lua:174",
+    "note": "getVision = math.min(10, math.floor(7.5 + self:getTalentLevel(t)/2))"
+  },
+  {
+    "talent": "T_SPECTRAL_SIGHT",
+    "acronym": 2,
+    "expr": ["floor", ["+", 10, ["talentLevel"]]],
+    "source": "tome-src-full/data/talents/spells/spectre.lua:175",
+    "note": "getEsp = math.floor(10 + self:getTalentLevel(t))"
+  },
+  {
+    "talent": "T_LIVING_LIGHTNING",
+    "acronym": 3,
+    "expr": ["+", 50, ["/", ["spellDamage", 5, 500], 10]],
+    "source": "tome-src-full/data/talents/spells/energy-alchemy.lua:151",
+    "note": "getTurn = util.bound(50 + combatTalentSpellDamage(t, 5, 500)/10, 50, 160)，上界未触及"
+  },
+  {
+    "talent": "T_FIERY_HANDS",
+    "acronym": 2,
+    "expr": ["/", ["talentLevel"], 3],
+    "source": "tome-src-full/data/talents/spells/enhancement.lua:108",
+    "note": "info 第 3 个参数 self:getTalentLevel(t) / 3（每次命中回复耐力）"
+  },
+  {
+    "talent": "T_SHOCK_HANDS",
+    "acronym": 2,
+    "expr": ["/", ["talentLevel"], 3],
+    "source": "tome-src-full/data/talents/spells/enhancement.lua:151",
+    "note": "info 第 3 个参数 self:getTalentLevel(t) / 3（每次命中回复法力）"
+  },
+  {
+    "talent": "T_ELDRITCH_BLOW",
+    "acronym": 0,
+    "expr": ["*", 100, ["weaponDamage", 0.6, ["/", ["+", 100, ["spellDamage", 50, 300]], 100]]],
+    "source": "tome-src-full/data/talents/spells/eldritch-shield.lua:62",
+    "note": "100 * combatTalentWeaponDamage(t, 0.6, (100 + combatTalentSpellDamage(t,50,300))/100)"
+  },
+  {
+    "talent": "T_ELDRITCH_INFUSION",
+    "acronym": 2,
+    "expr": ["talentScale", 5, 10],
+    "source": "tome-src-full/data/talents/spells/eldritch-shield.lua:77",
+    "note": "getPower = combatTalentScale(t, 5, 10)（每材质等级的法术/精神强度）"
+  },
+  {
+    "talent": "T_ARCANE_EYE",
+    "acronym": 0,
+    "expr": ["floor", ["+", 10, ["*", 3, ["talentLevel"]]]],
+    "source": "tome-src-full/data/talents/spells/divination.lua:30",
+    "note": "getDuration = math.floor(10 + self:getTalentLevel(t) * 3)"
+  },
+  {
+    "talent": "T_GOLEM_PORTAL",
+    "acronym": 0,
+    "expr": ["min", 100, ["+", 25, ["*", 15, ["talentLevel", true]]]],
+    "source": "tome-src-full/data/talents/spells/golemancy.lua:510",
+    "note": "math.min(100, self:getTalentLevelRaw(t) * 15 + 25)（三套同值）"
+  },
+  {
+    "talent": "T_STONE_WALL",
+    "acronym": 0,
+    "expr": ["+", 2, ["spellDamage", 5, 12]],
+    "source": "tome-src-full/data/talents/spells/earth.lua:192",
+    "note": "getDuration = util.bound(2 + combatTalentSpellDamage(t, 5, 12), 2, 25)"
+  },
+  {
+    "talent": "T_ARCANE_POWER",
+    "acronym": 1,
+    "expr": ["+", 5, ["/", ["spellDamage", 10, 500], 18]],
+    "source": "tome-src-full/data/talents/spells/arcane.lua:83",
+    "note": "getArcaneResist = 5 + combatTalentSpellDamage(t, 10, 500) / 18"
+  },
+  {
+    "talent": "T_IMBUE_ITEM",
+    "acronym": 0,
+    "expr": ["talentLevel", true],
+    "source": "tome-src-full/data/talents/spells/stone-alchemy.lua:146",
+    "note": "tformat(self:getTalentLevelRaw(t)) —— 可附魔宝石材质等级"
+  },
+  {
+    "talent": "T_STAFF_MASTERY",
+    "acronym": 0,
+    "expr": ["/", ["*", 100, ["sqrt", ["/", ["talentLevel"], 5]]], 1.5],
+    "source": "tome-src-full/data/talents/spells/staff-combat.lua:100",
+    "note": "info 显示 100 * getPercentInc，getPercentInc = math.sqrt(self:getTalentLevel(t)/5) / 1.5"
+  },
+  {
+    "talent": "T_GOLEM_ARMOUR",
+    "acronym": 0,
+    "expr": ["-", ["*", 1.4, ["talentLevel", true]], 4.2],
+    "source": "tome-src-full/data/talents/spells/golem.lua:470",
+    "note": "getArmor = getTalentTypeMastery(\"technique/combat-training\") * (raw * 1.4 - 4.2)；导出用 mastery=1（三套同值）"
+  },
+  {
+    "talent": "T_GOLEM_ARMOUR",
+    "acronym": 1,
+    "expr": ["-", ["*", 5, ["talentLevel", true]], 15],
+    "source": "tome-src-full/data/talents/spells/golem.lua:469",
+    "note": "getArmorHardiness = mastery * (raw * 5 - 15)，mastery=1"
+  },
+  {
+    "talent": "T_GOLEM_ARMOUR",
+    "acronym": 2,
+    "expr": ["-", ["*", 1.9, ["talentLevel", true]], 5.7],
+    "source": "tome-src-full/data/talents/spells/golem.lua:471",
+    "note": "getCriticalChanceReduction = mastery * (raw * 1.9 - 5.7)，mastery=1"
+  },
+  {
+    "talent": "T_GOLEM_MOLTEN_SKIN",
+    "acronym": 1,
+    "expr": ["+", 5, ["talentLevel"]],
+    "source": "tome-src-full/data/talents/spells/golem.lua:428",
+    "note": "info 第 2 个参数 5 + self:getTalentLevel(t)"
+  }
+]
