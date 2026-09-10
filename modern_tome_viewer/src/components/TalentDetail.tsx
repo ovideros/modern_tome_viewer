@@ -32,6 +32,19 @@ interface TalentDetailProps {
    * the effective talent level is `raw level × mastery`.
    */
   mastery?: number;
+  /**
+   * Embedded panels are opened from inside another view (the monster
+   * encyclopedia) rather than being the page's own detail. They keep the full
+   * text and simulator but drop the tree breadcrumb, which has nowhere to go,
+   * and the favourite/compare actions, which the host page owns.
+   */
+  embedded?: boolean;
+  /**
+   * Text for the close button. The monster page uses "返回怪物" on narrow
+   * viewports, where the talent sheet sits in the same slot as the monster
+   * sheet and closing it is what brings the monster back.
+   */
+  closeLabel?: string;
 }
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -59,6 +72,8 @@ export function TalentDetail({
   compareFull,
   compact = false,
   mastery = 1,
+  embedded = false,
+  closeLabel = '关闭',
 }: TalentDetailProps) {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -100,7 +115,7 @@ export function TalentDetail({
             <Highlight text={talent.plainName} terms={terms} />
           </h2>
           <p className="mt-0.5 font-mono text-[11px] text-subtle">{talent.shortName}</p>
-          {compact ? (
+          {compact || embedded ? (
             <p className="mt-1 text-[11.5px] text-accent-strong">{talent.treePlainName}</p>
           ) : (
             <button
@@ -113,27 +128,37 @@ export function TalentDetail({
           )}
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
-          <button type="button" className="btn-ghost btn px-2 py-1" onClick={onClose} title="关闭（Esc）">
-            ✕
-          </button>
           <button
             type="button"
-            className="btn px-2 py-1 text-[11.5px]"
-            aria-pressed={favorite}
-            onClick={() => onToggleFavorite(talent.id)}
-            title={favorite ? '取消收藏' : '加入收藏'}
+            className="btn-ghost btn px-2 py-1"
+            onClick={onClose}
+            title={`${closeLabel}（Esc）`}
+            aria-label={closeLabel}
           >
-            {favorite ? '★ 已收藏' : '☆ 收藏'}
+            {closeLabel === '关闭' ? '✕' : `← ${closeLabel}`}
           </button>
-          <button
-            type="button"
-            className="btn px-2 py-1 text-[11.5px]"
-            aria-pressed={inCompare}
-            onClick={() => onToggleCompare(talent.id)}
-            title={inCompare ? '移出对比' : compareFull ? '对比列表已满' : '加入对比'}
-          >
-            {inCompare ? '− 移出对比' : '+ 对比'}
-          </button>
+          {!embedded && (
+            <>
+              <button
+                type="button"
+                className="btn px-2 py-1 text-[11.5px]"
+                aria-pressed={favorite}
+                onClick={() => onToggleFavorite(talent.id)}
+                title={favorite ? '取消收藏' : '加入收藏'}
+              >
+                {favorite ? '★ 已收藏' : '☆ 收藏'}
+              </button>
+              <button
+                type="button"
+                className="btn px-2 py-1 text-[11.5px]"
+                aria-pressed={inCompare}
+                onClick={() => onToggleCompare(talent.id)}
+                title={inCompare ? '移出对比' : compareFull ? '对比列表已满' : '加入对比'}
+              >
+                {inCompare ? '− 移出对比' : '+ 对比'}
+              </button>
+            </>
+          )}
         </div>
       </header>
 

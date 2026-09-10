@@ -6,12 +6,16 @@
 > | --- | --- |
 > | 3750 个数值 | **3650 源码公式（97.3%）** / 71 反解估算 / 29 仅参考值 |
 > | 技能维度 | 1591 全可调 / 9 部分可调 / 7 完全不可调（另有 219 个技能没有数值） |
+> | 技能总数 | **1834**（上游导出 1826 + 从 Lua 补的 8 条怪物技能，见 §11） |
+| 怪物描述 | 765 个有英文原文，其中 763 个有中文译文（缺译 2 条已在报告里列出） |
 > | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
-> | 测试基线 | typecheck 无错 · scaling **45/45** · verify **87/87** · smoke **42/42** · e2e **174/174** |
+> | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入 |
+> | 测试基线 | typecheck 无错 · monsters **43/43** · scaling **45/45** · verify **87/87** · smoke **61/61** · e2e **222/222** |
 > | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
 >
 > 本轮的逐条进展见 §0「最近一轮变更」；数值覆盖的来龙去脉见
 > [expression-overlay-report.md](expression-overlay-report.md)。
+> 怪物图鉴的收录口径、数量统计与已知缺口见 [monster-pipeline.md](monster-pipeline.md)。
 > 当前实现与边界以 [lua-scaling.md](lua-scaling.md) 为准。
 >
 > 交接时间：2026-09-10（初版）／后续多轮续修
@@ -19,7 +23,70 @@
 
 ---
 
-## 0. 最近一轮变更（2026 续修，按 jj 提交顺序）
+## 0. 最近一轮变更：怪物图鉴（本轮）
+
+本轮新增中文「怪物」页面与一条**独立、可复现**的 NPC 提取管线。逐条依据见
+[monster-pipeline.md](monster-pipeline.md)，这里只记结论与踩到的坑。
+
+| 项 | 结果 |
+| --- | --- |
+| 新页面 | `#/monsters`：分类侧栏 + 可搜索列表 + 怪物详情面板；技能在页面内面板打开（≥1800px 为第三列，1280–1799px 为底部抽屉，更窄回退到搜索页），不再需要"点进去再返回" |
+| 收录 | 942 个 `newEntity` 模板 → 130 个抽象 BASE 不计入 → **812 个**可遇模板 |
+| 分类 | 普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6（依据 `Actor:textRank`） |
+| 技能 | 固定 729 个模板有配置；218 个带互斥随机技能组/池；引用技能 **0 个未收录** |
+| 技能查看 | 技能在**页内面板**打开，任何宽度都不离开怪物：≥1800px 为第三列（怪物与技能同时可见、当前技能高亮），其余宽度为底部抽屉；<1280px（含手机）技能抽屉替代怪物抽屉并提供「← 返回怪物」 |
+| 中文 | 名称 812/812（游戏汉化表，`zh_hans.lua` ×4） |
+| 图片 | 787/812（96.9%），按引用复制 681 张；缺图 25 个逐条记在报告里 |
+| 补充技能 | 从 Lua 补 8 条上游缺的技能，技能总数 1826 → **1834** |
+
+五条踩坑记录（都写进了 `scripts/monsters/*.test.mjs`）：
+
+0. **`desc = _t[[...]]` 是调用不是字面量**。描述被汉化宏包了一层，按字面量
+   读会得到"所有怪物都没有描述"。同一处 `_t` 解析也用在名称上，漏掉它中文
+   覆盖率会直接掉到 0。
+1. **`do` 不能当成块起始**。`for k, v in pairs(t) do` 里 `for` 和 `do` 各加一次
+   深度，会让块跳过多吃一个 `end`，把 `newEntity{...}` 的 `}` 一起吞掉。正确做法是
+   记住"循环头已开"，让它的 `do` 不再计数。
+2. **`define_as` 不是全局唯一**。游戏会在多个区域文件里重复声明同一个
+   `define_as`（`ELANDAR`、`GLADIATOR`、`BASE_NPC_NAGA`…），它们必须各自成行。
+   但首版曾直接拿它当 React key，重复 key 让列表切换时残留旧卡片——界面显示
+   101 个固定 Boss，数据其实只有 98 个。现在 id 统一做全局唯一化，重复项加
+   `#2` 后缀并记录 `variantOf`。
+3. **搜索 haystack 漏了随机组技能**。详情页正确显示了 4 套互斥组，但搜索
+   `T_CALL_OF_THE_CRYPT` 找不到兽人死灵法师，因为 haystack 只拼了固定技能。
+   同时 `T_HIEMAL_SHIELD` 被按 `_` 切成三个词，任何含 `shield` 的怪都会命中；
+   现在查询解析器把带下划线的词当整体。
+4. **`archive` 字段名不一致**。图片索引里写 `archive: 'gfx'`，归档注册用的是
+   `id: 'tome'`，导致 `copyImages` 一张都读不出来（当时被"索引里本来就没这些
+   文件"掩盖了）。修好后 682 张一次复制成功。
+
+### 0.0.1 技能面板（同轮追加）
+
+怪物页最初把技能链到搜索页，读一个技能要来回跳。改成复用职业页的
+`TalentDetail`，在页面自己的面板里打开：
+
+- ≥1800px（新增 Tailwind `xxl` 变体）：作为第三列放在怪物面板右侧，怪物技能
+  列表保持可见，当前技能行高亮 `aria-pressed`。
+- 1280–1799px：底部抽屉（`data-testid="monster-talent-sheet"`），关闭后怪物面板
+  仍在，不丢上下文。
+- <1280px（含手机）：同样是底部抽屉，但替代怪物抽屉（同一时刻只有一个抽屉，
+  叠两层只会互相遮挡）；抽屉顶部是「← 返回怪物」按钮，关闭即回到怪物。
+  e2e 在 1200 / 900 / 420 / 360px 四档逐一验证开、关与返回。
+
+面板使用 `embedded` 模式：保留完整技能说明与数值模拟，去掉"跳到大系"面包屑与
+收藏/对比按钮（怪物页没有大系上下文）。布局全部由 Tailwind 变体决定，不用 JS
+媒体查询驱动渲染，避免缩窗时 JS 与 CSS 判断不一致。
+
+顺带修掉第 6 个真实缺陷：**技能点击之后的深链失效**。原来的 URL 同步用一个
+"本地状态领先"布尔标记决定是否采纳新 hash，而那个标记会被错误的 render 消费掉：
+先在本页打开技能、再用地址栏跳到 `#/monsters?cat=boss&m=WALROG`，新 hash 被当成
+自己写的而丢弃（实测显示 812 个而不是 98 个，选中的也是上一只怪）。现在发布与
+采纳各自记住"上次同步过的字符串"，只有既不是自己发布、也不是自己采纳过的 hash
+才当成外部输入。e2e 里"深链 → 刷新 → 回到上一个怪物视图"这一段覆盖它。
+
+---
+
+## 0.1 上一轮变更（2026 续修，按 jj 提交顺序）
 
 六次**功能**提交（文档更新另计），全部从"用户看到的现象"倒推到根因。
 **每条都先复现、再改、再实测**，下面写的是可复核的证据，不是结论。
@@ -77,6 +144,27 @@ npm run data          # 打印 manifest.scaling（源码/估算/参考 + 失败�
 npm run check         # typecheck + scaling + verify + build + smoke
 node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层逐条验收
 ```
+
+---
+
+## 0.2 部署（同轮追加）
+
+站点已发布到 GitHub Pages：<https://ovideros.github.io/modern_tome_viewer/>
+（仓库 <https://github.com/ovideros/modern_tome_viewer>，public）。
+
+- 工作流 `.github/workflows/deploy-pages.yml`：push 到 `main` 触发，Node 22 +
+  `npm ci` + `npm run build:pages`，用官方 Pages actions 发布
+  `modern_tome_viewer/dist`。
+- `vite.config.ts` 的 `base: './'` 让产物同时适配子路径与本地 `file://`，页面是
+  hash 路由，子路径下深链与刷新都正常（已在 `/modern_tome_viewer/` 前缀下实测）。
+- **`public/data` 与 `public/img` 改为提交**：CI 的干净 checkout 没有 gfx 图集与
+  语言表，生成不了这些文件，而站点运行时要 `fetch` 它们。`.gitignore` 里加了
+  `!public/data/`、`!public/img/` 例外并写明原因；`t-engine4-src-1.7.6/`（638 MB
+  引擎树）则已明确忽略，不再可能被 `git add -A` 误收。
+- 干净克隆的测试基线：`smoke 61/61`、`verify 87/87`、`e2e 222/222`、
+  `test:monsters 40 通过 + 3 skip`（缺图集/语言表的 3 项明确显示 skip，不再是失败）。
+
+详见 [deployment.md](deployment.md)。
 
 ---
 
@@ -163,13 +251,28 @@ modern_tome_viewer/
 ├── public/                      # 由 npm run data 生成（未提交）
 │   ├── data/talents.json        #   规范化技能数据（含反解出的系数）
 │   ├── data/meta.json           #   分类/职业/种族/词表/边界
+│   ├── data/talents.json        #   规范化技能数据（含补充技能）
+│   ├── data/monsters.json       #   怪物图鉴数据（本轮的产物）
+│   ├── data/monsters-report.json#   怪物覆盖率/诊断/缺图报告
 │   ├── data/manifest.json       #   构建元信息
-│   └── img/{talents/48,class-icons,player,npc}/
+│   └── img/{talents/48,class-icons,player,npc,object,terrain}/
+├── data/talent-supplement.json  # 从 Lua 补的上游缺失技能（已提交，构建输入）
+├── data/raw/locales/zh_hans.json# 规范化的游戏汉化表（已提交；上游 16MB 语言表不入库）
 ├── scripts/
-│   ├── build-data.mjs           # 数据管线（清洗/富化/反解/拷贝图片）
-│   ├── verify.mjs               # 73 项引擎断言
-│   ├── smoke.mjs                # 42 项渲染冒烟（happy-dom）
-│   ├── e2e.mjs                  # 108 项真实浏览器端到端
+│   ├── build-data.mjs           # 技能数据管线（清洗/富化/反解/拷贝图标）+ 合并补充技能
+│   ├── monsters/                # 怪物数据管线（见下）
+│   │   ├── lua-table.mjs        #   实体定义用的 Lua 读取器（不执行 Lua）
+│   │   ├── extract.mjs          #   模板/继承/技能 resolver/等级/图片解析
+│   │   ├── images.mjs           #   内置 ZIP 读取器 + Shockbolt 图片索引与复制
+│   │   ├── locale.mjs           #   游戏汉化表解析（英文 → 中文）
+│   │   ├── locale-snapshot.mjs  #   生成已提交的汉化表快照 + 干净环境兜底
+│   │   ├── talent-supplement.mjs#   从 newTalent{} 提取上游缺失技能
+│   │   ├── build-monsters.mjs   #   入口：产出 monsters.json / 报告 / 图片
+│   │   └── *.test.mjs           #   43 项怪物管线与前端检索测试
+│   ├── verify.mjs               # 87 项引擎断言
+│   ├── build-pages.mjs          # 部署构建（校验已提交产物后 vite build）
+│   ├── smoke.mjs                # 61 项渲染冒烟（happy-dom）
+│   ├── e2e.mjs                  # 222 项真实浏览器端到端
 │   └── serve.mjs                # 零依赖静态服务器
 ├── src/
 │   ├── lib/scaling-core.js      # ★ 数值公式 + 反解（纯 JS，浏览器与构建脚本共用）
@@ -180,12 +283,15 @@ modern_tome_viewer/
 │   ├── lib/data.ts              #   数据加载 + 紧凑格式展开 + 文案常量
 │   ├── lib/compare.ts           #   对比最优值判定
 │   ├── lib/types.ts             #   数据模型
+│   ├── lib/monsters.ts          #   怪物数据加载、倒排索引（固定/随机技能）、检索
 │   ├── hooks/                   #   主题、数据加载、hash 路由、收藏/对比、表头高度
 │   ├── components/              #   搜索栏、筛选面板、结果列表、详情面板、对比栏、
 │   │                            #   VariableText（实时数值+tooltip）、ClassBits
 │   └── pages/                   #   SearchPage / ClassesPage / RacesPage /
-│                                #   FavoritesPage / ComparePage
+│                                #   MonstersPage / FavoritesPage / ComparePage
 ├── docs/feasibility.md          # 可行性分析 + 反解原理 + 常见疑问（第 10 节）
+├── docs/monster-pipeline.md     # 怪物图鉴：收录口径、数量、继承、图片、已知边界
+├── docs/deployment.md           # GitHub Pages 部署（产物提交策略、启用步骤）
 └── README.md                    # 使用说明
 ```
 

@@ -10,11 +10,12 @@ import { emptyFilters, filtersToParams } from './lib/filters';
 import { ClassesPage } from './pages/ClassesPage';
 import { ComparePage } from './pages/ComparePage';
 import { FavoritesPage } from './pages/FavoritesPage';
+import { MonstersPage } from './pages/MonstersPage';
 import { RacesPage } from './pages/RacesPage';
 import { SearchPage } from './pages/SearchPage';
 import type { Talent, TalentEntry } from './lib/types';
 
-const ROUTES = ['search', 'classes', 'races', 'favorites', 'compare'] as const;
+const ROUTES = ['search', 'classes', 'races', 'monsters', 'favorites', 'compare'] as const;
 type RouteName = (typeof ROUTES)[number];
 
 function Loading({ progress, building }: { progress: number; building: boolean }) {
@@ -123,6 +124,17 @@ export default function App() {
           onOpenTree={openTree}
           onSearchRace={searchTrees}
           onOpenTalent={openTalent}
+        />
+      ) : routeName === 'monsters' ? (
+        <MonstersPage
+          data={data}
+          params={effectiveParams}
+          onParamsChange={updateParams}
+          favoriteHas={favorites.has}
+          onToggleFavorite={favorites.toggle}
+          compareHas={compare.has}
+          onToggleCompare={compare.toggle}
+          compareFull={compare.full}
         />
       ) : routeName === 'favorites' ? (
         <FavoritesPage

@@ -144,7 +144,7 @@ check('filter panel rendered', text().includes('高级筛选'));
 check('facet counts rendered', text().includes('主动技能'));
 check(
   'all talents are listed by default',
-  text().includes('1826') || text().includes('1,826'),
+  text().includes('1834') || text().includes('1,834'),
   text().match(/共\s*[\d,]+\s*条结果/)?.[0] ?? 'no count found',
 );
 
@@ -166,7 +166,7 @@ check('search input exists', Boolean(input));
 setInput(input, '火焰');
 await wait(200);
 const afterSearch = text();
-check('typing filters the list', !afterSearch.includes('共 1826 条结果'), afterSearch.match(/共\s*[\d,]+\s*条结果/)?.[0] ?? '');
+check('typing filters the list', !afterSearch.includes('共 1834 条结果'), afterSearch.match(/共\s*[\d,]+\s*条结果/)?.[0] ?? '');
 check('result row shows a matched talent', afterSearch.includes('火焰'), '');
 check('search state is reflected in the URL hash', window.location.hash.includes('q=%E7%81%AB%E7%84%B0'), window.location.hash);
 
@@ -206,7 +206,7 @@ check('reset button exists', Boolean(resetButton));
 if (resetButton) {
   click(resetButton);
   await wait(200);
-  check('reset clears the query and restores every talent', text().includes('共 1826 条结果'));
+  check('reset clears the query and restores every talent', text().includes('共 1834 条结果'));
 }
 
 // The "使用模式" section is open by default; only toggle if it is collapsed.
@@ -284,6 +284,80 @@ check('races page renders races', racesText.includes('人类') && racesText.incl
 check('races page renders subrace stats', racesText.includes('属性修正'));
 check('races page renders portraits', document.querySelectorAll('[data-testid="portrait"]').length > 0);
 check('races page renders talent tree panels', document.querySelectorAll('[data-testid="tree-panel"]').length > 0);
+
+console.log('\nmonsters page');
+await go('#/monsters', 1200);
+const monstersText = text();
+check('monsters page renders the census headline', monstersText.includes('怪物图鉴') && monstersText.includes('个可遇怪物模板'), monstersText.slice(0, 80));
+check('monsters page states the inclusion rule', monstersText.includes('抽象 BASE 模板'));
+check(
+  'monsters page lists the category buckets',
+  monstersText.includes('普通怪物') && monstersText.includes('精英') && monstersText.includes('固定Boss'),
+);
+check('monsters page renders monster cards', document.querySelectorAll('main div.grid > button').length > 100, String(document.querySelectorAll('main div.grid > button').length));
+check('monsters page renders artwork', document.querySelectorAll('main div.grid img').length > 0);
+
+const monsterSearchInput = document.querySelector('aside input.input');
+check('monster search box exists', Boolean(monsterSearchInput));
+if (monsterSearchInput) {
+  setInput(monsterSearchInput, '蠕虫团');
+  await wait(300);
+  const wormCount = document.querySelectorAll('main div.grid > button').length;
+  check('monster name search narrows the list', wormCount > 0 && wormCount < 100, String(wormCount));
+  check('monster search highlights matches', document.querySelectorAll('main mark.mark').length > 0);
+
+  setInput(monsterSearchInput, 'T_MULTIPLY');
+  await wait(300);
+  const talentHit = text().includes('白色蠕虫团') || text().includes('white worm mass');
+  check('monster search matches talent ids', talentHit);
+  setInput(monsterSearchInput, '');
+  await wait(200);
+}
+
+const monsterCards = document.querySelectorAll('main div.grid > button');
+// Pick a monster that actually has talents, so the skill-panel path is exercised.
+let opened = null;
+for (const card of monsterCards) {
+  card.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+  await wait(250);
+  const text = document.querySelector('section[aria-label$="的详情"]')?.textContent ?? '';
+  if (text.includes('固定技能') && !text.includes('源码未给这个模板配置固定技能')) { opened = card; break; }
+}
+check('monster detail panel opens', document.querySelector('section[aria-label$="的详情"]') !== null);
+const detailText = document.querySelector('section[aria-label$="的详情"]')?.textContent ?? '';
+check('monster detail lists talents', detailText.includes('固定技能'));
+check('monster detail cites its source', detailText.includes('数据来源与继承'));
+
+// Skills open in an in-page panel here too — clicking one must not navigate.
+// happy-dom reports zero-size rects, so presence (not layout) is what can be
+// asserted; the real viewport matrix lives in e2e.
+const skillRow = document.querySelector('section[aria-label$="的详情"] button[title*="技能栏"]');
+check('monster skill rows are rendered', Boolean(skillRow));
+if (skillRow) {
+  skillRow.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+  await wait(600);
+  const panel = document.querySelector('[data-testid="talent-detail"]');
+  const panelText = panel?.textContent ?? '';
+  check('clicking a monster skill stays on the monster route', window.location.hash.startsWith('#/monsters'), window.location.hash);
+  check('clicking a monster skill opens an in-page talent panel', Boolean(panel));
+  check('the talent panel carries the full detail', panelText.includes('使用模式'));
+  // Either presentation is fine: a third column, a sheet, or the desktop
+  // fallback when matchMedia is unavailable.
+  check(
+    'the talent panel has a presentation for this viewport',
+    Boolean(
+      document.querySelector('[data-testid="monster-talent-sheet"]') ||
+        document.querySelector('[data-testid="monster-talent-column"]'),
+    ),
+  );
+  const close = document.querySelector('[data-testid="talent-detail"] button[aria-label="返回怪物"], [data-testid="talent-detail"] button[aria-label="关闭"]');
+  check('the talent panel can be closed', Boolean(close));
+  if (close) {
+    close.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+    await wait(500);
+    check('closing the talent panel removes it', document.querySelector('[data-testid="talent-detail"]') === null);
+  }
+}
 
 console.log('\nfavorites page');
 await go('#/favorites', 300);

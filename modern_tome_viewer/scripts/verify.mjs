@@ -74,8 +74,8 @@ const meta = JSON.parse(fs.readFileSync(path.join(root, 'public/data/meta.json')
 const { trees, talents } = normalizeDataset(wire, meta);
 
 section('dataset');
-check('trees loaded', trees.length === 379, `got ${trees.length}`);
-check('talents loaded', talents.length === 1826, `got ${talents.length}`);
+check('trees loaded', trees.length === 381, `got ${trees.length}`);
+check('talents loaded', talents.length === 1834, `got ${talents.length}`);
 check('every talent has a tree name', talents.every((t) => t.treePlainName.length > 0));
 check('every talent has a category name', talents.every((t) => t.categoryName.length > 0));
 check(

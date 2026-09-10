@@ -4,9 +4,14 @@ node_modules/
 # build output
 dist/
 
-# generated data (regenerate with `npm run data`)
+# Generated site data. Committed on purpose: the game gfx pack and locale
+# tables are not tracked (they are hundreds of MB / vendor media), so a CI
+# checkout cannot regenerate these, and the deployed site needs them.
+# Regenerate with `npm run data` and commit the result. See docs/deployment.md.
 public/data/
 public/img/
+!public/data/
+!public/img/
 
 # caches
 .npm-cache/

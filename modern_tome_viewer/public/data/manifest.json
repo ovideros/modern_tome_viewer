@@ -1,0 +1,54 @@
+{
+  "builtAt": "2026-09-10T17:27:01.699Z",
+  "gameVersion": "master",
+  "dataVariant": "1.5",
+  "source": "data/raw",
+  "counts": {
+    "trees": 381,
+    "talents": 1834,
+    "icons": 1704,
+    "portraits": 99,
+    "classes": 12,
+    "races": 10
+  },
+  "missingIcons": 65,
+  "sizeBytes": {
+    "talents": 4176029,
+    "meta": 191642
+  },
+  "hash": "ad26c35509fc",
+  "scaling": {
+    "total": 3750,
+    "source": 3650,
+    "estimated": 71,
+    "reference": 29,
+    "full": 1591,
+    "partial": 9,
+    "none": 7,
+    "reasons": {
+      "reference mismatch": 11,
+      "source unavailable": 70,
+      "unsupported input dimensions": 9,
+      "Multiple local assignment": 10
+    }
+  },
+  "luaSourceHash": "e9023a55b14535adad372e7a33b94eaf7fb8d4f778415a7a0e41208d790568a9",
+  "overlay": {
+    "file": "data/lua-expressions.json",
+    "entries": 1053,
+    "accepted": 1053,
+    "rejected": 0,
+    "superset": 93,
+    "supersetSample": [
+      "T_RELENTLESS_PURSUIT#0 (mental save)",
+      "T_RELENTLESS_PURSUIT#1 (mental save,spell save)",
+      "T_RELENTLESS_PURSUIT#2 (spell save)",
+      "T_GLYPH_OF_REPULSION#1 (法术强度)",
+      "T_GLYPH_OF_REPULSION#2 (法术强度)",
+      "T_WARP_MINE_TOWARD#0 (魔力)",
+      "T_WARP_MINE_TOWARD#1 (魔力)",
+      "T_WARP_MINE_TOWARD#2 (paradox,法术强度)"
+    ],
+    "validatedAgainst": 3
+  }
+}

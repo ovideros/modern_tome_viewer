@@ -1,0 +1,15 @@
+{
+  "total": 3750,
+  "source": 3650,
+  "estimated": 71,
+  "reference": 29,
+  "full": 1591,
+  "partial": 9,
+  "none": 7,
+  "reasons": {
+    "reference mismatch": 11,
+    "source unavailable": 70,
+    "unsupported input dimensions": 9,
+    "Multiple local assignment": 10
+  }
+}

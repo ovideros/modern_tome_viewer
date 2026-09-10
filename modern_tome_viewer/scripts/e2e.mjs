@@ -93,9 +93,9 @@ await page.waitForFunction(() => document.body.innerText.includes('条结果'), 
 check('no console errors on load', consoleErrors.length === 0, consoleErrors.slice(0, 2).join(' | '));
 check('header rendered', await page.locator('text=ToME 技能查看器').first().isVisible());
 check('header dropped the removed browse entry', (await page.locator('header').innerText()).includes('职业'));
-check('default result count is every talent', (await resultCount()) === 1826, String(await resultCount()));
+check('default result count is every talent', (await resultCount()) === 1834, String(await resultCount()));
 check('filter panel is visible', await page.locator('text=高级筛选').first().isVisible());
-check('manifest line rendered', (await page.locator('body').innerText()).includes('1826 技能'));
+check('manifest line rendered', (await page.locator('body').innerText()).includes('1834 技能'));
 await shot('01-initial');
 
 // ---------------------------------------------------------------------------
@@ -103,7 +103,7 @@ section('text search');
 await searchInput().fill('火焰');
 await page.waitForTimeout(250);
 const fireCount = await resultCount();
-check('CJK query narrows the list', fireCount !== null && fireCount > 0 && fireCount < 1826, String(fireCount));
+check('CJK query narrows the list', fireCount !== null && fireCount > 0 && fireCount < 1834, String(fireCount));
 check('URL hash carries the query', page.url().includes('q='), page.url());
 
 const firstRowText = await page.locator('[data-testid="result-row"]').first().innerText();
@@ -130,7 +130,7 @@ check('nonsense query shows the empty state', (await page.locator('text=没有�
 
 await searchInput().fill('');
 await page.waitForTimeout(250);
-check('clearing the query restores all talents', (await resultCount()) === 1826);
+check('clearing the query restores all talents', (await resultCount()) === 1834);
 
 // ---------------------------------------------------------------------------
 section('structured filters');
@@ -172,7 +172,7 @@ check('mode + resource intersect (54 sustains with mana)', (await resultCount())
 // Reset everything.
 await resetButton().click();
 await page.waitForTimeout(300);
-check('reset restores all talents', (await resultCount()) === 1826);
+check('reset restores all talents', (await resultCount()) === 1834);
 check('reset clears the URL hash filters', !page.url().includes('modes='), page.url());
 
 // The fixed-cooldown switch is a radio group of two mutually exclusive halves.
@@ -189,7 +189,7 @@ check(
 );
 await cdKind('只看非固定').click();
 await page.waitForTimeout(300);
-check('只看非固定 is the complement', (await resultCount()) === 1826 - 27, String(await resultCount()));
+check('只看非固定 is the complement', (await resultCount()) === 1834 - 27, String(await resultCount()));
 check('the two states are mutually exclusive', (await page.locator('[aria-label="固定冷却"] button[aria-pressed="true"]').count()) === 1);
 // The switch is orthogonal to the numeric window: 固定 + ≤5 is a strict subset.
 await cdKind('只看固定').click();
@@ -206,14 +206,14 @@ check('全部 keeps the numeric window', cdShort !== null && cdShort > fixedShor
 check('the switch drops out of the URL but the window stays', !page.url().includes('cdKind=') && page.url().includes('cdMax=5'), page.url());
 await resetButton().click();
 await page.waitForTimeout(300);
-check('reset clears the fixed switch too', (await resultCount()) === 1826 && !page.url().includes('cdKind='), page.url());
+check('reset clears the fixed switch too', (await resultCount()) === 1834 && !page.url().includes('cdKind='), page.url());
 
 // ---------------------------------------------------------------------------
 section('class scope');
 await page.locator('select').first().selectOption('MAGE');
 await page.waitForTimeout(350);
 const mageCount = await resultCount();
-check('class filter returns a subset', mageCount !== null && mageCount > 0 && mageCount < 1826, String(mageCount));
+check('class filter returns a subset', mageCount !== null && mageCount > 0 && mageCount < 1834, String(mageCount));
 const mageTrees = await page.locator('[data-testid="result-row"]').first().innerText();
 check('class-scoped results render', mageTrees.length > 0);
 await shot('04-class-filter');
@@ -948,6 +948,201 @@ if (await raceTalent.count()) {
     check('race page tooltip escapes its panel', box?.inside === true && box?.confined === false, JSON.stringify(box));
   }
 }
+
+// ---------------------------------------------------------------------------
+section('monsters page');
+
+const monsterCards = () => page.locator('main div.grid > button');
+/** Count rendered monster cards straight from the DOM, avoiding locator staleness. */
+const monsterCardCount = () => page.evaluate(() => document.querySelectorAll('main div.grid > button').length);
+const monsterSearch = () => page.locator('aside input.input');
+
+await page.goto(`${url}#/monsters`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('怪物图鉴'), null, { timeout: 30000 });
+await page.waitForTimeout(600);
+
+const monstersBody = await page.locator('body').innerText();
+check('header exposes the monsters entry', (await page.locator('header').innerText()).includes('怪物'));
+check('census headline states the inclusion rule', monstersBody.includes('个可遇怪物模板') && monstersBody.includes('抽象 BASE 模板'));
+check(
+  'category counts are rendered',
+  /普通怪物\s*447/.test(monstersBody) && /精英\s*176/.test(monstersBody) && /固定Boss\s*98/.test(monstersBody),
+);
+check('every concrete template is listed', (await monsterCardCount()) === 812, String(await monsterCardCount()));
+check('monster artwork rendered', (await page.locator('main div.grid img').count()) > 0);
+await shot('10-monsters');
+
+// Chinese name search.
+await monsterSearch().fill('蠕虫团');
+await page.waitForTimeout(400);
+const wormCards = await monsterCards().allInnerTexts();
+check('Chinese name search narrows to the worm masses', wormCards.length > 0 && wormCards.length < 40, String(wormCards.length));
+check('Chinese search highlights the match', (await page.locator('main mark.mark').count()) > 0);
+
+// Talent search must hit the fixed configuration as well as random groups.
+await monsterSearch().fill('T_MULTIPLY');
+await page.waitForTimeout(400);
+const multiplyCards = await monsterCards().allInnerTexts();
+check(
+  'talent-id search finds the worm masses',
+  multiplyCards.some((card) => card.includes('白色蠕虫团') || card.includes('white worm mass')),
+  multiplyCards.slice(0, 3).join(' | '),
+);
+await monsterSearch().fill('T_CALL_OF_THE_CRYPT');
+await page.waitForTimeout(400);
+const necroCards = await monsterCards().allInnerTexts();
+check(
+  'talent search also matches random skill groups',
+  necroCards.some((card) => card.includes('兽人死灵法师')),
+  necroCards.slice(0, 3).join(' | '),
+);
+
+// Zero results.
+await monsterSearch().fill('zzzz-no-such-monster');
+await page.waitForTimeout(400);
+check('zero-result state is explicit', (await page.locator('body').innerText()).includes('没有匹配的怪物'));
+await monsterSearch().fill('');
+await page.waitForTimeout(400);
+
+// Detail panel: the orc necromancer is the handover's worked example.
+await monsterCards().filter({ hasText: '兽人死灵法师' }).first().click();
+await page.waitForTimeout(500);
+const detailPanel = page.locator('section[aria-label$="的详情"]:visible').first();
+const necroDetail = await detailPanel.innerText();
+check('detail panel opens', (await detailPanel.count()) === 1);
+check('fixed talents listed', necroDetail.includes('固定技能') && necroDetail.includes('T_HIEMAL_SHIELD'));
+check('base=0 growth is spelled out', necroDetail.includes('初始 0 级'), necroDetail.slice(0, 200));
+check('mutually exclusive groups are grouped and explained', necroDetail.includes('技能组 4') && necroDetail.includes('互斥'));
+check('detail records the defining source file', necroDetail.includes('数据来源与继承') || necroDetail.includes('orc-rak-shor.lua'));
+
+// Clicking a skill opens it in a panel *beside* the monster (>= 1800px) or in a
+// bottom sheet (>= 1280px) — it must not navigate away from the monster.
+await detailPanel.locator('button:has-text("↗")').first().click();
+await page.waitForTimeout(900);
+const visibleTalentPanel = () => page.locator('[data-testid="talent-detail"]:visible');
+check('clicking a monster talent stays on the monster route', page.url().includes('#/monsters'), page.url());
+check('talent panel renders without navigating', (await visibleTalentPanel().count()) === 1);
+check('monster panel stays visible beside the talent', await detailPanel.isVisible());
+check(
+  'talent panel carries the full detail',
+  (await visibleTalentPanel().first().innerText()).includes('使用模式'),
+);
+check(
+  'the open talent is marked in the monster skill list',
+  (await page.locator('section[aria-label$="的详情"] button[aria-pressed="true"][title*="技能栏"]').count()) > 0,
+);
+await shot('13-monster-talent-panel');
+
+// Closing the talent must leave the monster panel in place.
+await visibleTalentPanel().first().locator('button[title^="关闭"]').click();
+await page.waitForTimeout(500);
+check('closing the talent panel keeps the monster open', (await visibleTalentPanel().count()) === 0 && (await detailPanel.isVisible()));
+
+// 1500px: the talent becomes a bottom sheet, and the monster stays visible.
+await page.setViewportSize({ width: 1500, height: 950 });
+await page.waitForTimeout(300);
+await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
+await page.waitForTimeout(700);
+const sheetState = () => page.evaluate(() => {
+  const rect = (q) => {
+    const el = document.querySelector(q);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  };
+  return {
+    sheet: rect('[data-testid="monster-talent-sheet"]'),
+    column: rect('[data-testid="monster-talent-column"]'),
+    monsterSheet: rect('[data-testid="monster-detail-sheet"]'),
+    monsterSections: [...document.querySelectorAll('section[aria-label$="的详情"]')].filter((el) => {
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    }).length,
+    talentPanels: [...document.querySelectorAll('[data-testid="talent-detail"]')].filter((el) => {
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    }).length,
+  };
+});
+let state = await sheetState();
+check('1500px shows the talent as a bottom sheet', state.sheet && state.talentPanels === 1, JSON.stringify(state));
+check('1500px keeps the monster panel visible', state.monsterSections === 1, JSON.stringify(state));
+await page.locator('[data-testid="monster-talent-sheet"] button[title^="关闭"]').click();
+await page.waitForTimeout(500);
+
+// Below xl the talent sheet replaces the monster sheet, with a way back.
+for (const width of [1200, 900, 420, 360]) {
+  await page.setViewportSize({ width, height: 900 });
+  await page.waitForTimeout(350);
+  await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
+  await page.waitForTimeout(700);
+  state = await sheetState();
+  check(
+    `${width}px opens the talent in a bottom sheet`,
+    state.sheet && state.column === false && state.talentPanels === 1,
+    JSON.stringify(state),
+  );
+  check(`${width}px hides the monster sheet behind the talent`, state.monsterSections === 0, JSON.stringify(state));
+  const back = page.locator('[data-testid="talent-detail"]:visible button[aria-label="返回怪物"]');
+  check(`${width}px offers a back-to-monster control`, (await back.count()) > 0);
+  await back.click();
+  await page.waitForTimeout(600);
+  state = await sheetState();
+  check(
+    `${width}px closing the talent brings the monster sheet back`,
+    state.talentPanels === 0 && state.monsterSections === 1,
+    JSON.stringify(state),
+  );
+}
+await page.setViewportSize({ width: 1500, height: 950 });
+await page.waitForTimeout(300);
+
+// Direct link + refresh keeps the selection, and Back returns to it.
+await page.goto(`${url}#/monsters?cat=boss&m=WALROG`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('怪物图鉴'), null, { timeout: 30000 });
+await page.waitForTimeout(700);
+check('deep link restores the category filter', (await monsterCardCount()) === 98, String(await monsterCardCount()));
+const linkedDetail = await page.locator('section[aria-label$="的详情"]').first().innerText();
+check('deep link restores the selected monster', linkedDetail.includes('乌尔罗格') || linkedDetail.includes('Walrog'), linkedDetail.slice(0, 60));
+check('supplemented talent T_HEAT resolves', linkedDetail.includes('加热') && !linkedDetail.includes('未收录'), linkedDetail.slice(0, 400));
+
+await page.goto(`${url}#/monsters?cat=elite`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('怪物图鉴'), null, { timeout: 30000 });
+// Wait for the filter to actually apply, not just for the heading to exist.
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 176, null, { timeout: 15000 });
+check('elite filter lists every elite template', (await monsterCardCount()) === 176, String(await monsterCardCount()));
+await page.goBack();
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 98, null, { timeout: 15000 });
+check('browser Back restores the previous monster view', (await monsterCardCount()) === 98, String(await monsterCardCount()));
+
+// Multi-layer art must not render as a transparent tile.
+await page.goto(`${url}#/monsters?m=THE_ONE_THAT_HUNTS`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('怪物图鉴'), null, { timeout: 30000 });
+await page.waitForTimeout(600);
+const layered = await page.locator('section[aria-label$="的详情"] img').first().evaluate((el) => ({
+  width: el.naturalWidth,
+  height: el.naturalHeight,
+  src: el.getAttribute('src'),
+}));
+check(
+  'layered monster art is a real non-empty image',
+  layered.width > 0 && layered.height > 0 && !/invis\.png$/.test(layered.src ?? ''),
+  JSON.stringify(layered),
+);
+await shot('11-monsters-detail');
+
+// Mobile layout: the sidebar collapses and the list still renders.
+await page.setViewportSize({ width: 420, height: 900 });
+await page.goto(`${url}#/monsters`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('怪物图鉴'), null, { timeout: 30000 });
+await page.waitForTimeout(700);
+check('mobile monster list renders', (await monsterCardCount()) > 0);
+check('mobile category toggle available', (await page.locator('button', { hasText: '分类' }).count()) > 0);
+await page.locator('button', { hasText: '分类' }).first().click();
+await page.waitForTimeout(300);
+check('mobile category chips expand', (await page.locator('button', { hasText: '固定Boss' }).count()) > 0);
+await shot('12-monsters-mobile');
+await page.setViewportSize({ width: 1500, height: 950 });
 
 // ---------------------------------------------------------------------------
 section('favorites');

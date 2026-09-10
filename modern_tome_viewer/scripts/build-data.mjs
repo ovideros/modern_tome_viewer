@@ -610,6 +610,92 @@ for (const file of talentFiles) {
 
 trees.sort((a, b) => a.id.localeCompare(b.id));
 
+// ---------------------------------------------------------------------------
+// Supplemental talents (monster-only gaps in the upstream export)
+// ---------------------------------------------------------------------------
+//
+// The upstream export is a 1.5-era snapshot and never emitted a handful of
+// talents that the 1.7.6 monster templates reference (for example `T_HEAT`,
+// which the Phoenix, Tannen and Walrog define). `data/talent-supplement.json`
+// is generated from the local Lua sources by
+// `scripts/monsters/talent-supplement.mjs`, and merging it here is what makes
+// those monster skill entries click through to a real detail panel instead of
+// showing up as unresolved references.
+const supplementPath = path.join(projectRoot, args.supplement || 'data/talent-supplement.json');
+const supplementStats = { merged: 0, skipped: 0, ids: [] };
+if (fs.existsSync(supplementPath)) {
+  const supplement = JSON.parse(fs.readFileSync(supplementPath, 'utf8'));
+  for (const entry of supplement.talents || []) {
+    if (!entry?.id || seenTalents.has(entry.id)) {
+      supplementStats.skipped += 1;
+      continue;
+    }
+    const treeId = (entry.tree || 'misc/supplement').replace(/^talents\//, '');
+    const category = treeId.split('/')[0];
+    // `info` may be plain game text with `%d`-style placeholders and colour
+    // markup; normalize exactly like the exported talents so the same renderer
+    // and scaling pipeline handle it.
+    const infoText = entry.info || '';
+    const flags = {};
+    if (entry.mode === 'passive') flags.generic = true;
+    const record = {
+      id: entry.id,
+      name: colorMarkupToHtml(entry.name || entry.id),
+      shortName: '',
+      image: null,
+      tree: treeId,
+      index: 0,
+      mode: entry.mode || '',
+      points: typeof entry.points === 'number' ? entry.points : 0,
+      cd: typeof entry.cooldown === 'number' ? entry.cooldown : null,
+      range: null,
+      rangeKind: 'other',
+      cost: null,
+      costResource: null,
+      costAmount: null,
+      costKind: null,
+      useSpeed: '',
+      require: [],
+      text: normalizeDisplayHtml(infoText),
+      plain: htmlToPlainText(infoText),
+      acronyms: [],
+      flags,
+      source: entry.file || null,
+      // Marks the entry as coming from the supplement rather than the export,
+      // so the report can tell the two apart.
+      supplemental: true,
+    };
+    seenTalents.set(record.id, record);
+    let tree = trees.find((candidate) => candidate.id === treeId);
+    if (!tree) {
+      tree = {
+        id: treeId,
+        category,
+        name: category,
+        description: '',
+        classes: [],
+        talentCount: 0,
+        talents: [],
+      };
+      trees.push(tree);
+    }
+    tree.talents.push(record);
+    tree.talentCount = tree.talents.length;
+    supplementStats.merged += 1;
+    supplementStats.ids.push(record.id);
+    // Keep the manifest/summary count in step with what was actually written.
+    talentCount += 1;
+  }
+}
+if (supplementStats.merged || supplementStats.skipped) {
+  console.log(
+    `[build-data] 补充技能 ${supplementStats.merged} 条（${supplementStats.ids.join(', ')}）` +
+      (supplementStats.skipped ? `，跳过 ${supplementStats.skipped} 条已收录` : ''),
+  );
+}
+
+// Collect the counts now that trees may have gained a synthetic tree.
+
 // Icon inventory: only keep the icons actually referenced.
 const sourceIconDir = path.join(iconSourceDir, iconSize);
 const outIconDir = path.join(outDir, 'img', 'talents', iconSize);

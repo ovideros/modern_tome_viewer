@@ -1,0 +1,1721 @@
+{
+  "builtAt": "2026-09-10T17:29:30.212Z",
+  "census": {
+    "templates": 942,
+    "abstract": 130,
+    "concrete": 812,
+    "distinctNames": 749,
+    "duplicateDefineAs": [],
+    "byCategory": {
+      "normal": 447,
+      "unique": 49,
+      "elite": 176,
+      "boss": 98,
+      "elite_boss": 36,
+      "god": 6
+    },
+    "bySource": {
+      "tome": 613,
+      "orcs": 125,
+      "ashes": 8,
+      "cults": 66
+    },
+    "bySourceCategory": {
+      "tome": {
+        "normal": 366,
+        "unique": 31,
+        "elite": 117,
+        "boss": 78,
+        "elite_boss": 18,
+        "god": 3
+      },
+      "orcs": {
+        "normal": 52,
+        "elite": 39,
+        "unique": 7,
+        "boss": 14,
+        "elite_boss": 10,
+        "god": 3
+      },
+      "ashes": {
+        "unique": 1,
+        "elite": 2,
+        "boss": 2,
+        "normal": 3
+      },
+      "cults": {
+        "normal": 26,
+        "elite": 18,
+        "unique": 10,
+        "elite_boss": 8,
+        "boss": 4
+      }
+    },
+    "fixedBosses": 189,
+    "uniqueFlagged": 165,
+    "randomBossCapable": 179,
+    "noDifficultyRandomClass": 14,
+    "withTalents": 729,
+    "withRandomGroups": 1,
+    "withImage": 787,
+    "withChineseName": 812,
+    "namedLikeBase": 0
+  },
+  "files": [
+    {
+      "id": "tome",
+      "label": "本体",
+      "files": 158,
+      "entities": 707
+    },
+    {
+      "id": "orcs",
+      "label": "兽人 DLC",
+      "files": 41,
+      "entities": 149
+    },
+    {
+      "id": "ashes",
+      "label": "灰烬 DLC",
+      "files": 4,
+      "entities": 10
+    },
+    {
+      "id": "cults",
+      "label": "邪教 DLC",
+      "files": 24,
+      "entities": 76
+    }
+  ],
+  "diagnostics": [
+    {
+      "file": "tome-src-full/data/general/npcs/thieve.lua",
+      "line": 162,
+      "message": "duplicate define_as THIEF_ASSASSIN (also in tome-src-full/data/general/npcs/thieve.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/arena-unlock/npcs.lua",
+      "line": 23,
+      "message": "duplicate define_as GLADIATOR (also in tome-src-full/data/zones/arena/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/high-peak/npcs.lua",
+      "line": 53,
+      "message": "duplicate define_as ELANDAR (also in tome-src-full/data/zones/charred-scar/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/high-peak/npcs.lua",
+      "line": 143,
+      "message": "duplicate define_as ARGONIEL (also in tome-src-full/data/zones/charred-scar/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/murgol-lair/npcs.lua",
+      "line": 78,
+      "message": "duplicate define_as BASE_NPC_NAGA (also in tome-src-full/data/general/npcs/naga.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/slazish-fen/npcs.lua",
+      "line": 33,
+      "message": "duplicate define_as BASE_NPC_NAGA (also in tome-src-full/data/general/npcs/naga.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/slazish-fen/npcs.lua",
+      "line": 61,
+      "message": "duplicate define_as NAGA_TIDEWARDEN (also in tome-src-full/data/zones/murgol-lair/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/slazish-fen/npcs.lua",
+      "line": 78,
+      "message": "duplicate define_as NAGA_TIDECALLER (also in tome-src-full/data/zones/murgol-lair/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 58,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 59,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 60,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 61,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 62,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 63,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+      "line": 64,
+      "message": "unparsed talent entry",
+      "severity": "info",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/town-gates-of-morning/npcs.lua",
+      "line": 25,
+      "message": "duplicate define_as HIGH_SUN_PALADIN_AERYN (also in tome-src-full/data/zones/high-peak/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/town-point-zero/npcs.lua",
+      "line": 77,
+      "message": "duplicate define_as BASE_NPC_LOSGOROTH (also in tome-src-full/data/general/npcs/losgoroth.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/town-shatur/npcs.lua",
+      "line": 22,
+      "message": "duplicate define_as BASE_NPC_ELVALA_TOWN (also in tome-src-full/data/zones/town-elvala/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/town-zigur/npcs.lua",
+      "line": 28,
+      "message": "duplicate define_as GRAND_CORRUPTOR (also in tome-src-full/data/zones/mark-spellblaze/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/tutorial-combat-stats/npcs.lua",
+      "line": 55,
+      "message": "duplicate define_as TUTORIAL_NPC_MAGE (also in tome-src-full/data/zones/tutorial/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/tutorial-combat-stats/npcs.lua",
+      "line": 70,
+      "message": "duplicate define_as TUTORIAL_NPC_TROLL (also in tome-src-full/data/zones/tutorial/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/tutorial-combat-stats/npcs.lua",
+      "line": 79,
+      "message": "duplicate define_as TUTORIAL_NPC_LONE_WOLF (also in tome-src-full/data/zones/tutorial/npcs.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "tome-src-full/data/zones/unhallowed-morass/npcs.lua",
+      "line": 22,
+      "message": "duplicate define_as BASE_NPC_SPIDER (also in tome-src-full/data/general/npcs/spider.lua)",
+      "severity": "warn",
+      "source": "tome"
+    },
+    {
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/ritch-extended.lua",
+      "line": 22,
+      "message": "duplicate define_as BASE_NPC_RITCH (also in tome-src-full/data/general/npcs/ritch.lua)",
+      "severity": "warn",
+      "source": "orcs"
+    },
+    {
+      "file": "dlc-src/orcs/tome-orcs/data/zones/cave-hatred/npcs.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_SHADOW (also in tome-src-full/data/zones/keepsake-meadow/npcs.lua)",
+      "severity": "warn",
+      "source": "orcs"
+    },
+    {
+      "file": "dlc-src/orcs/tome-orcs/data/zones/gates-of-morning/npcs.lua",
+      "line": 26,
+      "message": "duplicate define_as HIGH_SUN_PALADIN_AERYN (also in tome-src-full/data/zones/high-peak/npcs.lua)",
+      "severity": "warn",
+      "source": "orcs"
+    },
+    {
+      "file": "dlc-src/orcs/tome-orcs/data/zones/gates-of-morning/npcs.lua",
+      "line": 218,
+      "message": "duplicate define_as LIMMIR (also in tome-src-full/data/zones/valley-moon/npcs.lua)",
+      "severity": "warn",
+      "source": "orcs"
+    },
+    {
+      "file": "dlc-src/orcs/tome-orcs/data/zones/town-kruk/npcs.lua",
+      "line": 27,
+      "message": "duplicate define_as BASE_NPC_KRUK_TOWN (also in dlc-src/orcs/tome-orcs/data/zones/sunwall-outpost/npcs.lua)",
+      "severity": "warn",
+      "source": "orcs"
+    },
+    {
+      "file": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/general/npcs/major-demon.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_NPC_MAJOR_DEMON (also in tome-src-full/data/general/npcs/major-demon.lua)",
+      "severity": "warn",
+      "source": "ashes"
+    },
+    {
+      "file": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/searing-halls/npcs.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_NPC_DEMON (also in tome-src-full/data/general/npcs/minor-demon.lua)",
+      "severity": "warn",
+      "source": "ashes"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/corrupted_blobs.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_NPC_BLOB (also in dlc-src/cults/tome-cults/data/general/npcs/blobs.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/horror-special-test.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_NPC_HORROR (also in tome-src-full/data/general/npcs/horror.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/horror-special.lua",
+      "line": 24,
+      "message": "duplicate define_as BASE_NPC_HORROR (also in tome-src-full/data/general/npcs/horror.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/horror-special.lua",
+      "line": 46,
+      "message": "duplicate define_as THE_ONE_THAT_HUNTS (also in dlc-src/cults/tome-cults/data/general/npcs/horror-special-test.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-cultist/npcs.lua",
+      "line": 24,
+      "message": "duplicate define_as HYPOSTASIS (also in dlc-src/cults/tome-cults/data/zones/entropic-void/npcs.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-haze-cave/npcs.lua",
+      "line": 174,
+      "message": "duplicate define_as BASE_NPC_RODENT (also in tome-src-full/data/general/npcs/rodent.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-yaech/npcs.lua",
+      "line": 29,
+      "message": "duplicate define_as THE_ONE_THAT_WRITES (also in dlc-src/cults/tome-cults/data/zones/ft-horrors/npcs.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/zones/necromancers-ruins/npcs.lua",
+      "line": 29,
+      "message": "duplicate define_as NECROMANCER (also in tome-src-full/data/zones/blighted-ruins/npcs.lua)",
+      "severity": "warn",
+      "source": "cults"
+    },
+    {
+      "file": "dlc-src/cults/tome-cults/data/zones/test/npcs.lua",
+      "line": 22,
+      "message": "duplicate define_as BASE_NPC_ELVALA_TOWN (also in tome-src-full/data/zones/town-elvala/npcs.lua)",
+      "severity": "warn",
+      "source": "cults"
+    }
+  ],
+  "unresolved": [],
+  "imageGaps": [
+    {
+      "id": "NPC_HUMANOID_HUMAN",
+      "name": "human",
+      "candidate": "npc/humanoid_human_human.png",
+      "file": "tome-src-full/data/general/npcs/humanoid_random_boss.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "NPC_HUMANOID_DWARF",
+      "name": "dwarf",
+      "candidate": "npc/humanoid_dwarf_dwarf.png",
+      "file": "tome-src-full/data/general/npcs/humanoid_random_boss.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "NPC_HUMANOID_OGRE",
+      "name": "giant",
+      "candidate": "npc/humanoid_ogre_giant.png",
+      "file": "tome-src-full/data/general/npcs/humanoid_random_boss.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/major-demon.lua:295",
+      "name": "Khulmanar, General of Urh'Rok",
+      "candidate": "npc/demon_major_khulmanar__general_of_urh_rok.png",
+      "file": "tome-src-full/data/general/npcs/major-demon.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/multihued-drake.lua:139",
+      "name": "Ureslak the Prismatic",
+      "candidate": "npc/dragon_multihued_ureslak_the_prismatic.png",
+      "file": "tome-src-full/data/general/npcs/multihued-drake.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/xorn.lua:92",
+      "name": "The Fragmented Essence of Harkor'Zun",
+      "candidate": "npc/elemental_xorn_the_fragmented_essence_of_harkor_zun.png",
+      "file": "tome-src-full/data/general/npcs/xorn.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "SPACIAL_DISTURBANCE",
+      "name": "Spacial Disturbance",
+      "candidate": "npc/elemental_void_spacial_disturbance.png",
+      "file": "tome-src-full/data/zones/abashed-expanse/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "ARENA_BOSS_VALFREN",
+      "name": "Valfren Loren",
+      "candidate": "npc/humanoid_human_valfren_loren.png",
+      "file": "tome-src-full/data/zones/arena/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "ILLUSION_YEEK",
+      "name": "yeek illusion",
+      "candidate": "npc/humanoid_yeek_yeek_illusion.png",
+      "file": "tome-src-full/data/zones/dreams/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "HORNED_HORROR",
+      "name": "Horned Horror",
+      "candidate": "npc/horror_corrupted_horned_horror.png",
+      "file": "tome-src-full/data/zones/maze/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "CHRONOLITH_TWIN",
+      "name": "Chronolith Twin",
+      "candidate": "npc/horror_temporal_chronolith_twin.png",
+      "file": "tome-src-full/data/zones/temporal-rift/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "CHRONOLITH_CLONE",
+      "name": "Chronolith Clone",
+      "candidate": "npc/horror_temporal_chronolith_clone.png",
+      "file": "tome-src-full/data/zones/temporal-rift/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "SUPREME_ARCHMAGE_LINANIIL",
+      "name": "Linaniil, Supreme Archmage of Angolwen",
+      "candidate": "npc/humanoid_human_linaniil__supreme_archmage_of_angolwen.png",
+      "file": "tome-src-full/data/zones/town-angolwen/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "DEFENDER_OF_REALITY",
+      "name": "guardian of reality",
+      "candidate": "npc/humanoid_human_guardian_of_reality.png",
+      "file": "tome-src-full/data/zones/town-point-zero/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "TROLL_BILL",
+      "name": "Bill the Stone Troll",
+      "candidate": "npc/giant_troll_bill_the_stone_troll.png",
+      "file": "tome-src-full/data/zones/trollmire/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "GOD_GERLYK",
+      "name": "Gerlyk, the Creator",
+      "candidate": "npc/god_eyal_gerlyk__the_creator.png",
+      "file": "tome-src-full/data/zones/void/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:dlc-src/orcs/tome-orcs/data/general/npcs/steam-drone.lua:50",
+      "name": "steam drone",
+      "candidate": "npc/mechanical_drone_steam_drone.png",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-drone.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "COUNCIL5",
+      "name": "Council Member Tantalos",
+      "candidate": "npc/giant_titan_council_member_tantalos.png",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/palace-fumes/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "METASH",
+      "name": "Metash the Maulotaur",
+      "candidate": "npc/undead_minotaur_metash_the_maulotaur.png",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/town-kruk/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:dlc-src/orcs/tome-orcs/data/zones/vaporous-emporium/npcs.lua:76",
+      "name": "steam giant scribe",
+      "candidate": "npc/giant_steam_steam_giant_scribe.png",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/vaporous-emporium/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "NPC_HUMANOID_KROG",
+      "name": "krog",
+      "candidate": "npc/humanoid_krog_krog.png",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/humanoid_random_boss.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:dlc-src/cults/tome-cults/data/general/npcs/tentacle-tree.lua:23",
+      "name": "awoken tentacle tree",
+      "candidate": "npc/horror_eldritch_awoken_tentacle_tree.png",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/tentacle-tree.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "HYPOSTASIS#2",
+      "name": "Unspeakable Thing",
+      "candidate": "npc/horror_eldritch_unspeakable_thing.png",
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-cultist/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "anon:dlc-src/cults/tome-cults/data/zones/scourged-pits/npcs.lua:26",
+      "name": "awoken tentacle tree",
+      "candidate": "npc/horror_eldritch_awoken_tentacle_tree.png",
+      "file": "dlc-src/cults/tome-cults/data/zones/scourged-pits/npcs.lua",
+      "kind": "missing"
+    },
+    {
+      "id": "SOMEMERCHANT",
+      "name": "some merchant",
+      "candidate": "npc/humanoid_shalore_some_merchant.png",
+      "file": "dlc-src/cults/tome-cults/data/zones/test/npcs.lua",
+      "kind": "missing"
+    }
+  ],
+  "imageCopied": 681,
+  "imageMissing": [],
+  "missingArtSources": [],
+  "unknownTalentRefs": [],
+  "missingTranslations": [],
+  "abstractTemplates": [
+    {
+      "id": "BASE_NPC_HORROR",
+      "defineAs": "BASE_NPC_HORROR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror.lua",
+      "line": 24,
+      "childCount": 61
+    },
+    {
+      "id": "BASE_NPC_HORROR#2",
+      "defineAs": "BASE_NPC_HORROR",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/horror-special-test.lua",
+      "line": 24,
+      "childCount": 61
+    },
+    {
+      "id": "BASE_NPC_HORROR#3",
+      "defineAs": "BASE_NPC_HORROR",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/horror-special.lua",
+      "line": 24,
+      "childCount": 61
+    },
+    {
+      "id": "BASE_NPC_ORC",
+      "defineAs": "BASE_NPC_ORC",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/orc.lua",
+      "line": 22,
+      "childCount": 25
+    },
+    {
+      "id": "BASE_NPC_ARENA1",
+      "defineAs": "BASE_NPC_ARENA1",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/arena/npcs.lua",
+      "line": 38,
+      "childCount": 24
+    },
+    {
+      "id": "BASE_NPC_SPIDER",
+      "defineAs": "BASE_NPC_SPIDER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/spider.lua",
+      "line": 22,
+      "childCount": 22
+    },
+    {
+      "id": "BASE_NPC_SPIDER#2",
+      "defineAs": "BASE_NPC_SPIDER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/unhallowed-morass/npcs.lua",
+      "line": 22,
+      "childCount": 22
+    },
+    {
+      "id": "BASE_NPC_ANT",
+      "defineAs": "BASE_NPC_ANT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ant.lua",
+      "line": 24,
+      "childCount": 14
+    },
+    {
+      "id": "BASE_NPC_ELVEN_CASTER",
+      "defineAs": "BASE_NPC_ELVEN_CASTER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/elven-caster.lua",
+      "line": 24,
+      "childCount": 14
+    },
+    {
+      "id": "BASE_NPC_TROLL",
+      "defineAs": "BASE_NPC_TROLL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/troll.lua",
+      "line": 22,
+      "childCount": 14
+    },
+    {
+      "id": "BASE_NPC_BLOB",
+      "defineAs": "BASE_NPC_BLOB",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/blobs.lua",
+      "line": 24,
+      "childCount": 14
+    },
+    {
+      "id": "BASE_NPC_BLOB#2",
+      "defineAs": "BASE_NPC_BLOB",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/corrupted_blobs.lua",
+      "line": 24,
+      "childCount": 14
+    },
+    {
+      "id": "BASE_NPC_CANINE",
+      "defineAs": "BASE_NPC_CANINE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/canine.lua",
+      "line": 24,
+      "childCount": 12
+    },
+    {
+      "id": "BASE_NPC_RODENT",
+      "defineAs": "BASE_NPC_RODENT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/rodent.lua",
+      "line": 22,
+      "childCount": 12
+    },
+    {
+      "id": "BASE_NPC_RODENT#2",
+      "defineAs": "BASE_NPC_RODENT",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-haze-cave/npcs.lua",
+      "line": 174,
+      "childCount": 12
+    },
+    {
+      "id": "BASE_NPC_CORRUPTED_HORROR",
+      "defineAs": "BASE_NPC_CORRUPTED_HORROR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror-corrupted.lua",
+      "line": 22,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_ELDRICTH_EYE",
+      "defineAs": "BASE_NPC_ELDRICTH_EYE",
+      "name": "eldritch eye",
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror.lua",
+      "line": 262,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_NAGA",
+      "defineAs": "BASE_NPC_NAGA",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/naga.lua",
+      "line": 22,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_OOZE",
+      "defineAs": "BASE_NPC_OOZE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ooze.lua",
+      "line": 24,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_SKELETON",
+      "defineAs": "BASE_NPC_SKELETON",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/skeleton.lua",
+      "line": 22,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_NAGA#2",
+      "defineAs": "BASE_NPC_NAGA",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/murgol-lair/npcs.lua",
+      "line": 78,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_NAGA#3",
+      "defineAs": "BASE_NPC_NAGA",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/slazish-fen/npcs.lua",
+      "line": 33,
+      "childCount": 11
+    },
+    {
+      "id": "BASE_NPC_CRYSTAL",
+      "defineAs": "BASE_NPC_CRYSTAL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/crystal.lua",
+      "line": 22,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_MAJOR_DEMON",
+      "defineAs": "BASE_NPC_MAJOR_DEMON",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/major-demon.lua",
+      "line": 24,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_DEMON",
+      "defineAs": "BASE_NPC_DEMON",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/minor-demon.lua",
+      "line": 24,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_OGRE",
+      "defineAs": "BASE_NPC_OGRE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ogre.lua",
+      "line": 22,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_SUNWALL_WARRIOR",
+      "defineAs": "BASE_SUNWALL_WARRIOR",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/sunwall-warrior.lua",
+      "line": 24,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_MAJOR_DEMON#2",
+      "defineAs": "BASE_NPC_MAJOR_DEMON",
+      "name": null,
+      "source": "ashes",
+      "file": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/general/npcs/major-demon.lua",
+      "line": 24,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_DEMON#2",
+      "defineAs": "BASE_NPC_DEMON",
+      "name": null,
+      "source": "ashes",
+      "file": "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/searing-halls/npcs.lua",
+      "line": 24,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_KROSHKKUR_TOWN",
+      "defineAs": "BASE_NPC_KROSHKKUR_TOWN",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/zones/town-kroshkkur/npcs.lua",
+      "line": 22,
+      "childCount": 10
+    },
+    {
+      "id": "BASE_NPC_SNAKE",
+      "defineAs": "BASE_NPC_SNAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/snake.lua",
+      "line": 22,
+      "childCount": 9
+    },
+    {
+      "id": "BASE_NPC_THIEF",
+      "defineAs": "BASE_NPC_THIEF",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/thieve.lua",
+      "line": 22,
+      "childCount": 9
+    },
+    {
+      "id": "BASE_SHADOW",
+      "defineAs": "BASE_SHADOW",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/keepsake-meadow/npcs.lua",
+      "line": 131,
+      "childCount": 9
+    },
+    {
+      "id": "BASE_SHADOW#2",
+      "defineAs": "BASE_SHADOW",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/cave-hatred/npcs.lua",
+      "line": 24,
+      "childCount": 9
+    },
+    {
+      "id": "BASE_NPC_BEAR",
+      "defineAs": "BASE_NPC_BEAR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/bear.lua",
+      "line": 24,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_HORROR_UNDEAD",
+      "defineAs": "BASE_NPC_HORROR_UNDEAD",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror-undead.lua",
+      "line": 22,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_RITCH",
+      "defineAs": "BASE_NPC_RITCH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ritch.lua",
+      "line": 22,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_IRKKK_TOWN",
+      "defineAs": "BASE_NPC_IRKKK_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-irkkk/npcs.lua",
+      "line": 24,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_RITCH#2",
+      "defineAs": "BASE_NPC_RITCH",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/ritch-extended.lua",
+      "line": 22,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_TITAN",
+      "defineAs": "BASE_TITAN",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/titan.lua",
+      "line": 24,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_YETI",
+      "defineAs": "BASE_NPC_YETI",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/yeti.lua",
+      "line": 24,
+      "childCount": 8
+    },
+    {
+      "id": "BASE_NPC_BONE_GIANT",
+      "defineAs": "BASE_NPC_BONE_GIANT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/bone-giant.lua",
+      "line": 22,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_HORROR_TEMPORAL",
+      "defineAs": "BASE_NPC_HORROR_TEMPORAL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror_temporal.lua",
+      "line": 24,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_HUMANOID_RANDOM_BOSS",
+      "defineAs": "BASE_NPC_HUMANOID_RANDOM_BOSS",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/humanoid_random_boss.lua",
+      "line": 22,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_JELLY",
+      "defineAs": "BASE_NPC_JELLY",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/jelly.lua",
+      "line": 26,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_ORC_GRUSHNAK",
+      "defineAs": "BASE_NPC_ORC_GRUSHNAK",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/orc-grushnak.lua",
+      "line": 22,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_VAMPIRE",
+      "defineAs": "BASE_NPC_VAMPIRE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/vampire.lua",
+      "line": 22,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_STEAM_SPIDER",
+      "defineAs": "BASE_STEAM_SPIDER",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-spiders.lua",
+      "line": 24,
+      "childCount": 7
+    },
+    {
+      "id": "BASE_NPC_AQUATIC_CRITTER",
+      "defineAs": "BASE_NPC_AQUATIC_CRITTER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/aquatic_critter.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_GHOST",
+      "defineAs": "BASE_NPC_GHOST",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ghost.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_HORROR_AQUATIC",
+      "defineAs": "BASE_NPC_HORROR_AQUATIC",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/horror_aquatic.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_PLANT",
+      "defineAs": "BASE_NPC_PLANT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/plant.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_SANDWORM",
+      "defineAs": "BASE_NPC_SANDWORM",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/sandworm.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_UNDEAD_RAT",
+      "defineAs": "BASE_NPC_UNDEAD_RAT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/undead-rat.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_ELVALA_TOWN",
+      "defineAs": "BASE_NPC_ELVALA_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-elvala/npcs.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_ELVALA_TOWN#2",
+      "defineAs": "BASE_NPC_ELVALA_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-shatur/npcs.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_STEAM_GIANT_GUNNER",
+      "defineAs": "BASE_STEAM_GIANT_GUNNER",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-giant-gunner.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_SUNWALL_MAGE",
+      "defineAs": "BASE_SUNWALL_MAGE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/sunwall-mage.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_TROLL_PIRATE",
+      "defineAs": "BASE_NPC_TROLL_PIRATE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/troll-pirates.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_MINOTAUR_UNDEAD",
+      "defineAs": "BASE_NPC_MINOTAUR_UNDEAD",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/whitehooves.lua",
+      "line": 24,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_ELVALA_TOWN#3",
+      "defineAs": "BASE_NPC_ELVALA_TOWN",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/zones/test/npcs.lua",
+      "line": 22,
+      "childCount": 6
+    },
+    {
+      "id": "BASE_NPC_CONSTRUCT",
+      "defineAs": "BASE_NPC_CONSTRUCT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/construct.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_CAT",
+      "defineAs": "BASE_NPC_CAT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/feline.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_GHOUL",
+      "defineAs": "BASE_NPC_GHOUL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ghoul.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_LICH",
+      "defineAs": "BASE_NPC_LICH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/lich.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_MOLD",
+      "defineAs": "BASE_NPC_MOLD",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/molds.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_MULTIHUED_DRAKE",
+      "defineAs": "BASE_NPC_MULTIHUED_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/multihued-drake.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_ORC_GORBAT",
+      "defineAs": "BASE_NPC_ORC_GORBAT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/orc-gorbat.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_ORC_RAK_SHOR",
+      "defineAs": "BASE_NPC_ORC_RAK_SHOR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/orc-rak-shor.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_ORC_VOR",
+      "defineAs": "BASE_NPC_ORC_VOR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/orc-vor.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_SNOW_GIANT",
+      "defineAs": "BASE_NPC_SNOW_GIANT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/snow-giant.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_WIGHT",
+      "defineAs": "BASE_NPC_WIGHT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/wight.lua",
+      "line": 30,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_XORN",
+      "defineAs": "BASE_NPC_XORN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/xorn.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_YAECH",
+      "defineAs": "BASE_NPC_YAECH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/yaech.lua",
+      "line": 22,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_ANGOLWEN_TOWN",
+      "defineAs": "BASE_NPC_ANGOLWEN_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-angolwen/npcs.lua",
+      "line": 179,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_DERTH_TOWN",
+      "defineAs": "BASE_NPC_DERTH_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-derth/npcs.lua",
+      "line": 24,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_STEAM_GIANT_WARRIOR",
+      "defineAs": "BASE_STEAM_GIANT_WARRIOR",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-giant-warrior.lua",
+      "line": 24,
+      "childCount": 5
+    },
+    {
+      "id": "BASE_NPC_ELVEN_WARRIOR",
+      "defineAs": "BASE_NPC_ELVEN_WARRIOR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/elven-warrior.lua",
+      "line": 24,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_FAEROS",
+      "defineAs": "BASE_NPC_FAEROS",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/faeros.lua",
+      "line": 22,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_LOSGOROTH",
+      "defineAs": "BASE_NPC_LOSGOROTH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/losgoroth.lua",
+      "line": 22,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_MUMMY",
+      "defineAs": "BASE_NPC_MUMMY",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/mummy.lua",
+      "line": 22,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_SUNWALL_TOWN",
+      "defineAs": "BASE_NPC_SUNWALL_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/sunwall-town.lua",
+      "line": 22,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_INSECT",
+      "defineAs": "BASE_NPC_INSECT",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/swarm.lua",
+      "line": 24,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_ZIGURANTH",
+      "defineAs": "BASE_NPC_ZIGURANTH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/ziguranth.lua",
+      "line": 24,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_RITCH_REL",
+      "defineAs": "BASE_NPC_RITCH_REL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/ritch-tunnels/npcs.lua",
+      "line": 27,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_LAST_HOPE_TOWN",
+      "defineAs": "BASE_NPC_LAST_HOPE_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-last-hope/npcs.lua",
+      "line": 24,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_LOSGOROTH#2",
+      "defineAs": "BASE_NPC_LOSGOROTH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-point-zero/npcs.lua",
+      "line": 77,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_UNDEAD_DRAKE",
+      "defineAs": "BASE_NPC_UNDEAD_DRAKE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/undead-drake.lua",
+      "line": 22,
+      "childCount": 4
+    },
+    {
+      "id": "COUNCIL_BASE",
+      "defineAs": "COUNCIL_BASE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/palace-fumes/npcs.lua",
+      "line": 35,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_KRUK_TOWN",
+      "defineAs": "BASE_NPC_KRUK_TOWN",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/sunwall-outpost/npcs.lua",
+      "line": 80,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_KRUK_TOWN#2",
+      "defineAs": "BASE_NPC_KRUK_TOWN",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/town-kruk/npcs.lua",
+      "line": 27,
+      "childCount": 4
+    },
+    {
+      "id": "STORY_NPC_BASE",
+      "defineAs": "STORY_NPC_BASE",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-haze-cave/npcs.lua",
+      "line": 28,
+      "childCount": 4
+    },
+    {
+      "id": "BASE_NPC_AQUATIC_DEMON",
+      "defineAs": "BASE_NPC_AQUATIC_DEMON",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/aquatic_demon.lua",
+      "line": 24,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_COLD_DRAKE",
+      "defineAs": "BASE_NPC_COLD_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/cold-drake.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_FIRE_DRAKE",
+      "defineAs": "BASE_NPC_FIRE_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/fire-drake.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_GWELGOROTH",
+      "defineAs": "BASE_NPC_GWELGOROTH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/gwelgoroth.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_MINOTAUR",
+      "defineAs": "BASE_NPC_MINOTAUR",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/minotaur.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_SHIVGOROTH",
+      "defineAs": "BASE_NPC_SHIVGOROTH",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shivgoroth.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_STORM_DRAKE",
+      "defineAs": "BASE_NPC_STORM_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/storm-drake.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_VENOM_DRAKE",
+      "defineAs": "BASE_NPC_VENOM_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/venom-drake.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_WORM",
+      "defineAs": "BASE_NPC_WORM",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/vermin.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_CARAVANEER",
+      "defineAs": "BASE_CARAVANEER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/keepsake-meadow/npcs.lua",
+      "line": 25,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_TUTORIAL_SPIDER",
+      "defineAs": "BASE_TUTORIAL_SPIDER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/tutorial-combat-stats/npcs.lua",
+      "line": 381,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_ALLIGATOR",
+      "defineAs": "BASE_NPC_ALLIGATOR",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/alligator.lua",
+      "line": 24,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_YETI_TAME",
+      "defineAs": "BASE_NPC_YETI_TAME",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/domestic-yeti.lua",
+      "line": 24,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_HETHUROTH",
+      "defineAs": "BASE_NPC_HETHUROTH",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/hethugoroth.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_STEAM_GIANT_ARCANE",
+      "defineAs": "BASE_STEAM_GIANT_ARCANE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-giant-arcane.lua",
+      "line": 24,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_AMAKTHEL",
+      "defineAs": "BASE_NPC_AMAKTHEL",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/slumbering-caves/npcs.lua",
+      "line": 29,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_AUTOMATED_DEFENCE_SYSTEM",
+      "defineAs": "BASE_AUTOMATED_DEFENCE_SYSTEM",
+      "name": "Automated Defense System",
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/steam-quarry/npcs.lua",
+      "line": 31,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_STEAM_GIANT_CITIZEN",
+      "defineAs": "BASE_STEAM_GIANT_CITIZEN",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/vaporous-emporium/npcs.lua",
+      "line": 28,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_SCOURGE_DRAKE",
+      "defineAs": "BASE_NPC_SCOURGE_DRAKE",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/general/npcs/scourge-drake.lua",
+      "line": 22,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_STUDENT",
+      "defineAs": "BASE_NPC_STUDENT",
+      "name": null,
+      "source": "cults",
+      "file": "dlc-src/cults/tome-cults/data/zones/ft-cultist/npcs.lua",
+      "line": 177,
+      "childCount": 3
+    },
+    {
+      "id": "BASE_NPC_SHERTUL",
+      "defineAs": "BASE_NPC_SHERTUL",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shertul.lua",
+      "line": 24,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_WILD_DRAKE",
+      "defineAs": "BASE_NPC_WILD_DRAKE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/wild-drake.lua",
+      "line": 22,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_SUNWALL_DEFENDER",
+      "defineAs": "BASE_NPC_SUNWALL_DEFENDER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/charred-scar/npcs.lua",
+      "line": 27,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_VAT",
+      "defineAs": "BASE_NPC_VAT",
+      "name": "old vats",
+      "source": "tome",
+      "file": "tome-src-full/data/zones/conclave-vault/npcs.lua",
+      "line": 28,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_BERETHH_COMPANION",
+      "defineAs": "BASE_BERETHH_COMPANION",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/keepsake-meadow/npcs.lua",
+      "line": 250,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_SLAVER",
+      "defineAs": "BASE_NPC_SLAVER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/ring-of-blood/npcs.lua",
+      "line": 144,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_IRON_COUNCIL_TOWN",
+      "defineAs": "BASE_NPC_IRON_COUNCIL_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-iron-council/npcs.lua",
+      "line": 24,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_POINT_ZERO_TOWN",
+      "defineAs": "BASE_NPC_POINT_ZERO_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-point-zero/npcs.lua",
+      "line": 24,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_DEFENSE_ORB",
+      "defineAs": "BASE_NPC_DEFENSE_ORB",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/zones/gates-of-morning/npcs.lua",
+      "line": 182,
+      "childCount": 2
+    },
+    {
+      "id": "BASE_NPC_BIRD",
+      "defineAs": "BASE_NPC_BIRD",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/bird.lua",
+      "line": 24,
+      "childCount": 1
+    },
+    {
+      "id": "BASE_NPC_ORC_ATTACKER",
+      "defineAs": "BASE_NPC_ORC_ATTACKER",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/charred-scar/npcs.lua",
+      "line": 111,
+      "childCount": 1
+    },
+    {
+      "id": "BASE_NPC_ORC_SUMMON",
+      "defineAs": "BASE_NPC_ORC_SUMMON",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/orc-breeding-pit/npcs.lua",
+      "line": 25,
+      "childCount": 1
+    },
+    {
+      "id": "BASE_NPC_ELVALA_OGRE_TOWN",
+      "defineAs": "BASE_NPC_ELVALA_OGRE_TOWN",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/zones/town-elvala/npcs.lua",
+      "line": 77,
+      "childCount": 1
+    },
+    {
+      "id": "BASE_STEAM_DRONE",
+      "defineAs": "BASE_STEAM_DRONE",
+      "name": null,
+      "source": "orcs",
+      "file": "dlc-src/orcs/tome-orcs/data/general/npcs/steam-drone.lua",
+      "line": 24,
+      "childCount": 1
+    },
+    {
+      "id": "BASE_NPC_SHADE",
+      "defineAs": "BASE_NPC_SHADE",
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shade.lua",
+      "line": 24,
+      "childCount": 0
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/shade.lua:97",
+      "defineAs": null,
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shade.lua",
+      "line": 97,
+      "childCount": 0
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/shade.lua:103",
+      "defineAs": null,
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shade.lua",
+      "line": 103,
+      "childCount": 0
+    },
+    {
+      "id": "anon:tome-src-full/data/general/npcs/shade.lua:109",
+      "defineAs": null,
+      "name": null,
+      "source": "tome",
+      "file": "tome-src-full/data/general/npcs/shade.lua",
+      "line": 109,
+      "childCount": 0
+    }
+  ],
+  "elapsedMs": 680
+}

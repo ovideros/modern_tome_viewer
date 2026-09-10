@@ -2,6 +2,11 @@
 modern_tome_viewer/node_modules/
 modern_tome_viewer/dist/
 
+# --- 引擎源码包（638M 解压树）：站点不读取，只用于本机核对引擎语义 ---
+# 怪物管线需要的引擎语义已固化成带出处的快照
+# （modern_tome_viewer/data/lua-coefficients.json 与 scripts/monsters 的注释）
+t-engine4-src-1.7.6/
+
 # --- 本机缓存 / 浏览器二进制 ---
 .npm-cache/
 .pw-browsers/

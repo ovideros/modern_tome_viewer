@@ -6,7 +6,7 @@
 - 数据自包含：原始 JSON 已随仓库提交（`data/raw/master/`），无需联网即可重新生成数据。
 - 高级搜索：技能大系名 / 技能名 / 技能文本多字段检索，支持字段限定、短语、排除。
 - 结构化筛选：使用模式、冷却、使用速度、射程、资源消耗、技能需求、职业适用、技能标记。
-- 浏览：**职业**（子职业、画像、属性/生命/点数、初始技能、各大系下的技能图标与名称）、**种族**（亚种、画像、属性、种族技能大系）。
+- 浏览：**职业**（子职业、画像、属性/生命/点数、初始技能、各大系下的技能图标与名称）、**种族**（亚种、画像、属性、种族技能大系）、**怪物**（中文怪物图鉴：普通怪物 / 精英 / 史诗 / 固定Boss / 精英Boss / 神级，含图片、描述、固定技能与互斥随机技能组）。
 - **技能收藏**（localStorage 持久化）与**技能对比**（最多 6 个并列，自动高亮最优值）。
 - **技能数值模拟**：详情面板里拖动技能等级 / 技能系数 / 强度等滑条，技能说明中的数值实时重算。
   说明里的数字与滑条严格同步，浮窗同时给出「当前条件」和「导出条件」便于对照。
@@ -15,6 +15,8 @@
 文档：
 
 - [`docs/HANDOVER.md`](docs/HANDOVER.md) —— **项目交接文档**（架构、踩坑记录、待办、下一步任务）
+- [`docs/monster-pipeline.md`](docs/monster-pipeline.md) —— **怪物图鉴数据管线**（收录口径、数量统计、继承语义、图片匹配、已知边界）
+- [`docs/deployment.md`](docs/deployment.md) —— **部署到 GitHub Pages**（线上地址、产物提交策略、首次启用 Pages）
 - [`docs/HANDOVER_PROMPT.md`](docs/HANDOVER_PROMPT.md) —— 交接给新 agent 的提示词
 - [`docs/feasibility.md`](docs/feasibility.md) —— 可行性分析、数值反解原理、常见疑问
 
@@ -22,12 +24,15 @@
 
 ## 快速开始
 
+线上站点：<https://ovideros.github.io/modern_tome_viewer/>
+
 ```bash
 npm install
 npm run data      # 从 data/raw 生成 public/data + public/img
 npm run dev       # 开发服务器
 npm run build     # 生成数据 + 构建到 dist/
 npm run serve     # 用本地静态服务器预览 dist/（http://127.0.0.1:4173/）
+npm run build:pages   # 校验已提交的数据产物后构建 dist/（部署用，见 docs/deployment.md）
 ```
 
 > `npm run data` 需要图标资源：默认从 `../starsapphirex.github.io/tometips/img/talents` 复制。
@@ -56,6 +61,7 @@ npm run serve     # 用本地静态服务器预览 dist/（http://127.0.0.1:4173
 | `#/search` | 高级搜索 + 筛选（主页面） |
 | `#/classes` | 12 个职业 → 39 个子职业：画像、属性修正、每级生命、额外点数、初始技能、职业/通用大系（含掌握度与解锁状态）以及每个大系下的技能图标与名称；点击技能在右侧面板查看 |
 | `#/races` | 10 个种族 → 17 个亚种：画像、属性修正、基础生命、经验修正、种族技能大系与技能 |
+| `#/monsters` | 怪物图鉴：812 个可遇模板（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），可按分类、来源包、中文名/英文名/技能检索；详情面板区分固定技能与互斥随机技能组，技能在本页面板内直接查看（不离开怪物），与职业页使用同一套技能详情 |
 | `#/favorites` | 收藏夹（localStorage），可搜索、移除、一键加入对比 |
 | `#/compare` | 技能对比表（最多 6 个），数值行自动高亮最优值 |
 

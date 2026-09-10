@@ -5,19 +5,24 @@
   "type": "module",
   "description": "Modern web viewer for Tales of Maj'Eyal (ToME4) talents, with advanced multi-level search and faceted filtering.",
   "scripts": {
-    "data": "node scripts/build-data.mjs",
+    "data": "node scripts/build-data.mjs && npm run data:monsters",
+    "data:monsters": "node scripts/monsters/build-monsters.mjs",
+    "data:locale": "node scripts/monsters/locale-snapshot.mjs",
+    "data:supplement": "node scripts/monsters/talent-supplement.mjs .. data/talent-supplement.json T_HEAT T_STAMINA_POOL T_MANA_POOL T_STEAM_POOL T_TUTORIAL_MIND_KB T_TUTORIAL_SPELL_KB T_TUTORIAL_MIND_FEAR T_TUTORIAL_SPELL_BLINK",
     "dev": "vite",
     "build": "npm run data && vite build",
     "build:app": "vite build",
+    "build:pages": "node scripts/build-pages.mjs",
     "preview": "vite preview",
     "serve": "node scripts/serve.mjs dist 4173",
     "typecheck": "tsc --noEmit",
     "verify": "node scripts/verify.mjs",
     "smoke": "node scripts/smoke.mjs",
     "e2e": "node scripts/e2e.mjs",
-    "check": "npm run typecheck && npm run test:scaling && npm run verify && npm run build:app && npm run smoke",
+    "check": "npm run typecheck && npm run test:monsters && npm run test:scaling && npm run verify && npm run build:app && npm run smoke",
     "data:lua": "node scripts/extract-lua-coefficients.mjs",
-    "test:scaling": "node --test scripts/scaling.test.mjs"
+    "test:scaling": "node --test scripts/scaling.test.mjs",
+    "test:monsters": "node --test scripts/monsters/*.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",

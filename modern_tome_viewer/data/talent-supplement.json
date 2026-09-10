@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-10T17:17:29.155Z",
+  "note": "由 scripts/monsters/talent-supplement.mjs 从本地 1.7.6 Lua 源码提取，仅覆盖上游技能导出缺失、但怪物模板实际引用的技能。",
+  "talents": [
+    {
+      "id": "T_HEAT",
+      "enName": "Heat",
+      "name": "加热",
+      "tree": "spell/war-alchemy",
+      "points": 5,
+      "cooldown": 5,
+      "mode": null,
+      "info": "将你的敌人化为火焰，在8回合内造成 %0.2f 火焰伤害。\n\t\t伤害受法术强度加成。",
+      "infoStatus": "exact",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/spells/war-alchemy.lua",
+      "line": 20,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_MANA_POOL",
+      "enName": "Mana Pool",
+      "name": "法术值槽",
+      "tree": "base/class",
+      "points": null,
+      "cooldown": null,
+      "mode": "passive",
+      "info": null,
+      "infoStatus": "none",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/misc.lua",
+      "line": 127,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_STAMINA_POOL",
+      "enName": "Stamina Pool",
+      "name": "体力值槽",
+      "tree": "base/class",
+      "points": null,
+      "cooldown": null,
+      "mode": "passive",
+      "info": null,
+      "infoStatus": "none",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/misc.lua",
+      "line": 151,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_STEAM_POOL",
+      "enName": "Steam Pool",
+      "name": "Steam Pool",
+      "tree": "base/class",
+      "points": null,
+      "cooldown": null,
+      "mode": "passive",
+      "info": null,
+      "infoStatus": "none",
+      "nameStatus": "missing",
+      "file": "dlc-src/orcs/tome-orcs/data/talents/steam/steam.lua",
+      "line": 20,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_TUTORIAL_MIND_FEAR",
+      "enName": "Fear",
+      "name": "恐惧",
+      "tree": "tutorial",
+      "points": 5,
+      "cooldown": 0,
+      "mode": null,
+      "info": "尝试恐惧目标使其逃跑。",
+      "infoStatus": "exact",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/tutorial.lua",
+      "line": 133,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_TUTORIAL_MIND_KB",
+      "enName": "Telekinetic Punt",
+      "name": "念力打击",
+      "tree": "tutorial",
+      "points": 5,
+      "cooldown": 0,
+      "mode": null,
+      "info": "使用强大的念力攻击，将目标击退。",
+      "infoStatus": "exact",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/tutorial.lua",
+      "line": 77,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_TUTORIAL_SPELL_BLINK",
+      "enName": "Blink",
+      "name": "闪烁",
+      "tree": "tutorial",
+      "points": 5,
+      "cooldown": 0,
+      "mode": null,
+      "info": "使用魔法，将目标轻微的传送至远处。",
+      "infoStatus": "exact",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/tutorial.lua",
+      "line": 105,
+      "source": "lua-supplement"
+    },
+    {
+      "id": "T_TUTORIAL_SPELL_KB",
+      "enName": "Mana Gale",
+      "name": "魔法风暴",
+      "tree": "tutorial",
+      "points": 5,
+      "cooldown": 0,
+      "mode": null,
+      "info": "施放一股强力的魔法风暴，将目标击退 %d 码。",
+      "infoStatus": "exact",
+      "nameStatus": "exact",
+      "file": "tome-src-full/data/talents/misc/tutorial.lua",
+      "line": 48,
+      "source": "lua-supplement"
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "T_MANA_POOL",
+      "file": "tome-src-full/data/talents/misc/misc.lua",
+      "line": 127,
+      "message": "info 未提取到字面量文本"
+    },
+    {
+      "id": "T_STAMINA_POOL",
+      "file": "tome-src-full/data/talents/misc/misc.lua",
+      "line": 151,
+      "message": "info 未提取到字面量文本"
+    },
+    {
+      "id": "T_STEAM_POOL",
+      "file": "dlc-src/orcs/tome-orcs/data/talents/steam/steam.lua",
+      "line": 20,
+      "message": "info 未提取到字面量文本"
+    }
+  ]
+}

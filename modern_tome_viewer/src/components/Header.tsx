@@ -15,6 +15,7 @@ const NAV = [
   { name: 'search', label: '高级搜索' },
   { name: 'classes', label: '职业' },
   { name: 'races', label: '种族' },
+  { name: 'monsters', label: '怪物' },
   { name: 'favorites', label: '收藏' },
 ];
 

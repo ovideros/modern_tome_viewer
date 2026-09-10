@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* The monster page shows a monster panel *and* a talent panel side by side;
+   that needs more room than `xl`, where the list would drop to one column.
+   Kept as a variant so the layout stays declarative instead of being driven by
+   a JS media query (the two can disagree during a resize). */
+@custom-variant xxl (@media (min-width: 1800px));
+
 /* ---------------------------------------------------------------------------
    Design tokens. Both themes expose the same variable names so components
    never need a `dark:` variant for ordinary surfaces.
