@@ -76,8 +76,9 @@ npm run serve     # 用本地静态服务器预览 dist/（http://127.0.0.1:4173
 构建优先使用 Lua 源码中的公式，逐项校验导出说明的完整数值阶梯；不匹配或解析不了时保留旧反解兜底。
 详情中的 tooltip 会区分「源码公式」与「反解估算」，源码项带文件路径和行号。
 
-- 3464 / 3750 个数值可重算（92.4%）：2469 个源码公式、995 个反解估算；286 个仍只显示参考值。
-- 1422 个技能全部可调，121 个部分可调，64 个不可调（另有 219 个技能没有可调数值）。
+- **3650 / 3750 个数值有源码公式（97.3%）**，另有 71 个反解估算、29 个仍只显示参考值；
+  其中 1053 条公式写在手写覆盖层 `data/lua-expressions.json` 里（构建时会按三套渲染重新校验）。
+- 1591 个技能全部可调，9 个部分可调，7 个不可调（另有 219 个技能没有可调数值）。
 - 源码支持 Scale、Limit、WeaponDamage（含他技能等级加成）、四种强度伤害、StatDamage、StatScale、
   通用 `combatScale`/`combatLimit`、属性与资源（魔力/意志/paradox/psi…）、`math.sqrt` 等函数、
   条件倍率（`self:attr("x") and 2 or 1`）与别的技能等级，保留倍率、取整及递减参数。
@@ -130,9 +131,9 @@ modern_tome_viewer/
 │   └── img/npc/              #   职业/种族附加美术
 ├── scripts/
 │   ├── build-data.mjs        # 数据管线：清洗 / 富化 / 压缩体积 / 拷贝画像
-│   ├── verify.mjs            # 搜索/筛选/数据完整性 77 项断言（真实数据）
+│   ├── verify.mjs            # 搜索/筛选/数据完整性 87 项断言（真实数据）
 │   ├── smoke.mjs             # 用 happy-dom 渲染生产包，42 项首屏与交互检查
-│   ├── e2e.mjs               # 真实 Chromium 端到端测试（112 项）
+│   ├── e2e.mjs               # 真实 Chromium 端到端测试（174 项）
 │   └── serve.mjs             # 零依赖静态服务器
 ├── src/
 │   ├── lib/types.ts          # 数据模型
@@ -164,7 +165,7 @@ modern_tome_viewer/
 ```bash
 npm run check                 # 类型检查 + 26 项数值测试 + 77 项引擎断言 + 构建 + 42 项渲染冒烟
 npm run serve &               # 起静态服务器
-npm run e2e -- http://127.0.0.1:4173/   # 112 项真实浏览器端到端
+npm run e2e -- http://127.0.0.1:4173/   # 174 项真实浏览器端到端
 ```
 
 端到端测试需要 Chromium（Playwright 的 headless shell）：

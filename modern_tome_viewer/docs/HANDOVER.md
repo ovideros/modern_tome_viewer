@@ -1,13 +1,82 @@
 # 项目交接文档 — modern_tome_viewer
 
-> 更新：2026-09-10，Lua 源码提取已接入。当前实现与边界以 [lua-scaling.md](lua-scaling.md) 为准。
-> 当前覆盖：3335/3750（1225 源码 + 2110 估算），1323 全可调 / 184 部分 / 100 不可调。
-> 新测试基线：scaling 26 / verify 77 / smoke 42 / e2e 112 / typecheck 无错。
-> 以下保留原交接背景；旧基线和原计划属于历史记录。
+> **最新状态（本节是唯一的总账，下面各节的数字若是旧的会就地标注）**
 >
-> 交接时间：2026-09-10
-> 交接人：上一轮 agent 会话
+> | 项 | 值 |
+> | --- | --- |
+> | 3750 个数值 | **3650 源码公式（97.3%）** / 71 反解估算 / 29 仅参考值 |
+> | 技能维度 | 1591 全可调 / 9 部分可调 / 7 完全不可调（另有 219 个技能没有数值） |
+> | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
+> | 测试基线 | typecheck 无错 · scaling **45/45** · verify **87/87** · smoke **42/42** · e2e **174/174** |
+> | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
+>
+> 本轮的逐条进展见 §0「最近一轮变更」；数值覆盖的来龙去脉见
+> [expression-overlay-report.md](expression-overlay-report.md)。
+> 当前实现与边界以 [lua-scaling.md](lua-scaling.md) 为准。
+>
+> 交接时间：2026-09-10（初版）／后续多轮续修
 > 本文档目标：让接手的新 agent 在不看历史对话的情况下，能独立继续开发。
+
+---
+
+## 0. 最近一轮变更（2026 续修，按 jj 提交顺序）
+
+六次**功能**提交（文档更新另计），全部从"用户看到的现象"倒推到根因。
+**每条都先复现、再改、再实测**，下面写的是可复核的证据，不是结论。
+用 `jj log` 可以按 change-id 逐条查证。
+
+| jj | 提交 | 现象 | 根因 | 结果 |
+| --- | --- | --- | --- | --- |
+| `yyxvzmqv` | 审计并修复覆盖层的「丢失滑条」 | 有些技能数字对，但滑条拖了不动 | 导出把非轴输入钉死时，15 点复现**证明不了**依赖存在 | 扫出 101 条「声明了却没读到」，回源码修好 24 条（22 条漏 `pmod`、2 条写死常数） |
+| `ovoylqpx` | 详情卡片：数值模拟移到技能说明下方 | 一进卡片先看到滑条、后看到技能描述 | 顺序问题 | 现在是 技能说明 → 数值模拟 |
+| `rorurnmm` | 强度滑条上限 200 → 150 | 滑条最右端拖不到、也没意义 | 有效 100 需原始 300，有效 150 已需原始 640；导出钉住的强度从来是 100 | 四种强度统一 1–150 |
+| `llzqznvx` | 多轴阶梯：同阶梯参数随轴一起推进 | 无尽追踪等 34 个值**连滑条都不显示** | 三层都堵：公式在兄弟方法里、反解缺 driver、`ladderAxis` 拒绝多条阶梯 | 34 条解决 33 条；源码 3618→3650 |
+| `sqpvuups` | 固定冷却 | 超越永恒显示 `50`，看不出它不吃减 CD | 导出**本来就有** `fixed_cooldown`，构建时被丢掉 | 27 条带上标记 + 角标 |
+| `syntqmpz` | 筛选器：只看固定 / 只看非固定 | —— | —— | 三态互斥开关（全部 1826 / 固定 27 / 非固定 1799） |
+
+### 0.1 这几轮真正修对的三处**判分器缺陷**
+
+覆盖率从 3618 涨到 3650 不是"公式写不出来"，是**工具把正确的公式判成了错**：
+
+1. **`ladderAxis` 拒绝多条阶梯**（`llzqznvx`）。导出会把**整个 `info` 函数**碰到的参数并集
+   抄进每一个 acronym，所以标题常带 2–6 条阶梯。渲染语义是**引擎一列一列同时推进所有带阶梯的参数**，
+   不是"变一个、其余钉在首值"——本轮 14 条自动新解的公式直接证明了这一点
+   （匕首格挡是 `120 + 灵巧 + 敏捷`，只变一个的话第 2 点会是 155 而不是导出的 170）。
+   实现：`axisSiblings()` + `simAtAxis()` 让**逐元素完全相同**的阶梯随轴一起走；
+   真的不同的第二条阶梯（`魔力 10..100` 配 `角色等级 1..50`）仍然拒绝，剩 9 条。
+2. **`isDeclaredInput` 不认 `kind:"other"`**。`physical save` / `精准` / `shield block 200`
+   这些解析器认不出类别的标签**恰恰是公式真读的输入**。
+3. **一条阶梯可以「这点截断、那点四舍五入」**（`llzqznvx`）。`matchesDisplayed()` 是逐点判的，
+   而一次 `tformat` 调用用**同一个格式符**打印整条阶梯。新增 `readingIsConsistent()` 要求整条阶梯
+   能被同一个约定读完（6 种：`trunc`/`round` × 不前置/`%0.1f`/`%0.2f`）。
+   这个洞是**抓假阳性时发现的**：子代理提交的心灵震爆公式靠混用读数拿到了 PASS。
+   收紧后全库 3481 条整数阶梯只有 2 条会掉。
+
+> **重要方法论**：数值复现（三套 15 点）与"滑条正确"是**两件事**。
+> 导出把非轴输入钉死时，前者无法证明后者；15 点也分辨不出"三行读同一个值还是各读各的"
+> （无尽追踪三行都读豁免，读哪个只能由句子决定，已写进 `note`）。
+> 这类条目必须回源码确认，或至少被显式计数以便复核。
+
+### 0.2 仍未解决
+
+| 类别 | 数量 | 说明 |
+| --- | --- | --- |
+| `unsupported input dimensions` | 9 | 标题里两条**真的不同**的阶梯（联合轴，如 `魔力 10..100` + `角色等级 1..50`）。要支持得让 `simAtAxis` 按索引同时推两条不同阶梯 |
+| `source unavailable` | 70 | 信息主要在 addon 里（`data-possessors` 本地没有源码）；或 getter 读别的技能/武器/随机数 |
+| `Multiple local assignment` | 10 | `info` 里多值局部赋值，无法确定哪个参数对应哪个 `%d` |
+| `reference mismatch` | 11 | 有候选但算不对；多数是抽到了同技能另一个 getter 的表达式 |
+| 判定为导出不自洽 | 1 | 心灵震爆 `T_MIND_BLAST#2`：1.00/1.30 沿技能等级渲染、1.50 沿属性渲染，两者互斥，公式写不出来（见报告 §2.5） |
+
+### 0.3 数字与命令的对应关系
+
+上面每个数字都能自己跑出来，不要凭文档相信：
+
+```bash
+cd modern_tome_viewer
+npm run data          # 打印 manifest.scaling（源码/估算/参考 + 失败原因分布）与 overlay 重校验行
+npm run check         # typecheck + scaling + verify + build + smoke
+node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层逐条验收
+```
 
 ---
 
@@ -73,14 +142,17 @@ npm run e2e -- http://127.0.0.1:4173/        # 真实浏览器 e2e（需先 npm 
 
 ```
 npm run typecheck   → 无错误
-npm run verify      → 77/77
+npm run test:scaling → 45/45
+npm run verify      → 87/87
 npm run smoke       → 42/42
-npm run e2e         → 160/160
-node --test scripts/scaling.test.mjs → 41/41
-node scripts/audit/match-rate.mjs    → 源码覆盖 2469/3750 (65.8%)
+npm run e2e         → 174/174   （需 PLAYWRIGHT_BROWSERS_PATH=../.pw-browsers）
+npm run data        → 覆盖层 1053/1053 accepted；manifest.scaling.source = 3650/3750
 ```
 
-构建产物：JS 271 KB（gzip 83 KB）、CSS 26 KB、`talents.json` 3.7 MB。
+构建产物：JS 286 KB（gzip 88 KB）、CSS 27 KB、`talents.json` 4.1 MB。
+
+**顺序很重要**：`npm run data` → `vite build` → 再跑 smoke/e2e。跳过重建会让测试跑在旧 `dist/` 上
+（曾经因此把"全绿"报错，实际测的是旧产物）。`scripts/serve.mjs` 从磁盘流式读，换产物不用重启。
 
 
 ## 3. 目录结构
@@ -180,7 +252,10 @@ modern_tome_viewer/
 
 ## 5. 数值来源：优先 Lua 源码，兜底反解
 
-### 5.1 现状（本轮扩展后）
+### 5.1 现状（**本轮**＝最初那次源码提取扩展；最新总量见 §0）
+
+> 下面这组数字是**那一轮**的快照，保留是为了说明"每次跳变靠什么"。
+> 当前是 **3650 源码 / 71 反解 / 29 参考**。
 
 ```
 3750 个数值
@@ -542,15 +617,21 @@ wire 仅在非空时下发 `pre` / `tail`；渲染时按 `prefix + 数值 + suff
 
 ## 6. 下一步任务（按性价比排序）
 
+> 数字是 §0 的总账；下表按"投入产出比"排，不是按条目数。
+
 ### 6.1 继续提高源码覆盖率
 
-1. **`reference mismatch` 607 条**——逐个看失败候选，补缺失的公式家族/语义：
-   `weaponDamage`（340 处调用，需实际武器伤害）、`getTalentTypeMastery` /
-   `getTalentMastery` 等 Actor 查询、双持副手惩罚 `getOffHandMult`。
-2. **`Multiple local assignment` 66 条**——继续放宽局部变量解析（多值返回、表构造）。
-3. **`Info control flow` / `Dynamic format` 31 条**——`info` 里的条件分支，
-   可在"分支互斥且各自安全"时逐分支解析。
-4. **Possessor 源码（约 68 条）**——用户未提供 `data-possessors/`，需要时向其索取。
+1. **联合轴支持（9 条，收益中等但能收口一类）**——`simAtAxis()` 目前只能推"逐元素相同"的
+   那组阶梯。真正的联合轴（`魔力 10..100` 配 `角色等级 1..50`，两条按索引一起走）
+   需要一个 `axes: [{label, ladder}]` 的多轴形式，并让 `ladderAxis()` 在
+   "两条阶梯长度相同"时返回全部；判分逻辑本身不用动。
+2. **`source unavailable` 70 条**——逐个看是"读别的技能 getter"还是"读运行时数据"。
+   前者可在提取器里做一次跨技能内联（`self:callTalent(T_X, "getY")`）；
+   后者（武器伤害、随机数、别的角色状态）应明确记为不可建模，不要再花时间。
+3. **`Multiple local assignment` 10 条**——放宽局部变量解析（多值返回、表构造）。
+   注意 `T_RELENTLESS_PURSUIT` 那类"公式在兄弟方法里"的形态：提取器不内联
+   `t.getXxx(self, t)`，这是本轮手写覆盖层里最大的一类来源。
+4. **Possessor 源码**——用户未提供 `data-possessors/`，需要时向其索取。
 
 ### 6.2 加固与工程化
 

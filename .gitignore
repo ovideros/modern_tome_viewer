@@ -23,3 +23,8 @@ dlc-src/**/*.*
 # starsapphirex.github.io 64M 里只有 6.5M 是导出 JSON；构建只读 tometips/data/master/*.json
 starsapphirex.github.io/**/*.*
 !starsapphirex.github.io/tometips/data/master/*.json
+
+# Editor scratch files
+*.swp
+*.swo
+*~
