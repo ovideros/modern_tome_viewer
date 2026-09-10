@@ -1,0 +1,51 @@
+[
+  {
+    "talent": "T_THROWING_KNIVES",
+    "acronym": 2,
+    "expr": ["^", ["*", 0.3, ["*", ["+", ["power", "physical power"], ["floor", ["min", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], ["+", 45, ["*", 0.75, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 45]]], ["+", 90, ["*", 0.6, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 105]]], ["+", 135, ["*", 0.5, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 180]]]]]], ["+", 1, ["*", 0.5, ["-", ["sqrt", 0.1], 1]]]]], 1.04],
+    "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:174",
+    "note": "knivesInfo: dmg = self:combatDamage(combat)（Combat.lua:1687）= rescaleDamage(0.3*(phys + statmod) * power * talented_mod)。phys=combatPhysicalpower→标题输入的 physical power；statmod=rescaleCombatStats(0.7*敏捷+0.5*力量, 45, 1/3)（Combat.lua:1477 凸包取 min，本式照抄前三段，末尾 floor）。导出用的假角色不认识 T_THROWING_KNIVES，故 knives.dam=0 → combatDamagePower=(sqrt(max(0,1)/10)-1)*0.5+1=0.6581138830084189，talented_mod=1。"
+  },
+  {
+    "talent": "T_THROWING_KNIVES",
+    "acronym": 3,
+    "expr": ["*", 1.4, ["^", ["*", 0.3, ["*", ["+", ["power", "physical power"], ["floor", ["min", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], ["+", 45, ["*", 0.75, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 45]]], ["+", 90, ["*", 0.6, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 105]]], ["+", 135, ["*", 0.5, ["-", ["+", ["*", 0.7, ["actor", "敏捷"]], ["*", 0.5, ["actor", "力量"]]], 180]]]]]], ["+", 1, ["*", 0.5, ["-", ["sqrt", 0.1], 1]]]]], 1.04]],
+    "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:203",
+    "note": "knivesInfo: weapon_range = knives.dam * knives.damrange，knives() 里 damrange = 1.4（第 29 行），即上一条同式再乘 1.4。"
+  },
+  {
+    "talent": "T_THROWING_KNIVES",
+    "acronym": 4,
+    "expr": ["actor", "精准"],
+    "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:172",
+    "note": "knivesInfo: atk = self:combatAttack(combat)（Combat.lua:1374，开头即 `if self.combat_precomputed_accuracy then return self.combat_precomputed_accuracy end`）。导出的假角色把命中/精准直接预置成标题里的『精准』阶梯（10,25,50,75,100），所以该值就是这个输入本身。"
+  },
+  {
+    "talent": "T_THROWING_KNIVES",
+    "acronym": 5,
+    "expr": ["max", 0, ["+", ["*", 0.3, ["-", ["actor", "灵巧"], 10]], ["*", 0.3, ["-", ["actor", "幸运"], 50]]]],
+    "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:177",
+    "note": "knivesInfo: crit = self:combatCrit(combat)（Combat.lua:1445）= max(0, combat_physcrit + generic + (灵巧-10)*0.3 + (幸运-50)*0.30 + (weapon.physcrit or 1) + addcrit)。假角色不认识 T_THROWING_KNIVES，故 combat.physcrit=0（Lua 里 0 为真，`0 or 1` 仍是 0），其余加成 0。"
+  },
+  {
+    "talent": "T_SKULLCRACKER",
+    "acronym": 1,
+    "expr": ["*", 50, ["-", 1, ["exp", ["+", ["*", ["^", ["actor", "敏捷"], 0.75], ["/", ["log", ["/", ["-", 45, 50], ["-", 25, 50]]], ["-", 31.623, 5.6234]]], ["/", ["-", 0, ["-", ["*", ["-", 31.623, 5.6234], ["log", ["-", 1, ["/", 45, 50]]]], ["*", 31.623, ["log", ["/", ["-", 45, 50], ["-", 25, 50]]]]]], ["-", 5.6234, 31.623]]]]]],
+    "source": "tome-src-full/data/talents/techniques/thuggery.lua:34",
+    "note": "getConfusion = self:combatStatLimit(\"dex\", 50, 25, 45)（Combat.lua:1631）= limit*(1-exp(stat^0.75*a+b))，a=log((high-limit)/(low-limit))/(x_high-x_low)，b 同 Combat.lua:1638。这里必须照抄源码里的字面量 x_low=5.6234 / x_high=31.623（不是精确的 10^0.75/100^0.75）：正是这点舍入让敏捷 100 时算得 44.9999 而不是 45，%d 截断成 44；用 combatLimit 节点（内部用精确幂）会得到 45.0000 而 FAIL。"
+  },
+  {
+    "talent": "T_STRIKING_STANCE",
+    "acronym": 0,
+    "expr": ["floor", ["/", ["actor", "敏捷"], 4]],
+    "source": "tome-src-full/data/talents/techniques/pugilism.lua:40",
+    "note": "getAttack = self:getDex(25, true) = 敏捷*25/100，info 用 %d 截断：2.5/6.25/12.5/18.75/25 → 2/6/12/18/25。"
+  },
+  {
+    "talent": "T_STRIKING_STANCE",
+    "acronym": 2,
+    "expr": ["min", 35, ["statScale", "str", 1, 30, 0.75]],
+    "source": "tome-src-full/data/talents/techniques/pugilism.lua:46",
+    "note": "getFlatReduction = min(35, self:combatStatScale(\"str\", 1, 30, 0.75))（不满足 knowTalent(T_REFLEX_DEFENSE) 乘数 → 1）。轴是力量，故 statScale 读的正是轴本身；min 的 35 在这条阶梯上不生效（力量 100 时恰为 30）。"
+  }
+]

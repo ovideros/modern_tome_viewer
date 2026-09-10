@@ -1,0 +1,62 @@
+[
+ {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 0,
+  "expr": [
+   "power",
+   "法术强度",
+   [
+    "pmod",
+    [
+     "actor",
+     "paradox"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/chronomancer.lua:173",
+  "note": "getParadoxSpellpower(self,t) = combatSpellpower(mod*pm) with mod=1 and pm=getParadoxModifier(self)=bound(sqrt(paradox/300),0.5,1.5) (chronomancer.lua:154, 183); info other.lua:118 calls it for 「时空法术强度」. Title pins paradox 300 -> pm=1, so the ladder equals the 法术强度 ladder."
+ },
+ {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 1,
+  "expr": [
+   "-",
+   0,
+   [
+    "*",
+    2,
+    [
+     "actor",
+     "意志"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/Actor.lua:5380",
+  "note": "getModifiedParadox (Actor.lua:5378) returns will_modifier = 2*(self:getWil() + (self:attr(\"paradox_reduce_anomalies\") or 0)); info prints it as 「意志修正数值：-%d」 (other.lua:127), so the value is -will_modifier. paradox_reduce_anomalies is an equipment/talent attribute the export does not set -> frozen at 0."
+ },
+ {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 2,
+  "expr": [
+   "max",
+   0,
+   [
+    "-",
+    [
+     "actor",
+     "paradox"
+    ],
+    [
+     "*",
+     2,
+     [
+      "actor",
+      "意志"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/Actor.lua:5382",
+  "note": "getModifiedParadox (Actor.lua:5378) returns modified_paradox = math.max(0, self:getParadox() - will_modifier + sustain_modifier); info prints it as 「修正后紊乱值」 (other.lua:129). will_modifier = 2*wil (paradox_reduce_anomalies -> 0), sustain_modifier = self:getMinParadox() = 0 because the export actor sustains nothing."
+ }
+]

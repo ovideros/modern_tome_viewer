@@ -18,6 +18,8 @@ export interface ScalingParamCore {
 export interface AcronymCore {
   className: string;
   axisLabel?: string | null;
+  /** Parameters that share the axis ladder and ride it in lockstep. */
+  axisLabels?: string[];
   displayed: number[];
   suffix: string;
   prefix?: string;
@@ -76,6 +78,8 @@ export function parseAcronyms(html: string, options?: { fit?: boolean }): Acrony
 export function fitCoefficients(acronym: AcronymCore): { base: number | null; max: number | null; mastery?: number };
 export function defaultSimParams(acronym: AcronymCore): SimParamsCore;
 export function simAtAxis(acronym: AcronymCore, sim: SimParamsCore, axisValue: number): SimParamsCore;
+/** Parameters carrying an element-wise copy of the axis ladder, axis included. */
+export function axisSiblings(acronym: { params?: ScalingParamCore[] }): ScalingParamCore[];
 export function axisLadder(acronym: AcronymCore): { label: string; values: number[] } | null;
 export function evaluateAcronym(acronym: AcronymCore, sim: SimParamsCore): number | null;
 export function formatValue(value: number | null | undefined, suffix: string): string;

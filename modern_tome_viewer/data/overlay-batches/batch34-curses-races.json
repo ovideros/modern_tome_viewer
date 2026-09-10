@@ -1,0 +1,135 @@
+[
+ {
+  "talent": "T_GESTURE_OF_POWER",
+  "acronym": 2,
+  "expr": [
+   "min",
+   100,
+   [
+    "max",
+    0,
+    [
+     "+",
+     [
+      "+",
+      [
+       "*",
+       0.3,
+       [
+        "-",
+        [
+         "actor",
+         "灵巧"
+        ],
+        10
+       ]
+      ],
+      [
+       "*",
+       0.3,
+       [
+        "-",
+        [
+         "actor",
+         "幸运"
+        ],
+        50
+       ]
+      ]
+     ],
+     1
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/interface/Combat.lua:1894",
+  "note": "gestures.lua:252 的 self:combatMindCrit()；combatMindCrit = util.bound(combat_mindcrit + (combat_generic_crit or 0) + (getCun()-10)*0.3 + (getLck()-50)*0.30 + 1 + add, 0, 100)。tooltip 的假角色未 knowTalent(T_GESTURE_OF_POWER)，故 add=getMindCritChange 分支不生效 =0；combat_mindcrit / combat_generic_crit 无标题输入，冻结为导出基准 0。标题 力量/灵巧/幸运/physical power 是同一条阶梯（10,25,50,75,100）同步推进，轴=力量，故 灵巧=幸运=轴值"
+ },
+ {
+  "talent": "T_GESTURE_OF_GUARDING",
+  "acronym": 2,
+  "expr": [
+   "statScale",
+   "cun",
+   0,
+   2.25
+  ],
+  "source": "tome-src-full/data/talents/cursed/gestures.lua:276",
+  "note": "getDeflects = self:combatStatScale(\"cun\", 0, 2.25)（canUseGestures(self) 在导出基准为真）。源码不取整，故导出保留小数（0.6/1.3/1.8/2.3 是 %0.1f 的显示读数，2.25→2.3）"
+ },
+ {
+  "talent": "T_DUCK_AND_DODGE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "/",
+    [
+     "actor",
+     "幸运"
+    ],
+    200
+   ],
+   [
+    "max",
+    0,
+    [
+     "+",
+     [
+      "*",
+      [
+       "-",
+       [
+        "actor",
+        "敏捷"
+       ],
+       10
+      ],
+      0.7
+     ],
+     [
+      "*",
+      [
+       "-",
+       [
+        "actor",
+        "幸运"
+       ],
+       50
+      ],
+      0.4
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/races.lua:608",
+  "note": "getDefense = self:getStat(\"lck\")/200*(self:combatDefenseBase() - (oldevasion and oldevasion.defense or 0))；combatDefenseBase(Combat.lua:1232) = max(0, combat_def + (dex-10)*0.7 + (lck-50)*0.4)*mult + add。导出基准下 combat_def=0（Actor.lua:162 默认 0）、mult=1（无轻甲专精）、add=0、无 EFF_EVASION 叠加，故只剩 dex/lck 两项；标题 幸运/敏捷 是同一条阶梯同步推进，轴=幸运"
+ },
+ {
+  "talent": "T_SHALOREN_SPEED",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatScale",
+    [
+     "max",
+     [
+      "actor",
+      "敏捷"
+     ],
+     [
+      "actor",
+      "魔力"
+     ]
+    ],
+    0.1,
+    10,
+    0.476,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/races.lua:173",
+  "note": "getSpeed = self:combatStatScale(math.max(self:getDex(), self:getMag()), 0.1, 0.476)；info 再 *100 显示成百分比。combatStatScale(stat,low,high) = combatScale(stat, low, 10, high, 100)，故展开成 combatScale(max(敏捷,魔力),0.1,10,0.476,100)——保留 max 而不是退化成 dex，这样两个属性各自的滑条都真的影响数值。标题 敏捷/魔力 是同一条阶梯同步推进。"
+ }
+]

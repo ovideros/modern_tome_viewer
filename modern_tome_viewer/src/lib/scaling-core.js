@@ -265,6 +265,7 @@ export function parseAcronyms(html, { fit = true } = {}) {
     const acronym = {
       className,
       axisLabel: axis ? axis.label : null,
+      axisLabels: axis ? axisSiblings({ params }).map((p) => p.label) : [],
       displayed: numbers,
       ...wrap,
       precision: Math.max(...[...inner.matchAll(NUM_RE)].map(m => (m[0].split('.')[1] || '').length)),
@@ -464,24 +465,53 @@ export function axisLadder(acronym) {
 
 /** Recompute one acronym. Returns null when its coefficients could not be fitted. */
 /**
+ * Parameters that ride the axis ladder together with the axis itself.
+ *
+ * The export writes a whole tooltip's parameter union into every acronym title,
+ * so a value rendered along 灵巧 can still carry 法术强度's ladder — and the two
+ * ladders are often *identical* (`10, 25, 50, 75, 100`). The engine renders one
+ * column per index and advances **every** laddered parameter at once, so such a
+ * parameter is not a second dimension: it is the same dimension under another
+ * name. Only exactly-equal ladders qualify; a genuinely different second ladder
+ * (魔力 `10…100` against 角色等级 `1…50`) still has no single axis.
+ */
+export function axisSiblings(acronym) {
+  const ladders = (acronym.params ?? []).filter((p) => Array.isArray(p.ladder) && p.ladder.length > 1);
+  if (!ladders.length) return [];
+  const [axis] = ladders;
+  return ladders.filter((p) => p.ladder.length === axis.ladder.length && p.ladder.every((v, i) => v === axis.ladder[i]));
+}
+
+/**
  * Substitute the axis value into a simulation for one ladder point.
  *
  * The axis parameter is the only thing the five displayed values vary, so every
- * other input stays at the value the export recorded.
+ * other input stays at the value the export recorded — but a sibling that shares
+ * the axis ladder rides along, because the export advanced them in lockstep.
  */
 export function simAtAxis(acronym, sim, axisValue) {
   const label = acronym.axisLabel;
   if (!label) return { ...sim, talentLevel: axisValue };
-  if (label === '技能等级') return { ...sim, talentLevel: axisValue };
-  if (label === '角色等级') return { ...sim, characterLevel: axisValue };
+  const riders = acronym.axisLabels?.length ? acronym.axisLabels : [label];
 
-  // Power stats are first-class inputs of the damage formulas, so set the field
-  // the formulas read rather than only the generic stat map.
-  const next = { ...sim, stats: { ...sim.stats, [label]: axisValue } };
-  if (POWER_LABEL_LIST.includes(label)) {
-    next.powers = { ...sim.powers, [label]: axisValue };
-    next.power = axisValue;
+  const next = { ...sim, stats: { ...sim.stats } };
+  let powers = sim.powers;
+  let touchedPowers = false;
+  for (const rider of riders) {
+    if (rider === '技能等级') next.talentLevel = axisValue;
+    else if (rider === '角色等级') next.characterLevel = axisValue;
+    else {
+      next.stats[rider] = axisValue;
+      // Power stats are first-class inputs of the damage formulas, so set the
+      // field the formulas read rather than only the generic stat map.
+      if (POWER_LABEL_LIST.includes(rider)) {
+        powers = { ...powers, [rider]: axisValue };
+        touchedPowers = true;
+      }
+    }
   }
+  if (POWER_LABEL_LIST.includes(label)) next.power = axisValue;
+  if (touchedPowers) next.powers = powers;
   return next;
 }
 

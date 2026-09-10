@@ -1,4 +1,4 @@
-import { defaultSimParams, simAtAxis, evaluateAcronym } from '../src/lib/scaling-core.js';
+import { defaultSimParams, simAtAxis, evaluateAcronym, axisSiblings } from '../src/lib/scaling-core.js';
 import { evaluateLuaExpression, formulaCalls, formulaConditions, formulaDependencies, formulaActorInputs, formulaTalentRefs } from '../src/lib/lua-formula.js';
 
 /** Decimal places a printed number actually carries. */
@@ -63,9 +63,17 @@ export function ladderAxis(acronym) {
   // `axisLabel` is parsed once, so keep it consistent with the live parameter.
   acronym.axisLabel = axis.label;
   if (axis.ladder.length !== acronym.displayed.length || axis.ladder.length < 2) return null;
-  // Every other input must be a single value we can pin.
+  // A title may carry several parameter ladders because the export writes a
+  // whole tooltip's parameter union into every acronym. When those ladders are
+  // element-wise identical they are the same dimension under different names —
+  // the engine advanced them in lockstep — so they ride the axis together
+  // instead of blocking it. A genuinely different second ladder still has no
+  // single axis to vary.
+  const siblings = axisSiblings(acronym);
   const others = acronym.params.filter((p) => p !== axis);
-  if (others.some((p) => p.ladder.length > 1)) return null;
+  if (others.some((p) => p.ladder.length > 1 && !siblings.includes(p))) return null;
+  // Every other input must be a single value we can pin.
+  acronym.axisLabels = siblings.map((p) => p.label);
   return axis;
 }
 
@@ -101,6 +109,10 @@ export function matchLuaFormula(acronym, record) {
       const predicted = axis.ladder.map((value) =>
         evaluateLuaExpression(bound.expr, { ...simAtAxis(acronym, sim, value), flags }));
       if (!predicted.every((v, i) => Number.isFinite(v) && matchesDisplayed(v, acronym.displayed[i], precision))) continue;
+      // One specifier printed the whole ladder, so every integer in it must read
+      // back the same way; without this a formula could truncate one point and
+      // round the next.
+      if (!readingIsConsistent(predicted, acronym.displayed)) continue;
       const allOff = Object.values(flags).every((v) => v === false);
       if (!accepted || (allOff && !Object.values(accepted.flags).every((v) => v === false))) accepted = { flags, predicted };
     }
@@ -214,6 +226,48 @@ export function inputsCovered(declared, consumed) {
 }
 
 /**
+ * Every way one `tformat` call can turn a value into the integer it prints.
+ *
+ * `trunc` is Lua's `%d`, `round` is `%.0f`, and the staged pair is the export's
+ * second step: it prints the integer part of a value the talent's own specifier
+ * had already rounded (`%0.1f` of 46.4835 is "46.5" and prints as 47).
+ */
+const CONVENTION_MODES = {
+  trunc: (v) => Math.trunc(v),
+  round: (v) => Math.round(v),
+  'round1>round': (v) => Math.round(roundTo(v, 1)),
+  'round1>trunc': (v) => Math.trunc(roundTo(v, 1)),
+  'round2>round': (v) => Math.round(roundTo(v, 2)),
+  'round2>trunc': (v) => Math.trunc(roundTo(v, 2)),
+};
+
+/**
+ * Is the whole ladder readable under **one** integer convention?
+ *
+ * A `tformat` call prints every one of its values through the same specifier, so
+ * the five points of one acronym cannot mix `%d` with `%.0f`: a ladder whose
+ * second point only rounds and whose fifth point only truncates was not produced
+ * by any real export. Comparing point by point accepts such ladders, so the
+ * consistency has to be checked for the ladder as a whole. Decimal points are
+ * exact readings and pin themselves, so only the integer ones are at stake.
+ */
+export function readingIsConsistent(predicted, displayed) {
+  const integer = displayed
+    .map((value, index) => ({ displayed: value, predicted: predicted[index] }))
+    .filter((point) => Number.isInteger(point.displayed) && Number.isFinite(point.predicted));
+  if (integer.length < 2) return true;
+  // A prediction that already *is* the printed integer carries no evidence:
+  // every convention reads it the same way, and the last bit of the arithmetic
+  // must not decide the question (混沌之球 prints -24 for a value landing 4e-15
+  // below -25, and -9 for one landing 2e-15 above -9).
+  const discriminating = integer.filter(
+    (point) => Math.abs(point.predicted - point.displayed) > 1e-9 * Math.max(1, Math.abs(point.displayed)));
+  if (discriminating.length < 2) return true;
+  return Object.values(CONVENTION_MODES).some((read) =>
+    discriminating.every((point) => read(point.predicted) === point.displayed));
+}
+
+/**
  * Evaluate a hand-written expression against one exported rendering.
  *
  * The workbench and the build share this so an overlay entry is judged the same
@@ -245,12 +299,18 @@ export function checkHandExpression(ref, expr, conditions = null) {
       ok: Number.isFinite(predicted) && matchesDisplayed(predicted, displayed, ref.precision ?? 0),
     };
   });
-  return { axis: axis.label, ladder: axis.ladder, points, ok: points.every((point) => point.ok) };
+  const ok = points.every((point) => point.ok)
+    && readingIsConsistent(points.map((point) => point.predicted), ref.displayed);
+  return { axis: axis.label, ladder: axis.ladder, points, ok };
 }
 
 /** Does this title parameter name an input the formula must consume? */
 function isDeclaredInput(param) {
   if (['power', 'stat'].includes(param.kind)) return true;
+  // `other` is the parser's bucket for labels it cannot type — "physical save",
+  // "精准", "shield block 200". A formula may read them through `actor`, and the
+  // title does pin them, so they count as declared.
+  if (param.kind === 'other') return true;
   if (param.label === '技能等级' || param.label === '技能系数') return false;
   return /等级/.test(param.label);
 }

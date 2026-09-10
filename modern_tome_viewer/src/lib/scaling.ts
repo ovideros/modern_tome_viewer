@@ -7,6 +7,7 @@
 
 import {
   axisLadder as coreAxisLadder,
+  axisSiblings as coreAxisSiblings,
   combatTalentScale,
   defaultSimParams as coreDefaultSimParams,
   describeParams,
@@ -56,6 +57,8 @@ export interface Acronym {
   className: string;
   /** Label of the parameter the displayed ladder varies; null when none. */
   axisLabel?: string | null;
+  /** Parameters that share the axis ladder and ride it in lockstep. */
+  axisLabels?: string[];
   displayed: number[];
   suffix: string;
   /** Text the export wraps around the numbers, e.g. "+" before "+16". */
@@ -128,6 +131,8 @@ export const parseAcronyms = coreParseAcronyms as (html: string) => Acronym[];
 export const defaultSimParams = coreDefaultSimParams as (acronym: Acronym) => SimParams;
 export const simAtAxis = coreSimAtAxis as (acronym: Acronym, sim: SimParams, axisValue: number) => SimParams;
 export const axisLadder = coreAxisLadder as (acronym: Acronym) => { label: string; values: number[] } | null;
+/** Parameters carrying an element-wise copy of the axis ladder, axis included. */
+export const axisSiblings = coreAxisSiblings as (acronym: { params?: ScalingParam[] }) => ScalingParam[];
 
 /** One simulator input a value reads; `key` addresses it inside SimParams. */
 export interface ValueInput {

@@ -7,6 +7,7 @@
  */
 
 import type { Acronym, ScalingParam } from './scaling';
+import { axisSiblings } from './scaling';
 import type {
   BuildManifest,
   ClassMeta,
@@ -82,6 +83,30 @@ function expandAcronym(raw: unknown): Acronym | null {
   const wire = raw as WireAcronym;
   if (!wire.f) return null;
   const { c: className, d: displayed, s: suffix, pre: prefix, tail, f: family, b: base, m: max, t: mastery, p: params } = wire;
+  const expanded: ScalingParam[] = Array.isArray(params)
+    ? params.map((entry) => {
+        const [label, kind, value, ladder] = entry as [string, ScalingParam['kind'], number | null, number[]];
+        return {
+          label,
+          kind,
+          value: value ?? null,
+          ladder: Array.isArray(ladder) ? ladder : [],
+          editable: kind === 'coefficient' || kind === 'power' || kind === 'stat',
+          ...(kind === 'coefficient'
+            ? { min: 0.1, max: 5, step: 0.1 }
+            : kind === 'power'
+              ? { min: 0, max: 500, step: 1 }
+              : kind === 'stat'
+                ? { min: 0, max: 1000, step: 1 }
+                : {}),
+        };
+      })
+    : [];
+  // The wire format drops `axisLabel` and lets the reader re-derive it. A title
+  // can carry several identical parameter ladders (the export writes a whole
+  // tooltip's parameter union into each acronym), and those ride the axis
+  // together, so record the whole group rather than just the first.
+  const riders = axisSiblings({ params: expanded });
   return {
     className,
     displayed: Array.isArray(displayed) ? displayed : [],
@@ -93,25 +118,8 @@ function expandAcronym(raw: unknown): Acronym | null {
     max: max ?? null,
     mastery: typeof mastery === 'number' ? mastery : 1,
     ...(wire.l ? { lua: wire.l } : {}),
-    params: Array.isArray(params)
-      ? params.map((entry) => {
-          const [label, kind, value, ladder] = entry as [string, ScalingParam['kind'], number | null, number[]];
-          return {
-            label,
-            kind,
-            value: value ?? null,
-            ladder: Array.isArray(ladder) ? ladder : [],
-            editable: kind === 'coefficient' || kind === 'power' || kind === 'stat',
-            ...(kind === 'coefficient'
-              ? { min: 0.1, max: 5, step: 0.1 }
-              : kind === 'power'
-                ? { min: 0, max: 500, step: 1 }
-                : kind === 'stat'
-                  ? { min: 0, max: 1000, step: 1 }
-                  : {}),
-          };
-        })
-      : [],
+    ...(riders.length ? { axisLabel: riders[0].label, axisLabels: riders.map((p) => p.label) } : {}),
+    params: expanded,
   };
 }
 

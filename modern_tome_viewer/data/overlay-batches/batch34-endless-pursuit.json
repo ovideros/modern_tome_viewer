@@ -1,0 +1,23 @@
+[
+  {
+    "talent": "T_RELENTLESS_PURSUIT",
+    "acronym": 0,
+    "expr": ["floor", ["max", 2, ["/", ["actor", "spell save"], 5]]],
+    "source": "tome-src-full/data/talents/misc/misc.lua:358",
+    "note": "getReduction(self,t,e) = floor(max(2, save_fn(self,true)/5))，save_fn = self.save_for_effects[e.type]（Actor.lua:7632 把 magical→combatSpellResist、physical→combatPhysicalResist、mental→combatMentalResist，就是角色面板上的 spell/physical/mental save）。info 按行渲染「魔法/物理/精神效果持续时间减少」，本条是魔法 → spell save。标题里三条豁免阶梯数值完全相同（10,25,50,75,100），15 点判分无法区分哪行读哪个豁免，映射取自句子。"
+  },
+  {
+    "talent": "T_RELENTLESS_PURSUIT",
+    "acronym": 1,
+    "expr": ["floor", ["max", 2, ["/", ["actor", "physical save"], 5]]],
+    "source": "tome-src-full/data/talents/misc/misc.lua:358",
+    "note": "同上；本条是「物理效果持续时间减少」→ physical save（combatPhysicalResist）。"
+  },
+  {
+    "talent": "T_RELENTLESS_PURSUIT",
+    "acronym": 2,
+    "expr": ["floor", ["max", 2, ["/", ["actor", "mental save"], 5]]],
+    "source": "tome-src-full/data/talents/misc/misc.lua:358",
+    "note": "同上；本条是「精神效果持续时间减少」→ mental save（combatMentalResist）。"
+  }
+]

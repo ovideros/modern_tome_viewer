@@ -1,0 +1,36 @@
+[
+ {
+  "talent": "T_DUAL_WEAPON_DEFENSE",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "actor",
+    "灵巧"
+   ],
+   1,
+   10,
+   2.25,
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/dualweapon.lua:70",
+  "note": "getDeflects = function(self, t, fake) if fake or self:hasDualWeapon() then return self:combatStatScale(\"cun\", 1, 2.25) else return 0 end end; info 第2个参数 %0.1f = t.getDeflects(self, t, true) -> combatStatScale(\"cun\",1,2.25) 展开为 combatScale(cun, 1, 10, 2.25, 100)"
+ },
+ {
+  "talent": "T_DUAL_WEAPON_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "actor",
+    "灵巧"
+   ],
+   2,
+   10,
+   3,
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/duelist.lua:48",
+  "note": "getDeflects = function(self, t, fake) if fake or self:hasDualWeapon() then return self:combatStatScale(\"cun\", 2, 3) + (not fake and self:hasEffect(self.EFF_FEINT) and 1 or 0) else return 0 end end; info 第2个参数 %0.1f = t.getDeflects(self, t, true)，fake=true 故无 FEINT 加成 -> combatStatScale(\"cun\",2,3) 展开为 combatScale(cun, 2, 10, 3, 100)"
+ }
+]

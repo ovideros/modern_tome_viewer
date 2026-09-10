@@ -8434,6 +8434,23 @@
   "note": "getPower = combatLimit(combatTalentSpellDamage(t,10,50),1,0,0,0.329,32.9)；info 用 power*100，文本是 'prevent death until -%d%% life'，导出值本身为负"
  },
  {
+  "talent": "T_DUAL_WEAPON_DEFENSE",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "actor",
+    "灵巧"
+   ],
+   1,
+   10,
+   2.25,
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/dualweapon.lua:70",
+  "note": "getDeflects = function(self, t, fake) if fake or self:hasDualWeapon() then return self:combatStatScale(\"cun\", 1, 2.25) else return 0 end end; info 第2个参数 %0.1f = t.getDeflects(self, t, true) -> combatStatScale(\"cun\",1,2.25) 展开为 combatScale(cun, 1, 10, 2.25, 100)"
+ },
+ {
   "talent": "T_DUAL_WEAPON_MASTERY",
   "acronym": 0,
   "expr": [
@@ -8452,6 +8469,23 @@
   ],
   "source": "tome-src-full/data/talents/techniques/duelist.lua:60",
   "note": "info: 100 - getoffmult*100，getoffmult = combatTalentLimit(t,1,0.6,0.85)"
+ },
+ {
+  "talent": "T_DUAL_WEAPON_MASTERY",
+  "acronym": 1,
+  "expr": [
+   "combatScale",
+   [
+    "actor",
+    "灵巧"
+   ],
+   2,
+   10,
+   3,
+   100
+  ],
+  "source": "tome-src-full/data/talents/techniques/duelist.lua:48",
+  "note": "getDeflects = function(self, t, fake) if fake or self:hasDualWeapon() then return self:combatStatScale(\"cun\", 2, 3) + (not fake and self:hasEffect(self.EFF_FEINT) and 1 or 0) else return 0 end end; info 第2个参数 %0.1f = t.getDeflects(self, t, true)，fake=true 故无 FEINT 加成 -> combatStatScale(\"cun\",2,3) 展开为 combatScale(cun, 2, 10, 3, 100)"
  },
  {
   "talent": "T_DUAL_WEAPON_MASTERY",
@@ -8498,6 +8532,54 @@
   ],
   "source": "tome-src-full/data/talents/misc/races.lua:604",
   "note": "getThreshold*100 = max(10, 15 - getTalentLevelRaw(t))；用原始等级（三套系数下相同）"
+ },
+ {
+  "talent": "T_DUCK_AND_DODGE",
+  "acronym": 1,
+  "expr": [
+   "*",
+   [
+    "/",
+    [
+     "actor",
+     "幸运"
+    ],
+    200
+   ],
+   [
+    "max",
+    0,
+    [
+     "+",
+     [
+      "*",
+      [
+       "-",
+       [
+        "actor",
+        "敏捷"
+       ],
+       10
+      ],
+      0.7
+     ],
+     [
+      "*",
+      [
+       "-",
+       [
+        "actor",
+        "幸运"
+       ],
+       50
+      ],
+      0.4
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/races.lua:608",
+  "note": "getDefense = self:getStat(\"lck\")/200*(self:combatDefenseBase() - (oldevasion and oldevasion.defense or 0))；combatDefenseBase(Combat.lua:1232) = max(0, combat_def + (dex-10)*0.7 + (lck-50)*0.4)*mult + add。导出基准下 combat_def=0（Actor.lua:162 默认 0）、mult=1（无轻甲专精）、add=0、无 EFF_EVASION 叠加，故只剩 dex/lck 两项；标题 幸运/敏捷 是同一条阶梯同步推进，轴=幸运"
  },
  {
   "talent": "T_DWARF_RESILIENCE",
@@ -10745,6 +10827,18 @@
  },
  {
   "talent": "T_GESTURE_OF_GUARDING",
+  "acronym": 2,
+  "expr": [
+   "statScale",
+   "cun",
+   0,
+   2.25
+  ],
+  "source": "tome-src-full/data/talents/cursed/gestures.lua:276",
+  "note": "getDeflects = self:combatStatScale(\"cun\", 0, 2.25)（canUseGestures(self) 在导出基准为真）。源码不取整，故导出保留小数（0.6/1.3/1.8/2.3 是 %0.1f 的显示读数，2.25→2.3）"
+ },
+ {
+  "talent": "T_GESTURE_OF_GUARDING",
   "acronym": 3,
   "expr": [
    "talentLimit",
@@ -10818,6 +10912,51 @@
   ],
   "source": "tome-src-full/data/talents/cursed/gestures.lua:245",
   "note": "getMindCritChange = floor(min(14, tl*1.2))"
+ },
+ {
+  "talent": "T_GESTURE_OF_POWER",
+  "acronym": 2,
+  "expr": [
+   "min",
+   100,
+   [
+    "max",
+    0,
+    [
+     "+",
+     [
+      "+",
+      [
+       "*",
+       0.3,
+       [
+        "-",
+        [
+         "actor",
+         "灵巧"
+        ],
+        10
+       ]
+      ],
+      [
+       "*",
+       0.3,
+       [
+        "-",
+        [
+         "actor",
+         "幸运"
+        ],
+        50
+       ]
+      ]
+     ],
+     1
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/interface/Combat.lua:1894",
+  "note": "gestures.lua:252 的 self:combatMindCrit()；combatMindCrit = util.bound(combat_mindcrit + (combat_generic_crit or 0) + (getCun()-10)*0.3 + (getLck()-50)*0.30 + 1 + add, 0, 100)。tooltip 的假角色未 knowTalent(T_GESTURE_OF_POWER)，故 add=getMindCritChange 分支不生效 =0；combat_mindcrit / combat_generic_crit 无标题输入，冻结为导出基准 0。标题 力量/灵巧/幸运/physical power 是同一条阶梯（10,25,50,75,100）同步推进，轴=力量，故 灵巧=幸运=轴值"
  },
  {
   "talent": "T_GLOOM",
@@ -14848,18 +14987,6 @@
   "note": "getDamage = combatTalentLimit(t,100,10,50)；导出高锚点为 45（版本漂移 -5）"
  },
  {
-  "talent": "T_MECHARACHNID_PILOTING",
-  "acronym": 2,
-  "expr": [
-   "talentLimit",
-   70,
-   10,
-   34.5
-  ],
-  "source": "dlc-src/orcs/tome-orcs/data/talents/steam/mecharachnid.lua:676",
-  "note": "getResist = combatTalentLimit(t,70,10,40)；导出高锚点为 35，工具闭式解在锚点恰好命中 35，故取 34.5"
- },
- {
   "talent": "T_MEDIC_TURRET",
   "acronym": 0,
   "expr": [
@@ -17988,6 +18115,69 @@
   "note": "info tformat(..., 12 + self:getTalentLevel(t) * 8)"
  },
  {
+  "talent": "T_RELENTLESS_PURSUIT",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "max",
+    2,
+    [
+     "/",
+     [
+      "actor",
+      "spell save"
+     ],
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/misc.lua:358",
+  "note": "getReduction(self,t,e) = floor(max(2, save_fn(self,true)/5))，save_fn = self.save_for_effects[e.type]（Actor.lua:7632 把 magical→combatSpellResist、physical→combatPhysicalResist、mental→combatMentalResist，就是角色面板上的 spell/physical/mental save）。info 按行渲染「魔法/物理/精神效果持续时间减少」，本条是魔法 → spell save。标题里三条豁免阶梯数值完全相同（10,25,50,75,100），15 点判分无法区分哪行读哪个豁免，映射取自句子。"
+ },
+ {
+  "talent": "T_RELENTLESS_PURSUIT",
+  "acronym": 1,
+  "expr": [
+   "floor",
+   [
+    "max",
+    2,
+    [
+     "/",
+     [
+      "actor",
+      "physical save"
+     ],
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/misc.lua:358",
+  "note": "同上；本条是「物理效果持续时间减少」→ physical save（combatPhysicalResist）。"
+ },
+ {
+  "talent": "T_RELENTLESS_PURSUIT",
+  "acronym": 2,
+  "expr": [
+   "floor",
+   [
+    "max",
+    2,
+    [
+     "/",
+     [
+      "actor",
+      "mental save"
+     ],
+     5
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/misc.lua:358",
+  "note": "同上；本条是「精神效果持续时间减少」→ mental save（combatMentalResist）。"
+ },
+ {
   "talent": "T_REPEL",
   "acronym": 0,
   "expr": [
@@ -19725,6 +19915,34 @@
   "note": "getDuration = getTalentLevel(t) >= 3 and 4 or 3 (floor(tl/3) clamps to 0/1)"
  },
  {
+  "talent": "T_SHALOREN_SPEED",
+  "acronym": 0,
+  "expr": [
+   "*",
+   100,
+   [
+    "combatScale",
+    [
+     "max",
+     [
+      "actor",
+      "敏捷"
+     ],
+     [
+      "actor",
+      "魔力"
+     ]
+    ],
+    0.1,
+    10,
+    0.476,
+    100
+   ]
+  ],
+  "source": "tome-src-full/data/talents/misc/races.lua:173",
+  "note": "getSpeed = self:combatStatScale(math.max(self:getDex(), self:getMag()), 0.1, 0.476)；info 再 *100 显示成百分比。combatStatScale(stat,low,high) = combatScale(stat, low, 10, high, 100)，故展开成 combatScale(max(敏捷,魔力),0.1,10,0.476,100)——保留 max 而不是退化成 dex，这样两个属性各自的滑条都真的影响数值。标题 敏捷/魔力 是同一条阶梯同步推进。"
+ },
+ {
   "talent": "T_SHARED_INSANITY",
   "acronym": 1,
   "expr": [
@@ -20782,6 +21000,116 @@
   ],
   "source": "tome-src-full/data/talents/techniques/skirmisher-slings.lua:24",
   "note": "100*getPercentInc = 100*sqrt(tl/5)/1.5"
+ },
+ {
+  "talent": "T_SKULLCRACKER",
+  "acronym": 1,
+  "expr": [
+   "*",
+   50,
+   [
+    "-",
+    1,
+    [
+     "exp",
+     [
+      "+",
+      [
+       "*",
+       [
+        "^",
+        [
+         "actor",
+         "敏捷"
+        ],
+        0.75
+       ],
+       [
+        "/",
+        [
+         "log",
+         [
+          "/",
+          [
+           "-",
+           45,
+           50
+          ],
+          [
+           "-",
+           25,
+           50
+          ]
+         ]
+        ],
+        [
+         "-",
+         31.623,
+         5.6234
+        ]
+       ]
+      ],
+      [
+       "/",
+       [
+        "-",
+        0,
+        [
+         "-",
+         [
+          "*",
+          [
+           "-",
+           31.623,
+           5.6234
+          ],
+          [
+           "log",
+           [
+            "-",
+            1,
+            [
+             "/",
+             45,
+             50
+            ]
+           ]
+          ]
+         ],
+         [
+          "*",
+          31.623,
+          [
+           "log",
+           [
+            "/",
+            [
+             "-",
+             45,
+             50
+            ],
+            [
+             "-",
+             25,
+             50
+            ]
+           ]
+          ]
+         ]
+        ]
+       ],
+       [
+        "-",
+        5.6234,
+        31.623
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/thuggery.lua:34",
+  "note": "getConfusion = self:combatStatLimit(\"dex\", 50, 25, 45)（Combat.lua:1631）= limit*(1-exp(stat^0.75*a+b))，a=log((high-limit)/(low-limit))/(x_high-x_low)，b 同 Combat.lua:1638。这里必须照抄源码里的字面量 x_low=5.6234 / x_high=31.623（不是精确的 10^0.75/100^0.75）：正是这点舍入让敏捷 100 时算得 44.9999 而不是 45，%d 截断成 44；用 combatLimit 节点（内部用精确幂）会得到 45.0000 而 FAIL。"
  },
  {
   "talent": "T_SLAM",
@@ -23090,6 +23418,66 @@
   "note": "cdred(self,t,20) = floor(20*combatTalentLimit(t,0.8,0.1,0.5))，同上手工展开"
  },
  {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 0,
+  "expr": [
+   "power",
+   "法术强度",
+   [
+    "pmod",
+    [
+     "actor",
+     "paradox"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/chronomancy/chronomancer.lua:173",
+  "note": "getParadoxSpellpower(self,t) = combatSpellpower(mod*pm) with mod=1 and pm=getParadoxModifier(self)=bound(sqrt(paradox/300),0.5,1.5) (chronomancer.lua:154, 183); info other.lua:118 calls it for 「时空法术强度」. Title pins paradox 300 -> pm=1, so the ladder equals the 法术强度 ladder."
+ },
+ {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 1,
+  "expr": [
+   "-",
+   0,
+   [
+    "*",
+    2,
+    [
+     "actor",
+     "意志"
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/Actor.lua:5380",
+  "note": "getModifiedParadox (Actor.lua:5378) returns will_modifier = 2*(self:getWil() + (self:attr(\"paradox_reduce_anomalies\") or 0)); info prints it as 「意志修正数值：-%d」 (other.lua:127), so the value is -will_modifier. paradox_reduce_anomalies is an equipment/talent attribute the export does not set -> frozen at 0."
+ },
+ {
+  "talent": "T_SPACETIME_TUNING",
+  "acronym": 2,
+  "expr": [
+   "max",
+   0,
+   [
+    "-",
+    [
+     "actor",
+     "paradox"
+    ],
+    [
+     "*",
+     2,
+     [
+      "actor",
+      "意志"
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/mod/class/Actor.lua:5382",
+  "note": "getModifiedParadox (Actor.lua:5378) returns modified_paradox = math.max(0, self:getParadox() - will_modifier + sustain_modifier); info prints it as 「修正后紊乱值」 (other.lua:129). will_modifier = 2*wil (paradox_reduce_anomalies -> 0), sustain_modifier = self:getMinParadox() = 0 because the export actor sustains nothing."
+ },
+ {
   "talent": "T_SPATIAL_TETHER",
   "acronym": 0,
   "expr": [
@@ -24890,6 +25278,40 @@
   ],
   "source": "tome-src-full/data/talents/chronomancy/guardian.lua:26",
   "note": "info: 100*getPercentInc，getPercentInc = sqrt(getTalentLevel(t)/5)/1.5"
+ },
+ {
+  "talent": "T_STRIKING_STANCE",
+  "acronym": 0,
+  "expr": [
+   "floor",
+   [
+    "/",
+    [
+     "actor",
+     "敏捷"
+    ],
+    4
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:40",
+  "note": "getAttack = self:getDex(25, true) = 敏捷*25/100，info 用 %d 截断：2.5/6.25/12.5/18.75/25 → 2/6/12/18/25。"
+ },
+ {
+  "talent": "T_STRIKING_STANCE",
+  "acronym": 2,
+  "expr": [
+   "min",
+   35,
+   [
+    "statScale",
+    "str",
+    1,
+    30,
+    0.75
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/pugilism.lua:46",
+  "note": "getFlatReduction = min(35, self:combatStatScale(\"str\", 1, 30, 0.75))（不满足 knowTalent(T_REFLEX_DEFENSE) 乘数 → 1）。轴是力量，故 statScale 读的正是轴本身；min 的 35 在这条阶梯上不生效（力量 100 时恰为 30）。"
  },
  {
   "talent": "T_SUDDEN_GROWTH",
@@ -26972,6 +27394,373 @@
   ],
   "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:127",
   "note": "range = floor(combatTalentLimit(t,10,4,7))"
+ },
+ {
+  "talent": "T_THROWING_KNIVES",
+  "acronym": 2,
+  "expr": [
+   "^",
+   [
+    "*",
+    0.3,
+    [
+     "*",
+     [
+      "+",
+      [
+       "power",
+       "physical power"
+      ],
+      [
+       "floor",
+       [
+        "min",
+        [
+         "+",
+         [
+          "*",
+          0.7,
+          [
+           "actor",
+           "敏捷"
+          ]
+         ],
+         [
+          "*",
+          0.5,
+          [
+           "actor",
+           "力量"
+          ]
+         ]
+        ],
+        [
+         "+",
+         45,
+         [
+          "*",
+          0.75,
+          [
+           "-",
+           [
+            "+",
+            [
+             "*",
+             0.7,
+             [
+              "actor",
+              "敏捷"
+             ]
+            ],
+            [
+             "*",
+             0.5,
+             [
+              "actor",
+              "力量"
+             ]
+            ]
+           ],
+           45
+          ]
+         ]
+        ],
+        [
+         "+",
+         90,
+         [
+          "*",
+          0.6,
+          [
+           "-",
+           [
+            "+",
+            [
+             "*",
+             0.7,
+             [
+              "actor",
+              "敏捷"
+             ]
+            ],
+            [
+             "*",
+             0.5,
+             [
+              "actor",
+              "力量"
+             ]
+            ]
+           ],
+           105
+          ]
+         ]
+        ],
+        [
+         "+",
+         135,
+         [
+          "*",
+          0.5,
+          [
+           "-",
+           [
+            "+",
+            [
+             "*",
+             0.7,
+             [
+              "actor",
+              "敏捷"
+             ]
+            ],
+            [
+             "*",
+             0.5,
+             [
+              "actor",
+              "力量"
+             ]
+            ]
+           ],
+           180
+          ]
+         ]
+        ]
+       ]
+      ]
+     ],
+     [
+      "+",
+      1,
+      [
+       "*",
+       0.5,
+       [
+        "-",
+        [
+         "sqrt",
+         0.1
+        ],
+        1
+       ]
+      ]
+     ]
+    ]
+   ],
+   1.04
+  ],
+  "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:174",
+  "note": "knivesInfo: dmg = self:combatDamage(combat)（Combat.lua:1687）= rescaleDamage(0.3*(phys + statmod) * power * talented_mod)。phys=combatPhysicalpower→标题输入的 physical power；statmod=rescaleCombatStats(0.7*敏捷+0.5*力量, 45, 1/3)（Combat.lua:1477 凸包取 min，本式照抄前三段，末尾 floor）。导出用的假角色不认识 T_THROWING_KNIVES，故 knives.dam=0 → combatDamagePower=(sqrt(max(0,1)/10)-1)*0.5+1=0.6581138830084189，talented_mod=1。"
+ },
+ {
+  "talent": "T_THROWING_KNIVES",
+  "acronym": 3,
+  "expr": [
+   "*",
+   1.4,
+   [
+    "^",
+    [
+     "*",
+     0.3,
+     [
+      "*",
+      [
+       "+",
+       [
+        "power",
+        "physical power"
+       ],
+       [
+        "floor",
+        [
+         "min",
+         [
+          "+",
+          [
+           "*",
+           0.7,
+           [
+            "actor",
+            "敏捷"
+           ]
+          ],
+          [
+           "*",
+           0.5,
+           [
+            "actor",
+            "力量"
+           ]
+          ]
+         ],
+         [
+          "+",
+          45,
+          [
+           "*",
+           0.75,
+           [
+            "-",
+            [
+             "+",
+             [
+              "*",
+              0.7,
+              [
+               "actor",
+               "敏捷"
+              ]
+             ],
+             [
+              "*",
+              0.5,
+              [
+               "actor",
+               "力量"
+              ]
+             ]
+            ],
+            45
+           ]
+          ]
+         ],
+         [
+          "+",
+          90,
+          [
+           "*",
+           0.6,
+           [
+            "-",
+            [
+             "+",
+             [
+              "*",
+              0.7,
+              [
+               "actor",
+               "敏捷"
+              ]
+             ],
+             [
+              "*",
+              0.5,
+              [
+               "actor",
+               "力量"
+              ]
+             ]
+            ],
+            105
+           ]
+          ]
+         ],
+         [
+          "+",
+          135,
+          [
+           "*",
+           0.5,
+           [
+            "-",
+            [
+             "+",
+             [
+              "*",
+              0.7,
+              [
+               "actor",
+               "敏捷"
+              ]
+             ],
+             [
+              "*",
+              0.5,
+              [
+               "actor",
+               "力量"
+              ]
+             ]
+            ],
+            180
+           ]
+          ]
+         ]
+        ]
+       ]
+      ],
+      [
+       "+",
+       1,
+       [
+        "*",
+        0.5,
+        [
+         "-",
+         [
+          "sqrt",
+          0.1
+         ],
+         1
+        ]
+       ]
+      ]
+     ]
+    ],
+    1.04
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:203",
+  "note": "knivesInfo: weapon_range = knives.dam * knives.damrange，knives() 里 damrange = 1.4（第 29 行），即上一条同式再乘 1.4。"
+ },
+ {
+  "talent": "T_THROWING_KNIVES",
+  "acronym": 4,
+  "expr": [
+   "actor",
+   "精准"
+  ],
+  "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:172",
+  "note": "knivesInfo: atk = self:combatAttack(combat)（Combat.lua:1374，开头即 `if self.combat_precomputed_accuracy then return self.combat_precomputed_accuracy end`）。导出的假角色把命中/精准直接预置成标题里的『精准』阶梯（10,25,50,75,100），所以该值就是这个输入本身。"
+ },
+ {
+  "talent": "T_THROWING_KNIVES",
+  "acronym": 5,
+  "expr": [
+   "max",
+   0,
+   [
+    "+",
+    [
+     "*",
+     0.3,
+     [
+      "-",
+      [
+       "actor",
+       "灵巧"
+      ],
+      10
+     ]
+    ],
+    [
+     "*",
+     0.3,
+     [
+      "-",
+      [
+       "actor",
+       "幸运"
+      ],
+      50
+     ]
+    ]
+   ]
+  ],
+  "source": "tome-src-full/data/talents/techniques/throwing-knives.lua:177",
+  "note": "knivesInfo: crit = self:combatCrit(combat)（Combat.lua:1445）= max(0, combat_physcrit + generic + (灵巧-10)*0.3 + (幸运-50)*0.30 + (weapon.physcrit or 1) + addcrit)。假角色不认识 T_THROWING_KNIVES，故 combat.physcrit=0（Lua 里 0 为真，`0 or 1` 仍是 0），其余加成 0。"
  },
  {
   "talent": "T_THUNDERSTORM",

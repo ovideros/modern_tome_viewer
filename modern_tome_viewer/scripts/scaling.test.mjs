@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { tokenizeLua, extractTalents, buildLuaIndex } from './extract-lua-coefficients.mjs';
 import { parseAcronyms, defaultSimParams, evaluateAcronym, talentPowerDamage, fitCoefficients, simAtAxis, formatAcronymValue, valueInputs, inputValue, exportCondition, rawCombatStat, rescaleCombatStat, paradoxModifier } from '../src/lib/scaling-core.js';
 import { evaluateLuaExpression } from '../src/lib/lua-formula.js';
-import { matchLuaFormula, matchesDisplayed, ladderAxis, resolveIntegerRounding, integerRounding } from './lua-scaling.mjs';
+import { matchLuaFormula, matchesDisplayed, ladderAxis, declaredInputs, readingIsConsistent, resolveIntegerRounding, integerRounding } from './lua-scaling.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const oracle=JSON.parse(fs.readFileSync(path.join(root,'scripts/fixtures/lua-oracle.json')));
@@ -144,6 +144,53 @@ test('the ladder axis is read from the title, not assumed to be talent level',()
   relabelled.params[0].label='角色等级';
   relabelled.axisLabel='角色等级';
   assert.equal(matchLuaFormula(relabelled,index.talents.T_FLAMESHOCK).reason,'reference mismatch');
+});
+
+test('several identical parameter ladders are one dimension, not two',()=>{
+  // The export writes a whole tooltip's parameter union into every acronym
+  // title, so 无尽追踪's three saves all carry the same ladder and 匕首格挡's
+  // 灵巧 and 敏捷 do too. The engine advances every laddered parameter column by
+  // column, so they ride the axis together.
+  const a=acronyms('T_DAGGER_BLOCK')[0];
+  assert.equal(ladderAxis(a).label,'灵巧');
+  assert.deepEqual(a.axisLabels,['灵巧','敏捷']);
+  // `getDaggerBlock = 120 + dex + cun` — only the lockstep reading reproduces
+  // 140/170/220/270/320; pinning the rider at its first value gives 155 at the
+  // second point.
+  const sim=defaultSimParams(a);
+  const read=v=>evaluateLuaExpression(['+',['+',120,['actor','灵巧']],['actor','敏捷']],simAtAxis(a,sim,v));
+  assert.deepEqual(a.displayed.map((_,i)=>read(a.params.find(p=>p.label==='灵巧').ladder[i])),a.displayed);
+  assert.equal(read(25),170);
+});
+
+test('a genuinely different second ladder still has no single axis',()=>{
+  // 腐化形态 varies 魔力 10,25,50,75,100 against 角色等级 1,10,25,40,50 — that is
+  // a real joint axis, and this round deliberately leaves it unsolved.
+  const a=acronyms('T_CORRUPTION_OF_THE_DOOMED').find(x=>x.params.some(p=>p.label==='角色等级'&&p.ladder.length>1));
+  assert.equal(ladderAxis(a),null);
+  assert.equal(matchLuaFormula(a,index.talents.T_CORRUPTION_OF_THE_DOOMED).reason,'unsupported input dimensions');
+});
+
+test('a kind:"other" title parameter counts as a declared input',()=>{
+  // 无尽追踪's saves parse as `other`; reading one through `actor` must not be
+  // reported as reading state the title never declared.
+  const a=acronyms('T_RELENTLESS_PURSUIT')[0];
+  const declared=declaredInputs(a,ladderAxis(a));
+  assert.ok(declared.includes('spell save'));
+  assert.ok(declared.includes('mental save'));
+});
+
+test('one ladder cannot mix truncation with rounding',()=>{
+  // A `tformat` call prints its whole ladder through one specifier, so a formula
+  // that would have to truncate point 2 and round point 5 is not a match. Before
+  // this check, 心灵震爆#2 passed exactly that way on its 1.5 rendering.
+  assert.equal(readingIsConsistent([5.873,6.743,7.916,8.892,9.746],[5,7,7,8,10]),false);
+  // A single convention that reads the whole ladder is enough...
+  assert.equal(readingIsConsistent([5.873,7.000,7.916,8.709,9.417],[5,7,7,8,9]),true);
+  // ...and the staged pair covers the export's second rounding step.
+  assert.equal(readingIsConsistent([3.642,4.430,4.968,5.381,5.717],[3,4,5,5,5]),true);
+  // Decimal points are exact readings and settle themselves.
+  assert.equal(readingIsConsistent([1.4,2.6,3.5,4.2,5.9],[1.4,2.6,3.5,4.2,5.9]),true);
 });
 
 test('a character-level ladder is reproduced from source',()=>{
