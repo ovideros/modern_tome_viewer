@@ -24,7 +24,7 @@
 
 ## 快速开始
 
-线上站点：<https://ovideros.github.io/modern_tome_viewer/>
+**线上站点：<https://ovideros.github.io/modern_tome_viewer/>**（仓库：<https://github.com/ovideros/modern_tome_viewer>）
 
 ```bash
 npm install

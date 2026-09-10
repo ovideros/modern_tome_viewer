@@ -10,6 +10,7 @@
 | 怪物描述 | 765 个有英文原文，其中 763 个有中文译文（缺译 2 条已在报告里列出） |
 > | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
 > | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入 |
+> | 线上站点 | <https://ovideros.github.io/modern_tome_viewer/> · 仓库 <https://github.com/ovideros/modern_tome_viewer> · 发布提交 `042542a` |
 > | 测试基线 | typecheck 无错 · monsters **43/43** · scaling **45/45** · verify **87/87** · smoke **61/61** · e2e **222/222** |
 > | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
 >
@@ -147,24 +148,103 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 
 ---
 
-## 0.2 部署（同轮追加）
+## 0.2 部署（已完成并线上验证）
 
-站点已发布到 GitHub Pages：<https://ovideros.github.io/modern_tome_viewer/>
-（仓库 <https://github.com/ovideros/modern_tome_viewer>，public）。
+站点已发布到 GitHub Pages：
 
-- 工作流 `.github/workflows/deploy-pages.yml`：push 到 `main` 触发，Node 22 +
-  `npm ci` + `npm run build:pages`，用官方 Pages actions 发布
-  `modern_tome_viewer/dist`。
+| 项 | 值 |
+| --- | --- |
+| 仓库 | <https://github.com/ovideros/modern_tome_viewer>（public） |
+| 默认分支 | `main`，发布提交 `042542a` |
+| 线上地址 | <https://ovideros.github.io/modern_tome_viewer/> |
+| 自定义域名 | <http://old.ovideros.site/modern_tome_viewer/>（见下方「账号级自定义域名」） |
+| 工作流 | `.github/workflows/deploy-pages.yml`（push `main` 触发；`build` + `deploy` 均成功） |
+
+- 工作流用 Node 22 + `npm ci`（有 lockfile 时）+ `npm run build:pages`，再用官方
+  `configure-pages` / `upload-pages-artifact` / `deploy-pages` 发布
+  `modern_tome_viewer/dist`；Pages 的 `build_type` 已设为 `workflow`。
 - `vite.config.ts` 的 `base: './'` 让产物同时适配子路径与本地 `file://`，页面是
-  hash 路由，子路径下深链与刷新都正常（已在 `/modern_tome_viewer/` 前缀下实测）。
+  hash 路由，子路径下的深链与刷新都正常（已在 `/modern_tome_viewer/` 前缀下实测）。
 - **`public/data` 与 `public/img` 改为提交**：CI 的干净 checkout 没有 gfx 图集与
   语言表，生成不了这些文件，而站点运行时要 `fetch` 它们。`.gitignore` 里加了
-  `!public/data/`、`!public/img/` 例外并写明原因；`t-engine4-src-1.7.6/`（638 MB
-  引擎树）则已明确忽略，不再可能被 `git add -A` 误收。
-- 干净克隆的测试基线：`smoke 61/61`、`verify 87/87`、`e2e 222/222`、
-  `test:monsters 40 通过 + 3 skip`（缺图集/语言表的 3 项明确显示 skip，不再是失败）。
+  `!public/data/`、`!public/img/` 例外并写明原因。
+- `t-engine4-src-1.7.6/`（638 MB 引擎解压树）已明确忽略，不再可能被 `git add -A`
+  误收。**这是本轮踩到的坑**：根 `.gitignore` 是白名单式（`dlc-src/**/*.*` 这种
+  规则不覆盖新目录），第一次在原始工作目录 `git add -A` 一次性暂存了 666 MB，
+  后来改成「只导出该提交需要的路径」再提交，并把引擎树补进 `.gitignore`。
+
+### 线上验证（真实浏览器，2026-09-10）
+
+在 <https://ovideros.github.io/modern_tome_viewer/> 上实测：
+
+- `#/monsters` 列出 812 个怪物；深链 `?cat=boss&m=WALROG` 得到 98 个结果，
+  刷新后仍是 98；点技能在页内打开技能面板且 URL 仍停在 `#/monsters`。
+- 怪物页 93 张 `<img>` 全部加载成功（`naturalWidth > 0`），0 张破损。
+- 搜索 / 职业 / 种族 / 收藏各路由均正常渲染，**0 个控制台报错、0 个失败请求**。
+
+### 账号级自定义域名（不是本仓库的配置）
+
+`ovideros.github.io` 这个仓库在 Settings → Pages 设置了自定义域名
+`old.ovideros.site`，GitHub 会把它套用到该账号下**所有** `*.github.io/<repo>/`
+站点，所以本项目也多了一个 `old.ovideros.site/modern_tome_viewer/` 地址（两个地址
+返回同一份页面）。仓库里没有 `CNAME` 文件，要改得去 `ovideros.github.io` 仓库改。
+
+### 干净克隆的测试基线
+
+| 环境 | 结果 |
+| --- | --- |
+| 完整源码机器 | typecheck 无错 · monsters 43/43 · scaling 45/45 · verify 87/87 · smoke 61/61 · e2e 222/222 |
+| 干净克隆（无 gfx 图集 / 语言表 / DLC 源码） | `build:pages` ✅ · smoke 61/61 · verify 87/87 · e2e 222/222 · monsters **40 通过 + 3 skip** |
+
+那 3 项 skip 是需要图集或语言表的用例，测试里用 `skipArt` / `hasLocaleTables` /
+`hasDlcSources` 三个信号显式声明原因，**不再是失败**。
 
 详见 [deployment.md](deployment.md)。
+
+## 0.3 本轮进展记录（本地简要）
+
+> 上面 §0 / §0.1 / §0.2 是本轮做完并验证过的内容。这里是给下一轮接手用的一页速览，
+> 细节都在对应文档里，不重复。**当前工作区未提交**（最近一次提交是 `e23444a`）；
+> GitHub 远端停在 `042542a`，只包含怪物图鉴与部署，尚不包含本节这些文档更新。
+
+### 做完并验证过的事
+
+| 阶段 | 结果 | 细节 |
+| --- | --- | --- |
+| 怪物图鉴 | `#/monsters`，812 个可遇模板（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），130 个抽象 BASE 不计入 | [monster-pipeline.md](monster-pipeline.md) |
+| 提取管线 | `scripts/monsters/`：Lua 读取器 → 继承合并 → 技能 resolver（固定/随机组）→ 汉化 → 图片 → 产物与报告 | §0 与 monster-pipeline.md |
+| 技能补缺 | 从 Lua 补 8 条上游缺失技能（含 `T_HEAT`），技能总数 1826 → 1834，怪物引用技能 0 未收录 | monster-pipeline.md §8 |
+| 页内技能面板 | 点技能不离开怪物页：≥1800px 第三列，更窄为底部抽屉，<1280px 抽屉替代怪物抽屉并提供「← 返回怪物」 | §0.0.1 |
+| 部署 | GitHub Pages 已上线并线上验证（812 怪物 / 深链 98 / 图片 0 破损 / 0 报错） | [deployment.md](deployment.md) |
+
+### 本轮修掉的 7 个真实缺陷（都有测试兜底）
+
+1. `for … do` 的 `do` 被当成第二个块起始，吞掉实体表的 `}`（845 → 942 模板）
+2. `desc = _t[[...]]` 被当成字面量，导致全部怪物描述为空
+3. `define_as` 在多个区域文件重复，重复 React key 让列表残留旧卡片
+4. 搜索 haystack 漏了随机组技能，且技能 id 被按 `_` 切词
+5. 图片索引的 archive 名与归档注册 id 不一致，一张图都复制不出来
+6. URL 同步状态机在「本页点技能后再深链」时丢弃新 hash
+7. 窄屏用 `hidden` 类切换面板时输给 `xl:hidden`，关闭技能后怪物面板永久消失
+
+### 下一轮可以接着做的
+
+- [ ] 9 个缺图模板（`human`、`dwarf`、`Ureslak the Prismatic` 等）：多为 `moddable_tile`
+      合成模型或画风里确实没有 PNG，已逐条列在 `monsters-report.json` 的 `imageGaps`
+- [ ] `monsters-report.json` 里 39 条诊断（32 条是跨区域重复 `define_as`，属正常）
+- [ ] 毒池/教程等内部技能在技能列表里的呈现（当前只标注 `supplemental: true`）
+- [ ] 干净克隆下 3 项需要图集/语言表的测试用例：若要全绿，需把 gfx 图集纳入 CI 输入
+- [ ] 技能补缺管线目前是「按 id 集合补」，若要覆盖更多上游缺口需扩展 `data:supplement`
+
+### 常用命令
+
+```bash
+cd modern_tome_viewer
+npm run data          # 技能 + 怪物数据 + 图片（需本机游戏源码包）
+npm run check         # typecheck + monsters + scaling + verify + build + smoke
+npm run e2e -- http://127.0.0.1:4173/     # 需先 npm run serve
+npm run build:pages   # 部署构建（校验已提交产物）
+```
 
 ---
 

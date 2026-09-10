@@ -1,8 +1,13 @@
 # 部署到 GitHub Pages
 
-线上地址：<https://ovideros.github.io/modern_tome_viewer/>
+**当前状态：已上线**（2026-09-10，发布提交 `042542a`）
 
-仓库：<https://github.com/ovideros/modern_tome_viewer>
+| 项 | 地址 |
+| --- | --- |
+| 主地址 | <https://ovideros.github.io/modern_tome_viewer/> |
+| 账号自定义域名 | <http://old.ovideros.site/modern_tome_viewer/>（见文末说明） |
+| 仓库 | <https://github.com/ovideros/modern_tome_viewer>（public） |
+| Actions | <https://github.com/ovideros/modern_tome_viewer/actions> |
 
 ## 组成
 
@@ -15,6 +20,16 @@
 Vite 用 `base: './'`，所以构建产物既可以放在仓库根，也可以放在
 `/modern_tome_viewer/` 这样的子路径下，不需要为 Pages 改配置。页面是 hash 路由
 （`#/monsters`），深链接不依赖服务端重写。
+
+## 线上验证记录（2026-09-10）
+
+在 <https://ovideros.github.io/modern_tome_viewer/> 用真实浏览器跑过：
+
+- `#/monsters` 列出 812 个怪物；`?cat=boss&m=WALROG` 得 98 条，刷新后仍是 98；
+  点技能在页内打开面板，URL 仍停在 `#/monsters`。
+- 怪物页 93 张图片全部加载成功，0 张破损。
+- `#/search`、`#/classes`、`#/races`、`#/favorites` 均正常，0 控制台报错、
+  0 失败请求。
 
 ## 为什么提交 `public/data` 与 `public/img`
 
@@ -81,6 +96,38 @@ curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.g
 
 `npm run data` 缺图集时不会崩，只是把怪物图片记为缺口并在
 `public/data/monsters-report.json` 的 `missingArtSources` 里写明。
+
+## 提交与推送（接手时先看这段）
+
+发布提交是 `042542a`，远程 `main` 就在这里。本地若还停在旧提交，先同步：
+
+```bash
+cd /Users/ovideros/Codes/senior1/modern_tome
+git remote add origin https://github.com/ovideros/modern_tome_viewer.git   # 已存在会报错，忽略
+git fetch origin main
+git switch -c main --track origin/main      # 若已有 main 分支，跳过这步
+git reset --hard origin/main
+```
+
+之后正常提交即可，push 到 `main` 就会自动部署：
+
+```bash
+git add -A && git commit -m "…" && git push
+```
+
+**提交前务必看一眼 `git status --short`**：根目录是白名单式 `.gitignore`
+（`dlc-src/**/*.*` 这类规则不覆盖新目录），历史上曾一次性暂存进 666 MB 的
+`t-engine4-src-1.7.6/` 引擎树。现在该目录已被显式忽略，但仍建议提交前确认
+暂存区里没有它（`git diff --cached --name-only | grep t-engine4`）。
+
+## 账号级自定义域名
+
+`ovideros.github.io` 仓库设置了自定义域名 `old.ovideros.site`，GitHub 会把它套用到
+该账号下**所有** `*.github.io/<repo>/` 站点，所以本项目除主地址外还有
+<http://old.ovideros.site/modern_tome_viewer/>（两者返回同一份页面）。
+
+本仓库里**没有** `CNAME` 文件；要改或删这个域名，得去 `ovideros.github.io` 仓库的
+Settings → Pages。默认的 `ovideros.github.io/modern_tome_viewer/` 始终有效。
 
 ## 常见问题
 
