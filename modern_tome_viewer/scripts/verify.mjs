@@ -61,7 +61,7 @@ const dataMod = await import(pathToFileURL(path.join(outDir, 'data.js')).href);
 const compareMod = await import(pathToFileURL(path.join(outDir, 'compare.js')).href);
 
 const { TalentSearchIndex, tokenize } = searchMod;
-const { compileFilters, emptyFilters, facetCounts, filtersToParams, paramsToFilters } = filtersMod;
+const { compileFilters, cooldownKindCounts, emptyFilters, facetCounts, filtersToParams, paramsToFilters } = filtersMod;
 const { normalizeDataset } = dataMod;
 const { bestByRow, bestId, cooldownValue, rangeValue, costValue } = compareMod;
 
@@ -226,6 +226,36 @@ const cdZeroNoNulls = compileFilters({
 check(
   'excluding no-cooldown talents removes passives',
   talents.filter(cdZeroNoNulls).every((t) => t.cooldown.values.length > 0),
+);
+
+// The fixed/non-fixed switch: two mutually exclusive halves of the same set.
+const onlyFixed = compileFilters({ ...emptyFilters(), cooldownKind: 'fixed' });
+const onlyNormal = compileFilters({ ...emptyFilters(), cooldownKind: 'normal' });
+const fixedMatches = talents.filter(onlyFixed);
+const normalMatches = talents.filter(onlyNormal);
+check('fixed-only filter returns exactly the flagged talents', fixedMatches.length === 27, `got ${fixedMatches.length}`);
+check('fixed-only filter keeps only flagged talents', fixedMatches.every((t) => t.cooldown.fixed));
+check('not-fixed-only filter keeps only unflagged talents', normalMatches.every((t) => !t.cooldown.fixed));
+check(
+  'the two halves partition the corpus',
+  fixedMatches.length + normalMatches.length === talents.length,
+  `${fixedMatches.length} + ${normalMatches.length} vs ${talents.length}`,
+);
+check(
+  'both halves are non-empty and neither contains the other',
+  fixedMatches.length > 0 && normalMatches.length > 0 && fixedMatches.length < normalMatches.length,
+);
+// Fixed is a flag, not a shape: a fixed talent may still show a cooldown ladder.
+check(
+  'fixed-only is not the same as "cooldown is a single number"',
+  fixedMatches.some((t) => t.cooldown.values.length > 1)
+    && normalMatches.some((t) => t.cooldown.values.length === 1),
+);
+const cdKindTally = cooldownKindCounts(talents, emptyFilters());
+check(
+  'the switch counts agree with the predicates',
+  cdKindTally.fixed === fixedMatches.length && cdKindTally.normal === normalMatches.length,
+  JSON.stringify(cdKindTally),
 );
 
 const melee = compileFilters({ ...emptyFilters(), rangeKinds: ['melee'] });

@@ -175,6 +175,39 @@ await page.waitForTimeout(300);
 check('reset restores all talents', (await resultCount()) === 1826);
 check('reset clears the URL hash filters', !page.url().includes('modes='), page.url());
 
+// The fixed-cooldown switch is a radio group of two mutually exclusive halves.
+await openSection('冷却时间', '固定冷却');
+const cdKind = (label) => page.locator('[aria-label="固定冷却"] button').filter({ hasText: new RegExp(`^${label}`) }).first();
+check('the fixed-cooldown switch offers three states', (await page.locator('[aria-label="固定冷却"] button').count()) === 3);
+await cdKind('只看固定').click();
+await page.waitForTimeout(300);
+check('只看固定 narrows to the 27 flagged talents', (await resultCount()) === 27, String(await resultCount()));
+check('URL hash carries the fixed switch', page.url().includes('cdKind=fixed'), page.url());
+check(
+  'the radio is marked pressed, not just styled',
+  (await page.locator('[aria-label="固定冷却"] button[aria-pressed="true"]').innerText()).includes('只看固定'),
+);
+await cdKind('只看非固定').click();
+await page.waitForTimeout(300);
+check('只看非固定 is the complement', (await resultCount()) === 1826 - 27, String(await resultCount()));
+check('the two states are mutually exclusive', (await page.locator('[aria-label="固定冷却"] button[aria-pressed="true"]').count()) === 1);
+// The switch is orthogonal to the numeric window: 固定 + ≤5 is a strict subset.
+await cdKind('只看固定').click();
+await page.waitForTimeout(300);
+await page.locator('button').filter({ hasText: /^≤5$/ }).first().click();
+await page.waitForTimeout(300);
+const fixedShort = await resultCount();
+check('the fixed switch intersects the cooldown window', fixedShort !== null && fixedShort > 0 && fixedShort < 27, String(fixedShort));
+// 全部 clears only the switch — the numeric window is a separate control.
+await cdKind('全部').click();
+await page.waitForTimeout(300);
+const cdShort = await resultCount();
+check('全部 keeps the numeric window', cdShort !== null && cdShort > fixedShort, `${cdShort} vs ${fixedShort}`);
+check('the switch drops out of the URL but the window stays', !page.url().includes('cdKind=') && page.url().includes('cdMax=5'), page.url());
+await resetButton().click();
+await page.waitForTimeout(300);
+check('reset clears the fixed switch too', (await resultCount()) === 1826 && !page.url().includes('cdKind='), page.url());
+
 // ---------------------------------------------------------------------------
 section('class scope');
 await page.locator('select').first().selectOption('MAGE');

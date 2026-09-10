@@ -7,6 +7,9 @@
 
 import type { TalentEntry, TallyEntry } from './types';
 
+/** Which half of the fixed/non-fixed cooldown split to keep. */
+export type CooldownKind = 'any' | 'fixed' | 'normal';
+
 export interface FilterState {
   /** Free-text query, parsed by the search index. */
   query: string;
@@ -24,6 +27,13 @@ export interface FilterState {
   classId: string | null;
   /** null means "no bound applied". */
   cooldown: { min: number | null; max: number | null };
+  /**
+   * `fixed_cooldown` is a property of the talent, not of its value: it says no
+   * effect may change the cooldown (`Actor.lua:6872`). 24 of the 27 fixed
+   * talents have a flat cooldown and 3 show a ladder, so this cannot be derived
+   * from the numbers — hence its own switch.
+   */
+  cooldownKind: CooldownKind;
   range: { min: number | null; max: number | null };
   requireLevel: { min: number | null; max: number | null };
   /** Show talents that have no cooldown at all (passives, sustains). */
@@ -44,6 +54,7 @@ export function emptyFilters(): FilterState {
     trees: [],
     classId: null,
     cooldown: { min: null, max: null },
+    cooldownKind: 'any',
     range: { min: null, max: null },
     requireLevel: { min: null, max: null },
     includeNoCooldown: true,
@@ -65,6 +76,7 @@ export function activeFilterCount(filters: FilterState): number {
   for (const array of arrays) count += array.length;
   if (filters.classId) count += 1;
   if (filters.cooldown.min !== null || filters.cooldown.max !== null) count += 1;
+  if (filters.cooldownKind !== 'any') count += 1;
   if (filters.range.min !== null || filters.range.max !== null) count += 1;
   if (filters.requireLevel.min !== null || filters.requireLevel.max !== null) count += 1;
   return count;
@@ -104,6 +116,8 @@ export function compileFilters(filters: FilterState, classTrees?: Set<string>): 
 
   const { min: cdMin, max: cdMax } = filters.cooldown;
   const hasCooldownFilter = cdMin !== null || cdMax !== null;
+  const wantsFixed = filters.cooldownKind === 'fixed';
+  const wantsNormal = filters.cooldownKind === 'normal';
   const { min: rMin, max: rMax } = filters.range;
   const hasRangeFilter = rMin !== null || rMax !== null;
   const { min: lMin, max: lMax } = filters.requireLevel;
@@ -121,6 +135,10 @@ export function compileFilters(filters: FilterState, classTrees?: Set<string>): 
     for (let i = 0; i < flags.length; i += 1) {
       if (talent.flags[flags[i]] !== true) return false;
     }
+
+    // The two halves are mutually exclusive by construction: one boolean check.
+    if (wantsFixed && !talent.cooldown.fixed) return false;
+    if (wantsNormal && talent.cooldown.fixed) return false;
 
     if (hasCooldownFilter) {
       if (!talent.cooldown.values.length) {
@@ -197,6 +215,29 @@ export function facetCounts(
     .map(([value, count]) => ({ value, count }));
 }
 
+/**
+ * How many results each half of the fixed/non-fixed split would keep.
+ *
+ * The switch itself is relaxed before counting, like every other facet count, so
+ * the numbers answer "how many would this option show?" under the rest of the
+ * state rather than under the current switch.
+ */
+export function cooldownKindCounts(
+  talents: TalentEntry[],
+  filters: FilterState,
+  classTrees?: Set<string>,
+): { fixed: number; normal: number } {
+  const predicate = compileFilters({ ...filters, cooldownKind: 'any' }, classTrees);
+  let fixed = 0;
+  let normal = 0;
+  for (const talent of talents) {
+    if (!predicate(talent)) continue;
+    if (talent.cooldown.fixed) fixed += 1;
+    else normal += 1;
+  }
+  return { fixed, normal };
+}
+
 function facetValue(talent: TalentEntry, key: keyof FilterState): string | null {
   switch (key) {
     case 'modes':
@@ -238,6 +279,7 @@ export function filtersToParams(filters: FilterState): URLSearchParams {
   if (filters.classId) params.set('class', filters.classId);
   if (filters.cooldown.min !== null) params.set('cdMin', String(filters.cooldown.min));
   if (filters.cooldown.max !== null) params.set('cdMax', String(filters.cooldown.max));
+  if (filters.cooldownKind !== 'any') params.set('cdKind', filters.cooldownKind);
   if (filters.range.min !== null) params.set('rMin', String(filters.range.min));
   if (filters.range.max !== null) params.set('rMax', String(filters.range.max));
   if (filters.requireLevel.min !== null) params.set('lvMin', String(filters.requireLevel.min));
@@ -273,6 +315,8 @@ export function paramsToFilters(params: URLSearchParams): FilterState {
   };
 
   filters.cooldown = { min: num('cdMin'), max: num('cdMax') };
+  const cdKind = params.get('cdKind');
+  if (cdKind === 'fixed' || cdKind === 'normal') filters.cooldownKind = cdKind;
   filters.range = { min: num('rMin'), max: num('rMax') };
   filters.requireLevel = { min: num('lvMin'), max: num('lvMax') };
   filters.includeNoCooldown = params.get('noCd') !== '0';

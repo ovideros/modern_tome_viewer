@@ -1,6 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import type { FilterState } from '../lib/filters';
-import { emptyFilters } from '../lib/filters';
+import { cooldownKindCounts, emptyFilters } from '../lib/filters';
+import type { CooldownKind } from '../lib/filters';
 import { COST_KIND_LABELS, RANGE_KIND_LABELS, RESOURCE_LABELS, flagLabel } from '../lib/data';
 import type { DatasetMeta, TalentEntry, TallyEntry } from '../lib/types';
 import { facetCounts } from '../lib/filters';
@@ -200,6 +201,13 @@ function NumberRange({
   );
 }
 
+/** The three mutually exclusive states of the fixed-cooldown switch. */
+const COOLDOWN_KIND_OPTIONS: { value: CooldownKind; label: string }[] = [
+  { value: 'any', label: '全部' },
+  { value: 'fixed', label: '只看固定' },
+  { value: 'normal', label: '只看非固定' },
+];
+
 export function FilterPanel({
   meta,
   talents,
@@ -234,6 +242,11 @@ export function FilterPanel({
       ? meta.treeNames.map((t) => ({ value: t.id, count: map.get(t.id) ?? 0 }))
       : counts;
   }, [talents, filters, classTrees, meta.treeNames]);
+
+  const cooldownCounts = useMemo(
+    () => cooldownKindCounts(talents, filters, classTrees),
+    [talents, filters, classTrees],
+  );
 
   const treeLabel = (id: string) => meta.treeNames.find((t) => t.id === id)?.name ?? id;
   const classLabel = (id: string) => meta.classes.find((c) => c.id === id)?.name ?? id;
@@ -310,7 +323,13 @@ export function FilterPanel({
           />
         </Section>
 
-        <Section title="冷却时间" activeCount={filters.cooldown.min !== null || filters.cooldown.max !== null ? 1 : 0}>
+        <Section
+          title="冷却时间"
+          activeCount={
+            (filters.cooldown.min !== null || filters.cooldown.max !== null ? 1 : 0)
+            + (filters.cooldownKind !== 'any' ? 1 : 0)
+          }
+        >
           <div className="space-y-2">
             <NumberRange
               label="冷却"
@@ -326,6 +345,35 @@ export function FilterPanel({
               ]}
               onChange={(next) => set('cooldown', next)}
             />
+            <div>
+              <p className="mb-1 text-[11.5px] font-medium text-muted">固定冷却</p>
+              <div className="flex flex-wrap gap-1" role="radiogroup" aria-label="固定冷却">
+                {COOLDOWN_KIND_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    role="radio"
+                    aria-checked={filters.cooldownKind === option.value}
+                    // `aria-pressed` is what styles.css keys the active state off.
+                    aria-pressed={filters.cooldownKind === option.value}
+                    className="btn px-2 py-0.5 text-[11.5px]"
+                    onClick={() => set('cooldownKind', option.value)}
+                  >
+                    {option.label}
+                    {option.value !== 'any' && (
+                      <span className="ml-1 text-subtle">
+                        {option.value === 'fixed' ? cooldownCounts.fixed : cooldownCounts.normal}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+              <p className="mt-1 text-[11px] leading-snug text-subtle">
+                「固定」＝任何效果都不能增减它的冷却（源码 <code>fixed_cooldown</code>），
+                与数值是否随技能等级变化无关——超越永恒是固定 50，狂热是固定但随等级
+                <code>44–24</code>。超越永恒/时空回响这类减 CD 效果会跳过它们。
+              </p>
+            </div>
             <label className="flex cursor-pointer items-center gap-2 text-[12px]">
               <input
                 type="checkbox"
