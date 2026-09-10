@@ -218,17 +218,6 @@ export function TalentDetail({
           </section>
         )}
 
-        {simulatable && (
-          <ValueSimulator
-            acronyms={talent.acronyms}
-            points={talent.points}
-            sim={sim}
-            onChange={setSim}
-            active={edited !== null && edited.key === simKey}
-            onReset={() => setEdited(null)}
-          />
-        )}
-
         <section className="mb-3">
           <h3 className="mb-1.5 text-[12px] font-semibold text-muted">技能说明</h3>
           {talent.text ? (
@@ -242,6 +231,18 @@ export function TalentDetail({
             <p className="text-[12.5px] text-subtle">暂无说明文本。</p>
           )}
         </section>
+
+        {/* Below the description: read the skill first, then dial its numbers. */}
+        {simulatable && (
+          <ValueSimulator
+            acronyms={talent.acronyms}
+            points={talent.points}
+            sim={sim}
+            onChange={setSim}
+            active={edited !== null && edited.key === simKey}
+            onReset={() => setEdited(null)}
+          />
+        )}
 
         {tree && tree.classes.length > 0 && (
           <section className="mb-3">
