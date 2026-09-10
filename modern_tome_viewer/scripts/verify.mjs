@@ -83,6 +83,15 @@ check(
   talents.every((t) => t.cooldown.values.every((v) => v >= 0)),
   JSON.stringify(talents.filter((t) => t.cooldown.values.some((v) => v < 0)).slice(0, 3).map((t) => t.id)),
 );
+// `fixed_cooldown = true` (Actor.lua:6872 — "Can not touch this cooldown") is
+// orthogonal to whether the value is a constant: 超越永恒 is a flat 50, while
+// 狂热/哨兵/定向跳跃 scale with talent level and are still untouchable.
+const fixedCooldowns = talents.filter((t) => t.cooldown.fixed);
+check('fixed cooldowns survive the build', fixedCooldowns.length === 27, `got ${fixedCooldowns.length}`);
+const timeless = talents.find((t) => t.id === 'T_TIMELESS');
+check('超越永恒 carries its fixed cooldown', timeless?.cooldown.fixed === true && timeless?.cooldown.display === '50', JSON.stringify(timeless?.cooldown));
+const frenzy = talents.find((t) => t.id === 'T_DREM_FRENZY');
+check('a fixed cooldown may still be a level ladder', frenzy?.cooldown.fixed === true && frenzy?.cooldown.values.length === 5, JSON.stringify(frenzy?.cooldown));
 
 // ---------------------------------------------------------------------------
 // Tokenizer

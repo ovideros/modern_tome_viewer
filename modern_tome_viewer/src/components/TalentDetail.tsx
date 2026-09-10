@@ -150,6 +150,13 @@ export function TalentDetail({
                 {ladder.length > 0 && (
                   <span className="ml-1 text-[11px] text-subtle">回合（随技能等级 1–{ladder.length}）</span>
                 )}
+                {talent.cooldown.fixed && (
+                  <span className="ml-1.5 align-middle" data-testid="fixed-cooldown">
+                    <Chip title="固定冷却：任何效果都不能增减它——减 CD 装备、超越永恒、时空回响等都无效（源码 fixed_cooldown = true）。数值本身仍可随技能等级变化。">
+                      固定
+                    </Chip>
+                  </span>
+                )}
               </>
             )}
           </Row>

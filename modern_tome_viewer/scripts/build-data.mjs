@@ -559,6 +559,12 @@ for (const file of talentFiles) {
         points: typeof talent.points === 'number' ? talent.points : Number(talent.points) || 0,
         // Compact wire format: number for a plain cooldown, string for a ladder.
         cd: compactCooldown(cooldown),
+        // `fixed_cooldown = true` (27 talents): the game refuses to let any
+        // effect change this cooldown — `Actor.lua:6872` reads
+        // `if t.fixed_cooldown or base then return cd end` under the comment
+        // "Can not touch this cooldown". Worth keeping: 超越永恒 works by
+        // *shortening other talents' remaining cooldowns* and skips these.
+        ...(talent.fixed_cooldown ? { fixedCd: true } : {}),
         range: range.display,
         rangeKind: range.kind,
         cost: cost.display,

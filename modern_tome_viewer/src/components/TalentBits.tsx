@@ -82,8 +82,14 @@ export function TalentStats({ talent, dense = false }: { talent: Talent; dense?:
         </Chip>
       )}
       {cooldown.display !== null && (
-        <Chip title={cooldown.values.length > 1 ? `随等级变化：${cooldown.display}` : '冷却时间'}>
+        <Chip
+          title={
+            (cooldown.values.length > 1 ? `随等级变化：${cooldown.display}` : '冷却时间') +
+            (cooldown.fixed ? '；固定冷却：任何效果都不能增减它' : '')
+          }
+        >
           冷却 <span className="font-medium">{cooldown.display}</span>
+          {cooldown.fixed && <span className="ml-1 text-[10px] text-subtle">固定</span>}
         </Chip>
       )}
       {talent.range.display && (

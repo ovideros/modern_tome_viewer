@@ -11,6 +11,12 @@ export interface Cooldown {
   max: number | null;
   /** Every value in the ladder, in level order. */
   values: number[];
+  /**
+   * `fixed_cooldown = true`: no effect may change this cooldown
+   * (`Actor.lua:6872` — "Can not touch this cooldown"). The in-game character
+   * sheet prints it as "Fixed Cooldown: N".
+   */
+  fixed: boolean;
 }
 
 export type RangeKind = 'melee' | 'bow' | 'distance' | 'other';

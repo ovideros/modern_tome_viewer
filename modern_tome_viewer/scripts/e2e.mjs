@@ -200,7 +200,30 @@ check('detail shows the talent text', detail.includes('技能说明'));
 check('detail shows requirements or flags', detail.includes('升级需求') || detail.includes('技能标记'));
 check('detail shows the data source', detail.includes('数据来源'));
 check('URL carries the talent id', page.url().includes('talent='), page.url());
+// 火焰冲击 has an ordinary cooldown, so no "固定" marker.
+check('an ordinary cooldown is not marked fixed', (await page.locator('[data-testid="fixed-cooldown"]').count()) === 0);
 await shot('05-detail');
+
+// `fixed_cooldown = true` (Actor.lua:6872 — "Can not touch this cooldown"):
+// 超越永恒's 50 turns cannot be shortened by any effect, and the character sheet
+// spells that out. The card must too.
+await page.goto(`${url}#/search?talent=T_TIMELESS`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('条结果'), null, { timeout: 30000 });
+await page.waitForTimeout(800);
+const timelessPanel = page.locator('[data-testid="talent-detail"]:visible').first();
+const timelessText = await timelessPanel.innerText();
+check('超越永恒 shows its cooldown', /冷却时间\s*50/.test(timelessText), timelessText.split('\n').slice(0, 8).join(' | '));
+check('超越永恒 is marked as a fixed cooldown', /冷却时间[\s\S]{0,20}固定/.test(timelessText), timelessText.split('\n').slice(0, 8).join(' | '));
+check(
+  'the fixed marker explains itself',
+  ((await timelessPanel.locator('[data-testid="fixed-cooldown"] .chip').getAttribute('title')) ?? '').includes('任何效果都不能增减'),
+);
+// 狂热's cooldown is a ladder *and* fixed — the two properties are orthogonal.
+await page.goto(`${url}#/search?talent=T_DREM_FRENZY`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.body.innerText.includes('条结果'), null, { timeout: 30000 });
+await page.waitForTimeout(800);
+const frenzyText = await page.locator('[data-testid="talent-detail"]:visible').first().innerText();
+check('a fixed cooldown may still be a level ladder', /44,\s*35,\s*30,\s*26,\s*24/.test(frenzyText) && /固定/.test(frenzyText), frenzyText.split('\n').slice(0, 8).join(' | '));
 
 // Flag chip adds a filter. Target the chip itself, not the breadcrumb link.
 const flagChip = page.locator('aside button:visible').filter({ hasText: /^法术$/ }).first();

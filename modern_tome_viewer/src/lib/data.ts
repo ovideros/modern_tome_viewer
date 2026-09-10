@@ -46,6 +46,8 @@ interface WireTalent {
   mode?: string;
   points?: number;
   cd?: number | string | null;
+  /** `fixed_cooldown = true`: no effect may change this cooldown. */
+  fixedCd?: boolean;
   range?: string | null;
   rangeKind?: RangeKind;
   cost?: string | null;
@@ -166,16 +168,17 @@ function numbersFrom(value: number | string | null | undefined): number[] {
   return found ? found.map(Number) : [];
 }
 
-export function expandCooldown(value: number | string | null | undefined): Cooldown {
+export function expandCooldown(value: number | string | null | undefined, fixed = false): Cooldown {
   const values = numbersFrom(value);
   if (!values.length) {
-    return { display: value === null || value === undefined ? null : String(value), min: null, max: null, values: [] };
+    return { display: value === null || value === undefined ? null : String(value), min: null, max: null, values: [], fixed };
   }
   return {
     display: typeof value === 'number' ? String(value) : stripMarkup(String(value)),
     min: Math.min(...values),
     max: Math.max(...values),
     values,
+    fixed,
   };
 }
 
@@ -287,7 +290,7 @@ function expandTalent(wire: WireTalent, tree: WireTree): Talent {
     index: wire.index ?? 0,
     mode: wire.mode ?? '',
     points: wire.points ?? 0,
-    cooldown: expandCooldown(wire.cd),
+    cooldown: expandCooldown(wire.cd, wire.fixedCd === true),
     range: expandRange(wire.range, wire.rangeKind),
     cost: expandCost(wire),
     useSpeed: wire.useSpeed ?? '',

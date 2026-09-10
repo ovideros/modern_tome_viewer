@@ -133,6 +133,20 @@ modern_tome_viewer/
    若按整串抽数字会把 `1-5` 读成 `-5`，导致 96 个技能出现负冷却。
    正确做法：先 `<[^>]*>` 去标签再抽数字。
 
+2b. **固定冷却（`fixed_cooldown`）要一起带上**。导出**本身就有**这个字段（27 个技能为 `true`），
+   早先只是没往构建数据里抄。语义见 `Actor.lua:6872`——`getTalentCooldown()` 里
+   `if t.fixed_cooldown or base then return cd end`，上面写着一行 `-- Can not touch this cooldown`：
+   **任何效果都不能增减这个冷却**。游戏角色面板因此把它印成 `Fixed Cooldown: N`（`Actor.lua:6787`）。
+
+   > 两个容易混淆的点：
+   > - "固定" ≠ "数值是常数"。狂热/哨兵/定向跳跃的冷却都随技能等级变化（`44,35,30,26,24` 等），
+   >   但它们同时是固定的；反过来，治愈之光冷却恒为 10，却**不是**固定，可以被减。
+   > - 这个标记对玩家有直接用处：超越永恒自己就是"缩短其他技能剩余冷却"，
+   >   而它会跳过固定冷却的技能（`races.lua:283` 的 `not t.fixed_cooldown`）。
+   >
+   > 线格式：`fixedCd: true`（只在为真时写，保持 JSON 小）；`expandCooldown(cd, fixedCd)` 把它
+   > 放进 `Cooldown.fixed`，卡片与技能小卡片的冷却徽章据此加一个「固定」角标。
+
 3. **色码转换**：`#GOLD#…#LAST#` → `<span style="color:…">`；同时产出纯文本供搜索。
 
 4. **职业/种族记录**：
