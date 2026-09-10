@@ -273,7 +273,9 @@ test('the effective combat stat is the raw one rescaled, and the inverse is mini
     assert.equal(rescaleCombatStat(raw),effective,`effective ${effective} -> raw ${raw}`);
     assert.ok(rescaleCombatStat(raw-1)<effective,`raw ${raw-1} must not already reach ${effective}`);
   }
-  // That curve is why the power slider stops at 200: effective 100 needs raw 300.
+  // That curve is why the power slider stops at 150: effective 100 needs raw 300,
+  // and 150 needs raw 640 — past it the curve is flat enough that no real build
+  // gets there.
   assert.equal(rawCombatStat(100),300);
 });
 

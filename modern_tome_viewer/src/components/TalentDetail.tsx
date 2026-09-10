@@ -405,11 +405,13 @@ function rawPowerHint(effective: number): string {
  * 466 tree references), so anything outside 1–2 is meaningless. Power is the
  * *effective* combat stat the damage helpers consume: the game puts the raw one
  * through `rescaleCombatStat` (Combat.lua:1477), where effective 100 already
- * needs raw 300 and effective 200 needs raw 1100 — so 1–200 covers every real
- * character, and the panel prints the raw value the slider implies.
+ * needs raw 300 and effective 150 needs raw 640 — beyond that the curve is so
+ * flat that no character a player actually builds reaches it (the export never
+ * pins a power above 100), so 1–150 is the span worth dragging. The panel prints
+ * the raw value the slider implies.
  */
 const COEFFICIENT_RANGE = { min: 0.9, max: 1.5, step: 0.1 };
-const POWER_RANGE = { min: 1, max: 200, step: 1 };
+const POWER_RANGE = { min: 1, max: 150, step: 1 };
 
 /** Power sliders name the power they set: 法术强度, 精神强度, physical power… */
 function powerControl(label: string): Control {

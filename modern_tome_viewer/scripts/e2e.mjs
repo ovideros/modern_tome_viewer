@@ -291,16 +291,17 @@ await page.goto(`${url}#/search?talent=T_FLAMESHOCK`, { waitUntil: 'domcontentlo
 await page.waitForTimeout(900);
 check('computed damage ladder rendered', /^[\d.,\s]+$/.test(baseline) && baseline.split(',').length === 5, baseline);
 
-// Raising the power stat must raise the numbers.
-await sliders.nth(2).fill('200');
+// Raising the power stat must raise the numbers. 150 is the top of the power
+// slider — the effective stat the game's damage helpers read.
+await sliders.nth(2).fill('150');
 await page.waitForTimeout(400);
 const boosted = await damageText();
 check('raising spell power changes the numbers', boosted !== baseline, `${baseline} -> ${boosted}`);
 const boostedFirst = Number(boosted.split(',')[0].trim());
 // Combat.lua oracle: combatTalentSpellDamage(t=1, 10, 250) at effective
-// spellpower 200. The search page leaves mastery unknown, so the coefficient
-// starts at 1 and the effective talent level is 1 x 1 = 1, giving 299.
-const sourceExpected = 299;
+// spellpower 150. The search page leaves mastery unknown, so the coefficient
+// starts at 1 and the effective talent level is 1 x 1 = 1, giving 225.
+const sourceExpected = 225;
 check('power slider evaluates source coefficients accurately', boostedFirst === sourceExpected, `${boostedFirst} vs ${sourceExpected}`);
 const baselineFirst = Number(baseline.split(',')[0].trim());
 check('raising spell power increases the value', boostedFirst > baselineFirst, `${baselineFirst} -> ${boostedFirst}`);
@@ -311,8 +312,8 @@ const powerRanges = await sliders.evaluateAll((els) =>
   els.map((el) => `${el.closest('label')?.innerText.replace(/\n/g, ' ')}:${el.min}..${el.max}/${el.step}`),
 );
 check(
-  'the power slider is 1-200 and prints the raw value behind it',
-  powerRanges.some((l) => l.includes('强度（有效值）') && l.includes(':1..200/1') && l.includes('原始值')),
+  'the power slider is 1-150 and prints the raw value behind it',
+  powerRanges.some((l) => l.includes('强度（有效值）') && l.includes(':1..150/1') && l.includes('原始值')),
   powerRanges.join(' | '),
 );
 check(
@@ -358,11 +359,11 @@ check(
   tip.includes('取决于') || tip.includes('当前条件'),
   tip.replace(/\n/g, ' | ').slice(0, 90),
 );
-// The sliders sit at coefficient 1.3 and power 200 just above. A tooltip that
+// The sliders sit at coefficient 1.3 and power 150 just above. A tooltip that
 // describes the export's condition instead of the current one would say 1.5 and
 // 100 — that is exactly what must not happen.
 check('tooltip reports the coefficient the slider is at', tip.includes('技能系数 1.3'), tip.replace(/\n/g, ' | ').slice(0, 110));
-// The sliders sit at coefficient 1.3 and power 200 just above. A tooltip that
+// The sliders sit at coefficient 1.3 and power 150 just above. A tooltip that
 // describes the export's condition instead of the current one would say 1.5 and
 // 100 — that is exactly what must not happen. (This trigger is a source value,
 // so it drops the export lines entirely; the fallback keeps them, and the
@@ -385,7 +386,7 @@ for (let index = 0; index < sourceCount; index += 1) {
   const tip = await page.locator('body > [role="tooltip"]').first().innerText();
   if (tip.includes('法术强度')) { damageTip = tip; break; }
 }
-check('a source value that reads the power slider is present', damageTip.includes('法术强度 200'), `${sourceCount} source values | ${damageTip.replace(/\n/g, ' | ').slice(0, 120)}`);
+check('a source value that reads the power slider is present', damageTip.includes('法术强度 150'), `${sourceCount} source values | ${damageTip.replace(/\n/g, ' | ').slice(0, 120)}`);
 check('and the coefficient on the same value', damageTip.includes('技能系数 1.3'), damageTip.replace(/\n/g, ' | ').slice(0, 110));
 // A source value needs no export reference: the formula already defines it.
 check(
@@ -566,17 +567,17 @@ const decayValue = async () =>
   Number((await decayPanel.locator('[data-testid$="-value"]').first().innerText()).split(',')[0].replace(/[^\d.]/g, ''));
 const decayIndex = (needle) => decaySliders.findIndex((l) => l.includes(needle));
 const decayAtRest = await decayValue();
-await decayPanel.locator('input[type=range]').nth(decayIndex('精神强度')).fill('200');
+await decayPanel.locator('input[type=range]').nth(decayIndex('精神强度')).fill('150');
 await page.waitForTimeout(400);
 const mindBoosted = await decayValue();
 await decayPanel.locator('input[type=range]').nth(decayIndex('精神强度')).fill('100');
-await decayPanel.locator('input[type=range]').nth(decayIndex('法术强度')).fill('200');
+await decayPanel.locator('input[type=range]').nth(decayIndex('法术强度')).fill('150');
 await page.waitForTimeout(400);
 const spellBoosted = await decayValue();
 check(
   'raising either power raises the value, symmetrically',
   mindBoosted > decayAtRest && mindBoosted === spellBoosted,
-  `${decayAtRest} / mind 200: ${mindBoosted} / spell 200: ${spellBoosted}`,
+  `${decayAtRest} / mind 150: ${mindBoosted} / spell 150: ${spellBoosted}`,
 );
 
 // 饥荒挽歌 renders its ladder at character level 50 while varying the talent
