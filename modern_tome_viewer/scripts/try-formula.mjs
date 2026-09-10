@@ -21,7 +21,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const { parseAcronyms, defaultSimParams, simAtAxis, evaluateAcronym } = require('../src/lib/scaling-core.js');
-const { matchesDisplayed, declaredInputs, consumedInputs, uncoveredInputs, ladderAxis } = await import('./lua-scaling.mjs');
+const { matchesDisplayed, declaredInputs, consumedInputs, uncoveredInputs, ladderAxis, checkHandExpression } = await import('./lua-scaling.mjs');
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const SITE = path.resolve(ROOT, '../starsapphirex.github.io/tometips/data/master');
@@ -81,35 +81,21 @@ function checkExpression(talentId, acronymIndex, expr, conditions = null) {
       variants.push({ name, error: '该技能在这套导出里找不到，或没有这个 acronym' });
       continue;
     }
-    const axis = ladderAxis(ref);
-    if (!axis) {
+    const check = checkHandExpression(ref, expr, conditions);
+    if (check.error) {
       variants.push({ name, error: '标题里没有唯一可变的轴' });
       continue;
     }
-    const acr = {
-      ...ref,
-      base: null,
-      max: null,
-      mastery: 1,
-      lua: { expr, precision: ref.precision ?? 0 },
-    };
-    const sim = {
-      ...defaultSimParams(acr),
-      ...(conditions ? { flags: conditions } : {}),
-    };
-    const points = axis.ladder.map((value) => {
-      const predicted = evaluateAcronym(acr, simAtAxis(acr, sim, value));
-      const displayed = ref.displayed[axis.ladder.indexOf(value)];
-      const truncMatches = Number.isFinite(predicted) && Math.trunc(predicted) === displayed;
-      const roundMatches = Number.isFinite(predicted) && Math.round(predicted) === displayed;
-      const decimal = (ref.precision ?? 0) > 0;
-      const ok = Number.isFinite(predicted) &&
-        matchesDisplayed(predicted, displayed, ref.precision ?? 0);
+    const decimal = (ref.precision ?? 0) > 0;
+    const points = check.points.map((point) => {
+      const finite = Number.isFinite(point.predicted);
+      const truncMatches = finite && Math.trunc(point.predicted) === point.displayed;
+      const roundMatches = finite && Math.round(point.predicted) === point.displayed;
       return {
-        axis: value,
-        displayed,
-        predicted: Number.isFinite(predicted) ? Number(predicted.toFixed(4)) : null,
-        ok,
+        axis: point.axis,
+        displayed: point.displayed,
+        predicted: finite ? Number(point.predicted.toFixed(4)) : null,
+        ok: point.ok,
         reading: decimal ? 'decimal' : truncMatches && roundMatches ? 'both' : truncMatches ? 'trunc' : roundMatches ? 'round' : 'none',
       };
     });
@@ -117,13 +103,13 @@ function checkExpression(talentId, acronymIndex, expr, conditions = null) {
     variants.push({
       name,
       coefficient,
-      axis: axis.label,
-      ladder: axis.ladder,
+      axis: check.axis,
+      ladder: check.ladder,
       suffix: ref.suffix,
       prefix: ref.prefix ?? '',
       tail: ref.tail ?? '',
       points,
-      ok: points.every((p) => p.ok),
+      ok: check.ok,
     });
   }
   // The three variants say the same thing about inputs (only the coefficient

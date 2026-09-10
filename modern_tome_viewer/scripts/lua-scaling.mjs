@@ -1,4 +1,4 @@
-import { defaultSimParams, simAtAxis } from '../src/lib/scaling-core.js';
+import { defaultSimParams, simAtAxis, evaluateAcronym } from '../src/lib/scaling-core.js';
 import { evaluateLuaExpression, formulaCalls, formulaConditions, formulaDependencies, formulaActorInputs, formulaTalentRefs } from '../src/lib/lua-formula.js';
 
 /** Decimal places a printed number actually carries. */
@@ -110,14 +110,19 @@ export function matchLuaFormula(acronym, record) {
 
   if (matches.size !== 1) return { reason: matches.size ? 'ambiguous formula' : 'reference mismatch' };
   const candidate = [...matches.values()][0];
-  const [family, ...args] = formulaCalls(candidate.expr)[0];
+  // A hand-written formula need not be one of the game's helper families: a pure
+  // level expression like `["*",2,["talentLevel",true]]` is a formula too, it
+  // just carries no family, base or max.
+  const calls = formulaCalls(candidate.expr);
+  const family = calls.length ? calls[0][0] : null;
+  const args = calls.length ? calls[0].slice(1) : [];
   const offset = ['statDamage', 'statScale', 'talentLimit'].includes(family) ? 1 : 0;
   const conditions = Object.fromEntries(Object.entries(candidate.flags ?? {}).filter(([, v]) => v !== false));
   return {
     formula: {
       family,
-      base: args[offset],
-      max: args[offset + 1],
+      base: calls.length ? args[offset] : null,
+      max: calls.length ? args[offset + 1] : null,
       mastery: sim.coefficient,
       lua: {
         expr: candidate.expr,
@@ -206,6 +211,41 @@ export function uncoveredInputs(declared, consumed) {
 
 export function inputsCovered(declared, consumed) {
   return uncoveredInputs(declared, consumed).length === 0;
+}
+
+/**
+ * Evaluate a hand-written expression against one exported rendering.
+ *
+ * The workbench and the build share this so an overlay entry is judged the same
+ * way in both: same ladder, same display readings. (The input-coverage rule is
+ * checked by the caller, which is the side that knows the title's declaration.)
+ *
+ * Returns `{ error }` when the rendering has no single varying axis, otherwise
+ * `{ axis, ladder, points, ok }` with the raw prediction kept so callers can
+ * report which integer reading matched.
+ */
+export function checkHandExpression(ref, expr, conditions = null) {
+  const axis = ladderAxis(ref);
+  if (!axis) return { error: 'unsupported axis' };
+  const acronym = {
+    ...ref,
+    base: null,
+    max: null,
+    mastery: 1,
+    lua: { expr, precision: ref.precision ?? 0 },
+  };
+  const sim = { ...defaultSimParams(acronym), ...(conditions ? { flags: conditions } : {}) };
+  const points = axis.ladder.map((value, index) => {
+    const predicted = evaluateAcronym(acronym, simAtAxis(acronym, sim, value));
+    const displayed = ref.displayed[index];
+    return {
+      axis: value,
+      displayed,
+      predicted,
+      ok: Number.isFinite(predicted) && matchesDisplayed(predicted, displayed, ref.precision ?? 0),
+    };
+  });
+  return { axis: axis.label, ladder: axis.ladder, points, ok: points.every((point) => point.ok) };
 }
 
 /** Does this title parameter name an input the formula must consume? */

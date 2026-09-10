@@ -540,7 +540,7 @@ function defaultSimFor(acronyms: Acronym[], mastery: number): SimParams {
     stats: {},
   };
   for (const acronym of acronyms) {
-    if (acronym.base === null) continue;
+    if (!acronym.lua && acronym.base === null) continue;
     const defaults = defaultSimParams(acronym);
     base.talentLevel = defaults.talentLevel;
     base.characterLevel = defaults.characterLevel ?? 1;

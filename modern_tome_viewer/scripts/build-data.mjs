@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { parseAcronyms, fitCoefficients } from '../src/lib/scaling-core.js';
 
 import { buildLuaIndex } from './extract-lua-coefficients.mjs';
-import { matchLuaFormula, resolveIntegerRounding } from './lua-scaling.mjs';
+import { matchLuaFormula, resolveIntegerRounding, checkHandExpression, declaredInputs, consumedInputs, uncoveredInputs, ladderAxis } from './lua-scaling.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..');
@@ -80,11 +80,103 @@ if (luaIndex) {
   if (luaIndex.rawHash !== rawHash.digest('hex')) throw new Error('Lua index does not match raw data; run npm run data:lua');
 }
 const scalingStats = { total: 0, source: 0, estimated: 0, reference: 0, full: 0, partial: 0, none: 0, reasons: {} };
+
+// ---------------------------------------------------------------------------
+// Hand-written expression overlay (data/lua-expressions.json)
+//
+// The overlay is a candidate list, never an authority: every entry is re-checked
+// here with the same gate the extractor's candidates go through, plus the full
+// three-rendering ladder it was written against. An entry that fails is dropped
+// and reported instead of being trusted.
+// ---------------------------------------------------------------------------
+const VARIANT_NAMES = ['1', '1.3', '1.5'];
+const overlayPath = path.join(projectRoot, args.overlay || 'data/lua-expressions.json');
+const overlay = fs.existsSync(overlayPath) ? JSON.parse(fs.readFileSync(overlayPath, 'utf8')) : [];
+const overlayByTalent = new Map();
+for (const entry of overlay) {
+  if (!overlayByTalent.has(entry.talent)) overlayByTalent.set(entry.talent, new Map());
+  overlayByTalent.get(entry.talent).set(entry.acronym, entry);
+}
+
+// The export ships the same talents rendered at three tooltip coefficients; only
+// the canonical one is committed under data/raw, the others live beside the icon
+// checkout. Validation falls back to the canonical rendering alone when absent.
+const variantsDir = path.resolve(
+  projectRoot,
+  args['variants-source'] ||
+    process.env.TOME_VARIANTS_DIR ||
+    path.join(projectRoot, '..', 'starsapphirex.github.io', 'tometips', 'data', 'master'),
+);
+const variantAcronyms = new Map();
+function variant(name) {
+  if (!variantAcronyms.has(name)) {
+    const map = new Map();
+    const files = fs.existsSync(variantsDir)
+      ? fs.readdirSync(variantsDir).filter(n => n.endsWith(`-${name}.json`))
+      : [];
+    for (const file of files) {
+      for (const group of JSON.parse(fs.readFileSync(path.join(variantsDir, file), 'utf8'))) {
+        for (const talent of group.talents || []) map.set(talent.id, parseAcronyms(talent.info_text || '', { fit: false }));
+      }
+    }
+    variantAcronyms.set(name, map);
+  }
+  return variantAcronyms.get(name);
+}
+const overlayStats = { total: overlay.length, accepted: 0, rejected: [], variants: 0 };
+overlayStats.variants = VARIANT_NAMES.filter((name) => variant(name).size > 0).length;
+
+/**
+ * null when the entry reproduces every available rendering and reads only inputs
+ * the title declares. With the off-repo renderings absent the ladder check falls
+ * to `matchLuaFormula` on the canonical acronym further down.
+ */
+function overlayVerdict(entry, acronym) {
+  if (overlayStats.variants) {
+    for (const name of VARIANT_NAMES) {
+      const ref = variant(name).get(entry.talent)?.[entry.acronym];
+      if (!ref) return `variant ${name}: acronym not found`;
+      const check = checkHandExpression(ref, entry.expr, entry.conditions ?? null);
+      if (check.error) return `variant ${name}: no single varying axis`;
+      if (!check.ok) {
+        const bad = check.points.filter((p) => !p.ok)
+          .map((p) => `${p.axis}->${p.displayed}≠${Number.isFinite(p.predicted) ? p.predicted.toFixed(4) : '—'}`);
+        return `variant ${name}: ladder mismatch at ${bad.slice(0, 3).join(', ')}`;
+      }
+    }
+  }
+  const axis = ladderAxis(acronym);
+  if (!axis) return 'no single varying axis';
+  const missing = uncoveredInputs(declaredInputs(acronym, axis), consumedInputs(entry.expr, axis.label));
+  if (missing.length) return `reads undeclared input(s): ${missing.join(', ')}`;
+  return null;
+}
+
 function talentAcronyms(talent) {
   const result = parseAcronyms(talent.info_text || '', { fit: false });
-  for (const acronym of result) {
+  const hand = overlayByTalent.get(talent.id);
+  result.forEach((acronym, index) => {
     scalingStats.total++;
-    const match = matchLuaFormula(acronym, luaIndex?.talents[talent.id]);
+    const record = luaIndex?.talents[talent.id];
+    const entry = hand?.get(index);
+    let candidates = record?.candidates;
+    let provenance = record;
+    if (entry) {
+      const verdict = overlayVerdict(entry, acronym);
+      if (!verdict) {
+        // A hand-written formula replaces the extracted candidates for this value
+        // so the two can never both match and be rejected as ambiguous.
+        const line = Number(String(entry.source).match(/:(\d+)$/)?.[1] ?? 0);
+        provenance = { ...(record ?? {}), file: String(entry.source).replace(/:\d+$/, ''), line, candidates: [{ expr: entry.expr, argument: index + 1 }] };
+        candidates = provenance.candidates;
+        overlayStats.accepted++;
+      } else {
+        overlayStats.rejected.push(`${entry.talent}#${entry.acronym}: ${verdict}`);
+      }
+    }
+    const match = candidates
+      ? matchLuaFormula(acronym, provenance ?? { candidates })
+      : { reason: 'source unavailable' };
     if (match.formula) {
       Object.assign(acronym, match.formula);
       scalingStats.source++;
@@ -93,12 +185,12 @@ function talentAcronyms(talent) {
       scalingStats[acronym.base === null ? 'reference' : 'estimated']++;
       scalingStats.reasons[match.reason] = (scalingStats.reasons[match.reason] || 0) + 1;
     }
-  }
+  });
   if (result.length) {
     // Values printed by one `tformat` call share a format string, so the
     // integer reading one of them proves settles its siblings.
     resolveIntegerRounding(result);
-    const solved = result.filter(a => a.base !== null).length;
+    const solved = result.filter(a => a.lua || a.base !== null).length;
     scalingStats[solved === result.length ? 'full' : solved ? 'partial' : 'none']++;
   }
   return result;
@@ -787,8 +879,20 @@ const manifest = {
 };
 manifest.scaling = scalingStats;
 manifest.luaSourceHash = luaIndex?.sourceHash ?? null;
+manifest.overlay = {
+  file: path.relative(projectRoot, overlayPath),
+  entries: overlayStats.total,
+  accepted: overlayStats.accepted,
+  rejected: overlayStats.rejected.length,
+  validatedAgainst: overlayStats.variants || 1,
+};
 fs.writeFileSync(path.join(outDir, 'data', 'scaling-report.json'), JSON.stringify(scalingStats, null, 2));
 console.log('[build-data] scaling', JSON.stringify(scalingStats));
+console.log(
+  `[build-data] overlay ${overlayStats.accepted}/${overlayStats.total} accepted` +
+  ` (re-validated against ${overlayStats.variants || 1} rendering(s))` +
+  (overlayStats.rejected.length ? `; dropped: ${overlayStats.rejected.slice(0, 5).join(' | ')}${overlayStats.rejected.length > 5 ? ` … +${overlayStats.rejected.length - 5}` : ''}` : ''),
+);
 fs.writeFileSync(path.join(outDir, 'data', 'manifest.json'), JSON.stringify(manifest, null, 2));
 
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`;

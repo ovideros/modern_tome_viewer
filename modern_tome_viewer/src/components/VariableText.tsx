@@ -186,7 +186,8 @@ function TipBody({
       </span>
       {simulatable ? (
         <span className="mt-1 block text-subtle">
-          {acronym.lua ? '源码公式' : '反解估算'}：{FAMILY_LABELS[acronym.family] ?? acronym.family}
+          {acronym.lua ? '源码公式' : '反解估算'}
+          {acronym.family ? `：${FAMILY_LABELS[acronym.family] ?? acronym.family}` : ''}
           {!acronym.lua && acronym.base !== null && ` · 系数 ${acronym.base} / ${acronym.max}`}
           {acronym.lua && (
             <span className="block">

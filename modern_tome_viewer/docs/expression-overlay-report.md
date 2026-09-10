@@ -13,6 +13,7 @@
 | 全库覆盖率 | **267 / 1281 = 20.8%** |
 | 验收 | `覆盖层校验：267/267 通过`（每条都满足：三套导出系数 1.00/1.30/1.50 共 15 点全中 ＋ 表达式读到的输入都被标题声明过）|
 | 回归 | scaling **41/41** · verify **77/77** · smoke **42/42** · e2e **160/160** · typecheck OK |
+| **上站** | ✅ 已接入 `build-data.mjs` 并重建：`manifest.scaling.source` **2469 → 2850**（+381）；构建日志 `overlay 267/267 accepted (re-validated against 3 renderings)`；`vite build` 重建 `dist/` 后 smoke/e2e 复跑通过 |
 | 分树报告 | 15 份，见 `docs/overlay-reports/` |
 
 **交付物**
@@ -82,6 +83,16 @@
 `matches.size !== 1` 会判歧义，见第五节建议 1）。
 
 也就是说：**重建一次数据（`npm run data`）本身就能白拿 +142 条**，不需要任何新的覆盖层条目。
+
+**已兑现**：本轮把覆盖层接入构建后重建，`manifest.scaling.source` 从 **2469 涨到 2850（+381）**——
+正是"自动 +142"加上"覆盖层独有的 239 条"。构建日志：
+
+```
+[build-data] overlay 267/267 accepted (re-validated against 3 rendering(s))
+```
+
+即覆盖层没有被盲信：构建对每条都跑了三套渲染的 15 点复现 + 输入覆盖判定，失败会丢弃并打印原因
+（`manifest.overlay` 记录 `entries / accepted / rejected / validatedAgainst`）。
 
 ### 方法论：不接受「复刻显示规则」的包装
 
@@ -439,10 +450,14 @@
 
 ## 五、给主项目的建议（按收益排序）
 
-1. **接入构建**（上一轮遗留的 ①）：`build-data.mjs` 读 `data/lua-expressions.json`，按 `(talent, acronymIndex)` 用覆盖层表达式
-   走 `matchLuaFormula` 的同一套校验，过不了的丢弃并在构建日志报告。这样 267 条真正进入网站产物。
-   ⚠️ 注意 `matchLuaFormula` 的「唯一候选」判定（`matches.size !== 1` → `ambiguous formula`）需单独处理：
-   若覆盖层表达式与自动候选同时命中会被判歧义，应在有覆盖层条目时只放该条候选。
+1. ~~**接入构建**（上一轮遗留的 ①）~~ —— **本轮已完成**。实现要点：`build-data.mjs` 读 `data/lua-expressions.json`；
+   某 `(talent, acronymIndex)` 有覆盖层条目时，**只用该条表达式作为候选**（避免与自动候选同时命中被判
+   `ambiguous formula`），并用 `overlayVerdict()` 对**三套渲染逐点复现 + 输入覆盖**重校验，过不了就丢弃、
+   回落到自动候选，并在构建日志与 `manifest.overlay` 里报告。三套变体从旁边的
+   `starsapphirex.github.io/tometips/data/master` 读取（可用 `--variants-source` 或 `TOME_VARIANTS_DIR` 覆盖），
+   目录不存在时退化为只校验构建自带的 1.5 渲染，并在日志里写明校验了几套。
+   另：`matchLuaFormula` 现在也接受**没有游戏公式族**的纯表达式（如 `["*",2,["talentLevel",true]]`），
+   `family` 为 `null`，前端弹层已相应处理（不再显示 `源码公式：null`）。
 2. **加「多轴对角线」支持**（`ladderAxis`）：一条 title 有多条 5 值阶梯时，沿导出给定的联合点同点代入。
    可一次性解锁 **18 条**（本轮剩余的最大一块）。注意 `combatStatScale` 默认 `power=0.5`（sqrt 变换），按线性内插会全错。
 3. **修 `isDeclaredInput` 的认类**：`kind: other`（如 `精准`）也算已声明；可解锁 `T_CRIPPLING_SHOT#1` 一类。
