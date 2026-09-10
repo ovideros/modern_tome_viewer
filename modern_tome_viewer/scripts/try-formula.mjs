@@ -199,12 +199,21 @@ function runOverlay() {
   const entries = Array.isArray(overlay) ? overlay : Object.entries(overlay).map(([id, v]) => ({ talent: id, ...v }));
   let pass = 0;
   const failures = [];
+  const superset = [];
   for (const entry of entries) {
     const result = checkExpression(entry.talent, entry.acronym, parseExpression(JSON.stringify(entry.expr)), entry.conditions ?? null);
-    if (result.ok && result.inputsMatch) pass += 1;
-    else failures.push({ entry, result });
+    if (result.ok && result.inputsMatch) {
+      pass += 1;
+      // The fifteen points cannot tell a dropped input from an unused one when
+      // the export pins that input (pmod(300) is exactly 1), so surface the count.
+      if (result.unused.length) superset.push(`${entry.talent}#${entry.acronym} (${result.unused.join(',')})`);
+    } else failures.push({ entry, result });
   }
   console.log(`覆盖层校验：${pass}/${entries.length} 通过`);
+  if (superset.length) {
+    console.log(`其中 ${superset.length} 条是「标题声明 ⊋ 表达式消耗」：15 点校验无法判断它们是否漏读了滑条输入，需按源码复核。`);
+    console.log(`  ${superset.slice(0, 6).join('、')}${superset.length > 6 ? ` … 共 ${superset.length} 条` : ''}`);
+  }
   for (const f of failures.slice(0, 10)) {
     console.log(`\n✗ ${f.entry.talent} acronym#${f.entry.acronym}`);
     if (f.result.error) console.log(`   ${f.result.error}`);

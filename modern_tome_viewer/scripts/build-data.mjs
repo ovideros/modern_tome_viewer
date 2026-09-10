@@ -123,7 +123,7 @@ function variant(name) {
   }
   return variantAcronyms.get(name);
 }
-const overlayStats = { total: overlay.length, accepted: 0, rejected: [], variants: 0 };
+const overlayStats = { total: overlay.length, accepted: 0, rejected: [], superset: [], variants: 0 };
 overlayStats.variants = VARIANT_NAMES.filter((name) => variant(name).size > 0).length;
 
 /**
@@ -147,8 +147,16 @@ function overlayVerdict(entry, acronym) {
   }
   const axis = ladderAxis(acronym);
   if (!axis) return 'no single varying axis';
-  const missing = uncoveredInputs(declaredInputs(acronym, axis), consumedInputs(entry.expr, axis.label));
+  const declared = declaredInputs(acronym, axis);
+  const consumed = consumedInputs(entry.expr, axis.label);
+  const missing = uncoveredInputs(declared, consumed);
   if (missing.length) return `reads undeclared input(s): ${missing.join(', ')}`;
+  // Declaring more than the formula reads is legitimate (the export writes a
+  // whole tooltip's parameter union into every acronym title), but it is also
+  // the shape a dropped slider takes when the export pins that input — so count
+  // it instead of accepting it silently.
+  const unused = declared.filter((label) => !consumed.includes(label));
+  if (unused.length) overlayStats.superset.push(`${entry.talent}#${entry.acronym} (${unused.join(',')})`);
   return null;
 }
 
@@ -884,6 +892,8 @@ manifest.overlay = {
   entries: overlayStats.total,
   accepted: overlayStats.accepted,
   rejected: overlayStats.rejected.length,
+  superset: overlayStats.superset.length,
+  supersetSample: overlayStats.superset.slice(0, 8),
   validatedAgainst: overlayStats.variants || 1,
 };
 fs.writeFileSync(path.join(outDir, 'data', 'scaling-report.json'), JSON.stringify(scalingStats, null, 2));
@@ -891,6 +901,7 @@ console.log('[build-data] scaling', JSON.stringify(scalingStats));
 console.log(
   `[build-data] overlay ${overlayStats.accepted}/${overlayStats.total} accepted` +
   ` (re-validated against ${overlayStats.variants || 1} rendering(s))` +
+  (overlayStats.superset.length ? `; ${overlayStats.superset.length} declare an input the formula does not read (audited in docs/overlay-reports/audit-superset-*.md)` : '') +
   (overlayStats.rejected.length ? `; dropped: ${overlayStats.rejected.slice(0, 5).join(' | ')}${overlayStats.rejected.length > 5 ? ` … +${overlayStats.rejected.length - 5}` : ''}` : ''),
 );
 fs.writeFileSync(path.join(outDir, 'data', 'manifest.json'), JSON.stringify(manifest, null, 2));

@@ -13,6 +13,7 @@
 | **全库有源码公式** | 2469 → **3618 / 3750 = 96.5%** |
 | 回归 | typecheck OK · scaling **41/41** · verify **77/77** · smoke **42/42** · e2e **160/160** |
 | 派发命中率 | 本轮派发 786 条可攻目标，拿下 **768 = 97.7%** |
+| 滑条完整性审计 | 扫出 101 条「声明了却没读到」，逐条回源码核对后修好 **24 条**（含 22 条漏 `pmod`、2 条写死常数）；余 77 条确认是导出过度声明 |
 
 **交付物**
 
@@ -59,6 +60,38 @@
 
 这两处缺陷同时也是**自动匹配**的瓶颈：重跑全库后自动匹配 2469 → **2611**（+142），再加上覆盖层，
 `manifest.scaling.source` 最终到 **3618 / 3750 = 96.5%**。
+
+### ⚠ 放宽闸门的盲点：悄悄丢掉的滑条（已审计）
+
+「覆盖」判定（`消耗 ⊆ 声明`）放行了一类**危险的形状**：公式声明了一个输入却**不读**它。
+多数情况这是导出把整份 tooltip 的参数并集抄进了每个 acronym 的 title（无害），但**如果源码真的用到它，滑条就失效了**——
+而 15 点校验**看不出来**，因为导出把非轴输入钉在固定值上。
+
+实例（用户在网页上撞见）：`T_TEMPORAL_REPRIEVE`（时空避难所）
+- 源码 `getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,6)))`，helper 里 `value = math.floor(value * pm)`
+- 错误公式 `["max",1,["floor",["combatScale",["talentLevel"],2,1,6,5]]]`，note 还写着「pm=1」
+- **`pmod(300) = 1.000`**（导出钉住值）→ 乘与不乘 pmod 在 15 个点上逐位相同，闸门无从分辨
+- 后果：paradox 300 → 675 时持续时间本该 2/6 → **3/9**（长 50%），错误公式下纹丝不动
+
+**已做的处置**：
+
+1. 对全部 1035 条扫出「声明 ⊋ 消耗」的 **101 条**；
+2. 派两个 agent 逐条回源码核对 getter，判出 **24 条真漏读**并修复：
+   - **22 条 `getExtensionModifier` 漏读 `paradox`**（`T_TEMPORAL_REPRIEVE`、`T_STOP#2`、`T_PHASE_PULSE#2`、`T_TIME_STOP#0`、
+     `T_WORMHOLE#1`、`T_PRECOGNITION#1`、`T_SEE_THE_THREADS#0`、`T_STATIC_HISTORY#0`、`T_TEMPORAL_FUGUE#0`、
+     `T_TEMPORAL_VIGOUR#0`、`T_TIME_DILATION#1`、`T_TIME_SKIP#1`、`T_TWIST_FATE#0`、`T_WARP_BLADE#1`、`T_BRAID_LIFELINES#0`、
+     `T_BREACH#1`、`T_CELERITY#1`、`T_CHRONO_TIME_SHIELD#1`、`T_ENTROPY#0`、`T_GRAVITY_WELL#0`、`T_INVIGORATE#0`）
+   - **2 条 `getCun(15,true)` 被写死成常数 15**（`T_PIERCING_SIGHT#0/#1`、`T_AMBUSCADE#3`）——只在灵巧=100 时成立，
+     灵巧滑条一动就错；其中 `T_AMBUSCADE#3` 的原 note 还断言「写成 `["actor","灵巧"]` 会让 15 点全错」，实测是**误判**
+3. 其余 **77 条**确认是导出过度声明（如 pure 等级阶梯的 range 被抄上 paradox、`psi` 显式传 0 使因子恒 1.5、
+   两个标签互为整份 tooltip 并集），公式正确，保持原样；
+4. **加结构性防护**：`try-formula --overlay` 与 `build-data` 现在都会报出这类条目数
+   （`其中 N 条是「标题声明 ⊋ 表达式消耗」…` / `manifest.overlay.superset`），并指向审计报告——避免它再次悄悄长出来。
+
+审计逐条结论见 `docs/overlay-reports/audit-superset-A.md`、`audit-superset-B.md`（各 50 条，未能判定 0 条）。
+
+**教训**：数值复现（15 点）与"滑条正确"是两件事。导出把非轴输入钉死时，前者**无法**证明后者；
+这类条目必须回源码确认，或至少被显式计数以便复核。
 
 ---
 

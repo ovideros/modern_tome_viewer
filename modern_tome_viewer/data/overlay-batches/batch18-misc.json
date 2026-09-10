@@ -2,147 +2,444 @@
  {
   "talent": "T_ARCANE_SUPREMACY",
   "acronym": 0,
-  "expr": ["floor", ["talentLevel"]],
+  "expr": [
+   "floor",
+   [
+    "talentLevel"
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:74",
   "note": "getRemoveCount = math.floor(self:getTalentLevel(t))；随有效等级（含系数）变化"
  },
  {
   "talent": "T_SHIV_LORD",
   "acronym": 0,
-  "expr": ["+", 4, ["ceil", ["talentLevel"]]],
+  "expr": [
+   "+",
+   4,
+   [
+    "ceil",
+    [
+     "talentLevel"
+    ]
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:557",
   "note": "getDuration = 4 + math.ceil(self:getTalentLevel(t))"
  },
  {
   "talent": "T_SHIV_LORD",
   "acronym": 1,
-  "expr": ["talentLevel", true],
+  "expr": [
+   "talentLevel",
+   true
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:571",
   "note": "info: self:getTalentLevelRaw(t)（三套系数下相同 → 原始等级）"
  },
  {
   "talent": "T_SHIV_LORD",
   "acronym": 2,
-  "expr": ["*", 100, ["/", ["min", 500, ["max", 0, ["+", 50, ["spellDamage", 50, 450]]]], 500]],
+  "expr": [
+   "*",
+   100,
+   [
+    "/",
+    [
+     "min",
+     500,
+     [
+      "max",
+      0,
+      [
+       "+",
+       50,
+       [
+        "spellDamage",
+        50,
+        450
+       ]
+      ]
+     ]
+    ],
+    500
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:558",
   "note": "power = util.bound(50 + combatTalentSpellDamage(t,50,450),0,500)/500；info 取 power*100"
  },
  {
   "talent": "T_SHIV_LORD",
   "acronym": 3,
-  "expr": ["*", 50, ["/", ["min", 500, ["max", 0, ["+", 50, ["spellDamage", 50, 450]]]], 500]],
+  "expr": [
+   "*",
+   50,
+   [
+    "/",
+    [
+     "min",
+     500,
+     [
+      "max",
+      0,
+      [
+       "+",
+       50,
+       [
+        "spellDamage",
+        50,
+        450
+       ]
+      ]
+     ]
+    ],
+    500
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:571",
   "note": "info: power * 100 / 2"
  },
  {
   "talent": "T_SHIV_LORD",
   "acronym": 4,
-  "expr": ["+", 50, ["*", 100, ["/", ["min", 500, ["max", 0, ["+", 50, ["spellDamage", 50, 450]]]], 500]]],
+  "expr": [
+   "+",
+   50,
+   [
+    "*",
+    100,
+    [
+     "/",
+     [
+      "min",
+      500,
+      [
+       "max",
+       0,
+       [
+        "+",
+        50,
+        [
+         "spellDamage",
+         50,
+         450
+        ]
+       ]
+      ]
+     ],
+     500
+    ]
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/objects.lua:571",
   "note": "info: 50 + power * 100"
  },
  {
   "talent": "T_LIGHT_OF_FOOT",
   "acronym": 0,
-  "expr": ["*", 0.2, ["talentLevel", true]],
+  "expr": [
+   "*",
+   0.2,
+   [
+    "talentLevel",
+    true
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3234",
   "note": "info: self:getTalentLevelRaw(t) * 0.2（三套系数下相同 → 原始等级）"
  },
  {
   "talent": "T_CHARM_MASTERY",
   "acronym": 0,
-  "expr": ["floor", ["/", ["*", 100, ["talentLevel"]], ["+", ["talentLevel"], 7.5]]],
+  "expr": [
+   "floor",
+   [
+    "/",
+    [
+     "*",
+     100,
+     [
+      "talentLevel"
+     ]
+    ],
+    [
+     "+",
+     [
+      "talentLevel"
+     ],
+     7.5
+    ]
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3265",
   "note": "cdReduc(tl) = math.floor(100*tl/(tl+7.5))，tl = getTalentLevel(t)；tl<=0 的守卫用不到"
  },
  {
   "talent": "T_PIERCING_SIGHT",
   "acronym": 0,
-  "expr": ["max", 0, ["combatScale", ["*", 15, ["talentLevel"]], 10, 1, 80, 75, 0.25]],
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.15
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    10,
+    1,
+    80,
+    75,
+    0.25
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3287",
-  "note": "seePower = max(0, combatScale(self:getCun(15,true)*tl, 10,1,80,75,0.25))。导出 15 点全部等于 15×有效等级（对应源码里 getCun 的字面默认参数 15，也印证源码注释 TL5=80）；按标题声明的 灵巧=100 代入会全盘偏大（tl=1 算得 87.9 vs 导出 44），故把该量冻结为源码字面常数 15，见报告「疑点」"
+  "note": "seePower = max(0, combatScale(getCun(15,true)*getTalentLevel(t),10,1,80,75,0.25))，getCun(15,true)=灵巧*15/100。原式把驱动量写成常数 15*等级（= 灵巧100 时的值），漏了灵巧依赖——导出把灵巧钉在 100，所以两者同分；灵巧滑条一动原式就错"
  },
  {
   "talent": "T_PIERCING_SIGHT",
   "acronym": 1,
-  "expr": ["max", 0, ["combatScale", ["*", 15, ["talentLevel"]], 10, 1, 80, 75, 0.25]],
+  "expr": [
+   "max",
+   0,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.15
+     ],
+     [
+      "talentLevel"
+     ]
+    ],
+    10,
+    1,
+    80,
+    75,
+    0.25
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3287",
-  "note": "info: tformat(t.seePower(self,t), t.seePower(self,t))，与 #0 同值"
+  "note": "seePower 同上（invis detection 与 stealth detection 同一 getter）；getCun(15,true)=灵巧*15/100。原式把驱动量写成常数 15*等级，漏了灵巧依赖——导出把灵巧钉在 100，所以两者同分"
  },
  {
   "talent": "T_DUCK_AND_DODGE",
   "acronym": 0,
-  "expr": ["max", 10, ["-", 15, ["talentLevel", true]]],
+  "expr": [
+   "max",
+   10,
+   [
+    "-",
+    15,
+    [
+     "talentLevel",
+     true
+    ]
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:604",
   "note": "getThreshold*100 = max(10, 15 - getTalentLevelRaw(t))；用原始等级（三套系数下相同）"
  },
  {
   "talent": "T_DWARF_RESILIENCE",
   "acronym": 0,
-  "expr": ["statScale", "con", 7, 25],
+  "expr": [
+   "statScale",
+   "con",
+   7,
+   25
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:472",
   "note": "params.armor = combatStatScale(\"con\", 7, 25)"
  },
  {
   "talent": "T_DWARF_RESILIENCE",
   "acronym": 2,
-  "expr": ["statScale", "con", 12, 30, 0.75],
+  "expr": [
+   "statScale",
+   "con",
+   12,
+   30,
+   0.75
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:474",
   "note": "params.physical = combatStatScale(\"con\", 12, 30, 0.75)"
  },
  {
   "talent": "T_DWARF_RESILIENCE",
   "acronym": 3,
-  "expr": ["statScale", "con", 12, 30, 0.75],
+  "expr": [
+   "statScale",
+   "con",
+   12,
+   30,
+   0.75
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:475",
   "note": "params.spell = combatStatScale(\"con\", 12, 30, 0.75)"
  },
  {
   "talent": "T_MILITANT_MIND",
   "acronym": 0,
-  "expr": ["*", 2, ["talentLevel"]],
+  "expr": [
+   "*",
+   2,
+   [
+    "talentLevel"
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:631",
   "note": "info: tformat(self:getTalentLevel(t) * 2)，格式 %0.1f"
  },
  {
   "talent": "T_YEEK_WILL",
   "acronym": 0,
-  "expr": ["floor", ["statScale", "wil", 5, 14]],
+  "expr": [
+   "floor",
+   [
+    "statScale",
+    "wil",
+    5,
+    14
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:868",
   "note": "getduration = math.floor(combatStatScale(\"wil\", 5, 14))"
  },
  {
   "talent": "T_OGRE_WRATH",
   "acronym": 0,
-  "expr": ["floor", ["statScale", "str", 5, 12]],
+  "expr": [
+   "floor",
+   [
+    "statScale",
+    "str",
+    5,
+    12
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/races.lua:1081",
   "note": "getduration = math.floor(combatStatScale(\"str\", 5, 12))"
  },
  {
   "talent": "T_BLIGHTZONE",
   "acronym": 0,
-  "expr": ["spellDamage", 4, 65],
+  "expr": [
+   "spellDamage",
+   4,
+   65
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:1368",
   "note": "action: local dam = self:combatTalentSpellDamage(t, 4, 65)，info 打印同一 getter"
  },
  {
   "talent": "T_VOID_SHARDS",
   "acronym": 0,
-  "expr": ["talentLevel", true],
+  "expr": [
+   "talentLevel",
+   true
+  ],
   "source": "tome-src-full/data/talents/misc/horrors.lua:344",
   "note": "info: local number = self:getTalentLevelRaw(t)"
  },
  {
   "talent": "T_PERFECT_CONTROL",
   "acronym": 1,
-  "expr": ["*", 0.5, ["combatScale", ["*", ["talentLevel"], ["^", ["+", 1, ["*", 8, ["+", ["*", 0.5, ["/", ["power", "精神强度"], 100]], ["*", 0.5, ["/", ["talentLevel"], 6.5]]]]], 1.04]], 15, 0, 49, 34]],
+  "expr": [
+   "*",
+   0.5,
+   [
+    "combatScale",
+    [
+     "*",
+     [
+      "talentLevel"
+     ],
+     [
+      "^",
+      [
+       "+",
+       1,
+       [
+        "*",
+        8,
+        [
+         "+",
+         [
+          "*",
+          0.5,
+          [
+           "/",
+           [
+            "power",
+            "精神强度"
+           ],
+           100
+          ]
+         ],
+         [
+          "*",
+          0.5,
+          [
+           "/",
+           [
+            "talentLevel"
+           ],
+           6.5
+          ]
+         ]
+        ]
+       ]
+      ],
+      1.04
+     ]
+    ],
+    15,
+    0,
+    49,
+    34
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:2533",
   "note": "getBoost = combatScale(tl * combatStatTalentIntervalDamage(t,\"combatMindpower\",1,9), 15,0,49,34)；info 打印 0.5*boost。combatStatTalentIntervalDamage = rescaleDamage(1+8*(0.5*mp/100+0.5*tl/6.5))，且 rescaleDamage(d)=d^1.04"
  },
  {
   "talent": "T_GNASHING_TEETH",
   "acronym": 5,
-  "expr": ["*", -100, ["combatLimit", ["statDamage", "con", 10, 50], 1, 0, 0, 0.357, 35.7]],
+  "expr": [
+   "*",
+   -100,
+   [
+    "combatLimit",
+    [
+     "statDamage",
+     "con",
+     10,
+     50
+    ],
+    1,
+    0,
+    0,
+    0.357,
+    35.7
+   ]
+  ],
   "source": "tome-src-full/data/talents/misc/horrors.lua:127",
   "note": "getPower = combatLimit(combatTalentStatDamage(t,\"con\",10,50), 1, 0, 0, 0.357, 35.7)，info 打印 power*100。导出读数带负号（源码注释即为 \"-health\"，tooltip 原文 \"prevent death until -%d%% life\" 的负号被并入 acronym），故乘 -100"
  }

@@ -131,7 +131,14 @@
    "combatScale",
    [
     "*",
-    15,
+    [
+     "*",
+     0.15,
+     [
+      "actor",
+      "灵巧"
+     ]
+    ],
     [
      "talentLevel"
     ]
@@ -142,7 +149,7 @@
    75
   ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3538",
-  "note": "getStealthPower = combatScale(getCun(15, true) * getTalentLevel(t), 25, 0, 100, 75)。getCun(15, true) 是「无加成基准值」getter，源码本身不吃标题声明的输入；导出基准下实测该驱动常量恒为 15（拟合可行区间 [14.801, 15.047]），故按导出基准冻结成常数 15（写成 [\"actor\",\"灵巧\"]=100 会让 15 点全错）。标题过度声明 [法术强度, 灵巧]，本值两者都未用到"
+  "note": "getStealthPower = combatScale(getCun(15, true) * getTalentLevel(t), 25, 0, 100, 75)；getCun(15, true) = 灵巧×0.15（raw=true 只表示基准属性，不是恒定值）。原式把 100×0.15 硬写成常数 15，导出把 灵巧 钉在 100 上所以两者同分；已补 [\"*\",0.15,[\"actor\",\"灵巧\"]]。标题里的 法术强度 是超集（本值不用）。"
  },
  {
   "talent": "T_AMBUSH_TRAP",
@@ -3464,19 +3471,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       3,
+       1,
+       7,
+       5
+      ]
      ],
-     3,
-     1,
-     7,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/timeline-threading.lua:197",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentScale(t, 3, 7)))（timeline-threading.lua:197）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_BRANDISH",
@@ -3496,20 +3516,37 @@
   "talent": "T_BREACH",
   "acronym": 1,
   "expr": [
-   "floor",
+   "max",
+   1,
    [
-    "combatScale",
+    "floor",
     [
-     "talentLevel"
-    ],
-    3,
-    1,
-    7,
-    5
+     "*",
+     [
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       3,
+       1,
+       7,
+       5
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
+    ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:312",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1 时只余 floor()"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentScale(t, 3, 7)))（temporal-combat.lua:312）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_BULL_SHOT",
@@ -4072,19 +4109,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       1,
+       1,
+       2,
+       5
+      ]
      ],
-     1,
-     1,
-     2,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:27",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,2)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentScale(t, 1, 2)))（speed-control.lua:27）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_CHANT_ACOLYTE",
@@ -4942,25 +4992,42 @@
   "talent": "T_CHRONO_TIME_SHIELD",
   "acronym": 1,
   "expr": [
-   "min",
-   15,
+   "max",
+   1,
    [
-    "max",
-    5,
+    "floor",
     [
-     "+",
-     5,
+     "*",
      [
-      "floor",
+      "min",
+      15,
       [
-       "talentLevel"
+       "max",
+       5,
+       [
+        "+",
+        5,
+        [
+         "floor",
+         [
+          "talentLevel"
+         ]
+        ]
+       ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/stasis.lua:52",
-  "note": "getDuration = getExtensionModifier(self,t,util.bound(5+floor(getTalentLevel(t)),5,15))，pm=1"
+  "note": "getDuration = getExtensionModifier(self, t, util.bound(5 + math.floor(self:getTalentLevel(t)), 5, 15))（stasis.lua:52）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_CHRONO_TIME_SHIELD",
@@ -8760,53 +8827,66 @@
    [
     "floor",
     [
-     "max",
-     0,
+     "*",
      [
-      "+",
+      "floor",
       [
-       "*",
+       "max",
+       0,
        [
-        "/",
-        6,
+        "+",
         [
-         "-",
+         "*",
+         [
+          "/",
+          6,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ],
          [
           "sqrt",
-          5
-         ],
-         1
-        ]
-       ],
-       [
-        "sqrt",
-        [
-         "talentLevel"
-        ]
-       ]
-      ],
-      [
-       "-",
-       1,
-       [
-        "/",
-        6,
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
         [
          "-",
+         1,
          [
-          "sqrt",
-          5
-         ],
-         1
+          "/",
+          6,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
         ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/energy.lua:167",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,7)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(1-m) 展开：内置 combatScale 在 tl=5 给 7.0→7，Lua 给 6.999999999999999→6，导出为 6"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentScale(t, 1, 7)))（energy.lua:176）；内层 combatTalentScale 仍按 Lua 结合次序 m*sqrt(tl)+(1-m) 展开（内置 combatScale 在 tl=5 给 7.0→7，Lua 给 6.999999999999999→6，导出为 6）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_ESSENCE_OF_SPEED",
@@ -11826,19 +11906,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       4,
+       1,
+       8,
+       5
+      ]
      ],
-     4,
-     1,
-     8,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/gravity.lua:233",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,8)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentScale(t, 4, 8)))（gravity.lua:241）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_GRIM_FUTURE",
@@ -13273,33 +13366,46 @@
     "floor",
     [
      "*",
-     14,
      [
-      "-",
-      1,
+      "floor",
       [
-       "exp",
+       "*",
+       14,
        [
-        "+",
+        "-",
+        1,
         [
-         "*",
+         "exp",
          [
-          "sqrt",
+          "+",
           [
-           "talentLevel"
-          ]
-         ],
-         -0.3624587951042149
-        ],
-        0.07679437416765682
+           "*",
+           [
+            "sqrt",
+            [
+             "talentLevel"
+            ]
+           ],
+           -0.3624587951042149
+          ],
+          0.07679437416765682
+         ]
+        ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/temporal-combat.lua:232",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,14,4,8)))，paradox=300 时 pm=1；手工按 limit*(1-exp(sqrt(tl)*a+b)) 展开（内置 talentLimit 节点在 tl=1.3 锚点给 4，Lua 浮点给 3.9999999999999982→3）"
+  "note": "getDuration = getExtensionModifier(self, t, math.floor(self:combatTalentLimit(t, 14, 4, 8)))（temporal-combat.lua:232）；内层 combatTalentLimit 仍手工展开（内置 talentLimit 节点在 tl=1.3 锚点给 4，Lua 浮点给 3.9999999999999982→3）。getExtensionModifier（chronomancer.lua:187）依次做 value=math.floor(value*getParadoxModifier(self))、value=math.ceil(value*mod)（Extension 未激活时 mod=1）、return math.max(1, value)。原式只留了最外层 max(1,...)（原 note 写「pm=1」），漏掉 paradox 依赖；导出把 paradox 钉在 300 上（pmod=1）所以两者在 15 点上同分。已补成 [\"max\",1,[\"floor\",[\"*\",X,[\"pmod\",[\"actor\",\"paradox\"]]]]]。"
  },
  {
   "talent": "T_INVISIBILITY",
@@ -16592,19 +16698,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       2,
+       1,
+       4,
+       5
+      ]
      ],
-     2,
-     1,
-     4,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/spacetime-weaving.lua:258",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,4)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,4)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_PHASE_SHIFT",
@@ -16645,7 +16764,14 @@
     "combatScale",
     [
      "*",
-     15,
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.15
+     ],
      [
       "talentLevel"
      ]
@@ -16658,7 +16784,7 @@
    ]
   ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3287",
-  "note": "seePower = max(0, combatScale(self:getCun(15,true)*tl, 10,1,80,75,0.25))。导出 15 点全部等于 15×有效等级（对应源码里 getCun 的字面默认参数 15，也印证源码注释 TL5=80）；按标题声明的 灵巧=100 代入会全盘偏大（tl=1 算得 87.9 vs 导出 44），故把该量冻结为源码字面常数 15，见报告「疑点」"
+  "note": "seePower = max(0, combatScale(getCun(15,true)*getTalentLevel(t),10,1,80,75,0.25))，getCun(15,true)=灵巧*15/100。原式把驱动量写成常数 15*等级（= 灵巧100 时的值），漏了灵巧依赖——导出把灵巧钉在 100，所以两者同分；灵巧滑条一动原式就错"
  },
  {
   "talent": "T_PIERCING_SIGHT",
@@ -16670,7 +16796,14 @@
     "combatScale",
     [
      "*",
-     15,
+     [
+      "*",
+      [
+       "actor",
+       "灵巧"
+      ],
+      0.15
+     ],
      [
       "talentLevel"
      ]
@@ -16683,7 +16816,7 @@
    ]
   ],
   "source": "tome-src-full/data/talents/misc/npcs.lua:3287",
-  "note": "info: tformat(t.seePower(self,t), t.seePower(self,t))，与 #0 同值"
+  "note": "seePower 同上（invis detection 与 stealth detection 同一 getter）；getCun(15,true)=灵巧*15/100。原式把驱动量写成常数 15*等级，漏了灵巧依赖——导出把灵巧钉在 100，所以两者同分"
  },
  {
   "talent": "T_PITFALL_TRAP",
@@ -16973,19 +17106,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       2,
+       1,
+       10,
+       5
+      ]
      ],
-     2,
-     1,
-     10,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/chronomancy.lua:30",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,10)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,10)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_PREORDAIN",
@@ -19114,53 +19260,66 @@
    [
     "floor",
     [
-     "max",
-     0,
+     "*",
      [
-      "+",
+      "floor",
       [
-       "*",
+       "max",
+       0,
        [
-        "/",
-        12,
+        "+",
         [
-         "-",
+         "*",
+         [
+          "/",
+          12,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ],
          [
           "sqrt",
-          5
-         ],
-         1
-        ]
-       ],
-       [
-        "sqrt",
-        [
-         "talentLevel"
-        ]
-       ]
-      ],
-      [
-       "-",
-       4,
-       [
-        "/",
-        12,
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
         [
          "-",
+         4,
          [
-          "sqrt",
-          5
-         ],
-         1
+          "/",
+          12,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
         ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/chronomancy.lua:172",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,16)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(4-m) 展开：内置 combatScale 在 tl=5 给 16.0→16，Lua 给 15.999999999999998→15"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,4,16)))；内层按 Lua 结合次序 m*sqrt(tl)+(4-m) 展开（combatScale 在 tl=5 给 16.0→16，Lua 给 15.999999999999998→15）。getExtensionModifier 做 floor(value*pmod)；原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_SELF_JUDGEMENT",
@@ -23662,57 +23821,70 @@
    [
     "floor",
     [
-     "+",
-     1,
+     "*",
      [
-      "max",
-      0,
+      "floor",
       [
        "+",
+       1,
        [
-        "*",
+        "max",
+        0,
         [
-         "/",
-         6,
+         "+",
          [
-          "-",
+          "*",
+          [
+           "/",
+           6,
+           [
+            "-",
+            [
+             "sqrt",
+             5
+            ],
+            1
+           ]
+          ],
           [
            "sqrt",
-           5
-          ],
-          1
-         ]
-        ],
-        [
-         "sqrt",
-         [
-          "talentLevel"
-         ]
-        ]
-       ],
-       [
-        "-",
-        1,
-        [
-         "/",
-         6,
+           [
+            "talentLevel"
+           ]
+          ]
+         ],
          [
           "-",
+          1,
           [
-           "sqrt",
-           5
-          ],
-          1
+           "/",
+           6,
+           [
+            "-",
+            [
+             "sqrt",
+             5
+            ],
+            1
+           ]
+          ]
          ]
         ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/stasis.lua:129",
-  "note": "getDuration = getExtensionModifier(self,t,floor(1+combatTalentScale(t,1,7)))。按 Lua 结合次序 m*sqrt(tl)+(1-m) 展开：内置 combatScale 在 tl=5 给 7.0→8，Lua 给 6.999999999999999→7"
+  "note": "getDuration = getExtensionModifier(self,t,floor(1+combatTalentScale(t,1,7)))；内层按 Lua 结合次序展开（combatScale 在 tl=5 给 7.0→8，Lua 给 6.999999999999999→7）。getExtensionModifier 做 floor(value*pmod)；原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_STEADY_MIND",
@@ -24654,21 +24826,34 @@
    "max",
    1,
    [
-    "ceil",
+    "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "ceil",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       2.3,
+       1,
+       4.3,
+       5
+      ]
      ],
-     2.3,
-     1,
-     4.3,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/stasis.lua:87",
-  "note": "getDuration = getExtensionModifier(self,t,ceil(combatTalentScale(t,2.3,4.3)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,ceil(combatTalentScale(t,2.3,4.3)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_STORMCOIL_GENERATOR",
@@ -25269,53 +25454,66 @@
    [
     "floor",
     [
-     "max",
-     0,
+     "*",
      [
-      "+",
+      "floor",
       [
-       "*",
+       "max",
+       0,
        [
-        "/",
-        5,
+        "+",
         [
-         "-",
+         "*",
+         [
+          "/",
+          5,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ],
          [
           "sqrt",
-          5
-         ],
-         1
-        ]
-       ],
-       [
-        "sqrt",
-        [
-         "talentLevel"
-        ]
-       ]
-      ],
-      [
-       "-",
-       3,
-       [
-        "/",
-        5,
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
         [
          "-",
+         3,
          [
-          "sqrt",
-          5
-         ],
-         1
+          "/",
+          5,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
         ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/timeline-threading.lua:120",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,8)))，pm=1。按 Lua 结合次序 m*sqrt(tl)+(3-m) 展开：内置 combatScale 在 tl=5 给 7.999999999999999→7，Lua 给 8"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,8)))；内层按 Lua 结合次序展开。getExtensionModifier 做 floor(value*pmod)；原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TEMPORAL_FUGUE_OLD",
@@ -25435,24 +25633,33 @@
   "talent": "T_TEMPORAL_REPRIEVE",
   "acronym": 0,
   "expr": [
-   "max",
-   1,
+   "floor",
    [
-    "floor",
+    "*",
     [
-     "combatScale",
+     "floor",
      [
-      "talentLevel"
-     ],
-     2,
-     1,
-     6,
-     5
+      "combatScale",
+      [
+       "talentLevel"
+      ],
+      2,
+      1,
+      6,
+      5
+     ]
+    ],
+    [
+     "pmod",
+     [
+      "actor",
+      "paradox"
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/timetravel.lua:223",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,6)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,2,6)))；getExtensionModifier 做 floor(value*pmod)。注意导出把 paradox 钉在 300（pmod=1.000），所以不乘 pmod 也能过 15 点——但那样 paradox 滑条会失效"
  },
  {
   "talent": "T_TEMPORAL_VIGOUR",
@@ -25463,19 +25670,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       1,
+       1,
+       3,
+       5
+      ]
      ],
-     1,
-     1,
-     3,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/temporal-hounds.lua:347",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,3)))，pm=1 时 = max(1,floor(...))"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,3)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TEMPORAL_WAKE",
@@ -26774,19 +26994,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       1,
+       1,
+       2,
+       5
+      ]
      ],
-     1,
-     1,
-     2,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:50",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,2)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,2)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TIME_SHIELD",
@@ -26813,26 +27046,36 @@
    [
     "floor",
     [
-     "+",
-     2,
+     "*",
      [
-      "ceil",
+      "+",
+      2,
       [
-       "combatScale",
+       "ceil",
        [
-        "talentLevel"
-       ],
-       0.3,
-       1,
-       2.3,
-       5
+        "combatScale",
+        [
+         "talentLevel"
+        ],
+        0.3,
+        1,
+        2.3,
+        5
+       ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/timetravel.lua:132",
-  "note": "getDuration = getExtensionModifier(self,t,2+ceil(combatTalentScale(t,0.3,2.3)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,2+ceil(combatTalentScale(t,0.3,2.3)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TIME_STOP",
@@ -26844,33 +27087,46 @@
     "floor",
     [
      "*",
-     4,
      [
-      "-",
-      1,
+      "floor",
       [
-       "exp",
+       "*",
+       4,
        [
-        "+",
+        "-",
+        1,
         [
-         "*",
+         "exp",
          [
-          "sqrt",
+          "+",
           [
-           "talentLevel"
-          ]
-         ],
-         -0.7795256696436654
-        ],
-        0.6011139393098757
+           "*",
+           [
+            "sqrt",
+            [
+             "talentLevel"
+            ]
+           ],
+           -0.7795256696436654
+          ],
+          0.6011139393098757
+         ]
+        ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/speed-control.lua:102",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,4,1,3)))，pm=1；手工指数式展开"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentLimit(t,4,1,3)))；内层手工指数式展开。getExtensionModifier 做 floor(value*pmod)；原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TINKER_ARCANE_DISRUPTION_WAVE",
@@ -28148,53 +28404,66 @@
    [
     "floor",
     [
-     "max",
-     0,
+     "*",
      [
-      "+",
+      "floor",
       [
-       "*",
+       "max",
+       0,
        [
-        "/",
-        5,
+        "+",
         [
-         "-",
+         "*",
+         [
+          "/",
+          5,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ],
          [
           "sqrt",
-          5
-         ],
-         1
-        ]
-       ],
-       [
-        "sqrt",
-        [
-         "talentLevel"
-        ]
-       ]
-      ],
-      [
-       "-",
-       1,
-       [
-        "/",
-        5,
+          [
+           "talentLevel"
+          ]
+         ]
+        ],
         [
          "-",
+         1,
          [
-          "sqrt",
-          5
-         ],
-         1
+          "/",
+          5,
+          [
+           "-",
+           [
+            "sqrt",
+            5
+           ],
+           1
+          ]
+         ]
         ]
        ]
+      ]
+     ],
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
       ]
      ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/flux.lua:156",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,6)))，pm=1；按 Lua 结合次序展开"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,1,6)))；内层按 Lua 结合次序展开。getExtensionModifier 做 floor(value*pmod)；原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_TWOFOLD_CURSE",
@@ -29825,19 +30094,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       3,
+       1,
+       7,
+       5
+      ]
      ],
-     3,
-     1,
-     7,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/blade-threading.lua:36",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,3,7)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_WARP_MINE_AWAY",
@@ -30978,19 +31260,32 @@
    [
     "floor",
     [
-     "combatScale",
+     "*",
      [
-      "talentLevel"
+      "floor",
+      [
+       "combatScale",
+       [
+        "talentLevel"
+       ],
+       6,
+       1,
+       10,
+       5
+      ]
      ],
-     6,
-     1,
-     10,
-     5
+     [
+      "pmod",
+      [
+       "actor",
+       "paradox"
+      ]
+     ]
     ]
    ]
   ],
   "source": "tome-src-full/data/talents/chronomancy/spacetime-weaving.lua:140",
-  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))，pm=1"
+  "note": "getDuration = getExtensionModifier(self,t,floor(combatTalentScale(t,6,10)))；getExtensionModifier 做 floor(value*pmod)。原式漏了 paradox 依赖——导出把 paradox 钉在 300（pmod=1.000），乘不乘同分"
  },
  {
   "talent": "T_WRAITHFORM",
