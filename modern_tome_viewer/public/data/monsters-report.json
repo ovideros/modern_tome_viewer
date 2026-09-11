@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-10T17:29:30.212Z",
+  "builtAt": "2026-09-11T03:00:15.847Z",
   "census": {
     "templates": 942,
     "abstract": 130,
@@ -59,6 +59,11 @@
     "withRandomGroups": 1,
     "withImage": 787,
     "withChineseName": 812,
+    "distinctTypes": 20,
+    "distinctSubtypes": 89,
+    "withChineseType": 812,
+    "withChineseSubtype": 811,
+    "withSubtype": 811,
     "namedLikeBase": 0
   },
   "files": [
@@ -545,6 +550,7 @@
   "missingArtSources": [],
   "unknownTalentRefs": [],
   "missingTranslations": [],
+  "missingTypeLabels": [],
   "abstractTemplates": [
     {
       "id": "BASE_NPC_HORROR",
@@ -1717,5 +1723,5 @@
       "childCount": 0
     }
   ],
-  "elapsedMs": 680
+  "elapsedMs": 735
 }

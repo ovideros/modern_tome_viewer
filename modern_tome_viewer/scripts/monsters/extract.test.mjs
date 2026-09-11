@@ -20,7 +20,7 @@ import { collectTemplates, resolveEntity, resolveTalents, classifyRank, autoImag
 import { buildImageIndex, buildArtLookup, lookupArt } from './images.mjs';
 import { extractTalentSupplement } from './talent-supplement.mjs';
 import { loadLocales, readLocaleSnapshot } from './locale-snapshot.mjs';
-import { translate } from './locale.mjs';
+import { translate, parseLocale, translateEntityWord } from './locale.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..', '..');
@@ -251,6 +251,62 @@ test('dataset: most monsters carry a description', { skip: !hasBuild }, () => {
   assert.ok(withDesc > 700, `expected most templates to have a description, got ${withDesc}`);
   const withZh = dataset.monsters.filter((monster) => monster.descZh).length;
   assert.ok(withZh > withDesc * 0.95, `${withZh} of ${withDesc} descriptions translated`);
+});
+
+// ---------------------------------------------------------------------------
+// Type / subtype labels
+// ---------------------------------------------------------------------------
+
+test('locale: t() tags are kept per context', () => {
+  // A two-argument call must not be read as if the next statement's tag
+  // belonged to it, and the flat map still keeps the last value (which is what
+  // the engine's `nil` table does).
+  const parsed = parseLocale(
+    ['t("light", "光系", "damage type")', 't("light", "轻甲", "entity subtype")', 't("plain", "普通")', 't("x", "y", "tag")'].join('\n'),
+  );
+  assert.equal(parsed.byContext.get('entity subtype').get('light'), '轻甲');
+  assert.equal(parsed.byContext.get('damage type').get('light'), '光系');
+  assert.equal(parsed.map.get('light'), '轻甲');
+  assert.equal(parsed.byContext.has('_t'), false, 'an untagged call gets no context table');
+  assert.deepEqual(parsed.byContext.get('tag'), new Map([['x', 'y']]));
+  assert.equal(translateEntityWord(parsed, 'entity subtype', 'light').text, '轻甲');
+  assert.equal(translateEntityWord(parsed, 'missing tag', 'light').text, '轻甲', 'falls back to the flat map');
+});
+
+test('snapshot: the entity type tables survive the committed snapshot', () => {
+  const snapshot = readLocaleSnapshot(path.join(projectRoot, 'data/raw/locales/zh_hans.json'));
+  assert.ok(snapshot, 'the snapshot is a committed build input');
+  const types = snapshot.byContext.get('entity type');
+  const subtypes = snapshot.byContext.get('entity subtype');
+  assert.ok(types instanceof Map && types.size > 50, `entity type table has ${types?.size} entries`);
+  assert.ok(subtypes instanceof Map && subtypes.size > 200, `entity subtype table has ${subtypes?.size} entries`);
+  assert.equal(types.get('horror'), '恐魔');
+  assert.equal(subtypes.get('eldritch'), '艾尔德里奇');
+  // `light` is the reason the context tables exist: the flat map keeps the
+  // damage-type translation (光系) while the actor tooltip asks for the
+  // armour-subtype one (轻甲) — see mod/class/Actor.lua.
+  assert.equal(subtypes.get('light'), '轻甲');
+  assert.equal(snapshot.map.get('light'), '光系');
+});
+
+test('dataset: every monster type and subtype carries a Chinese label', { skip: !hasBuild }, () => {
+  const dataset = JSON.parse(fs.readFileSync(path.join(outDir, 'data/monsters.json'), 'utf8'));
+  const missing = dataset.monsters.filter((monster) => !monster.typeZh || (monster.subtype && !monster.subtypeZh));
+  assert.deepEqual(
+    missing.slice(0, 5).map((monster) => monster.id),
+    [],
+    `${missing.length} templates have no Chinese type label`,
+  );
+  assert.equal(dataset.census.withChineseType, dataset.monsters.length);
+  assert.equal(dataset.census.withChineseSubtype, dataset.census.withSubtype);
+  assert.ok(dataset.census.distinctTypes > 15, `only ${dataset.census.distinctTypes} distinct types`);
+  // Spot-check that the label really is the game's word and not the English.
+  const wisp = dataset.monsters.find((monster) => monster.subtype === 'light');
+  assert.equal(wisp.typeZh, '元素');
+  assert.equal(wisp.subtypeZh, '轻甲');
+  const horror = dataset.monsters.find((monster) => monster.type === 'horror' && monster.subtype === 'eldritch');
+  assert.equal(horror.typeZh, '恐魔');
+  assert.equal(horror.subtypeZh, '艾尔德里奇');
 });
 
 // ---------------------------------------------------------------------------

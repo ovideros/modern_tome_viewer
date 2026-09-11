@@ -314,6 +314,48 @@ if (monsterSearchInput) {
   await wait(200);
 }
 
+// Type tree: the engine's own `type` -> `subtype` classification, in Chinese.
+const typeTree = document.querySelector('[data-testid="monster-type-tree"]');
+check('monster sidebar renders the type tree', Boolean(typeTree));
+const horrorRow = document.querySelector('[data-testid="monster-type-row"][data-value="horror"]');
+check(
+  'type tree labels a category in Chinese and English',
+  (horrorRow?.textContent ?? '').includes('恐魔') && (horrorRow?.textContent ?? '').includes('horror'),
+  horrorRow?.textContent ?? '',
+);
+if (horrorRow) {
+  click(horrorRow);
+  await wait(300);
+  const horrorCount = document.querySelectorAll('main div.grid > button').length;
+  check('type filter narrows the list to that category', horrorCount === 95, String(horrorCount));
+  check('the active type is written to the URL', window.location.hash.includes('type=horror'), window.location.hash);
+  const firstCard = document.querySelector('main div.grid > button')?.textContent ?? '';
+  check('monster cards show the Chinese type', firstCard.includes('恐魔'), firstCard.slice(0, 80));
+
+  const eldritchRow = document.querySelector('[data-testid="monster-subtype-row"][data-value="eldritch"]');
+  check('selecting a type reveals its subtypes', (eldritchRow?.textContent ?? '').includes('艾尔德里奇'), eldritchRow?.textContent ?? '');
+  if (eldritchRow) {
+    click(eldritchRow);
+    await wait(300);
+    const subCount = document.querySelectorAll('main div.grid > button').length;
+    check('subtype filter narrows further', subCount === 61, String(subCount));
+    check('the active subtype is written to the URL', window.location.hash.includes('sub=eldritch'), window.location.hash);
+    // Clicking the open subtype again goes back to the whole type.
+    click(eldritchRow);
+    await wait(250);
+  }
+  const allRow = document.querySelector('[data-testid="monster-type-row"][data-value="all"]');
+  if (allRow) {
+    click(allRow);
+    await wait(300);
+  }
+  check(
+    'clearing the type filter restores the full list',
+    document.querySelectorAll('main div.grid > button').length === 812,
+    String(document.querySelectorAll('main div.grid > button').length),
+  );
+}
+
 const monsterCards = document.querySelectorAll('main div.grid > button');
 // Pick a monster that actually has talents, so the skill-panel path is exercised.
 let opened = null;

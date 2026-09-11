@@ -9,9 +9,9 @@
 > | 技能总数 | **1834**（上游导出 1826 + 从 Lua 补的 8 条怪物技能，见 §11） |
 | 怪物描述 | 765 个有英文原文，其中 763 个有中文译文（缺译 2 条已在报告里列出） |
 > | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
-> | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入 |
+> | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入；`type` 20 个大类 / `subtype` 89 个亚类，侧栏可按大类→亚类两级中文筛选 |
 > | 线上站点 | <https://ovideros.github.io/modern_tome_viewer/> · 仓库 <https://github.com/ovideros/modern_tome_viewer> · 发布提交 `042542a` |
-> | 测试基线 | typecheck 无错 · monsters **43/43** · scaling **45/45** · verify **87/87** · smoke **61/61** · e2e **222/222** |
+> | 测试基线 | typecheck 无错 · monsters **51/51** · scaling **45/45** · verify **87/87** · smoke **70/70** · e2e **247/247** |
 > | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
 >
 > 本轮的逐条进展见 §0「最近一轮变更」；数值覆盖的来龙去脉见
@@ -66,17 +66,19 @@
 怪物页最初把技能链到搜索页，读一个技能要来回跳。改成复用职业页的
 `TalentDetail`，在页面自己的面板里打开：
 
-- ≥1800px（新增 Tailwind `xxl` 变体）：作为第三列放在怪物面板右侧，怪物技能
-  列表保持可见，当前技能行高亮 `aria-pressed`。
-- 1280–1799px：底部抽屉（`data-testid="monster-talent-sheet"`），关闭后怪物面板
-  仍在，不丢上下文。
+- ≥1280px（`xl`）：作为第三列放在怪物面板右侧，怪物技能列表保持可见，当前技能行
+  高亮 `aria-pressed`。三列在 1280px 就成立，靠的是**列表让出一列**：技能面板打开
+  时列表的卡片列数改用容器查询按列表自身宽度决定（<560px 一列，≥560px 两列），
+  两块面板同时从 360px 收窄到 340px。**此前这一段要 1800px 才会变成第三列**
+  （当时的 `xxl` 变体已因此删除），细节见 §0.5。
 - <1280px（含手机）：同样是底部抽屉，但替代怪物抽屉（同一时刻只有一个抽屉，
   叠两层只会互相遮挡）；抽屉顶部是「← 返回怪物」按钮，关闭即回到怪物。
   e2e 在 1200 / 900 / 420 / 360px 四档逐一验证开、关与返回。
 
 面板使用 `embedded` 模式：保留完整技能说明与数值模拟，去掉"跳到大系"面包屑与
-收藏/对比按钮（怪物页没有大系上下文）。布局全部由 Tailwind 变体决定，不用 JS
-媒体查询驱动渲染，避免缩窗时 JS 与 CSS 判断不一致。
+收藏/对比按钮（怪物页没有大系上下文）。布局全部由 Tailwind 变体决定（<1280px
+是否需要"技能抽屉替代怪物抽屉"这一个布尔量来自 JS 媒体查询），避免缩窗时 JS 与
+CSS 判断不一致。
 
 顺带修掉第 6 个真实缺陷：**技能点击之后的深链失效**。原来的 URL 同步用一个
 "本地状态领先"布尔标记决定是否采纳新 hash，而那个标记会被错误的 render 消费掉：
@@ -193,8 +195,8 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 
 | 环境 | 结果 |
 | --- | --- |
-| 完整源码机器 | typecheck 无错 · monsters 43/43 · scaling 45/45 · verify 87/87 · smoke 61/61 · e2e 222/222 |
-| 干净克隆（无 gfx 图集 / 语言表 / DLC 源码） | `build:pages` ✅ · smoke 61/61 · verify 87/87 · e2e 222/222 · monsters **40 通过 + 3 skip** |
+| 完整源码机器（最新，含 §0.4 / §0.5） | typecheck 无错 · monsters 51/51 · scaling 45/45 · verify 87/87 · smoke 70/70 · e2e 247/247 |
+| 干净克隆（无 gfx 图集 / 语言表 / DLC 源码） | 上一轮实测：`build:pages` ✅ · smoke 61/61 · verify 87/87 · e2e 222/222 · monsters **40 通过 + 3 skip**；§0.4 新增的用例不依赖游戏源码，推算为 **48 通过 + 3 skip**（本轮未在干净克隆上重跑） |
 
 那 3 项 skip 是需要图集或语言表的用例，测试里用 `skipArt` / `hasLocaleTables` /
 `hasDlcSources` 三个信号显式声明原因，**不再是失败**。
@@ -204,8 +206,9 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 ## 0.3 本轮进展记录（本地简要）
 
 > 上面 §0 / §0.1 / §0.2 是本轮做完并验证过的内容。这里是给下一轮接手用的一页速览，
-> 细节都在对应文档里，不重复。**当前工作区未提交**（最近一次提交是 `e23444a`）；
-> GitHub 远端停在 `042542a`，只包含怪物图鉴与部署，尚不包含本节这些文档更新。
+> 细节都在对应文档里，不重复。**本轮追加的改动见 §0.4**（本地已验收待推送）。
+> 工作区状态：文档记录已提交为本地 `4fac3e0`，GitHub 远端仍停在 `042542a`
+> （只含怪物图鉴 + 部署），§0.4 的改动尚未提交、也未推送。
 
 ### 做完并验证过的事
 
@@ -244,6 +247,185 @@ npm run data          # 技能 + 怪物数据 + 图片（需本机游戏源码�
 npm run check         # typecheck + monsters + scaling + verify + build + smoke
 npm run e2e -- http://127.0.0.1:4173/     # 需先 npm run serve
 npm run build:pages   # 部署构建（校验已提交产物）
+```
+
+---
+
+## 0.4 追加：怪物种类中文化与「大类 / 亚类」选择器
+
+需求：把页面上的 `horror / eldritch` 这类英文种类换成中文，并在左侧搜索栏下方
+加一个按 `type`（大类）与 `subtype`（亚类）两级选择的筛选器，交互参考职业页。
+**代码已完成并通过全部本地测试，尚未提交、未推送**（等本地网页验收）。
+
+### 数据层
+
+| 改动 | 位置 |
+| --- | --- |
+| 语言解析保留 `_t(text, tag)` 的上下文分表 `byContext` | `scripts/monsters/locale.mjs` |
+| 新增 `translateEntityWord(locale, tag, value)`：按 `entity type` / `entity subtype` 取词，缺失才回退扁平映射 | 同上 |
+| 快照升到 `version: 2`，多出 `contexts` 段（只存这两个表：65 + 232 条） | `scripts/monsters/locale-snapshot.mjs` |
+| 每个模板写入 `typeZh` / `subtypeZh`；`census` 增加 `distinctTypes` / `distinctSubtypes` / `withChineseType` / `withChineseSubtype` / `withSubtype`；报告增加 `missingTypeLabels` | `scripts/monsters/build-monsters.mjs` |
+| 重新生成 `public/data/monsters.json` 与 `data/raw/locales/zh_hans.json`（图片零变化，报告只多两个字段） | 运行 `npm run data:monsters` |
+
+覆盖：**812/812 大类、811/811 亚类**有中文，`missingTypeLabels` 为空。
+
+### 界面层
+
+- `TypeChip` / 详情面板 / 缺图占位符都改成中文（如 `恐魔 / 艾尔德里奇`），
+  tooltip 保留源码英文；详情面板「数据来源与继承」新增一行中文 + 源码对照。
+- 侧栏搜索框下方新增 `MonsterTypeTree`：`全部类别` → 20 个大类行（中文 + 英文 +
+  计数），选中的大类展开它的亚类（缩进），再点一次逐级回退；点大类切换时自动清空
+  亚类。手机端（<1024px）用两个 `<select>` 暴露同样两级。
+- 筛选与 URL：`?type=horror&sub=eldritch`（亚类只在有 `type` 时生效）；结果行显示
+  「类别“恐魔” / “艾尔德里奇”」。搜索 haystack 增加 `typeZh` / `subtypeZh`，
+  所以搜「害虫」「大恶魔」也能命中。
+- 亚类值归一化：`subtypeKey()` 把 `Sher'Tul` / `sher'tul` / `shertul` 折成一行
+  （否则侧栏会出现三行「夏·图尔」），全库仅此一处冲突。
+
+### 顺带修掉的一个真实缺陷
+
+怪物页的 URL 同步是**单向**的：只有 `onParamsChange`（只改 App 状态），不像
+搜索/职业/种族页那样调用 `writeHash`，所以页面内选完筛选器后地址栏不变、刷新即丢。
+补上 `writeHash('monsters', …)` 后又暴露第二个坑：`publishedHash` / `adoptedHash`
+用 `''` 当"还没同步过"的哨兵，而"无筛选"本身就是一个合法空串，
+于是**清空筛选时 publish effect 直接早退**，地址栏留着旧参数。
+两处一起修：哨兵改成 `undefined`，publish effect 不再拿 `adoptedHash` 比较。
+回归测试：smoke「the active type/subtype is written to the URL」、
+e2e「type/subtype filter is written to the URL」+ 深链还原 + 清除后恢复 812。
+
+### 验证（本机，全部通过）
+
+```bash
+npm run typecheck      # 无错
+npm run test:monsters  # 51/51
+npm run test:scaling   # 45/45
+npm run verify         # 87/87
+npm run build:pages    # 通过（校验已提交产物）
+npm run smoke          # 70/70
+npm run e2e            # 当时 239/239；§0.5 追加 4 项后为 243/243（需 node scripts/serve.mjs dist 4173）
+```
+
+### 已知取舍
+
+- `light` 亚类（1 个怪：`crystal.lua:61` 的 wisp）按游戏的
+  `entity subtype` 表显示为「轻甲」——与游戏内 tooltip 一致；这是上游汉化表
+  自身的上下文冲突，页面不做修正，tooltip 给出源码 `elemental / light`。
+- 类型树的计数是全集总数（与稀有度行一致），不随关键词变化。
+
+---
+
+## 0.5 追加：技能面板的宽度门槛从 1800px 放宽到 1280px
+
+需求：在怪物页显示技能面板要求太宽；希望技能面板打开时左侧怪物列表从两列
+变成一列来腾空间。**已完成并通过全部本地测试，未提交、未推送。**
+
+### 改法
+
+| 位置 | 之前 | 现在 |
+| --- | --- | --- |
+| 技能面板作为第三列 | `xxl:block`（≥1800px） | `xl:block`（≥1280px，`data-testid="monster-talent-column"`） |
+| 技能底部抽屉 | `xxl:hidden` | `xl:hidden`（<1280px，与怪物抽屉同一档） |
+| 怪物面板宽度 | 固定 360px | 技能面板打开时 340px，否则 360px |
+| 技能面板宽度 | 固定 360px | 340px |
+| 卡片列表列数 | 恒定 `sm:grid-cols-2` | 技能面板打开时改为容器查询：`main` 加 `@container`，网格用 `@min-[560px]:grid-cols-2`（按列表自身宽度决定）；未打开时仍是 `sm:grid-cols-2` |
+| `xxl` 变体 | `src/styles.css` 自定义 | 已无引用，删除 |
+
+实测（本机 Chromium，`?m=WALROG` + 点开一个技能）：
+
+| 视口 | 侧栏 | 列表 | 卡片列数 | 怪物面板 | 技能面板 |
+| --- | --- | --- | --- | --- | --- |
+| 1280 | 236 | 296 | 1 | 340 | 340（列） |
+| 1500 | 236 | 516 | 1 | 340 | 340（列） |
+| 1600 | 236 | 616 | 2 | 340 | 340（列） |
+| ≥1600 | 236 | ≤616 | 2 | 340 | 340（列；页面外层 `max-w-[1600px]` 封顶） |
+| <1280 | 236 | — | 1–2 | 抽屉 | 抽屉（替代怪物抽屉） |
+
+各档均无横向滚动、无卡片内容溢出；`cardColumns` 用
+`getComputedStyle(grid).gridTemplateColumns` 实测，不是看类名。
+
+### 为什么用容器查询
+
+列数要跟着**列表自己的宽度**变，而不是视口：同一视口下开着技能面板时列表会少
+700px，用 `sm:`/`xl:` 这类视口断点只能写成"技能打开时 → 一列；≥某宽度 → 两列"的
+特例，还得再引入一个魔数断点。容器查询直接表达"列表够宽就两列"，
+1600px 起自动恢复两列，以后改侧栏或面板宽度也不用重算断点。
+未打开技能面板时不使用该分支，保持原有 `sm:grid-cols-2` 行为不变。
+
+### 测试
+
+- e2e 新增/改写 4 项：1500px 是**列**而不是抽屉、1500px 列表一列、1280px 三栏仍然
+  成立且列表 ≥240px、1600px 列表恢复两列；<1280px 的 1200/900/420/360 四档抽屉
+  行为不变。
+- smoke 的「技能面板在当前视口有呈现方式」原本就接受列或抽屉，未改。
+
+### 验证
+
+```bash
+npm run typecheck      # 无错
+npm run test:monsters  # 51/51
+npm run smoke          # 70/70
+npm run e2e            # 当时 243/243；§0.6 追加 4 项后为 247/247
+```
+
+---
+
+## 0.6 追加：底部抽屉滚不动（滚动跑到背后的怪物列表）
+
+现象：窄屏（<1280px）打开怪物抽屉或技能抽屉后，**抽屉里的内容无法上下滑动**；
+手指/滚轮一划，动的是抽屉背后的怪物列表。
+
+### 根因
+
+抽屉的 DOM 是"外壳 + 面板"两层，但两层的高度约束是错的：
+
+```html
+<!-- 旧写法 -->
+<div class="fixed inset-x-0 bottom-0 max-h-[75vh]">          <!-- 只有 max-height -->
+  <div class="mx-2 mb-2 max-h-[75vh] overflow-hidden">       <!-- 只有 max-height -->
+    <section class="panel flex h-full flex-col overflow-hidden">  <!-- h-full -->
+      <header>…</header>
+      <div class="min-h-0 flex-1 overflow-y-auto">…</div>         <!-- 本该滚动 -->
+```
+
+`h-full`＝`height:100%`，而父元素的高度是 `auto`（只有 `max-height`），
+百分比高度按 `auto` 处理 → 面板长到内容高度（实测 881px），内层滚动区随之被撑开
+（`scrollHeight == clientHeight`，永远不会滚动）；外层 `max-h` + `overflow-hidden`
+只是把超出 75vh（675px）的部分**裁掉**，内容既看不到也够不到。
+滚轮的"最近可滚动祖先"因此落到了 `<body>`，于是背后的列表在滚。
+
+浏览器实测（420×900，`#/monsters?m=WALROG`）：修前内层滚动区 752/752、
+页面 `scrollTop` 0 → 400；修后面板被压到 667，内层 538/752，滚轮把内层滚到
+214 且页面 `scrollTop` 保持 0；继续滚到末尾也不再带动页面。
+
+### 修法
+
+1. 抽屉外壳与内层都改成**有界的 flex 列**：
+   `fixed … flex max-h-[75vh] flex-col` + `flex max-h-[75vh] min-h-0 flex-col overflow-hidden`。
+   这样 `max-height` 会真的把面板"压小"，而不是让它长出去再裁掉。
+2. 面板根节点加 `min-h-0`（`MonsterDetail` 的 `<section>`、`TalentDetail` 的
+   `<aside>`）。flex 子项默认 `min-height:auto` 不允许缩到内容以下，加 `min-h-0`
+   才能被压缩，内层 `min-h-0 flex-1 overflow-y-auto` 才会得到有限高度而可滚动。
+   桌面两栏场景父元素本来就有确定高度（`h-[calc(100vh…)]`），`min-h-0` 对它是空操作。
+3. 面板正文加 `overscroll-contain`（`overscroll-behavior: contain`）：
+   抽屉滚到底后不再把滚动"接力"给背后的页面。
+
+同一套结构在 4 个页面共 5 处（怪物页 2 处、职业页、种族页、搜索页），
+**全部一起修**（它们是同一份复制粘贴的写法，只修一处等于留着 4 个同样的坑）。
+
+### 回归测试
+
+e2e 新增 4 项（`420px … sheet scrolls itself` / `does not scroll the list behind it`
+× 怪物抽屉、技能抽屉）：读内层滚动区的 `scrollHeight/clientHeight` 判断是否可滚，
+在正文里真实滚一次滚轮，断言"内层 `scrollTop` > 0 且页面 `scrollTop` 不变"。
+这两点正好覆盖本次的失败模式；happy-dom 没有布局，所以这只能由 e2e 兜住。
+
+### 验证
+
+```bash
+npm run typecheck      # 无错
+npm run test:monsters  # 51/51
+npm run smoke          # 70/70
+npm run e2e            # 247/247
 ```
 
 ---
@@ -310,10 +492,11 @@ npm run e2e -- http://127.0.0.1:4173/        # 真实浏览器 e2e（需先 npm 
 
 ```
 npm run typecheck   → 无错误
+npm run test:monsters → 51/51
 npm run test:scaling → 45/45
 npm run verify      → 87/87
-npm run smoke       → 42/42
-npm run e2e         → 174/174   （需 PLAYWRIGHT_BROWSERS_PATH=../.pw-browsers）
+npm run smoke       → 70/70
+npm run e2e         → 247/247  （需 PLAYWRIGHT_BROWSERS_PATH=<仓库>/.pw-browsers）
 npm run data        → 覆盖层 1053/1053 accepted；manifest.scaling.source = 3650/3750
 ```
 

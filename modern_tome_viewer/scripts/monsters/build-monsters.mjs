@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 
 import { collectTemplates, resolveEntity, resolveTalents, resolveImage, classifyRank, RANKS, CATEGORY_LABELS, SOURCES } from './extract.mjs';
 import { buildImageIndex, buildArtLookup, copyImages } from './images.mjs';
-import { readLocale, mergeLocales, translate } from './locale.mjs';
+import { readLocale, mergeLocales, translate, translateEntityWord } from './locale.mjs';
 import { loadLocales, readLocaleSnapshot } from './locale-snapshot.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -137,10 +137,27 @@ async function main() {
   const abstractTemplates = [];
   const unknownTalentRefs = new Map();
   const missingTranslation = new Map();
+  const missingTypeLabels = new Map();
   const imageGaps = [];
   const unresolved = [];
   const usedImages = new Set();
   const sourceFileHashes = {};
+
+  /**
+   * Chinese label from the engine's own context table.
+   *
+   * `type` / `subtype` are displayed by the game through
+   * `_t(self.type, "entity type")` (mod/class/Actor.lua), so the context table
+   * is authoritative and the flat map is only a fallback. `null` means "no
+   * translation", which the page renders as the English word.
+   */
+  const labelOf = (kind, value) => {
+    if (!value) return null;
+    const hit = translateEntityWord(locale, kind, value);
+    if (hit.status === 'exact') return hit.text;
+    missingTypeLabels.set(`${kind}: ${value}`, (missingTypeLabels.get(`${kind}: ${value}`) ?? 0) + 1);
+    return null;
+  };
 
   for (const record of records) {
     const resolved = resolveEntity(record, byDefineAs);
@@ -213,7 +230,12 @@ async function main() {
       nameZh: nameZh.status === 'missing' ? null : nameZh.text,
       nameStatus: nameZh.status,
       type: fields.type ?? null,
+      // Chinese for the two game words, from the entity context tables. The
+      // English stays alongside it: the filter tree and the detail panel show
+      // both, and the page falls back to English when nothing translates it.
+      typeZh: labelOf('entity type', fields.type),
       subtype: fields.subtype ?? null,
+      subtypeZh: labelOf('entity subtype', fields.subtype),
       rank,
       rankKey: rankMeta?.key ?? null,
       category,
@@ -306,6 +328,13 @@ async function main() {
     withRandomGroups: monsters.filter((m) => m.rngPools.length > 0 || m.rngSets.length > 0).length,
     withImage: monsters.filter((m) => m.image).length,
     withChineseName: monsters.filter((m) => m.nameStatus === 'exact').length,
+    // Type/subtype translation coverage: the filter tree is built from these
+    // words, so a missing label would show untranslated English in the sidebar.
+    distinctTypes: new Set(monsters.map((m) => m.type).filter(Boolean)).size,
+    distinctSubtypes: new Set(monsters.map((m) => m.subtype).filter(Boolean)).size,
+    withChineseType: monsters.filter((m) => m.typeZh).length,
+    withChineseSubtype: monsters.filter((m) => m.subtypeZh).length,
+    withSubtype: monsters.filter((m) => m.subtype).length,
     namedLikeBase: monsters.filter((m) => /^BASE_/.test(m.defineAs ?? '')).length,
   };
   for (const monster of monsters) {
@@ -368,6 +397,8 @@ async function main() {
       examples: [...entry.monsters].slice(0, 5),
     })),
     missingTranslations: [...missingTranslation.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count),
+    /** `type` / `subtype` words with no Chinese entry, so the tree stays English. */
+    missingTypeLabels: [...missingTypeLabels.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count),
     abstractTemplates: abstractTemplates.sort((a, b) => b.childCount - a.childCount),
     elapsedMs: Date.now() - started,
   };
@@ -380,6 +411,11 @@ async function main() {
   log(`wrote monsters.json (${(size / 1024).toFixed(0)} KB) in ${report.elapsedMs} ms`);
   log(`census: ${census.concrete} concrete (${Object.entries(census.byCategory).map(([k, v]) => `${CATEGORY_LABELS[k] ?? k} ${v}`).join(' / ')}), ${census.abstract} abstract templates`);
   log(`coverage: image ${census.withImage}/${census.concrete}, chinese name ${census.withChineseName}/${census.concrete}, talents ${census.withTalents}/${census.concrete}`);
+  log(
+    `type labels: ${census.withChineseType}/${census.concrete} types, ` +
+      `${census.withChineseSubtype}/${census.withSubtype} subtypes (${census.distinctTypes} / ${census.distinctSubtypes} distinct)` +
+      (report.missingTypeLabels.length ? ` — missing: ${report.missingTypeLabels.map((e) => e.name).join(', ')}` : ''),
+  );
   if (report.unknownTalentRefs.length) {
     log(`unknown talent refs: ${report.unknownTalentRefs.map((e) => e.id).join(', ')}`);
   }

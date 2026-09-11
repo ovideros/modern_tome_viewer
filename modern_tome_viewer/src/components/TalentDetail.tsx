@@ -107,7 +107,10 @@ export function TalentDetail({
   );
 
   return (
-    <aside data-testid="talent-detail" className="panel flex h-full flex-col overflow-hidden">
+    // `min-h-0` so the panel can shrink inside a bottom sheet (whose wrapper
+    // only sets a `max-height`): that is what makes the body below scroll
+    // instead of the sheet being clipped while the page behind moves.
+    <aside data-testid="talent-detail" className="panel flex h-full min-h-0 flex-col overflow-hidden">
       <header className="flex items-start gap-3 border-b border-line px-3 py-3">
         <TalentIcon talent={talent} size={56} iconSize={meta.iconSize} />
         <div className="min-w-0 flex-1">
@@ -162,7 +165,7 @@ export function TalentDetail({
         </div>
       </header>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3">
         <dl className="mb-3">
           <Row label="使用模式">{talent.mode || '—'}</Row>
           <Row label="使用速度">{talent.useSpeed || '—'}</Row>

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Highlight } from './Highlight';
 import { MonsterArtwork, CategoryBadge, TypeChip } from './MonsterBits';
 import type { Monster, MonsterTalentRef } from '../lib/monsters';
-import { describeTalentRule, monsterDisplayName } from '../lib/monsters';
+import { describeTalentRule, monsterDisplayName, monsterTypeLabels } from '../lib/monsters';
 import { stripMarkup } from '../lib/data';
 import type { TalentEntry } from '../lib/types';
 
@@ -154,13 +154,19 @@ export function MonsterDetail({
 }: MonsterDetailProps) {
   const [showRaw, setShowRaw] = useState(false);
   const display = monsterDisplayName(monster);
+  const typeLabels = monsterTypeLabels(monster);
   const description = monster.descZh ?? monster.desc;
   const notes = useMemo(() => mechanicNotes(monster), [monster]);
 
   const hasRandom = monster.rngSets.length > 0 || monster.rngPools.length > 0;
 
   return (
-    <section className="panel flex h-full flex-col overflow-hidden" aria-label={`${display.primary} 的详情`}>
+    // `min-h-0` matters in the bottom sheet: there the wrapper only has a
+    // `max-height`, so this panel has to be allowed to shrink below its content
+    // for the body below to become the scrolling element. Without it the panel
+    // grows past the sheet, gets clipped by `overflow-hidden`, and touch
+    // scrolling moves the page behind instead (see docs/HANDOVER.md §0.6).
+    <section className="panel flex h-full min-h-0 flex-col overflow-hidden" aria-label={`${display.primary} 的详情`}>
       <div className="flex items-start gap-3 border-b border-line p-3">
         <MonsterArtwork monster={monster} size={80} />
         <div className="min-w-0 flex-1">
@@ -195,7 +201,7 @@ export function MonsterDetail({
         </button>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto p-3">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">
         {description && (
           <p className="mb-3 text-[12.5px] leading-relaxed text-muted">
             {stripMarkup(description)}
@@ -302,6 +308,17 @@ export function MonsterDetail({
           {showRaw && (
             <ul className="mt-1 space-y-0.5">
               <li>来源包：{SOURCE_LABELS[monster.source] ?? monster.source}</li>
+              {(monster.type || monster.subtype) && (
+                <li>
+                  游戏类型：{typeLabels.type}
+                  {typeLabels.subtype ? ` / ${typeLabels.subtype}` : ''}
+                  <span className="text-subtle">
+                    （源码 {monster.type ?? '—'}
+                    {monster.subtype ? ` / ${monster.subtype}` : ''}，中文取自游戏汉化表的 entity type / entity
+                    subtype 词条）
+                  </span>
+                </li>
+              )}
               <li>
                 定义位置：{monster.file}:{monster.line}
               </li>

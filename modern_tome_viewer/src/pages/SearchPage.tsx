@@ -225,10 +225,12 @@ export function SearchPage({
         )}
       </div>
 
-      {/* On narrow screens the detail panel becomes a bottom sheet. */}
+      {/* On narrow screens the detail panel becomes a bottom sheet. It is a
+          bounded flex column so the sheet scrolls itself rather than clipping
+          the panel and scrolling the results behind it (HANDOVER §0.6). */}
       {selected && (
-        <div className="fixed inset-x-0 bottom-0 z-40 max-h-[70vh] xl:hidden">
-          <div className="animate-fade-in mx-2 mb-2 max-h-[70vh] overflow-hidden">
+        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[70vh] flex-col xl:hidden">
+          <div className="animate-fade-in mx-2 mb-2 flex max-h-[70vh] min-h-0 flex-col overflow-hidden">
             <TalentDetail
               talent={selected}
               tree={data.byTree.get(selected.tree)}

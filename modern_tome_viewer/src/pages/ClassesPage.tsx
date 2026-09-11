@@ -168,8 +168,10 @@ export function ClassesPage({
       </div>
 
       {selected && (
-        <div className="fixed inset-x-0 bottom-0 z-40 max-h-[70vh] xl:hidden">
-          <div className="animate-fade-in mx-2 mb-2 max-h-[70vh] overflow-hidden">
+        // Bounded flex column so the sheet scrolls itself instead of clipping
+        // the panel and letting the page behind scroll (docs/HANDOVER.md §0.6).
+        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[70vh] flex-col xl:hidden">
+          <div className="animate-fade-in mx-2 mb-2 flex max-h-[70vh] min-h-0 flex-col overflow-hidden">
             <TalentDetail
               talent={asEntry(selected.talent, selected.treeName)}
               tree={data.byTree.get(selected.talent.tree)}

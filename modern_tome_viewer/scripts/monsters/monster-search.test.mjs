@@ -37,9 +37,8 @@ const { code } = esbuild.transformSync(withoutImports, { loader: 'ts', format: '
 const modulePath = path.join(projectRoot, 'node_modules/.cache/monsters-under-test.mjs');
 fs.mkdirSync(path.dirname(modulePath), { recursive: true });
 fs.writeFileSync(modulePath, code);
-const { buildMonsterData, filterMonsters, emptyMonsterFilters, describeTalentRule } = await import(
-  pathToFileURL(modulePath).href
-);
+const { buildMonsterData, filterMonsters, emptyMonsterFilters, describeTalentRule, monsterTypeTree, monsterTypeLabels, subtypeKey } =
+  await import(pathToFileURL(modulePath).href);
 
 const monster = (overrides) => ({
   id: 'M1',
@@ -49,7 +48,9 @@ const monster = (overrides) => ({
   nameZh: '测试怪',
   nameStatus: 'exact',
   type: 'humanoid',
+  typeZh: '人形生物',
   subtype: 'orc',
+  subtypeZh: '兽人',
   rank: 2,
   rankKey: 'normal',
   category: 'normal',
@@ -107,6 +108,10 @@ const dataset = {
       id: 'WORM',
       name: 'white worm mass',
       nameZh: '白色蠕虫团',
+      type: 'vermin',
+      typeZh: '害虫',
+      subtype: 'worms',
+      subtypeZh: '蠕虫',
       rank: 1,
       category: 'normal',
       canMultiply: 4,
@@ -116,12 +121,20 @@ const dataset = {
       id: 'BOSS',
       name: 'the boss',
       nameZh: '首领',
+      type: 'demon',
+      typeZh: '恶魔',
+      subtype: 'major',
+      subtypeZh: '大恶魔',
       rank: 4,
       category: 'boss',
       categoryLabel: '固定Boss',
       source: 'orcs',
       rngPools: [{ count: 3, talents: [{ id: 'T_FIRE_BREATH', level: 5, growth: null }] }],
     }),
+    // The three spellings the sources use for the same creature; the tree and
+    // the filter must fold them into a single row.
+    monster({ id: 'SHERTUL1', name: "sher'tul one", nameZh: '夏·图尔一号', subtype: "sher'tul", subtypeZh: '夏·图尔' }),
+    monster({ id: 'SHERTUL2', name: 'shertul two', nameZh: '夏·图尔二号', subtype: 'shertul', subtypeZh: '夏·图尔' }),
   ],
 };
 
@@ -160,6 +173,57 @@ test('quoted phrases and -exclusion work', () => {
 test('category and source filters narrow the list', () => {
   assert.deepEqual(ids({ category: 'boss' }), ['BOSS']);
   assert.deepEqual(ids({ source: 'orcs' }), ['BOSS']);
+});
+
+test('type and subtype filters narrow the list', () => {
+  assert.deepEqual(ids({ type: 'vermin' }), ['WORM']);
+  assert.deepEqual(ids({ type: 'humanoid', subtype: 'orc' }), ['NECRO']);
+  assert.deepEqual(ids({ type: 'demon', category: 'boss' }), ['BOSS']);
+  // A subtype from another type must not leak in.
+  assert.deepEqual(ids({ type: 'demon', subtype: 'orc' }), []);
+});
+
+test('subtype spellings are folded into one filter value', () => {
+  assert.equal(subtypeKey("sher'tul"), 'shertul');
+  assert.equal(subtypeKey('Sher\'Tul'), 'shertul');
+  // Both spellings answer to the same filter value.
+  assert.deepEqual(ids({ type: 'humanoid', subtype: 'shertul' }).sort(), ['SHERTUL1', 'SHERTUL2']);
+});
+
+test('search matches the Chinese type and subtype labels', () => {
+  assert.deepEqual(ids({ query: '害虫' }), ['WORM']);
+  assert.deepEqual(ids({ query: '大恶魔' }), ['BOSS']);
+});
+
+test('the type tree groups subtypes under their type', () => {
+  const tree = monsterTypeTree(data.dataset.monsters);
+  const labels = tree.map((entry) => entry.label);
+  assert.ok(labels.includes('人形生物'));
+  // 3 humanoids, 2 demons/vermin... the biggest type comes first.
+  assert.equal(tree[0].label, '人形生物');
+  assert.equal(tree[0].count, 3);
+  const humanoid = tree.find((entry) => entry.type === 'humanoid');
+  // orc + the two Sher'Tul spellings, folded into a single row; biggest first.
+  assert.deepEqual(
+    humanoid.subtypes.map((sub) => [sub.subtype, sub.label, sub.count]),
+    [
+      ['shertul', '夏·图尔', 2],
+      ['orc', '兽人', 1],
+    ],
+  );
+  const vermin = tree.find((entry) => entry.type === 'vermin');
+  assert.deepEqual(vermin.subtypes, [{ subtype: 'worms', label: '蠕虫', count: 1 }]);
+});
+
+test('type labels fall back to English when the locale has no entry', () => {
+  assert.deepEqual(monsterTypeLabels({ type: 'horror', typeZh: '恐魔', subtype: 'eldritch', subtypeZh: '艾尔德里奇' }), {
+    type: '恐魔',
+    typeEn: 'horror',
+    subtype: '艾尔德里奇',
+    subtypeEn: 'eldritch',
+  });
+  assert.equal(monsterTypeLabels({ type: 'horror', typeZh: null, subtype: null, subtypeZh: null }).type, 'horror');
+  assert.equal(monsterTypeLabels({ type: null, typeZh: null, subtype: null, subtypeZh: null }).type, '未知');
 });
 
 test('onlyRandomGroups keeps just the random-group monsters', () => {

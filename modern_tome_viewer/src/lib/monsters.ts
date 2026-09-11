@@ -56,7 +56,11 @@ export interface Monster {
   nameZh: string | null;
   nameStatus: 'exact' | 'native' | 'missing';
   type: string | null;
+  /** Chinese for `type`, from the engine's `entity type` table. */
+  typeZh: string | null;
   subtype: string | null;
+  /** Chinese for `subtype`, from the engine's `entity subtype` table. */
+  subtypeZh: string | null;
   /** Engine rank: 1 critter, 2 normal, 3 elite, 3.2 rare, 3.5 unique, 4 boss, 5 elite boss, >=10 god. */
   rank: number | null;
   rankKey: string | null;
@@ -122,6 +126,13 @@ export interface MonsterCensus {
   withRandomGroups: number;
   withImage: number;
   withChineseName: number;
+  /** Distinct `type` / `subtype` words across the concrete templates. */
+  distinctTypes?: number;
+  distinctSubtypes?: number;
+  /** How many templates carry a Chinese `type` / `subtype` label. */
+  withChineseType?: number;
+  withChineseSubtype?: number;
+  withSubtype?: number;
 }
 
 export interface MonsterDataset {
@@ -193,7 +204,9 @@ export function buildMonsterData(dataset: MonsterDataset): MonsterData {
         monster.name,
         monster.nameZh,
         monster.type,
+        monster.typeZh,
         monster.subtype,
+        monster.subtypeZh,
         monster.descZh,
         monster.desc,
         monster.defineAs,
@@ -224,6 +237,10 @@ export function buildMonsterData(dataset: MonsterDataset): MonsterData {
 export interface MonsterFilters {
   query: string;
   category: MonsterCategory | 'all';
+  /** Game `type`, e.g. `horror`; `all` means every broad category. */
+  type: string | 'all';
+  /** Game `subtype`, e.g. `eldritch`; only meaningful together with `type`. */
+  subtype: string | 'all';
   source: string | 'all';
   /** Only monsters that teach a talent from an exclusive random group. */
   onlyRandomGroups: boolean;
@@ -232,6 +249,8 @@ export interface MonsterFilters {
 export const emptyMonsterFilters: MonsterFilters = {
   query: '',
   category: 'all',
+  type: 'all',
+  subtype: 'all',
   source: 'all',
   onlyRandomGroups: false,
 };
@@ -269,12 +288,94 @@ export function filterMonsters(data: MonsterData, filters: MonsterFilters): Mons
   const terms = parseMonsterQuery(filters.query);
   return data.dataset.monsters.filter((monster) => {
     if (filters.category !== 'all' && monster.category !== filters.category) return false;
+    if (filters.type !== 'all' && monster.type !== filters.type) return false;
+    // Compared through `subtypeKey`: the source spells Sher'Tul three ways
+    // (`Sher'Tul`, `sher'tul`, `shertul`) and all three mean the same thing, so
+    // they must be one row in the sidebar and one filter value.
+    if (filters.subtype !== 'all' && (!monster.subtype || subtypeKey(monster.subtype) !== filters.subtype)) return false;
     if (filters.source !== 'all' && monster.source !== filters.source) return false;
     if (filters.onlyRandomGroups && monster.rngPools.length === 0 && monster.rngSets.length === 0) return false;
     if (!terms.length) return true;
     const hay = data.haystack.get(monster.id) ?? '';
     return terms.every(({ term, exclude }) => (exclude ? !hay.includes(term) : hay.includes(term)));
   });
+}
+
+/**
+ * Chinese display for the engine's `type` / `subtype`.
+ *
+ * The page shows the translated words and keeps the English beside them: the
+ * English is what the source files, the wiki and the search box use, and it is
+ * also the fallback when the locale has no entry.
+ */
+export function monsterTypeLabels(monster: Monster): { type: string; typeEn: string | null; subtype: string | null; subtypeEn: string | null } {
+  return {
+    type: monster.typeZh ?? monster.type ?? '未知',
+    typeEn: monster.type,
+    subtype: monster.subtype ? monster.subtypeZh ?? monster.subtype : null,
+    subtypeEn: monster.subtype,
+  };
+}
+
+export interface MonsterSubtypeOption {
+  /** Normalised subtype key (lower-case, punctuation-free) used as filter value. */
+  subtype: string;
+  /** Chinese label, falling back to the English word. */
+  label: string;
+  count: number;
+}
+
+export interface MonsterTypeOption {
+  type: string;
+  /** Chinese label, falling back to the English word. */
+  label: string;
+  count: number;
+  subtypes: MonsterSubtypeOption[];
+}
+
+/**
+ * Case- and punctuation-insensitive key for a `subtype`.
+ *
+ * `Sher'Tul`, `sher'tul` and `shertul` are three distinct subtypes in the data
+ * (the engine compares strings) but one creature in the encyclopedia, so the
+ * tree and the filter fold them together instead of showing three identical
+ * Chinese labels.
+ */
+export function subtypeKey(subtype: string): string {
+  return subtype.toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+
+/**
+ * Build the `type` -> `subtype` tree for the sidebar.
+ *
+ * Counts are totals over the whole encyclopedia (matching the rarity rows),
+ * not facets of the current query, so the numbers do not move while typing.
+ * Sorted by count and then by Chinese label, which puts the categories a
+ * reader is most likely to look for at the top.
+ */
+export function monsterTypeTree(monsters: Monster[]): MonsterTypeOption[] {
+  const byType = new Map<string, MonsterTypeOption>();
+  for (const monster of monsters) {
+    if (!monster.type) continue;
+    let entry = byType.get(monster.type);
+    if (!entry) {
+      byType.set(monster.type, (entry = { type: monster.type, label: monster.typeZh ?? monster.type, count: 0, subtypes: [] }));
+    }
+    entry.count += 1;
+    if (!monster.subtype) continue;
+    const key = subtypeKey(monster.subtype);
+    let sub = entry.subtypes.find((option) => option.subtype === key);
+    if (!sub) {
+      entry.subtypes.push((sub = { subtype: key, label: monster.subtypeZh ?? monster.subtype, count: 0 }));
+    }
+    sub.count += 1;
+  }
+
+  const byCount = (a: { count: number; label: string }, b: { count: number; label: string }) =>
+    b.count - a.count || a.label.localeCompare(b.label, 'zh-Hans-CN');
+  const list = [...byType.values()];
+  for (const entry of list) entry.subtypes = [...entry.subtypes].sort(byCount);
+  return list.sort(byCount);
 }
 
 /** Display name with the Chinese name preferred, English kept as a subtitle. */

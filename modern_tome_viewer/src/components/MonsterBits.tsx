@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { assetUrl } from '../lib/data';
+import { monsterTypeLabels } from '../lib/monsters';
 import type { Monster, MonsterCategory, MonsterImageLayer } from '../lib/monsters';
 
 /** Tone per monster category, so ranks are distinguishable at a glance. */
@@ -56,7 +57,7 @@ export function MonsterArtwork({
         style={{ width: size, height: size }}
         title={monster.imageCandidate ? `缺少图片：${monster.imageCandidate}` : '缺少图片'}
       >
-        {monster.type ?? '?'}
+        {monster.typeZh ?? monster.type ?? '?'}
       </div>
     );
   }
@@ -87,13 +88,21 @@ export function MonsterArtwork({
   );
 }
 
-/** Type/subtype chip, e.g. `vermin / worms`. */
+/**
+ * Type/subtype chip, e.g. `恐魔 / 艾尔德里奇`.
+ *
+ * The Chinese words come from the game's own `entity type` / `entity subtype`
+ * tables — the same ones `Actor.lua` uses for the in-game tooltip — with the
+ * English source words kept in the tooltip and as the fallback.
+ */
 export function TypeChip({ monster }: { monster: Monster }) {
   if (!monster.type && !monster.subtype) return null;
+  const labels = monsterTypeLabels(monster);
+  const raw = [monster.type, monster.subtype].filter(Boolean).join(' / ');
   return (
-    <span className="chip" title="游戏内部类型 / 亚类">
-      {monster.type ?? 'unknown'}
-      {monster.subtype ? ` / ${monster.subtype}` : ''}
+    <span className="chip" title={`游戏内部类型 / 亚类：${raw}`} data-testid="monster-type-chip">
+      {labels.type}
+      {labels.subtype ? ` / ${labels.subtype}` : ''}
     </span>
   );
 }

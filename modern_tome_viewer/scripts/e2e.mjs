@@ -1004,6 +1004,41 @@ check('zero-result state is explicit', (await page.locator('body').innerText()).
 await monsterSearch().fill('');
 await page.waitForTimeout(400);
 
+// Sidebar type tree: broad category (`type`) -> subtype, in Chinese. The labels
+// come from the game's own `entity type` / `entity subtype` tables.
+const typeRow = (value) => page.locator(`[data-testid="monster-type-row"][data-value="${value}"]`);
+const subtypeRow = (value) => page.locator(`[data-testid="monster-subtype-row"][data-value="${value}"]`);
+check('type tree renders Chinese categories', (await typeRow('horror').innerText()).includes('恐魔'), await typeRow('horror').innerText());
+await typeRow('horror').click();
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 95, null, { timeout: 15000 });
+await page.waitForTimeout(300);
+check('type filter lists every horror template', (await monsterCardCount()) === 95, String(await monsterCardCount()));
+check('type filter is written to the URL', page.url().includes('type=horror'), page.url());
+check('the result line names the active category', (await page.locator('[data-testid="monster-type-filter"]').innerText()).includes('恐魔'));
+check(
+  'cards chip the Chinese type',
+  (await monsterCards().first().innerText()).includes('恐魔'),
+  (await monsterCards().first().innerText()).slice(0, 80),
+);
+await subtypeRow('eldritch').click();
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 61, null, { timeout: 15000 });
+await page.waitForTimeout(300);
+check('subtype filter narrows to eldritch', (await monsterCardCount()) === 61, String(await monsterCardCount()));
+check('subtype filter is written to the URL', page.url().includes('sub=eldritch'), page.url());
+check('the result line names the active subtype', (await page.locator('[data-testid="monster-type-filter"]').innerText()).includes('艾尔德里奇'));
+await shot('14-monster-type-tree');
+await typeRow('all').click();
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 812, null, { timeout: 15000 });
+check('clearing the type filter restores the full list', (await monsterCardCount()) === 812, String(await monsterCardCount()));
+
+// The filter is part of the shareable URL.
+await page.goto(`${url}#/monsters?type=horror&sub=eldritch`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 61, null, { timeout: 15000 });
+check('deep link restores the type filter', (await monsterCardCount()) === 61, String(await monsterCardCount()));
+check('deep link marks the active subtype row', (await subtypeRow('eldritch').getAttribute('aria-pressed')) === 'true');
+await page.goto(`${url}#/monsters`, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 812, null, { timeout: 15000 });
+
 // Detail panel: the orc necromancer is the handover's worked example.
 await monsterCards().filter({ hasText: '兽人死灵法师' }).first().click();
 await page.waitForTimeout(500);
@@ -1038,7 +1073,8 @@ await visibleTalentPanel().first().locator('button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 check('closing the talent panel keeps the monster open', (await visibleTalentPanel().count()) === 0 && (await detailPanel.isVisible()));
 
-// 1500px: the talent becomes a bottom sheet, and the monster stays visible.
+// From 1280px up the talent is a third column, and the list pays for it by
+// dropping to a single card column. It used to need 1800px.
 await page.setViewportSize({ width: 1500, height: 950 });
 await page.waitForTimeout(300);
 await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
@@ -1050,10 +1086,15 @@ const sheetState = () => page.evaluate(() => {
     const r = el.getBoundingClientRect();
     return r.width > 0 && r.height > 0;
   };
+  const list = document.querySelector('main');
+  const grid = document.querySelector('main div.grid');
   return {
     sheet: rect('[data-testid="monster-talent-sheet"]'),
     column: rect('[data-testid="monster-talent-column"]'),
     monsterSheet: rect('[data-testid="monster-detail-sheet"]'),
+    // How many card columns the list is actually rendering, and how wide it is.
+    cardColumns: grid ? getComputedStyle(grid).gridTemplateColumns.split(' ').length : 0,
+    listWidth: list ? Math.round(list.getBoundingClientRect().width) : 0,
     monsterSections: [...document.querySelectorAll('section[aria-label$="的详情"]')].filter((el) => {
       const r = el.getBoundingClientRect();
       return r.width > 0 && r.height > 0;
@@ -1065,9 +1106,43 @@ const sheetState = () => page.evaluate(() => {
   };
 });
 let state = await sheetState();
-check('1500px shows the talent as a bottom sheet', state.sheet && state.talentPanels === 1, JSON.stringify(state));
+check(
+  '1500px opens the talent in a column, not a sheet',
+  state.column === true && state.sheet === false && state.talentPanels === 1,
+  JSON.stringify(state),
+);
 check('1500px keeps the monster panel visible', state.monsterSections === 1, JSON.stringify(state));
-await page.locator('[data-testid="monster-talent-sheet"] button[title^="关闭"]').click();
+check('1500px drops the list to one card column to make room', state.cardColumns === 1, JSON.stringify(state));
+await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
+await page.waitForTimeout(500);
+
+// 1280px is the low end of the three-pane layout.
+await page.setViewportSize({ width: 1280, height: 900 });
+await page.waitForTimeout(400);
+await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
+await page.waitForTimeout(700);
+state = await sheetState();
+check(
+  '1280px still shows monster + talent side by side',
+  state.column === true && state.talentPanels === 1 && state.monsterSections === 1,
+  JSON.stringify(state),
+);
+check('1280px keeps the list usable as a single column', state.cardColumns === 1 && state.listWidth > 240, JSON.stringify(state));
+await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
+await page.waitForTimeout(500);
+
+// Wide enough for two card columns again, with the talent still open.
+await page.setViewportSize({ width: 1600, height: 950 });
+await page.waitForTimeout(400);
+await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
+await page.waitForTimeout(700);
+state = await sheetState();
+check(
+  '1600px gives the list its second column back while the talent is open',
+  state.column === true && state.cardColumns === 2 && state.listWidth > 560,
+  JSON.stringify(state),
+);
+await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 
 // Below xl the talent sheet replaces the monster sheet, with a way back.
@@ -1141,7 +1216,91 @@ check('mobile category toggle available', (await page.locator('button', { hasTex
 await page.locator('button', { hasText: '分类' }).first().click();
 await page.waitForTimeout(300);
 check('mobile category chips expand', (await page.locator('button', { hasText: '固定Boss' }).count()) > 0);
+
+// The desktop tree does not fit a phone; the same two levels are selects.
+check('mobile type select is offered', (await page.locator('#monster-type-select').count()) === 1);
+await page.locator('#monster-type-select').selectOption('horror');
+await page.waitForTimeout(400);
+check('mobile type select filters the list', (await monsterCardCount()) === 95, String(await monsterCardCount()));
+check('mobile subtype select follows the chosen type', (await page.locator('#monster-subtype-select').count()) === 1);
+await page.locator('#monster-subtype-select').selectOption('eldritch');
+await page.waitForTimeout(400);
+check('mobile subtype select narrows further', (await monsterCardCount()) === 61, String(await monsterCardCount()));
+check(
+  'mobile cards chip the Chinese type',
+  (await monsterCards().first().innerText()).includes('恐魔'),
+  (await monsterCards().first().innerText()).slice(0, 80),
+);
+await page.locator('#monster-type-select').selectOption('all');
+await page.waitForTimeout(400);
+check('mobile type select can be cleared', (await monsterCardCount()) === 812, String(await monsterCardCount()));
 await shot('12-monsters-mobile');
+
+// Bottom sheets must scroll *themselves*. A sheet built with only `max-h` (no
+// bounded flex column) lets the panel grow to its content, clip it, and send the
+// drag to the page behind — which is exactly what a reader sees as "the sheet
+// will not scroll, the list behind moves instead".
+const sheetScroll = (selector) => page.evaluate((sel) => {
+  const root = document.querySelector(sel);
+  const scroller = root?.querySelector('section div.overflow-y-auto, aside div.overflow-y-auto');
+  if (!scroller) return null;
+  const rect = scroller.getBoundingClientRect();
+  return {
+    scrollable: scroller.scrollHeight > scroller.clientHeight + 1,
+    scrollHeight: scroller.scrollHeight,
+    clientHeight: scroller.clientHeight,
+    point: { x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + Math.min(40, rect.height / 2)) },
+  };
+}, selector);
+
+/** Wheel at a point inside the sheet body; report what actually moved. */
+const wheelInSheet = async (selector) => {
+  const info = await sheetScroll(selector);
+  if (!info) return null;
+  const before = await page.evaluate(() => Math.round(document.scrollingElement.scrollTop));
+  await page.mouse.move(info.point.x, info.point.y);
+  await page.mouse.wheel(0, 320);
+  await page.waitForTimeout(350);
+  return page.evaluate((sel) => {
+    const scroller = document.querySelector(sel).querySelector('section div.overflow-y-auto, aside div.overflow-y-auto');
+    return {
+      scrollerTop: Math.round(scroller.scrollTop),
+      bodyTop: Math.round(document.scrollingElement.scrollTop),
+    };
+  }, selector).then((after) => ({ ...info, before, ...after }));
+};
+
+// WALROG is used here because its sheet is genuinely taller than 75vh (many
+// talents), which is the case that used to be unreachable.
+await page.goto(`${url}#/monsters?m=WALROG`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(700);
+const monsterSheetScroll = await wheelInSheet('[data-testid="monster-detail-sheet"]');
+check(
+  '420px monster sheet scrolls itself',
+  monsterSheetScroll?.scrollable === true && monsterSheetScroll.scrollerTop > 0,
+  JSON.stringify(monsterSheetScroll),
+);
+check(
+  '420px monster sheet does not scroll the list behind it',
+  monsterSheetScroll?.bodyTop === monsterSheetScroll?.before,
+  JSON.stringify(monsterSheetScroll),
+);
+await page.locator('[data-testid="monster-detail-sheet"] button[title*="技能栏"]').first().click();
+await page.waitForTimeout(700);
+const talentSheetScroll = await wheelInSheet('[data-testid="monster-talent-sheet"]');
+check(
+  '420px talent sheet scrolls itself',
+  talentSheetScroll?.scrollable === true && talentSheetScroll.scrollerTop > 0,
+  JSON.stringify(talentSheetScroll),
+);
+check(
+  '420px talent sheet does not scroll the list behind it',
+  talentSheetScroll?.bodyTop === talentSheetScroll?.before,
+  JSON.stringify(talentSheetScroll),
+);
+await page.locator('[data-testid="talent-detail"]:visible button[aria-label="返回怪物"]').click();
+await page.waitForTimeout(500);
+
 await page.setViewportSize({ width: 1500, height: 950 });
 
 // ---------------------------------------------------------------------------

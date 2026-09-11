@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { stripMarkup } from '../lib/data';
+import { writeHash } from '../lib/filters';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import {
   CATEGORY_ORDER,
   filterMonsters,
   loadMonsterData,
   monsterDisplayName,
+  monsterTypeTree,
   parseMonsterQuery,
   type Monster,
   type MonsterCategory,
@@ -16,6 +18,7 @@ import type { LoadedData } from '../lib/data';
 import type { TalentEntry } from '../lib/types';
 import { Highlight } from '../components/Highlight';
 import { MonsterArtwork, CategoryBadge, TypeChip } from '../components/MonsterBits';
+import { MonsterTypeTree } from '../components/MonsterTypeTree';
 import { MonsterDetail } from '../components/MonsterDetail';
 import { TalentDetail } from '../components/TalentDetail';
 
@@ -43,9 +46,15 @@ function asEntry(talent: TalentEntry, treeName: string, categoryName: string): T
 function paramsToFilters(params: URLSearchParams): MonsterFilters {
   const category = params.get('cat');
   const source = params.get('src');
+  // A subtype is only meaningful inside a type: the sidebar shows subtypes of
+  // the selected type, so `?sub=orc` on its own has nothing to display as
+  // active and would silently filter without any visible reason.
+  const type = params.get('type') ?? 'all';
   return {
     query: params.get('q') ?? '',
     category: category && CATEGORY_ORDER.includes(category as MonsterCategory) ? (category as MonsterCategory) : 'all',
+    type,
+    subtype: type === 'all' ? 'all' : params.get('sub') ?? 'all',
     source: source ?? 'all',
     onlyRandomGroups: params.get('rng') === '1',
   };
@@ -55,6 +64,10 @@ function filtersToParams(filters: MonsterFilters, monsterId: string | null): URL
   const next = new URLSearchParams();
   if (filters.query.trim()) next.set('q', filters.query.trim());
   if (filters.category !== 'all') next.set('cat', filters.category);
+  if (filters.type !== 'all') {
+    next.set('type', filters.type);
+    if (filters.subtype !== 'all') next.set('sub', filters.subtype);
+  }
   if (filters.source !== 'all') next.set('src', filters.source);
   if (filters.onlyRandomGroups) next.set('rng', '1');
   if (monsterId) next.set('m', monsterId);
@@ -77,17 +90,21 @@ export function MonstersPage({
   compareFull,
 }: MonstersPageProps) {
   // Where the talent opens:
-  //  - `xxl` (1800px) and up: a third column, beside the monster panel;
-  //  - below that: an overlay, matched to whichever monster presentation the
-  //    viewport uses — a column under `xl`, a bottom sheet below it.
+  //  - `xl` (1280px) and up: a third column, beside the monster panel. The
+  //    third column is paid for by the list, not by the viewport: while a
+  //    talent is open the list's card columns follow the list's *own* width
+  //    (container query), so it drops to one column whenever three panes would
+  //    squeeze it, and goes back to two as soon as there is room. The two side
+  //    panels also give 20px each back to the list.
+  //  - below `xl`: a bottom sheet, sharing one slot with the monster sheet.
   //
   // Below `xl` the talent sheet takes the same slot as the monster sheet, so the
   // monster sheet is suppressed while a talent is open and its close button
   // reads 返回怪物. That keeps the phone layout to one focused sheet at a time
   // instead of stacking two drawers on top of each other.
   // Only the *bottom sheet* variant needs the JS answer; the side columns stay
-  // CSS-driven (`xl:block` / `xxl:block`). `fallback: true` means an environment
-  // without `matchMedia` keeps the desktop layout rather than losing a panel.
+  // CSS-driven (`xl:block`). `fallback: true` means an environment without
+  // `matchMedia` keeps the desktop layout rather than losing a panel.
   const narrowViewport = !useMediaQuery('(min-width: 1280px)', true);
 
   const [monsterData, setMonsterData] = useState<MonsterData | null>(null);
@@ -122,8 +139,13 @@ export function MonstersPage({
   // other. (An earlier version used a "local state is ahead" flag, and that
   // flag was consumed by the wrong render: a link arriving right after a skill
   // click was silently discarded.)
-  const publishedHash = useRef('');
-  const adoptedHash = useRef('');
+  //
+  // The refs start as `undefined`, not `''`: "no filters" is a perfectly valid
+  // hash (`#/monsters`), and using `''` as the "nothing synced yet" sentinel
+  // made the publish effect treat a cleared filter set as already published —
+  // the URL kept the filters the reader had just removed.
+  const publishedHash = useRef<string | undefined>(undefined);
+  const adoptedHash = useRef<string | undefined>(undefined);
   const [notFound, setNotFound] = useState<string | null>(null);
 
   useEffect(() => {
@@ -141,13 +163,35 @@ export function MonstersPage({
 
   useEffect(() => {
     const next = filtersToParams(filters, selectedId).toString();
-    if (next === publishedHash.current || next === adoptedHash.current) return;
+    // Only the *published* hash is compared here: an adopted one is still
+    // written back (identical hashes are a no-op in `writeHash`), which is what
+    // normalises a hand-written link into the canonical order.
+    if (next === publishedHash.current) return;
     publishedHash.current = next;
     onParamsChange(new URLSearchParams(next));
+    // The other pages write their own hash too; without this the monster view
+    // was shareable only in the direction "link -> page", never "page -> link",
+    // and a reload dropped the type/category the reader had picked.
+    writeHash('monsters', new URLSearchParams(next));
   }, [filters, selectedId, onParamsChange]);
 
   const results = useMemo(() => (monsterData ? filterMonsters(monsterData, filters) : []), [monsterData, filters]);
   const terms = useMemo(() => termsOf(filters.query), [filters.query]);
+  // The type tree is built from the whole encyclopedia, not from the current
+  // result set, so its counts stay stable while the query changes.
+  const typeTree = useMemo(() => (monsterData ? monsterTypeTree(monsterData.dataset.monsters) : []), [monsterData]);
+  const subtypeOptions = useMemo(
+    () => typeTree.find((option) => option.type === filters.type)?.subtypes ?? [],
+    [typeTree, filters.type],
+  );
+  const activeTypeLabel = filters.type === 'all' ? null : typeTree.find((option) => option.type === filters.type)?.label ?? filters.type;
+  const activeSubtypeLabel =
+    filters.subtype === 'all' ? null : subtypeOptions.find((option) => option.subtype === filters.subtype)?.label ?? filters.subtype;
+
+  /** Selecting a type resets the subtype; `all` clears both. */
+  const selectType = (type: string | 'all', subtype: string | 'all') => {
+    setFilters((current) => ({ ...current, type, subtype: type === 'all' ? 'all' : subtype }));
+  };
   const selected = selectedId && monsterData ? monsterData.byId.get(selectedId) ?? null : null;
   // A link can name a template that is not in the encyclopedia (an abstract
   // BASE, or a typo). Say so instead of silently showing nothing.
@@ -213,6 +257,7 @@ export function MonstersPage({
           {CATEGORY_ORDER.filter((key) => (census.byCategory[key] ?? 0) > 0)
             .map((key) => `${monsterData.dataset.categoryLabels[key] ?? key} ${census.byCategory[key]}`)
             .join(' · ')}
+          {census.distinctTypes ? ` · ${census.distinctTypes} 个大类 / ${census.distinctSubtypes ?? 0} 个亚类` : ''}
         </p>
         <p className="mt-0.5 text-[10.5px] text-subtle">
           口径：源码 {census.templates} 个 newEntity 模板中，{census.abstract} 个是只用于继承的抽象 BASE 模板，其余{' '}
@@ -223,7 +268,7 @@ export function MonstersPage({
       </div>
 
       <div className="flex gap-3">
-        <aside className="hidden w-[210px] shrink-0 lg:block">
+        <aside className="hidden w-[236px] shrink-0 lg:block">
           <div className="panel sticky top-[calc(var(--header-h)+2px)] flex max-h-[calc(100vh-var(--header-h)-12px)] flex-col overflow-hidden">
             <div className="border-b border-line p-2.5">
               <input
@@ -234,21 +279,33 @@ export function MonstersPage({
               />
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto py-1">
-              <CategoryRow
-                label="全部"
-                count={census.concrete}
-                active={filters.category === 'all'}
-                onClick={() => setFilters({ ...filters, category: 'all' })}
+              {/* Below the search box: the engine's own type / subtype pair, as a
+                  two-level picker (the rarity rows keep their own section). */}
+              <MonsterTypeTree
+                options={typeTree}
+                total={census.concrete}
+                activeType={filters.type}
+                activeSubtype={filters.subtype}
+                onSelect={selectType}
               />
-              {CATEGORY_ORDER.map((key) => (
+              <div className="mt-2 border-t border-line pt-1">
+                <h3 className="px-2.5 pt-1 pb-0.5 text-[11px] font-semibold text-subtle">稀有度</h3>
                 <CategoryRow
-                  key={key}
-                  label={monsterData.dataset.categoryLabels[key] ?? key}
-                  count={census.byCategory[key] ?? 0}
-                  active={filters.category === key}
-                  onClick={() => setFilters({ ...filters, category: key })}
+                  label="全部"
+                  count={census.concrete}
+                  active={filters.category === 'all'}
+                  onClick={() => setFilters({ ...filters, category: 'all' })}
                 />
-              ))}
+                {CATEGORY_ORDER.map((key) => (
+                  <CategoryRow
+                    key={key}
+                    label={monsterData.dataset.categoryLabels[key] ?? key}
+                    count={census.byCategory[key] ?? 0}
+                    active={filters.category === key}
+                    onClick={() => setFilters({ ...filters, category: key })}
+                  />
+                ))}
+              </div>
               <div className="mt-2 border-t border-line px-2.5 py-2">
                 <h3 className="mb-1 text-[11px] font-semibold text-subtle">来源包</h3>
                 <div className="flex flex-wrap gap-1">
@@ -286,7 +343,7 @@ export function MonstersPage({
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <main className="@container min-w-0 flex-1">
           {/* Mobile: filters collapse into a toggle so the list keeps the space. */}
           <div className="mb-2 flex items-center gap-2 lg:hidden">
             <input
@@ -301,6 +358,48 @@ export function MonstersPage({
           </div>
           {showFilters && (
             <div className="panel mb-2 flex flex-wrap gap-1 p-2 lg:hidden">
+              {/* The desktop tree does not fit a phone, so the same two levels
+                  are exposed as selects. */}
+              <div className="mb-1 flex w-full flex-wrap items-center gap-1" data-testid="monster-type-selects">
+                <label className="sr-only" htmlFor="monster-type-select">
+                  怪物大类
+                </label>
+                <select
+                  id="monster-type-select"
+                  className="input min-w-[140px] flex-1"
+                  value={filters.type}
+                  aria-label="怪物大类"
+                  onChange={(event) => selectType(event.target.value, 'all')}
+                >
+                  <option value="all">全部类别</option>
+                  {typeTree.map((option) => (
+                    <option key={option.type} value={option.type}>
+                      {option.label}（{option.count}）
+                    </option>
+                  ))}
+                </select>
+                {subtypeOptions.length > 0 && (
+                  <>
+                    <label className="sr-only" htmlFor="monster-subtype-select">
+                      怪物亚类
+                    </label>
+                    <select
+                      id="monster-subtype-select"
+                      className="input min-w-[140px] flex-1"
+                      value={filters.subtype}
+                      aria-label="怪物亚类"
+                      onChange={(event) => selectType(filters.type, event.target.value)}
+                    >
+                      <option value="all">全部亚类</option>
+                      {subtypeOptions.map((option) => (
+                        <option key={option.subtype} value={option.subtype}>
+                          {option.label}（{option.count}）
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                )}
+              </div>
               <button
                 type="button"
                 className="btn px-2 py-0.5 text-[11px]"
@@ -326,6 +425,12 @@ export function MonstersPage({
           <div ref={listRef} className="flex flex-wrap items-baseline gap-2 px-1 pb-1.5">
             <span className="text-[12px] font-semibold">{results.length} 个结果</span>
             {filters.query && <span className="text-[11.5px] text-subtle">关键词“{filters.query}”</span>}
+            {activeTypeLabel && (
+              <span className="text-[11.5px] text-subtle" data-testid="monster-type-filter">
+                类别“{activeTypeLabel}”
+                {activeSubtypeLabel ? ` / “${activeSubtypeLabel}”` : ''}
+              </span>
+            )}
             {missingSelection && (
               <span className="text-[11.5px] text-amber-600 dark:text-amber-400">
                 未找到怪物 <code className="rounded bg-chip px-1">{missingSelection}</code>
@@ -335,7 +440,9 @@ export function MonstersPage({
           </div>
 
           {results.length ? (
-            <div className="grid gap-2 sm:grid-cols-2">
+            // One card per row while the skill panel squeezes the list; two as
+            // soon as the list itself is wide enough for them.
+            <div className={`grid gap-2 ${selectedTalent ? '@min-[560px]:grid-cols-2' : 'sm:grid-cols-2'}`}>
               {results.map((monster) => (
                 <MonsterCard
                   key={monster.id}
@@ -354,7 +461,10 @@ export function MonstersPage({
         </main>
 
         {selected && (
-          <div className="hidden w-[360px] shrink-0 xl:block">
+          // While the skill column is open the monster column hands 20px back
+          // to the list — the difference between "three panes fit at 1280px"
+          // and "the list collapses to a sliver".
+          <div className={`hidden shrink-0 xl:block ${selectedTalent ? 'w-[340px]' : 'w-[360px]'}`}>
             <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <MonsterDetail
                 monster={selected}
@@ -371,12 +481,13 @@ export function MonstersPage({
           </div>
         )}
 
-        {/* When the viewport can hold it, the talent opens in its own column
-            beside the monster instead of replacing it — the monster's skill
-            list stays visible, so comparing its skills does not need a round
-            trip through the search page. */}
+        {/* From `xl` up the talent opens in its own column beside the monster
+            instead of replacing it — the monster's skill list stays visible, so
+            comparing its skills does not need a round trip through the search
+            page. This used to need 1800px; the list giving up its second column
+            (and the narrower panels above) is what pays for it. */}
         {selected && selectedTalent && (
-          <div className="animate-fade-in hidden w-[360px] shrink-0 xxl:block" data-testid="monster-talent-column">
+          <div className="animate-fade-in hidden w-[340px] shrink-0 xl:block" data-testid="monster-talent-column">
             <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <TalentDetail
                 talent={selectedTalent}
@@ -408,8 +519,14 @@ export function MonstersPage({
         talent closed.
       */}
       {selected && !(narrowViewport && selectedTalent) && (
-        <div className="fixed inset-x-0 bottom-0 z-40 max-h-[75vh] xl:hidden" data-testid="monster-detail-sheet">
-          <div className="animate-fade-in mx-2 mb-2 max-h-[75vh] overflow-hidden">
+        // A bottom sheet must be a bounded *flex column* (`flex min-h-0
+        // flex-col` + `overflow-hidden`), not just a `max-h` box: the panel
+        // inside has to be shrunk to the sheet height so its own body becomes
+        // the scroll container. With only `max-h` the panel grows to its content
+        // and is clipped — the sheet looks unscrollable and a drag scrolls the
+        // list behind it (see docs/HANDOVER.md §0.6).
+        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[75vh] flex-col xl:hidden" data-testid="monster-detail-sheet">
+          <div className="animate-fade-in mx-2 mb-2 flex max-h-[75vh] min-h-0 flex-col overflow-hidden">
             <MonsterDetail
               monster={selected}
               talentOf={talentOf}
@@ -427,8 +544,8 @@ export function MonstersPage({
       )}
 
       {selected && selectedTalent && (
-        <div className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] xxl:hidden" data-testid="monster-talent-sheet">
-          <div className="animate-fade-in mx-2 mb-2 max-h-[85vh] overflow-hidden">
+        <div className="fixed inset-x-0 bottom-0 z-50 flex max-h-[85vh] flex-col xl:hidden" data-testid="monster-talent-sheet">
+          <div className="animate-fade-in mx-2 mb-2 flex max-h-[85vh] min-h-0 flex-col overflow-hidden">
             <TalentDetail
               talent={selectedTalent}
               tree={data.byTree.get(selectedTalent.tree)}
