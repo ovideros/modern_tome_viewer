@@ -26,6 +26,11 @@ const REQUIRED = [
   'public/data/manifest.json',
   'public/data/monsters.json',
   'public/data/monsters-report.json',
+  // Item encyclopedia: both pages fetch these at runtime, and the coverage
+  // report is what the docs point at for the inclusion rules.
+  'public/data/egos.json',
+  'public/data/artifacts.json',
+  'public/data/items-report.json',
 ];
 
 const missing = REQUIRED.filter((relative) => !fs.existsSync(path.join(projectRoot, relative)));
@@ -36,13 +41,27 @@ if (missing.length) {
   process.exit(1);
 }
 
+const itemDir = path.join(projectRoot, 'public/img/object');
+const itemCount = fs.existsSync(itemDir)
+  ? (function count(dir) {
+    return fs.readdirSync(dir, { withFileTypes: true }).reduce(
+      (total, entry) => total + (entry.isDirectory() ? count(path.join(dir, entry.name)) : 1),
+      0,
+    );
+  }(itemDir))
+  : 0;
+if (itemCount === 0) {
+  console.error('[build-pages] no item icons in public/img/object; run `npm run data:items`');
+  process.exit(1);
+}
+
 const npcDir = path.join(projectRoot, 'public/img/npc');
 const iconDir = path.join(projectRoot, 'public/img/talents');
 const npcCount = fs.existsSync(npcDir) ? fs.readdirSync(npcDir).length : 0;
 const iconCount = fs.existsSync(iconDir)
   ? fs.readdirSync(iconDir).reduce((total, size) => total + fs.readdirSync(path.join(iconDir, size)).length, 0)
   : 0;
-console.log(`[build-pages] data present; npc art ${npcCount}, talent icons ${iconCount}`);
+console.log(`[build-pages] data present; npc art ${npcCount}, talent icons ${iconCount}, item icons ${itemCount}`);
 
 const vite = path.join(projectRoot, 'node_modules/.bin/vite');
 const result = spawnSync(vite, ['build'], { cwd: projectRoot, stdio: 'inherit' });

@@ -1,0 +1,1649 @@
+{
+ "generatedAt": "2026-09-11T13:55:17.895Z",
+ "files": [
+  "tome-src-full/data/general/objects/2haxes.lua",
+  "tome-src-full/data/general/objects/2hmaces.lua",
+  "tome-src-full/data/general/objects/2hswords.lua",
+  "tome-src-full/data/general/objects/2htridents.lua",
+  "tome-src-full/data/general/objects/axes.lua",
+  "tome-src-full/data/general/objects/boss-artifacts-far-east.lua",
+  "tome-src-full/data/general/objects/boss-artifacts-maj-eyal.lua",
+  "tome-src-full/data/general/objects/boss-artifacts.lua",
+  "tome-src-full/data/general/objects/bows.lua",
+  "tome-src-full/data/general/objects/brotherhood-artifacts.lua",
+  "tome-src-full/data/general/objects/cloak.lua",
+  "tome-src-full/data/general/objects/cloth-armors.lua",
+  "tome-src-full/data/general/objects/digger.lua",
+  "tome-src-full/data/general/objects/egos/ammo.lua",
+  "tome-src-full/data/general/objects/egos/amulets.lua",
+  "tome-src-full/data/general/objects/egos/armor.lua",
+  "tome-src-full/data/general/objects/egos/belt.lua",
+  "tome-src-full/data/general/objects/egos/boots.lua",
+  "tome-src-full/data/general/objects/egos/bow.lua",
+  "tome-src-full/data/general/objects/egos/charged-attack.lua",
+  "tome-src-full/data/general/objects/egos/charged-defensive.lua",
+  "tome-src-full/data/general/objects/egos/charged-utility.lua",
+  "tome-src-full/data/general/objects/egos/charms.lua",
+  "tome-src-full/data/general/objects/egos/cloak.lua",
+  "tome-src-full/data/general/objects/egos/digger.lua",
+  "tome-src-full/data/general/objects/egos/gloves.lua",
+  "tome-src-full/data/general/objects/egos/heavy-armor.lua",
+  "tome-src-full/data/general/objects/egos/helm.lua",
+  "tome-src-full/data/general/objects/egos/infusions.lua",
+  "tome-src-full/data/general/objects/egos/light-armor.lua",
+  "tome-src-full/data/general/objects/egos/light-boots.lua",
+  "tome-src-full/data/general/objects/egos/lite.lua",
+  "tome-src-full/data/general/objects/egos/massive-armor.lua",
+  "tome-src-full/data/general/objects/egos/mindstars.lua",
+  "tome-src-full/data/general/objects/egos/potions.lua",
+  "tome-src-full/data/general/objects/egos/ranged.lua",
+  "tome-src-full/data/general/objects/egos/rings.lua",
+  "tome-src-full/data/general/objects/egos/robe.lua",
+  "tome-src-full/data/general/objects/egos/scrolls.lua",
+  "tome-src-full/data/general/objects/egos/shield.lua",
+  "tome-src-full/data/general/objects/egos/sling.lua",
+  "tome-src-full/data/general/objects/egos/staves.lua",
+  "tome-src-full/data/general/objects/egos/torques-powers.lua",
+  "tome-src-full/data/general/objects/egos/totems-powers.lua",
+  "tome-src-full/data/general/objects/egos/wands-powers.lua",
+  "tome-src-full/data/general/objects/egos/wands.lua",
+  "tome-src-full/data/general/objects/egos/weapon.lua",
+  "tome-src-full/data/general/objects/egos/wizard-hat.lua",
+  "tome-src-full/data/general/objects/elixir-ingredients.lua",
+  "tome-src-full/data/general/objects/gauntlets.lua",
+  "tome-src-full/data/general/objects/gem.lua",
+  "tome-src-full/data/general/objects/gloves.lua",
+  "tome-src-full/data/general/objects/heavy-armors.lua",
+  "tome-src-full/data/general/objects/heavy-boots.lua",
+  "tome-src-full/data/general/objects/helms.lua",
+  "tome-src-full/data/general/objects/jewelry.lua",
+  "tome-src-full/data/general/objects/knifes.lua",
+  "tome-src-full/data/general/objects/leather-belt.lua",
+  "tome-src-full/data/general/objects/leather-boots.lua",
+  "tome-src-full/data/general/objects/leather-caps.lua",
+  "tome-src-full/data/general/objects/light-armors.lua",
+  "tome-src-full/data/general/objects/lites.lua",
+  "tome-src-full/data/general/objects/lore/fun.lua",
+  "tome-src-full/data/general/objects/lore/maj-eyal.lua",
+  "tome-src-full/data/general/objects/lore/misc.lua",
+  "tome-src-full/data/general/objects/lore/spellhunt.lua",
+  "tome-src-full/data/general/objects/lore/sunwall.lua",
+  "tome-src-full/data/general/objects/maces.lua",
+  "tome-src-full/data/general/objects/massive-armors.lua",
+  "tome-src-full/data/general/objects/mindstars.lua",
+  "tome-src-full/data/general/objects/misc-tools.lua",
+  "tome-src-full/data/general/objects/money.lua",
+  "tome-src-full/data/general/objects/mounts.lua",
+  "tome-src-full/data/general/objects/mummy-wrappings.lua",
+  "tome-src-full/data/general/objects/objects-far-east.lua",
+  "tome-src-full/data/general/objects/potions.lua",
+  "tome-src-full/data/general/objects/quest-artifacts.lua",
+  "tome-src-full/data/general/objects/random-artifacts/ammo.lua",
+  "tome-src-full/data/general/objects/random-artifacts/generic.lua",
+  "tome-src-full/data/general/objects/random-artifacts/gloves.lua",
+  "tome-src-full/data/general/objects/random-artifacts/melee.lua",
+  "tome-src-full/data/general/objects/random-artifacts/ranged.lua",
+  "tome-src-full/data/general/objects/random-artifacts/shields.lua",
+  "tome-src-full/data/general/objects/random-artifacts/staves.lua",
+  "tome-src-full/data/general/objects/random-artifacts.lua",
+  "tome-src-full/data/general/objects/rods.lua",
+  "tome-src-full/data/general/objects/scrolls.lua",
+  "tome-src-full/data/general/objects/shields.lua",
+  "tome-src-full/data/general/objects/slings.lua",
+  "tome-src-full/data/general/objects/special-artifacts.lua",
+  "tome-src-full/data/general/objects/staves.lua",
+  "tome-src-full/data/general/objects/swords.lua",
+  "tome-src-full/data/general/objects/torques.lua",
+  "tome-src-full/data/general/objects/totems.lua",
+  "tome-src-full/data/general/objects/wands.lua",
+  "tome-src-full/data/general/objects/whips.lua",
+  "tome-src-full/data/general/objects/wizard-hat.lua",
+  "tome-src-full/data/general/objects/world-artifacts-far-east.lua",
+  "tome-src-full/data/general/objects/world-artifacts-maj-eyal.lua",
+  "tome-src-full/data/general/objects/world-artifacts.lua",
+  "tome-src-full/data/zones/abashed-expanse/npcs.lua",
+  "tome-src-full/data/zones/abashed-expanse/objects.lua",
+  "tome-src-full/data/zones/ancient-elven-ruins/npcs.lua",
+  "tome-src-full/data/zones/ancient-elven-ruins/objects.lua",
+  "tome-src-full/data/zones/ardhungol/npcs.lua",
+  "tome-src-full/data/zones/ardhungol/objects.lua",
+  "tome-src-full/data/zones/arena/npcs.lua",
+  "tome-src-full/data/zones/arena/objects.lua",
+  "tome-src-full/data/zones/arena-unlock/npcs.lua",
+  "tome-src-full/data/zones/blighted-ruins/npcs.lua",
+  "tome-src-full/data/zones/blighted-ruins/objects.lua",
+  "tome-src-full/data/zones/briagh-lair/npcs.lua",
+  "tome-src-full/data/zones/briagh-lair/objects.lua",
+  "tome-src-full/data/zones/charred-scar/npcs.lua",
+  "tome-src-full/data/zones/conclave-vault/npcs.lua",
+  "tome-src-full/data/zones/conclave-vault/objects.lua",
+  "tome-src-full/data/zones/crypt-kryl-feijan/npcs.lua",
+  "tome-src-full/data/zones/crypt-kryl-feijan/objects.lua",
+  "tome-src-full/data/zones/daikara/npcs.lua",
+  "tome-src-full/data/zones/daikara/objects.lua",
+  "tome-src-full/data/zones/deep-bellow/npcs.lua",
+  "tome-src-full/data/zones/deep-bellow/objects.lua",
+  "tome-src-full/data/zones/demon-plane/npcs.lua",
+  "tome-src-full/data/zones/demon-plane/objects.lua",
+  "tome-src-full/data/zones/dreadfell/npcs.lua",
+  "tome-src-full/data/zones/dreadfell/objects.lua",
+  "tome-src-full/data/zones/dreadfell-ambush/npcs.lua",
+  "tome-src-full/data/zones/dreadfell-ambush/objects.lua",
+  "tome-src-full/data/zones/dreams/npcs.lua",
+  "tome-src-full/data/zones/eidolon-plane/npcs.lua",
+  "tome-src-full/data/zones/eruan/npcs.lua",
+  "tome-src-full/data/zones/flooded-cave/npcs.lua",
+  "tome-src-full/data/zones/golem-graveyard/npcs.lua",
+  "tome-src-full/data/zones/golem-graveyard/objects.lua",
+  "tome-src-full/data/zones/gorbat-pride/npcs.lua",
+  "tome-src-full/data/zones/gorbat-pride/objects.lua",
+  "tome-src-full/data/zones/grushnak-pride/npcs.lua",
+  "tome-src-full/data/zones/grushnak-pride/objects.lua",
+  "tome-src-full/data/zones/halfling-ruins/npcs.lua",
+  "tome-src-full/data/zones/halfling-ruins/objects.lua",
+  "tome-src-full/data/zones/heart-gloom/npcs.lua",
+  "tome-src-full/data/zones/high-peak/npcs.lua",
+  "tome-src-full/data/zones/high-peak/objects.lua",
+  "tome-src-full/data/zones/infinite-dungeon/objects.lua",
+  "tome-src-full/data/zones/keepsake-meadow/npcs.lua",
+  "tome-src-full/data/zones/keepsake-meadow/objects.lua",
+  "tome-src-full/data/zones/lake-nur/objects.lua",
+  "tome-src-full/data/zones/last-hope-graveyard/npcs.lua",
+  "tome-src-full/data/zones/last-hope-graveyard/objects.lua",
+  "tome-src-full/data/zones/mark-spellblaze/npcs.lua",
+  "tome-src-full/data/zones/mark-spellblaze/objects.lua",
+  "tome-src-full/data/zones/maze/npcs.lua",
+  "tome-src-full/data/zones/maze/objects.lua",
+  "tome-src-full/data/zones/murgol-lair/npcs.lua",
+  "tome-src-full/data/zones/norgos-lair/npcs.lua",
+  "tome-src-full/data/zones/noxious-caldera/npcs.lua",
+  "tome-src-full/data/zones/noxious-caldera/objects.lua",
+  "tome-src-full/data/zones/old-forest/npcs.lua",
+  "tome-src-full/data/zones/old-forest/objects.lua",
+  "tome-src-full/data/zones/orc-breeding-pit/npcs.lua",
+  "tome-src-full/data/zones/orc-breeding-pit/objects.lua",
+  "tome-src-full/data/zones/paradox-plane/npcs.lua",
+  "tome-src-full/data/zones/paradox-plane/objects.lua",
+  "tome-src-full/data/zones/rak-shor-pride/npcs.lua",
+  "tome-src-full/data/zones/rak-shor-pride/objects.lua",
+  "tome-src-full/data/zones/reknor/npcs.lua",
+  "tome-src-full/data/zones/reknor/objects.lua",
+  "tome-src-full/data/zones/reknor-escape/npcs.lua",
+  "tome-src-full/data/zones/reknor-escape/objects.lua",
+  "tome-src-full/data/zones/rhaloren-camp/npcs.lua",
+  "tome-src-full/data/zones/rhaloren-camp/objects.lua",
+  "tome-src-full/data/zones/ring-of-blood/npcs.lua",
+  "tome-src-full/data/zones/ring-of-blood/objects.lua",
+  "tome-src-full/data/zones/ritch-tunnels/npcs.lua",
+  "tome-src-full/data/zones/ruins-kor-pul/npcs.lua",
+  "tome-src-full/data/zones/ruins-kor-pul/objects.lua",
+  "tome-src-full/data/zones/sandworm-lair/npcs.lua",
+  "tome-src-full/data/zones/sandworm-lair/objects.lua",
+  "tome-src-full/data/zones/scintillating-caves/npcs.lua",
+  "tome-src-full/data/zones/scintillating-caves/objects.lua",
+  "tome-src-full/data/zones/shadow-crypt/npcs.lua",
+  "tome-src-full/data/zones/shertul-fortress/npcs.lua",
+  "tome-src-full/data/zones/shertul-fortress/objects.lua",
+  "tome-src-full/data/zones/shertul-fortress-caldizar/npcs.lua",
+  "tome-src-full/data/zones/slazish-fen/npcs.lua",
+  "tome-src-full/data/zones/slazish-fen/objects.lua",
+  "tome-src-full/data/zones/sludgenest/npcs.lua",
+  "tome-src-full/data/zones/south-beach/npcs.lua",
+  "tome-src-full/data/zones/south-beach/objects.lua",
+  "tome-src-full/data/zones/tannen-tower/npcs.lua",
+  "tome-src-full/data/zones/tannen-tower/objects.lua",
+  "tome-src-full/data/zones/telmur/npcs.lua",
+  "tome-src-full/data/zones/telmur/objects.lua",
+  "tome-src-full/data/zones/tempest-peak/npcs.lua",
+  "tome-src-full/data/zones/temple-of-creation/npcs.lua",
+  "tome-src-full/data/zones/temple-of-creation/objects.lua",
+  "tome-src-full/data/zones/temporal-rift/npcs.lua",
+  "tome-src-full/data/zones/temporal-rift/objects.lua",
+  "tome-src-full/data/zones/thieves-tunnels/npcs.lua",
+  "tome-src-full/data/zones/town-angolwen/npcs.lua",
+  "tome-src-full/data/zones/town-angolwen/objects.lua",
+  "tome-src-full/data/zones/town-derth/npcs.lua",
+  "tome-src-full/data/zones/town-elvala/npcs.lua",
+  "tome-src-full/data/zones/town-elvala/objects.lua",
+  "tome-src-full/data/zones/town-gates-of-morning/npcs.lua",
+  "tome-src-full/data/zones/town-irkkk/npcs.lua",
+  "tome-src-full/data/zones/town-iron-council/npcs.lua",
+  "tome-src-full/data/zones/town-last-hope/npcs.lua",
+  "tome-src-full/data/zones/town-last-hope/objects.lua",
+  "tome-src-full/data/zones/town-lumberjack-village/npcs.lua",
+  "tome-src-full/data/zones/town-point-zero/npcs.lua",
+  "tome-src-full/data/zones/town-point-zero/objects.lua",
+  "tome-src-full/data/zones/town-shatur/npcs.lua",
+  "tome-src-full/data/zones/town-zigur/npcs.lua",
+  "tome-src-full/data/zones/town-zigur/objects.lua",
+  "tome-src-full/data/zones/trollmire/npcs.lua",
+  "tome-src-full/data/zones/trollmire/objects.lua",
+  "tome-src-full/data/zones/tutorial/npcs.lua",
+  "tome-src-full/data/zones/tutorial-combat-stats/npcs.lua",
+  "tome-src-full/data/zones/tutorial-combat-stats/objects.lua",
+  "tome-src-full/data/zones/unhallowed-morass/npcs.lua",
+  "tome-src-full/data/zones/unhallowed-morass/objects.lua",
+  "tome-src-full/data/zones/unremarkable-cave/npcs.lua",
+  "tome-src-full/data/zones/valley-moon/npcs.lua",
+  "tome-src-full/data/zones/valley-moon-caverns/objects.lua",
+  "tome-src-full/data/zones/void/npcs.lua",
+  "tome-src-full/data/zones/vor-armoury/npcs.lua",
+  "tome-src-full/data/zones/vor-armoury/objects.lua",
+  "tome-src-full/data/zones/vor-pride/npcs.lua",
+  "tome-src-full/data/zones/vor-pride/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/boss-artifacts.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/egos/steamgun.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/generic-world-artifacts.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/inscriptions.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/leather-hats.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/lore.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/quest-artifacts.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/schematics.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/special-misc.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/steamgun.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/steamsaw.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinker.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/chemistry.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/electricity.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/explosive.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/mechanical.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/smith.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/tinkers/therapeutics.lua",
+  "dlc-src/orcs/tome-orcs/data/general/objects/world-artifacts.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/cave-hatred/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/cave-hatred/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/dominion-port/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/dominion-port/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/gates-of-morning/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/gates-of-morning/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/gem/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/gem/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/internment-camp/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/internment-camp/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/kaltor-shop/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/kaltor-shop/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/krimbul/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/krimbul/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/lost-city/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/lost-city/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/palace-fumes/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/palace-fumes/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/pocket-time/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/primal-forest/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/primal-forest/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/ritch-hive/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/shertul-cave/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/slumbering-caves/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/slumbering-caves/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/steam-quarry/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/steam-quarry/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/sunwall-observatory/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/sunwall-observatory/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/sunwall-outpost/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/sunwall-outpost/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/tinker-master/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/town-kruk/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/town-kruk/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/ureslak-host/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/ureslak-host/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/vaporous-emporium/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/vaporous-emporium/objects.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/yeti-caves/npcs.lua",
+  "dlc-src/orcs/tome-orcs/data/zones/yeti-caves/objects.lua",
+  "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/general/objects/world-artifacts.lua",
+  "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/anteroom-agony/npcs.lua",
+  "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/anteroom-agony/objects.lua",
+  "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/searing-halls/npcs.lua",
+  "dlc-src/ashes-urhrok/tome-ashes-urhrok/data/zones/searing-halls/objects.lua",
+  "dlc-src/cults/tome-cults/data/general/objects/forbidden-tomes-base.lua",
+  "dlc-src/cults/tome-cults/data/general/objects/lore/eyal.lua",
+  "dlc-src/cults/tome-cults/data/general/objects/special-misc.lua",
+  "dlc-src/cults/tome-cults/data/general/objects/world-artifacts.lua",
+  "dlc-src/cults/tome-cults/data/zones/dremshor-tunnel/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/dremshor-tunnel/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/entropic-void/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-cultist/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-cultist/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-haze-cave/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-haze-cave/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-horrors/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-horrors/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-illusory-castle/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-illusory-castle/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/ft-yaech/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/godfeaster/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/godfeaster/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/maggot/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/maggot/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/necromancers-ruins/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/necromancers-ruins/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/occult-egress/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/scourged-pits/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/scourged-pits/objects.lua",
+  "dlc-src/cults/tome-cults/data/zones/test/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/town-kroshkkur/npcs.lua",
+  "dlc-src/cults/tome-cults/data/zones/town-kroshkkur/objects.lua"
+ ],
+ "workspace": "..",
+ "fieldMapFile": "tome-src-full/mod/class/Object.lua",
+ "scannedFiles": 391,
+ "scannedDefinitions": 2358,
+ "egoPools": 39,
+ "counts": {
+  "egos": 608,
+  "artifacts": 496,
+  "artifactsIncluded": 416,
+  "artifactsNonEquipment": 80,
+  "artifactsWithImage": 493,
+  "artifactsResolverImage": 0,
+  "artifactsWithoutImage": 3
+ },
+ "sourceCounts": {
+  "tome": 603,
+  "orcs": 5
+ },
+ "artifactSourceCounts": {
+  "tome": 352,
+  "orcs": 96,
+  "cults": 26,
+  "ashes": 22
+ },
+ "semantics": {
+  "rarity": "相对生成权重，不是掉落概率",
+  "levelRange": "该物品可生成的等级区间，不是装备需求等级",
+  "mbonusMaterial": "基础值 + 材料等级 × 每级增量；本站给出材料等级 1–5 的范围"
+ },
+ "skipped": [
+  {
+   "reason": "not-unique",
+   "count": 863
+  },
+  {
+   "reason": "npc-definition",
+   "count": 281
+  },
+  {
+   "reason": "no-type",
+   "count": 64
+  },
+  {
+   "reason": "quest-item",
+   "count": 28
+  },
+  {
+   "reason": "no-name",
+   "count": 16
+  },
+  {
+   "reason": "artifact:variant-same-define-as",
+   "count": 2
+  }
+ ],
+ "duplicateDefinitions": [
+  {
+   "kind": "artifact",
+   "id": "tome:RUNE_RIFT",
+   "kept": "tome-src-full/data/zones/daikara/objects.lua",
+   "also": "tome-src-full/data/zones/temporal-rift/objects.lua"
+  },
+  {
+   "kind": "artifact",
+   "id": "tome:VOID_STAR",
+   "kept": "tome-src-full/data/zones/abashed-expanse/objects.lua",
+   "also": "tome-src-full/data/zones/unhallowed-morass/objects.lua"
+  }
+ ],
+ "unmappedPropertyKeys": [
+  {
+   "key": "artifact_power_obsidian",
+   "count": 8
+  },
+  {
+   "key": "trap_detect_power",
+   "count": 4
+  },
+  {
+   "key": "sentient",
+   "count": 4
+  },
+  {
+   "key": "elemental_element",
+   "count": 2
+  },
+  {
+   "key": "of_breaching",
+   "count": 2
+  },
+  {
+   "key": "accuracy_effect_scale",
+   "count": 2
+  },
+  {
+   "key": "moddable_tile_nude",
+   "count": 2
+  },
+  {
+   "key": "staff_power",
+   "count": 2
+  },
+  {
+   "key": "melee_element",
+   "count": 2
+  },
+  {
+   "key": "tg_type",
+   "count": 2
+  },
+  {
+   "key": "damage_convert",
+   "count": 2
+  },
+  {
+   "key": "steam_regen",
+   "count": 2
+  },
+  {
+   "key": "sound",
+   "count": 2
+  },
+  {
+   "key": "sound_miss",
+   "count": 2
+  },
+  {
+   "key": "heal_factor",
+   "count": 2
+  },
+  {
+   "key": "inscriptions_data",
+   "count": 2
+  },
+  {
+   "key": "sawwheel_speed",
+   "count": 2
+  },
+  {
+   "key": "combat_damage",
+   "count": 1
+  },
+  {
+   "key": "combat_mindresist",
+   "count": 1
+  },
+  {
+   "key": "elemental_bonus",
+   "count": 1
+  },
+  {
+   "key": "of_warding",
+   "count": 1
+  },
+  {
+   "key": "of_greater_warding",
+   "count": 1
+  },
+  {
+   "key": "of_protection",
+   "count": 1
+  },
+  {
+   "key": "projection_targets",
+   "count": 1
+  },
+  {
+   "key": "twilight_mastery",
+   "count": 1
+  },
+  {
+   "key": "combat_ranged_def",
+   "count": 1
+  },
+  {
+   "key": "sentient_telos",
+   "count": 1
+  },
+  {
+   "key": "elemental_mastery",
+   "count": 1
+  },
+  {
+   "key": "no_stealth_break",
+   "count": 1
+  },
+  {
+   "key": "no_garrote",
+   "count": 1
+  },
+  {
+   "key": "wild_summon",
+   "count": 1
+  },
+  {
+   "key": "wil_attack",
+   "count": 1
+  },
+  {
+   "key": "mindpower",
+   "count": 1
+  },
+  {
+   "key": "talent_on_spell",
+   "count": 1
+  },
+  {
+   "key": "lightning_daze_tempest",
+   "count": 1
+  },
+  {
+   "key": "enhance_meditate",
+   "count": 1
+  },
+  {
+   "key": "hate_per_crit",
+   "count": 1
+  },
+  {
+   "key": "cold_freezes",
+   "count": 1
+  },
+  {
+   "key": "siege_impact",
+   "count": 1
+  },
+  {
+   "key": "demonblood_dam",
+   "count": 1
+  },
+  {
+   "key": "demonblood_def",
+   "count": 1
+  },
+  {
+   "key": "crushing_blow",
+   "count": 1
+  },
+  {
+   "key": "amplify_sun_beam",
+   "count": 1
+  },
+  {
+   "key": "lightning_brainlocks",
+   "count": 1
+  },
+  {
+   "key": "forbid_nature",
+   "count": 1
+  },
+  {
+   "key": "inscriptions_stat_multiplier",
+   "count": 1
+  },
+  {
+   "key": "suppress_steam_generator_straps",
+   "count": 1
+  },
+  {
+   "key": "max_steam",
+   "count": 1
+  },
+  {
+   "key": "ignore_bleed",
+   "count": 1
+  },
+  {
+   "key": "combat_steamspeed",
+   "count": 1
+  },
+  {
+   "key": "basedam",
+   "count": 1
+  },
+  {
+   "key": "base_dam",
+   "count": 1
+  },
+  {
+   "key": "arcane_dynamo",
+   "count": 1
+  },
+  {
+   "key": "DM_Bonus",
+   "count": 1
+  },
+  {
+   "key": "mental_negative_status_effect_immune",
+   "count": 1
+  },
+  {
+   "key": "obliterating_smash_wall",
+   "count": 1
+  },
+  {
+   "key": "control_haste_doom",
+   "count": 1
+  },
+  {
+   "key": "inc_dam",
+   "count": 1
+  },
+  {
+   "key": "death_dialog",
+   "count": 1
+  },
+  {
+   "key": "life",
+   "count": 1
+  }
+ ],
+ "untranslatedLabels": [
+  {
+   "label": "artifact_power_obsidian",
+   "count": 8
+  },
+  {
+   "label": "blind_fight",
+   "count": 4
+  },
+  {
+   "label": "trap_detect_power",
+   "count": 4
+  },
+  {
+   "label": "sentient",
+   "count": 4
+  },
+  {
+   "label": "lucid_dreamer",
+   "count": 3
+  },
+  {
+   "label": "avoid_pressure_traps",
+   "count": 3
+  },
+  {
+   "label": "elemental_element",
+   "count": 2
+  },
+  {
+   "label": "no_breath",
+   "count": 2
+  },
+  {
+   "label": "quick_weapon_swap",
+   "count": 2
+  },
+  {
+   "label": "of_breaching",
+   "count": 2
+  },
+  {
+   "label": "accuracy_effect_scale",
+   "count": 2
+  },
+  {
+   "label": "moddable_tile_nude",
+   "count": 2
+  },
+  {
+   "label": "staff_power",
+   "count": 2
+  },
+  {
+   "label": "melee_element",
+   "count": 2
+  },
+  {
+   "label": "tg_type",
+   "count": 2
+  },
+  {
+   "label": "damage_convert",
+   "count": 2
+  },
+  {
+   "label": "talent_on_spell",
+   "count": 2
+  },
+  {
+   "label": "speaks_shertul",
+   "count": 2
+  },
+  {
+   "label": "steam_regen",
+   "count": 2
+  },
+  {
+   "label": "sound",
+   "count": 2
+  },
+  {
+   "label": "sound_miss",
+   "count": 2
+  },
+  {
+   "label": "heal_factor",
+   "count": 2
+  },
+  {
+   "label": "inscriptions_data",
+   "count": 2
+  },
+  {
+   "label": "sawwheel_speed",
+   "count": 2
+  },
+  {
+   "label": "combat_damage",
+   "count": 1
+  },
+  {
+   "label": "combat_mindresist",
+   "count": 1
+  },
+  {
+   "label": "elemental_bonus",
+   "count": 1
+  },
+  {
+   "label": "of_warding",
+   "count": 1
+  },
+  {
+   "label": "of_greater_warding",
+   "count": 1
+  },
+  {
+   "label": "of_protection",
+   "count": 1
+  },
+  {
+   "label": "projection_targets",
+   "count": 1
+  },
+  {
+   "label": "twilight_mastery",
+   "count": 1
+  },
+  {
+   "label": "combat_ranged_def",
+   "count": 1
+  },
+  {
+   "label": "sentient_telos",
+   "count": 1
+  },
+  {
+   "label": "elemental_mastery",
+   "count": 1
+  },
+  {
+   "label": "no_stealth_break",
+   "count": 1
+  },
+  {
+   "label": "no_garrote",
+   "count": 1
+  },
+  {
+   "label": "wild_summon",
+   "count": 1
+  },
+  {
+   "label": "wil_attack",
+   "count": 1
+  },
+  {
+   "label": "lightning_daze_tempest",
+   "count": 1
+  },
+  {
+   "label": "enhance_meditate",
+   "count": 1
+  },
+  {
+   "label": "hate_per_crit",
+   "count": 1
+  },
+  {
+   "label": "cold_freezes",
+   "count": 1
+  },
+  {
+   "label": "siege_impact",
+   "count": 1
+  },
+  {
+   "label": "demonblood_dam",
+   "count": 1
+  },
+  {
+   "label": "demonblood_def",
+   "count": 1
+  },
+  {
+   "label": "crushing_blow",
+   "count": 1
+  },
+  {
+   "label": "amplify_sun_beam",
+   "count": 1
+  },
+  {
+   "label": "lightning_brainlocks",
+   "count": 1
+  },
+  {
+   "label": "forbid_nature",
+   "count": 1
+  },
+  {
+   "label": "inscriptions_stat_multiplier",
+   "count": 1
+  },
+  {
+   "label": "suppress_steam_generator_straps",
+   "count": 1
+  },
+  {
+   "label": "max_steam",
+   "count": 1
+  },
+  {
+   "label": "ignore_bleed",
+   "count": 1
+  },
+  {
+   "label": "combat_steamspeed",
+   "count": 1
+  },
+  {
+   "label": "basedam",
+   "count": 1
+  },
+  {
+   "label": "base_dam",
+   "count": 1
+  },
+  {
+   "label": "arcane_dynamo",
+   "count": 1
+  },
+  {
+   "label": "DM_Bonus",
+   "count": 1
+  },
+  {
+   "label": "mental_negative_status_effect_immune",
+   "count": 1
+  },
+  {
+   "label": "obliterating_smash_wall",
+   "count": 1
+  },
+  {
+   "label": "control_haste_doom",
+   "count": 1
+  },
+  {
+   "label": "inc_dam",
+   "count": 1
+  },
+  {
+   "label": "death_dialog",
+   "count": 1
+  }
+ ],
+ "effectCoverage": {
+  "withProperties": 557,
+  "callbackTemplates": 61,
+  "curatedNotes": 31,
+  "partialNotes": 38,
+  "withoutEffect": []
+ },
+ "missingTranslations": [],
+ "missingImages": [
+  {
+   "id": "orcs:TINKER_BRAIN_CAP4",
+   "name": "Brain Cap",
+   "image": null,
+   "reason": "no-image-field"
+  },
+  {
+   "id": "cults:FANGED_COLLAR_HEAD",
+   "name": "Fanged Collar",
+   "image": null,
+   "reason": "no-image-field"
+  },
+  {
+   "id": "tome:general-objects-world-artifacts:2882",
+   "name": "Great Caller",
+   "image": "object",
+   "reason": "not-in-index"
+  }
+ ],
+ "egoNameTokens": [
+  {
+   "token": "USE_TALENT",
+   "zh": "技能名",
+   "note": "由该词缀触发的技能名填充"
+  },
+  {
+   "token": "RESIST",
+   "zh": "抗性数值",
+   "note": "由该词缀自身提供的抗性数值填充"
+  },
+  {
+   "token": "REGEN",
+   "zh": "回复数值",
+   "note": "由该词缀提供的回复数值填充"
+  },
+  {
+   "token": "STATBONUS",
+   "zh": "属性加值",
+   "note": "由该词缀提供的属性加值填充"
+  },
+  {
+   "token": "MASTERY",
+   "zh": "技能树加成",
+   "note": "由该词缀提供的技能树加值填充"
+  }
+ ],
+ "pools": [
+  {
+   "pool": "ammo",
+   "file": "tome-src-full/data/general/objects/egos/ammo.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 34,
+   "baseItems": [
+    {
+     "defineAs": "BASE_ARROW",
+     "name": null,
+     "type": "ammo",
+     "subtype": "arrow",
+     "slot": "QUIVER"
+    },
+    {
+     "defineAs": "BASE_SHOT",
+     "name": null,
+     "type": "ammo",
+     "subtype": "shot",
+     "slot": "QUIVER"
+    }
+   ]
+  },
+  {
+   "pool": "amulets",
+   "file": "tome-src-full/data/general/objects/egos/amulets.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 32,
+   "baseItems": [
+    {
+     "defineAs": "BASE_AMULET",
+     "name": null,
+     "type": "jewelry",
+     "subtype": "amulet",
+     "slot": "NECK"
+    }
+   ]
+  },
+  {
+   "pool": "armor",
+   "file": "tome-src-full/data/general/objects/egos/armor.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 21,
+   "baseItems": []
+  },
+  {
+   "pool": "belt",
+   "file": "tome-src-full/data/general/objects/egos/belt.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 27,
+   "baseItems": [
+    {
+     "defineAs": "BASE_LEATHER_BELT",
+     "name": null,
+     "type": "armor",
+     "subtype": "belt",
+     "slot": "BELT"
+    }
+   ]
+  },
+  {
+   "pool": "boots",
+   "file": "tome-src-full/data/general/objects/egos/boots.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 27,
+   "baseItems": [
+    {
+     "defineAs": "BASE_HEAVY_BOOTS",
+     "name": null,
+     "type": "armor",
+     "subtype": "feet",
+     "slot": "FEET"
+    }
+   ]
+  },
+  {
+   "pool": "bow",
+   "file": "tome-src-full/data/general/objects/egos/bow.lua",
+   "source": "tome",
+   "loads": [
+    "ranged"
+   ],
+   "egoCount": 2,
+   "baseItems": [
+    {
+     "defineAs": "BASE_LONGBOW",
+     "name": null,
+     "type": "weapon",
+     "subtype": "longbow",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "charged-attack",
+   "file": "tome-src-full/data/general/objects/egos/charged-attack.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 1,
+   "baseItems": []
+  },
+  {
+   "pool": "charged-defensive",
+   "file": "tome-src-full/data/general/objects/egos/charged-defensive.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 1,
+   "baseItems": []
+  },
+  {
+   "pool": "charged-utility",
+   "file": "tome-src-full/data/general/objects/egos/charged-utility.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 1,
+   "baseItems": []
+  },
+  {
+   "pool": "charms",
+   "file": "tome-src-full/data/general/objects/egos/charms.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 22,
+   "baseItems": []
+  },
+  {
+   "pool": "cloak",
+   "file": "tome-src-full/data/general/objects/egos/cloak.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 25,
+   "baseItems": [
+    {
+     "defineAs": "BASE_CLOAK",
+     "name": null,
+     "type": "armor",
+     "subtype": "cloak",
+     "slot": "CLOAK"
+    }
+   ]
+  },
+  {
+   "pool": "digger",
+   "file": "tome-src-full/data/general/objects/egos/digger.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 18,
+   "baseItems": [
+    {
+     "defineAs": "BASE_DIGGER",
+     "name": null,
+     "type": "tool",
+     "subtype": "digger",
+     "slot": "TOOL"
+    }
+   ]
+  },
+  {
+   "pool": "gloves",
+   "file": "tome-src-full/data/general/objects/egos/gloves.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 33,
+   "baseItems": [
+    {
+     "defineAs": "BASE_GAUNTLETS",
+     "name": null,
+     "type": "armor",
+     "subtype": "hands",
+     "slot": "HANDS"
+    },
+    {
+     "defineAs": "BASE_GLOVES",
+     "name": null,
+     "type": "armor",
+     "subtype": "hands",
+     "slot": "HANDS"
+    }
+   ]
+  },
+  {
+   "pool": "heavy-armor",
+   "file": "tome-src-full/data/general/objects/egos/heavy-armor.lua",
+   "source": "tome",
+   "loads": [
+    "armor"
+   ],
+   "egoCount": 5,
+   "baseItems": [
+    {
+     "defineAs": "BASE_HEAVY_ARMOR",
+     "name": null,
+     "type": "armor",
+     "subtype": "heavy",
+     "slot": "BODY"
+    }
+   ]
+  },
+  {
+   "pool": "helm",
+   "file": "tome-src-full/data/general/objects/egos/helm.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 30,
+   "baseItems": [
+    {
+     "defineAs": "BASE_HELM",
+     "name": null,
+     "type": "armor",
+     "subtype": "head",
+     "slot": "HEAD"
+    },
+    {
+     "defineAs": "BASE_LEATHER_CAP",
+     "name": null,
+     "type": "armor",
+     "subtype": "head",
+     "slot": "HEAD"
+    },
+    {
+     "defineAs": "BASE_LEATHER_HAT",
+     "name": null,
+     "type": "armor",
+     "subtype": "head",
+     "slot": "HEAD"
+    }
+   ]
+  },
+  {
+   "pool": "infusions",
+   "file": "tome-src-full/data/general/objects/egos/infusions.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 6,
+   "baseItems": [
+    {
+     "defineAs": "BASE_INFUSION",
+     "name": null,
+     "type": "scroll",
+     "subtype": "infusion",
+     "slot": null
+    },
+    {
+     "defineAs": "BASE_RUNE",
+     "name": null,
+     "type": "scroll",
+     "subtype": "rune",
+     "slot": null
+    },
+    {
+     "defineAs": "BASE_TAINT",
+     "name": null,
+     "type": "scroll",
+     "subtype": "taint",
+     "slot": null
+    },
+    {
+     "defineAs": "BASE_IMPLANT",
+     "name": null,
+     "type": "scroll",
+     "subtype": "implant",
+     "slot": null
+    }
+   ]
+  },
+  {
+   "pool": "light-armor",
+   "file": "tome-src-full/data/general/objects/egos/light-armor.lua",
+   "source": "tome",
+   "loads": [
+    "armor"
+   ],
+   "egoCount": 11,
+   "baseItems": [
+    {
+     "defineAs": "BASE_LIGHT_ARMOR",
+     "name": null,
+     "type": "armor",
+     "subtype": "light",
+     "slot": "BODY"
+    }
+   ]
+  },
+  {
+   "pool": "light-boots",
+   "file": "tome-src-full/data/general/objects/egos/light-boots.lua",
+   "source": "tome",
+   "loads": [
+    "boots"
+   ],
+   "egoCount": 1,
+   "baseItems": [
+    {
+     "defineAs": "BASE_LEATHER_BOOT",
+     "name": null,
+     "type": "armor",
+     "subtype": "feet",
+     "slot": "FEET"
+    }
+   ]
+  },
+  {
+   "pool": "lite",
+   "file": "tome-src-full/data/general/objects/egos/lite.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 18,
+   "baseItems": [
+    {
+     "defineAs": "BASE_LITE",
+     "name": null,
+     "type": "lite",
+     "subtype": "lite",
+     "slot": "LITE"
+    }
+   ]
+  },
+  {
+   "pool": "massive-armor",
+   "file": "tome-src-full/data/general/objects/egos/massive-armor.lua",
+   "source": "tome",
+   "loads": [
+    "armor"
+   ],
+   "egoCount": 6,
+   "baseItems": [
+    {
+     "defineAs": "BASE_MASSIVE_ARMOR",
+     "name": null,
+     "type": "armor",
+     "subtype": "massive",
+     "slot": "BODY"
+    }
+   ]
+  },
+  {
+   "pool": "mindstars",
+   "file": "tome-src-full/data/general/objects/egos/mindstars.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 33,
+   "baseItems": [
+    {
+     "defineAs": "BASE_MINDSTAR",
+     "name": null,
+     "type": "weapon",
+     "subtype": "mindstar",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "potions",
+   "file": "tome-src-full/data/general/objects/egos/potions.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 2,
+   "baseItems": [
+    {
+     "defineAs": "BASE_POTION",
+     "name": null,
+     "type": "potion",
+     "subtype": "potion",
+     "slot": null
+    }
+   ]
+  },
+  {
+   "pool": "ranged",
+   "file": "tome-src-full/data/general/objects/egos/ranged.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 23,
+   "baseItems": []
+  },
+  {
+   "pool": "rings",
+   "file": "tome-src-full/data/general/objects/egos/rings.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 40,
+   "baseItems": [
+    {
+     "defineAs": "BASE_RING",
+     "name": null,
+     "type": "jewelry",
+     "subtype": "ring",
+     "slot": "FINGER"
+    }
+   ]
+  },
+  {
+   "pool": "robe",
+   "file": "tome-src-full/data/general/objects/egos/robe.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 33,
+   "baseItems": [
+    {
+     "defineAs": "BASE_CLOTH_ARMOR",
+     "name": null,
+     "type": "armor",
+     "subtype": "cloth",
+     "slot": "BODY"
+    },
+    {
+     "defineAs": "BASE_MUMMY_WRAPPING",
+     "name": null,
+     "type": "armor",
+     "subtype": "mummy",
+     "slot": "BODY"
+    }
+   ]
+  },
+  {
+   "pool": "scrolls",
+   "file": "tome-src-full/data/general/objects/egos/scrolls.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 2,
+   "baseItems": [
+    {
+     "defineAs": "BASE_SCROLL",
+     "name": null,
+     "type": "scroll",
+     "subtype": "scroll",
+     "slot": null
+    }
+   ]
+  },
+  {
+   "pool": "shield",
+   "file": "tome-src-full/data/general/objects/egos/shield.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 34,
+   "baseItems": [
+    {
+     "defineAs": "BASE_SHIELD",
+     "name": null,
+     "type": "armor",
+     "subtype": "shield",
+     "slot": "OFFHAND"
+    }
+   ]
+  },
+  {
+   "pool": "sling",
+   "file": "tome-src-full/data/general/objects/egos/sling.lua",
+   "source": "tome",
+   "loads": [
+    "ranged"
+   ],
+   "egoCount": 2,
+   "baseItems": [
+    {
+     "defineAs": "BASE_SLING",
+     "name": null,
+     "type": "weapon",
+     "subtype": "sling",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "staves",
+   "file": "tome-src-full/data/general/objects/egos/staves.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 28,
+   "baseItems": [
+    {
+     "defineAs": "BASE_STAFF",
+     "name": null,
+     "type": "weapon",
+     "subtype": "staff",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "steamgun",
+   "file": "dlc-src/orcs/tome-orcs/data/general/objects/egos/steamgun.lua",
+   "source": "orcs",
+   "loads": [
+    "ranged"
+   ],
+   "egoCount": 5,
+   "baseItems": [
+    {
+     "defineAs": "BASE_STEAMGUN",
+     "name": null,
+     "type": "weapon",
+     "subtype": "steamgun",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "steamsaw",
+   "file": "dlc-src/orcs/tome-orcs/data/general/objects/egos/steamsaw.lua",
+   "source": "orcs",
+   "loads": [
+    "weapon",
+    "shield"
+   ],
+   "egoCount": 0,
+   "baseItems": [
+    {
+     "defineAs": "BASE_STEAMSAW",
+     "name": null,
+     "type": "weapon",
+     "subtype": "steamsaw",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "torques",
+   "file": "tome-src-full/data/general/objects/egos/torques.lua",
+   "source": "tome",
+   "loads": [
+    "charms"
+   ],
+   "egoCount": 0,
+   "baseItems": [
+    {
+     "defineAs": "BASE_TORQUE",
+     "name": null,
+     "type": "charm",
+     "subtype": "torque",
+     "slot": "TOOL"
+    }
+   ]
+  },
+  {
+   "pool": "torques-powers",
+   "file": "tome-src-full/data/general/objects/egos/torques-powers.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 4,
+   "baseItems": []
+  },
+  {
+   "pool": "totems",
+   "file": "tome-src-full/data/general/objects/egos/totems.lua",
+   "source": "tome",
+   "loads": [
+    "charms"
+   ],
+   "egoCount": 0,
+   "baseItems": [
+    {
+     "defineAs": "BASE_TOTEM",
+     "name": null,
+     "type": "charm",
+     "subtype": "totem",
+     "slot": "TOOL"
+    }
+   ]
+  },
+  {
+   "pool": "totems-powers",
+   "file": "tome-src-full/data/general/objects/egos/totems-powers.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 4,
+   "baseItems": []
+  },
+  {
+   "pool": "wands",
+   "file": "tome-src-full/data/general/objects/egos/wands.lua",
+   "source": "tome",
+   "loads": [
+    "charms"
+   ],
+   "egoCount": 1,
+   "baseItems": [
+    {
+     "defineAs": "BASE_WAND",
+     "name": null,
+     "type": "charm",
+     "subtype": "wand",
+     "slot": "TOOL"
+    }
+   ]
+  },
+  {
+   "pool": "wands-powers",
+   "file": "tome-src-full/data/general/objects/egos/wands-powers.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 4,
+   "baseItems": []
+  },
+  {
+   "pool": "weapon",
+   "file": "tome-src-full/data/general/objects/egos/weapon.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 39,
+   "baseItems": [
+    {
+     "defineAs": "BASE_BATTLEAXE",
+     "name": null,
+     "type": "weapon",
+     "subtype": "battleaxe",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_GREATMAUL",
+     "name": null,
+     "type": "weapon",
+     "subtype": "greatmaul",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_GREATSWORD",
+     "name": null,
+     "type": "weapon",
+     "subtype": "greatsword",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_TRIDENT",
+     "name": null,
+     "type": "weapon",
+     "subtype": "trident",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_WARAXE",
+     "name": null,
+     "type": "weapon",
+     "subtype": "waraxe",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_KNIFE",
+     "name": null,
+     "type": "weapon",
+     "subtype": "dagger",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_MACE",
+     "name": null,
+     "type": "weapon",
+     "subtype": "mace",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_LONGSWORD",
+     "name": null,
+     "type": "weapon",
+     "subtype": "longsword",
+     "slot": "MAINHAND"
+    },
+    {
+     "defineAs": "BASE_WHIP",
+     "name": null,
+     "type": "weapon",
+     "subtype": "whip",
+     "slot": "MAINHAND"
+    }
+   ]
+  },
+  {
+   "pool": "wizard-hat",
+   "file": "tome-src-full/data/general/objects/egos/wizard-hat.lua",
+   "source": "tome",
+   "loads": [],
+   "egoCount": 33,
+   "baseItems": [
+    {
+     "defineAs": "BASE_WIZARD_HAT",
+     "name": null,
+     "type": "armor",
+     "subtype": "head",
+     "slot": "HEAD"
+    }
+   ]
+  }
+ ],
+ "diagnostics": [],
+ "diagnosticCount": 308,
+ "imageIndexSize": 26712,
+ "imagesCopied": 456,
+ "resolverGeneratedImages": [],
+ "imageSourcesMissing": [],
+ "imageMatchKinds": {
+  "exact": 493
+ }
+}
