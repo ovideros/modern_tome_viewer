@@ -1,6 +1,6 @@
 # 部署到 GitHub Pages
 
-**当前状态：已上线**（2026-09-10，发布提交 `042542a`）
+**当前状态：已上线**（2026-09-11，发布提交 `cb27214`）
 
 | 项 | 地址 |
 | --- | --- |
@@ -99,7 +99,7 @@ curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.g
 
 ## 提交与推送（接手时先看这段）
 
-发布提交是 `042542a`，远程 `main` 就在这里。本地若还停在旧提交，先同步：
+发布提交是 `cb27214`，远程 `main` 就在这里。本地若还停在旧提交，先同步：
 
 ```bash
 cd /Users/ovideros/Codes/senior1/modern_tome

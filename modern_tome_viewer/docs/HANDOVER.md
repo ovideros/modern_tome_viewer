@@ -10,7 +10,7 @@
 | 怪物描述 | 765 个有英文原文，其中 763 个有中文译文（缺译 2 条已在报告里列出） |
 > | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
 > | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入；`type` 20 个大类 / `subtype` 89 个亚类，侧栏可按大类→亚类两级中文筛选 |
-> | 线上站点 | <https://ovideros.github.io/modern_tome_viewer/> · 仓库 <https://github.com/ovideros/modern_tome_viewer> · 发布提交 `042542a` |
+> | 线上站点 | <https://ovideros.github.io/modern_tome_viewer/> · 仓库 <https://github.com/ovideros/modern_tome_viewer> · 发布提交 `cb27214` |
 > | 测试基线 | typecheck 无错 · monsters **51/51** · scaling **45/45** · verify **87/87** · smoke **70/70** · e2e **247/247** |
 > | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
 >
@@ -157,7 +157,7 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 | 项 | 值 |
 | --- | --- |
 | 仓库 | <https://github.com/ovideros/modern_tome_viewer>（public） |
-| 默认分支 | `main`，发布提交 `042542a` |
+| 默认分支 | `main`，发布提交 `cb27214` |
 | 线上地址 | <https://ovideros.github.io/modern_tome_viewer/> |
 | 自定义域名 | <http://old.ovideros.site/modern_tome_viewer/>（见下方「账号级自定义域名」） |
 | 工作流 | `.github/workflows/deploy-pages.yml`（push `main` 触发；`build` + `deploy` 均成功） |
@@ -206,9 +206,8 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 ## 0.3 本轮进展记录（本地简要）
 
 > 上面 §0 / §0.1 / §0.2 是本轮做完并验证过的内容。这里是给下一轮接手用的一页速览，
-> 细节都在对应文档里，不重复。**本轮追加的改动见 §0.4**（本地已验收待推送）。
-> 工作区状态：文档记录已提交为本地 `4fac3e0`，GitHub 远端仍停在 `042542a`
-> （只含怪物图鉴 + 部署），§0.4 的改动尚未提交、也未推送。
+> 细节都在对应文档里，不重复。§0.4（种类中文化 + 大类/亚类筛选）、§0.5（技能面板
+> 放宽到 1280px）、§0.6（底部抽屉滚动修复）**均已提交并部署**，见 §0.7。
 
 ### 做完并验证过的事
 
@@ -427,6 +426,23 @@ npm run test:monsters  # 51/51
 npm run smoke          # 70/70
 npm run e2e            # 247/247
 ```
+
+---
+
+## 0.7 已推送并部署（2026-09-11）
+
+| 项 | 值 |
+| --- | --- |
+| 提交 | `cb27214`（§0.4 / §0.5 / §0.6 一个提交，24 个文件；其前是本地文档记录 `4fac3e0`） |
+| 推送 | `042542a..cb27214  main -> main`（`git push -u origin main`） |
+| Actions | run `34559164635` → **success**（`build` + `deploy`，约 1 分钟） |
+| 线上验证 | 真实浏览器 12 项全过：812 个模板 · `?type=horror&sub=eldritch` = 61 · 卡片与侧栏中文种类 · 1500px 技能为第三列且列表一列 · 420px 两个抽屉自身可滚且不带动背后列表 · 0 控制台报错 · 0 失败请求（图标 404 除外） |
+
+线上站点：<https://ovideros.github.io/modern_tome_viewer/>（`#/monsters`）。
+
+> 注意：本文件的"发布提交"指向最后一次**功能**发布；之后若只有文档提交，
+> 站点内容不会变。要确认线上到底是哪一版，看 Actions 最近一次成功 run 的
+> `head_sha`，或直接看 `index.html` 里的 JS 文件名。
 
 ---
 
