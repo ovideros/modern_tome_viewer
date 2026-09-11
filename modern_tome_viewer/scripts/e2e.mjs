@@ -92,7 +92,13 @@ await page.waitForFunction(() => document.body.innerText.includes('条结果'), 
 
 check('no console errors on load', consoleErrors.length === 0, consoleErrors.slice(0, 2).join(' | '));
 check('header rendered', await page.locator('text=ToME 技能查看器').first().isVisible());
-check('header dropped the removed browse entry', (await page.locator('header').innerText()).includes('职业'));
+const headerNav = await page.locator('header').innerText();
+check('header dropped the removed browse entry', headerNav.includes('职业'));
+check(
+  'header exposes the two new encyclopedia entries',
+  headerNav.includes('装备词缀') && headerNav.includes('固定神器'),
+  headerNav.replace(/\s+/g, ' ').slice(0, 120),
+);
 check('default result count is every talent', (await resultCount()) === 1834, String(await resultCount()));
 check('filter panel is visible', await page.locator('text=高级筛选').first().isVisible());
 check('manifest line rendered', (await page.locator('body').innerText()).includes('1834 技能'));
@@ -1414,6 +1420,248 @@ if (icon404.length) console.log(`  note ${icon404.length} icon 404(s) tolerated 
 // Console errors caused by those missing icons are not application errors.
 const appConsoleErrors = consoleErrors.filter((entry) => !/Failed to load resource/.test(entry));
 check('no application console errors during the whole run', appConsoleErrors.length === 0, appConsoleErrors.slice(0, 3).join(' | '));
+
+// ---------------------------------------------------------------------------
+// Equipment ego affixes and fixed artifacts
+// ---------------------------------------------------------------------------
+
+// A real browser is the only place these can be checked properly: the property
+// grouping is CSS Grid, and the requirement that two items line up on one row
+// cannot be asserted from a happy-dom text dump.
+// The filter rail is a collapsible sheet below 1280px, and an earlier section
+// leaves the page at phone width. Pin the desktop layout and open the rail
+// explicitly rather than relying on whatever the previous section left behind.
+await page.setViewportSize({ width: 1500, height: 950 });
+const openFilterRail = async () => {
+  if (!(await page.locator('#ego-query, #artifact-query').first().isVisible().catch(() => false))) {
+    const toggle = page.locator('button', { hasText: /^筛选$/ });
+    if (await toggle.count()) await toggle.first().click();
+    await page.waitForTimeout(300);
+  }
+};
+
+section('ego affixes');
+await page.goto(`${url}#/egos`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-card"]', { timeout: 30000 });
+await openFilterRail();
+await page.waitForTimeout(300);
+
+const egosBody = await page.locator('body').innerText();
+const egoCardCount = await page.locator('[data-testid="ego-card"]').count();
+check('ego list renders', egoCardCount > 100, `${egoCardCount} cards`);
+check('ego census is stated', /共\s*608\s*条词缀/.test(egosBody), /共[^\n]*/.exec(egosBody)?.[0]);
+
+// Search must be punctuation-insensitive: the stun-immunity property is
+// labelled 震慑/冰冻免疫, and a reader types 震慑免疫.
+await page.fill('#ego-query', '震慑免疫');
+await page.waitForTimeout(500);
+const stunCount = Number(/匹配\s*(\d+)\s*条/.exec(await page.locator('body').innerText())?.[1] ?? 0);
+check('ego search matches a label containing a slash', stunCount >= 4, `${stunCount} matches`);
+await shot('10-egos-stun-immunity');
+
+// The stun tag must agree with the search: tags are derived from the parsed
+// properties, not from the description text.
+await page.locator('button', { hasText: '任意状态免疫' }).first().click();
+await page.waitForTimeout(400);
+const taggedCount = Number(/匹配\s*(\d+)\s*条/.exec(await page.locator('body').innerText())?.[1] ?? 0);
+check('effect tag narrows the list', taggedCount > 0 && taggedCount <= stunCount, `${taggedCount} tagged`);
+
+// The rail is tag toggles rather than dropdowns, and 适用部位 is expanded by
+// default so choosing a slot costs one click instead of two.
+check('the ego filter rail uses tags, not selects', (await page.locator('aside select').count()) === 0);
+check('a slot tag is reachable without expanding a section', await page.locator('aside button', { hasText: '盾牌' }).first().isVisible());
+
+// Two facets combine with AND while a facet's own values are alternatives.
+await page.fill('#ego-query', '');
+await page.locator('button', { hasText: '清空全部条件' }).first().click();
+await page.waitForTimeout(400);
+await page.locator('aside button', { hasText: '盾牌' }).first().click();
+await page.waitForTimeout(400);
+const shieldOnly = Number(/匹配\s*(\d+)\s*条/.exec(await page.locator('body').innerText())?.[1] ?? 0);
+check('a slot tag filters on one click', shieldOnly > 0 && shieldOnly < 608, `${shieldOnly} in the shield pool`);
+const shieldUrl = page.url();
+check('multi-select facets are written to the URL', shieldUrl.includes('slot='), shieldUrl.split('#')[1]);
+await page.goto(shieldUrl, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => /匹配\s*\d+\s*条/.test(document.body.innerText), null, { timeout: 20000 });
+const restoredSlots = Number(/匹配\s*(\d+)\s*条/.exec(await page.locator('body').innerText())?.[1] ?? -1);
+check('the slot selection survives a reload', restoredSlots === shieldOnly, `${restoredSlots} vs ${shieldOnly}`);
+
+// Ordering: normal tier first, then the greater tier; inside each, community
+// recommendation descending.
+await page.locator('button', { hasText: '清空全部条件' }).first().click();
+await page.waitForTimeout(600);
+const egoOrder = await page.locator('[data-testid="ego-card"]').evaluateAll((cards) =>
+  cards.map((card) => ({
+    greater: (card.textContent ?? '').includes('高级词缀'),
+    recommend: Number(/推荐\s*(\d+)/.exec(card.textContent ?? '')?.[1] ?? -1),
+  })),
+);
+const firstGreaterIndex = egoOrder.findIndex((entry) => entry.greater);
+const normalRun = firstGreaterIndex === -1 ? egoOrder : egoOrder.slice(0, firstGreaterIndex);
+check('normal-tier affixes are listed before greater-tier ones', normalRun.every((entry) => !entry.greater));
+check(
+  'same-tier affixes are ordered by community recommendation',
+  normalRun.every((entry, index) => index === 0 || normalRun[index - 1].recommend >= entry.recommend),
+);
+// The greater marker must be visually distinct, not another grey chip.
+const greaterColour = await page
+  .locator('[data-testid="ego-card"] span', { hasText: '高级词缀' })
+  .first()
+  .evaluate((el) => getComputedStyle(el).color);
+const chipColour = await page
+  .locator('[data-testid="ego-card"] span.chip')
+  .first()
+  .evaluate((el) => getComputedStyle(el).color);
+check('the greater-tier marker is colour-coded apart from ordinary chips', greaterColour !== chipColour, `${greaterColour} vs ${chipColour}`);
+await shot('10b-egos-ordering');
+
+// A shared ego pool: the chainsaw loads both the melee weapon and shield pools,
+// so some of its affixes are marked as coming from a shared pool.
+await page.goto(`${url}#/egos?q=${encodeURIComponent('链锯')}`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-card"]', { timeout: 20000 });
+await page.waitForTimeout(500);
+const sharedText = await page.locator('body').innerText();
+check('shared ego pool is labelled, not hidden', sharedText.includes('共享词缀池'));
+
+// Deep link: selection survives a reload.
+await page.locator('[data-testid="ego-card"]').first().click();
+await page.waitForTimeout(400);
+const egoShare = page.url();
+await page.goto(egoShare, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-detail"]:visible', { timeout: 20000 });
+check('ego selection survives a reload', true, egoShare.split('#')[1]?.slice(0, 60));
+
+// ---------------------------------------------------------------------------
+// The detail panel is pinned to the viewport, so its top edge must clear the
+// sticky header. Anchoring it at `top: 0` put the affix name and the close
+// button underneath the header — unreadable, and impossible to notice from a
+// text dump because the markup was all there.
+// ---------------------------------------------------------------------------
+await page.goto(`${url}#/egos?q=${encodeURIComponent('of carrying')}`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-card"]', { timeout: 20000 });
+await page.locator('[data-testid="ego-card"]').first().click();
+await page.waitForSelector('[data-testid="ego-detail"]:visible', { timeout: 15000 });
+const headerBox = await page.locator('header.sticky').boundingBox();
+const panelName = await page.locator('[data-testid="ego-detail"]:visible h2').first().boundingBox();
+const panelTop = await page.locator('[data-testid="ego-detail"]:visible').first().boundingBox();
+check(
+  'the affix detail panel starts below the header',
+  headerBox !== null && panelTop !== null && panelTop.y >= headerBox.y + headerBox.height - 1,
+  `header ends ${headerBox ? Math.round(headerBox.y + headerBox.height) : '?'}, panel starts ${panelTop ? Math.round(panelTop.y) : '?'}`,
+);
+check(
+  'the affix name is not covered by the header',
+  headerBox !== null && panelName !== null && panelName.y >= headerBox.y + headerBox.height - 1,
+  `name at ${panelName ? Math.round(panelName.y) : '?'}`,
+);
+await shot('10c-egos-detail-below-header');
+
+// The effect is on the card, not only in the panel: a callback affix (a charm
+// proc) has no property table at all, so before this it read "open the detail".
+await page.goto(`${url}#/egos?q=evasive`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-effect"]', { timeout: 20000 });
+const evasiveEffect = await page.locator('[data-testid="ego-effect"]').first().innerText();
+check('a callback affix states its effect on the card', evasiveEffect.includes('躲闪'), evasiveEffect.slice(0, 80));
+check('the card effect carries the real value range', evasiveEffect.includes('10~40'), evasiveEffect.slice(0, 80));
+
+// Material level: one choice, and it moves the numbers on the cards.
+const cardRange = async (query, level) => {
+  await page.goto(`${url}#/egos?q=${encodeURIComponent(query)}${level ? `&ml=${level}` : ''}`, { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('[data-testid="ego-effect"]', { timeout: 20000 });
+  await page.waitForTimeout(300);
+  return page.locator('[data-testid="ego-effect"]').first().innerText();
+};
+const fullRange = await cardRange('of carrying', null);
+const ironRange = await cardRange('of carrying', 1);
+const voratunRange = await cardRange('of carrying', 5);
+check('the widest range spans material levels 1–5', fullRange.includes('+20~+60'), fullRange.replace(/\n/g, ' | '));
+check('material level 1 narrows the range', ironRange.includes('+20~+28'), ironRange.replace(/\n/g, ' | '));
+check('material level 5 restores the widest range', voratunRange.includes('+20~+60'), voratunRange.replace(/\n/g, ' | '));
+await page.goto(`${url}#/egos?q=evasive&ml=1`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-card"]', { timeout: 20000 });
+await page.locator('[data-testid="ego-card"]').first().click();
+await page.waitForSelector('[data-testid="ego-detail"]:visible', { timeout: 15000 });
+await page.waitForTimeout(300);
+const levelDetail = await page.locator('[data-testid="ego-detail"]:visible').first().innerText();
+check('the detail panel states the level its numbers are for', levelDetail.includes('数值按材料等级 1 计算'), levelDetail.slice(0, 200));
+check('a callback value moves with the material level too', levelDetail.includes('10~16'), levelDetail.slice(0, 300));
+
+section('fixed artifacts');
+await page.goto(`${url}#/artifacts`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="artifact-card"]', { timeout: 30000 });
+await openFilterRail();
+await page.waitForTimeout(300);
+
+const artifactsBody = await page.locator('body').innerText();
+const artifactCardCount = await page.locator('[data-testid="artifact-card"]').count();
+check('artifact list renders', artifactCardCount > 100, `${artifactCardCount} cards`);
+check('artifact census separates equipment from the rest', /可装备\/可使用\s*\d+/.test(artifactsBody));
+check('artifact list shows native icons', (await page.locator('[data-testid="artifact-card"] img').count()) > 100);
+check('the artifact rail uses tags, not selects', (await page.locator('aside select').count()) === 0);
+
+// The two collection tags are independent: equipment only by default, then
+// non-equipment only, then everything.
+const artifactCount = async () =>
+  Number(/匹配\s*(\d+)\s*件/.exec(await page.locator('body').innerText())?.[1] ?? -1);
+check('equipment is the default scope', (await artifactCount()) === 416, String(await artifactCount()));
+await page.locator('aside button', { hasText: '可装备' }).first().click();
+await page.locator('aside button', { hasText: '非装备' }).first().click();
+await page.waitForTimeout(500);
+check('unchecking 可装备 and checking 非装备 shows only non-equipment', (await artifactCount()) === 80, String(await artifactCount()));
+check('the non-equipment scope is written to the URL', page.url().includes('scope=non'), page.url().split('#')[1]);
+await page.locator('aside button', { hasText: '可装备' }).first().click();
+await page.waitForTimeout(500);
+check('both tags on shows everything', (await artifactCount()) === 496, String(await artifactCount()));
+await page.locator('button', { hasText: '清空全部条件' }).first().click();
+await page.waitForTimeout(500);
+check('clearing restores the equipment-only default', (await artifactCount()) === 416, String(await artifactCount()));
+
+// A multi-resistance artifact: many damage types must share one 抗性 row with
+// the Chinese type names, and must not be summed into a single number.
+await page.fill('#artifact-query', '防腐腰带');
+await page.waitForTimeout(600);
+await page.locator('[data-testid="artifact-card"]').first().click();
+await page.waitForSelector('[data-testid="artifact-detail"]:visible', { timeout: 15000 });
+const beltText = await page.locator('[data-testid="artifact-detail"]:visible').first().innerText();
+check('multiple resistances group onto one row', /抗性[\s\S]{0,240}火焰/.test(beltText));
+check('resistances are labelled by damage type', ['火焰', '寒冷', '闪电', '酸性'].every((t) => beltText.includes(t)));
+check(
+  'resistances are not summed into one number',
+  !/抗性[^\n]{0,40}\b(165|135|11\s*×)\b/.test(beltText),
+);
+await shot('11-artifact-resistances');
+
+// A growth / random-property artifact must be described in words and must not
+// grow a simulator.
+await page.fill('#artifact-query', '命运之轮');
+await page.waitForTimeout(600);
+await page.locator('[data-testid="artifact-card"]').first().click();
+await page.waitForTimeout(500);
+const wheelLocator = page.locator('[data-testid="artifact-detail"]:visible').first();
+const wheelText = await wheelLocator.innerText();
+check('Wheel of Fate is described in words', wheelText.includes('重置戒指属性'), wheelText.slice(0, 120));
+check('Wheel of Fate has no random-attribute panel or slider', (await wheelLocator.locator('input[type="range"]').count()) === 0);
+check('Wheel of Fate says it has no static property panel', wheelText.includes('没有静态属性面板'));
+
+// The wearer / weapon distinction must be visible, not merged.
+await page.fill('#artifact-query', '比尔的树干');
+await page.waitForTimeout(600);
+await page.locator('[data-testid="artifact-card"]').first().click();
+await page.waitForTimeout(500);
+const billText = await page.locator('[data-testid="artifact-detail"]:visible').first().innerText();
+check('weapon body is a separate section from wearer effects', billText.includes('装备本体属性'));
+check('weapon body states it is not a wearer bonus', billText.includes('不是穿戴者获得的属性'));
+check('equipment requirements are kept complete', /装备需求[\s\S]{0,40}力量\s*25/.test(billText), billText.slice(0, 200));
+check('a talent ability links into the shared talent library', billText.includes('T_SHATTERING_BLOW'));
+check('flavour text is not the effect list', billText.includes('风味描述'));
+
+// Narrow-screen layout: the detail must stay readable without horizontal
+// scrolling, which is where the grouped rows would break first.
+await page.setViewportSize({ width: 390, height: 844 });
+await page.waitForTimeout(500);
+const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+check('artifact detail does not force horizontal scrolling on a phone', overflow <= 2, `${overflow}px overflow`);
+await shot('12-artifact-mobile');
 
 // ---------------------------------------------------------------------------
 

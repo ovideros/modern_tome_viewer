@@ -24,7 +24,174 @@
 
 ---
 
-## 0. 最近一轮变更：怪物图鉴（本轮）
+## 0. 最近一轮变更：词缀页第三轮（数值修正 + 卡片直接给效果 + 材料等级）
+
+用户反馈三条，全部改完并验证。详细口径见
+[item-pipeline.md](item-pipeline.md) §5 与 §7.1。
+
+### 1. 详情面板被顶部横幅挡住
+
+两个页面的详情面板是 `fixed` 钉在视口上的，而 header 是 `sticky top-0 z-30`：
+`inset-y-0` 让面板从 `top: 0` 开始、层级又低，于是**词缀名和「关闭」按钮整块被横幅盖住**。
+改为 `fixed bottom-0 right-0 top-[calc(var(--header-h)+2px)]`。`--header-h` 由
+`useHeaderHeight` 跟着真实高度同步（窄屏 header 折行），所以不能用硬编码的 57px。
+e2e 里有两条几何断言（面板顶部、标题顶部都在 header 底边之下）。
+
+### 2. 许多词缀要点开才看得到效果 → 卡片直接写效果
+
+- 卡片原来打印原始属性码（`FIRE 10~15`），回调型则写「打开详情查看」。现在统一走
+  `src/lib/ego-facts.ts` 产出最多 3 行效果：结构化属性（与详情面板共用 `fieldMeta`
+  和 `formatPropValue`，所以卡片和面板不可能互相矛盾）在前，回调说明在后。
+- **数值模型本身是错的，这轮一并修正。** `resolvers.mbonus_material(max, add)` 的区间是
+  `add ~ add + max`（引擎实现是 `ceil(rng.mbonus(max, 等级, 90) × ml / 5) + add`），
+  早期读成 `offset + 材料等级 × step`，于是 `balanced` 显示 `15~35`。
+  交叉验算是决定性的：玩家词缀表同一行写的是 `5-15命中闪避/20-50缴械免疫`，
+  改对后全库 506 行有数字区间的记录里 503 行与表一致（剩 3 行是表自身笔误）。
+  这个比对已经做成常驻步骤：`docs/items-community-report.md` 有「数值区间交叉核对」一节。
+- 两处乘数以前完全没算：**价格函数其实是数值变换**（`v=v/100`、`v=v/10`、取负、恒等，
+  全库只有这四种，识别不出来就不给数字），以及**字段自身的标度**
+  （`Moddable:compareFields` 打印 `raw * mod`，免疫/移速存小数、打印乘 100）。
+  漏掉标度会把 `stun_immune` 打成 0、`movement_speed` 打成 `0~0`。
+- 208 条没有属性表的词缀现在有文字说明：优先用**游戏自己的说明**（`charm_on_use` /
+  `on_block` / `special_on_*` 的 `desc`，以及 `resolvers.charm(_t"...")` 第一个参数），
+  58 条走这条；其余 31 条手写整理（每条都写了出处表达式）。构建产物有
+  `effectCoverage` 计数，现在是「0 条没有任何可读效果」。
+- 顺带修掉的：`wielder = { combat = {...} }`（33 条 egos 这么写）以前被当成一个叫
+  `combat` 的属性行，成员键 `melee_project`/`burst_on_crit` 被当成值显示在错的区；
+  现在会归到 `combat` 区。天赋/技能树/生物类型代码（`Talents.T_WARD`、
+  `wild-gift/fungus`、`living`）现在经 `makeCodeLabeler` 翻成中文。
+
+### 3. 材料等级选择器
+
+词缀侧栏新增「材料等级 1–5」：**单选的显示参数，不是筛选条件**（不改变匹配结果），
+写入 URL 的 `ml`，再点一次取消。选中后「随材料等级变化」的属性显示该等级自己的区间，
+回调说明里的值也跟着变（例如 `evasive` 在 1 级是 10~16%、5 级是 10~40%）。
+神器没有这一项：固定神器的属性全是字面量，全库 0 条 `mbonus_material`。
+
+### 本轮踩到的坑
+
+1. `mbonus_material` 的参数方向（见上）。任何「看起来像 offset + step」的 resolver
+   都要回源码确认，不要凭形状猜。
+2. **regex 的 `%%` 转义必须和格式符写在同一个 pattern 里**：单独匹配
+   `%(?!%)[-+ #0-9.]*[dsf]` 会跳过 `%%` 的第一个 `%`，再把第二个 `%` 和 ` for` 的
+   ` f` 一起吃掉，`reduce fatigue by %d%% for 2 turns` 变成 `... by {0}%?or 2 turns`。
+3. **汉化表按带颜色代码的原文存 key**：`#VIOLET#%d#LAST#` 必须在剥颜色**之前**查表，
+   否则这些说明一条都翻不出来（会静默退回英文）。
+4. 函数体里的值变换要靠 `lua-entities.mjs` 新加的 `bodyText`（共享解析器只留第一个
+   字符串 return）。`bodyText` 的边界按块嵌套算：`for`/`while` 的 `do` 不额外开块，
+   否则 `end` 会数错。
+5. `return 0, v` 这类恒等形态必须锚定到 `end`，否则 `return 0, v * e.material_level`
+   会被误判成恒等。
+6. 卡片和面板必须共用格式化函数。自己写一套 `toFixed` 会把 `0.1%` 打成 `0~0`。
+7. `onSelectPool` 以前写的是 `{ ...current, slot: pool }`——`EgoFilters` 里没有 `slot`
+   字段（是 `slots` 数组），对象展开让 TS 不做多余属性检查，于是这个点击**静默无效**。
+   现在按池反查槽位分类。
+
+### 验证
+
+`typecheck` · `test:items` 63 · `test:monsters` 51 · `test:scaling` 45 · `verify` 90 ·
+`smoke` 109 · `e2e` 283+ — 全绿，零控制台错误。
+新增断言：卡片都有非空效果行、没有「打开详情」、`balanced` 的区间是 `+5~+15`、
+材料等级是单选且换级会改数值、点第二次取消、详情「游戏说明」区块、
+以及详情面板顶部必须在 header 之下。
+
+---
+
+## 0. 上一轮变更：装备词缀与固定神器（新页面）
+
+本轮新增两个页面与一条**独立、可复现**的物品提取管线。
+完整的数据口径、属性映射来源、数值语义、ID 规则与更新方式见
+[item-pipeline.md](item-pipeline.md)；社区表核对结果见
+[items-community-report.md](items-community-report.md)。这里只记结论与踩到的坑。
+
+### 交付
+
+| 页面 | 路由 | 数据 | 规模 |
+| --- | --- | --- | --- |
+| 装备词缀 | `#/egos` | `public/data/egos.json` | 608 条（本体 603 / 兽人 5） |
+| 固定神器 | `#/artifacts` | `public/data/artifacts.json` | 496 件（可装备 416 + 非装备 80） |
+
+- 两条数据都**按页面懒加载**，不进入技能首页的启动路径。
+- 神器图标 493/496 解析成功（全部 exact 命中），去重后复制 456 个 PNG；
+  缺图 3 件进覆盖报告，页面用类别文字兜底。
+- 社区补充层 594 行、命中 570（本池 505 / 共享池 65）、稀有度冲突 14（一律以源码为准）。
+
+### 本轮踩到的坑（都能复发，改动相关代码前先看这里）
+
+1. **`parseLuaFile` 读 `world-artifacts.lua` 返回 0 个实体且诊断也为 0。**
+   文件开头的 `for ... do ... end` 被 `parseStatement` 交给宽松的
+   `skipBlockStatement()`，它的深度计算把每个 `end` 都当块结束，于是吞掉后面 8500 行。
+   同文件里其实有正确的 `skipBlock()`，但只有 `parseUnary` 会走到。
+   → 物品侧不走语句解析，改为**单趟 token 扫描 + 字符串外配对花括号**，
+   再把表区间重建成片段交给共享 `parseLuaFile` 解析。共享文件一行未改。
+2. **token 重建必须给相邻词之间补空格。** 源码 `return _t"..."` 原样拼接会变成
+   `return_t`，导致**所有**函数体文本抽取失败。这是个静默错误：
+   100 条 `special_desc` 只读出 15 条时才发现。
+3. **`compare_scaled` 的参数位置与 `compare_fields` 不同**，格式串/标签各往后一位；
+   取错会把 `%+d #LAST#(%+d eff.)` 当标签。
+4. **`desc_wielder` 是局部闭包**（`local desc_wielder = function(...)`），
+   只匹配 `function _M:desc_wielder(` 会取到空，而 `descCombat` 的字段会顺势填满
+   `wielder` 区——静默错位。两处都有测试钉住。
+5. **`_t` 解包只能用于文本字段。** 把 `type`/`subtype` 也走 `literalOfTranslationCall`
+   会把结构性标识变成 prose，继承解析直接崩（`no-type` 从 64 涨到 548）。
+6. **同一 `define_as` 在多处定义要按内容比较，不能按名字。**
+   `RUNE_RIFT` / `VOID_STAR` 是逐字节相同的重复定义（合并、列出全部位置）；
+   兽人 DLC 的 kaltor-shop 两件是**同名不同内容**的真实变体（保留两行）。
+   比较前必须剥掉 AST 里每行的 `line`，否则不同偏移量会误判为不同。
+7. **`unique = true` ≠ 固定神器。** 药水/卷轴用它表示不可堆叠，Boss 定义也带它。
+   必须解析继承链拿到真实的 `type` 再分类；否则 281 个 Boss 定义会被当成神器。
+8. **charm 词缀有普通档与 `greater_ego` 高级档同名同 keywords。**
+   按 keywords 做 ID 会把 12 条高级档静默丢掉。
+9. **`#RESIST#` 不是随机变体**，而是物品名的占位符（`descAttribute` 运行时填数值）。
+   伤害类型写死在各自的 `newEntity` 里。不要展开成组合枚举。
+10. **搜索必须对含糊标点不敏感。** 震慑免疫的属性标签是「震慑/冰冻免疫」，
+    直接 `includes('震慑免疫')` 命中 0 条。haystack 与查询词都过
+    `normalizeSearchText`，并给分组行补别名（`抗性` → `resists`）。
+11. **e2e 会在同一 page 上跨 section 复用视口。** 新增的页面段必须先
+    `setViewportSize` 回桌面宽度并显式展开筛选栏，否则 `#ego-query` 不可见。
+
+### 界面约定（用户已明确的偏好）
+
+- 高级词缀（`greater_ego`）用**琥珀色**标记；亮色 `text-amber-800`、暗色 `text-amber-300`，
+  实测对比度 6.32:1 / 9.34:1。不要退回普通 chip。
+- 词缀列表排序：**普通档在前、高级档在后**；同档内**社区推荐度降序**，缺失的排末尾。
+  推荐度也直接显示在卡片上（`推荐 4`）和详情里（`社区推荐 4 / 5`）。
+- 两个侧栏一律用**标签切换**而不是下拉框；同维度多选是「或」，跨维度是「且」；
+  空列表 = 不限制。`适用部位` 与 `收录范围` 默认展开。
+- 神器侧「可装备 / 非装备」是**两个独立标签**（默认只勾可装备），不是互斥单选。
+- 部位分类用 `src/lib/items.ts` 的 `EGO_SLOT_GROUPS`：按玩家表的 20 类组织，合并共享池，
+  不列 NPC 专用池 / 消耗品池。**标签名来自这张表，不能从物品亚类推**——
+  早期从亚类推，`charms` 池被标成「项圈」（它同时服务项圈/图腾/魔杖），
+  `armor` 被标成「重甲」，`shield` 被标成「双手斧」。
+
+### 本轮的界面改动后新增/更新的测试
+
+`smoke` 88→95，`e2e` 269→283：新增了「侧栏无下拉框」「部位默认展开」
+「普通档先于高级档」「同档按推荐度降序」「高级标记颜色不同于普通 chip」
+「多选 facet 写 URL 且刷新可恢复」「可装备/非装备两个独立标签的三种组合」等断言。
+
+### 体积
+
+路径字典（`file` 是 `items-report.json.files` 的下标）与字段表
+（`fieldMeta[key]` 存 `area`/`label`/`labelZh`/`format`/`unit`/`scale`）两项归一化把
+神器数据从 3.2 MB 降到 2.3 MB、词缀从 1.9 MB 降到 1.6 MB。改数据格式时两处都要同步。
+
+第三轮又加了 `materialRanges`（每个值 5 个区间）与 `notes`（回调说明），
+`egos.json` 1.65 MB → 2.19 MB；同时**刻意不把 `formula` 写进 JSON**
+（只有测试和报告用得到，写进去要多 ~150 KB 重复键名），
+`materialRanges` 已经足够驱动材料等级选择器。
+
+### 验证
+
+`typecheck` · `test:items` 46 · `test:monsters` 51 · `test:scaling` 45 ·
+`verify` 90 · `smoke` 88 · `e2e` 269 — 全绿，零控制台错误。（下一轮把 `test:items`
+扩到 63、`smoke` 扩到 109。）
+e2e 与 smoke 都新增了物品页面断言（列表、筛选、搜索、深链接恢复、属性分区、
+多抗性归组、命运之轮无模拟控件、手机端无横向滚动）。
+
+---
+
+## 0. 最近一轮变更：怪物图鉴（上一轮）
 
 本轮新增中文「怪物」页面与一条**独立、可复现**的 NPC 提取管线。逐条依据见
 [monster-pipeline.md](monster-pipeline.md)，这里只记结论与踩到的坑。

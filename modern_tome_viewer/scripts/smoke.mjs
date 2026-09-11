@@ -129,6 +129,8 @@ const text = () => document.body.textContent ?? '';
 const click = (element) => {
   element.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
 };
+const findCardByText = (needle) =>
+  [...document.querySelectorAll('[data-testid="ego-card"]')].find((card) => (card.textContent ?? '').includes(needle));
 const findByText = (selector, needle) =>
   [...document.querySelectorAll(selector)].find((el) => (el.textContent ?? '').includes(needle));
 
@@ -439,6 +441,151 @@ check(
   /降低护甲, 降低护甲, 增加护甲, 增加护甲, 增加护甲 -2, -1, 0, 1, 2 点/.test(golemText),
   golemText.slice(0, 160),
 );
+
+// ---------------------------------------------------------------------------
+// Item encyclopedia: ego affixes and fixed artifacts
+// ---------------------------------------------------------------------------
+
+// Both pages fetch their own dataset lazily (never on the talent home page), so
+// this section also guards the "does not slow the front page down" property:
+// the talents dataset must already be loaded while these are fetched on demand.
+console.log('\nego affix page');
+await go('#/egos', 2500);
+const egoText = text();
+check('egos page renders the census', /共\s*\d+\s*条词缀/.test(egoText), egoText.slice(0, 120));
+check('slot count names the curated equipment categories', /归入\s*\d+\s*个装备分类/.test(egoText), egoText.slice(0, 160));
+const egoCards = document.querySelectorAll('[data-testid="ego-card"]');
+check('egos page lists affixes', egoCards.length > 100, `${egoCards.length} cards`);
+check('artifact nav entry exists', text().includes('固定神器'));
+
+// The rail is tag toggles, not dropdowns, and 适用部位 is open by default.
+const egoRailSelects = document.querySelectorAll('aside select');
+check('ego filter rail has no dropdowns', egoRailSelects.length === 0, `${egoRailSelects.length} selects`);
+check('適用部位 is expanded by default', text().includes('近战武器') && text().includes('锄头'));
+
+// Ordering: the normal tier comes first, the greater tier after it.
+const cardState = [...document.querySelectorAll('[data-testid="ego-card"]')].map((card) => ({
+  greater: (card.textContent ?? '').includes('高级词缀'),
+  recommend: Number(/推荐\s*(\d+)/.exec(card.textContent ?? '')?.[1] ?? -1),
+}));
+const firstGreater = cardState.findIndex((state) => state.greater);
+const normalTier = firstGreater === -1 ? cardState : cardState.slice(0, firstGreater);
+check('normal-tier affixes precede greater-tier ones', normalTier.every((state) => !state.greater));
+check(
+  'within a tier, affixes sort by community recommendation descending',
+  normalTier.every((state, index) => index === 0 || normalTier[index - 1].recommend >= state.recommend),
+);
+check('the community recommendation is visible on the card', cardState.some((state) => state.recommend > 0));
+
+if (egoCards.length) {
+  const card = egoCards[0].querySelector('button') ?? egoCards[0];
+  click(card);
+  await wait(400);
+  const detail = document.querySelector('[data-testid="ego-detail"]');
+  const detailText = detail ? (detail.textContent ?? '') : '';
+  check('ego detail opens', Boolean(detail));
+  check('ego detail shows applicability', detailText.includes('适用装备'), detailText.slice(0, 80));
+  check('ego detail states the generation-weight semantics', detailText.includes('不是掉落概率'));
+  check(
+    'ego detail splits wearer / weapon effects',
+    detailText.includes('穿戴时生效') || detailText.includes('装备本体属性'),
+    detailText.slice(0, 200),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// The list has to answer "what does this affix do" without opening it. That
+// used to fail two ways: a raw dump of property codes (`FIRE 10~15`), and the
+// sentence "打开详情查看" for every callback affix.
+// ---------------------------------------------------------------------------
+const effectLines = [...document.querySelectorAll('[data-testid="ego-effect"]')].map((el) => el.textContent ?? '');
+check('every affix card carries an effect line', effectLines.length === egoCards.length && effectLines.every((line) => line.trim().length > 0), `${effectLines.length} / ${egoCards.length}`);
+check('no card defers the effect to the detail panel', !effectLines.some((line) => line.includes('打开详情')));
+check('no card ends up with no readable effect', !effectLines.some((line) => line.includes('没有可静态读取的数值')), effectLines.find((line) => line.includes('没有可静态读取')) ?? '');
+
+// The value model, pinned: `balanced` is `combat_atk = mbonus_material(10, 5)`
+// with `disarm_immune = mbonus_material(30, 20, v=v/100)`, which the community
+// sheet lists as `5-15命中闪避/20-50缴械免疫`. It used to render `15~35`.
+const balancedCard = findCardByText('balanced');
+const balancedText = balancedCard?.textContent ?? '';
+check(
+  'affix values use the engine formula (add .. add + max)',
+  balancedText.includes('+5~+15') && balancedText.includes('+20%~+50%'),
+  balancedText.slice(0, 160),
+);
+check('affix values are never shown as raw field keys', !/\bDamageType\.|\bStats\./.test(effectLines.join(' ')));
+
+// ---------------------------------------------------------------------------
+// Material level: a value that scales with the item's tier has to be readable
+// at one tier, and the selector must be a single choice, not a filter.
+// ---------------------------------------------------------------------------
+const materialTags = [...document.querySelectorAll('aside button[aria-pressed]')].filter((b) => /^[1-5]\s*级$/.test((b.textContent ?? '').trim()));
+check('the rail offers material levels 1–5', materialTags.length === 5, `${materialTags.length} tags`);
+click(materialTags[0]);
+await wait(300);
+check('selecting a material level narrows the shown range', window.location.hash.includes('ml=1'), window.location.hash);
+check('the card states which material level is shown', text().includes('材料 1 级'));
+const levelOneText = findCardByText('of carrying')?.textContent ?? '';
+click(materialTags[1]);
+await wait(300);
+const levelTwoText = findCardByText('of carrying')?.textContent ?? '';
+check(
+  'the same affix shows a different range at a different level',
+  levelOneText.includes('+20~+28') && levelTwoText.includes('+20~+36'),
+  `${levelOneText.slice(0, 90)} | ${levelTwoText.slice(0, 90)}`,
+);
+check('the material level is a single choice', [...document.querySelectorAll('aside button[aria-pressed]')].filter((b) => /^[1-5]\s*级$/.test((b.textContent ?? '').trim()) && b.getAttribute('aria-pressed') === 'true').length === 1);
+click(materialTags[1]);
+await wait(300);
+check('clicking the active level again clears it', !window.location.hash.includes('ml='), window.location.hash);
+const clearedText = findCardByText('of carrying')?.textContent ?? '';
+check('clearing the level restores the full range', clearedText.includes('+20~+60'), clearedText.slice(0, 120));
+
+// ---------------------------------------------------------------------------
+// Callback effects reach the detail as the game's own sentence.
+// ---------------------------------------------------------------------------
+await go('#/egos?slot=charm&tier=normal', 900);
+const charmCard = document.querySelector('[data-testid="ego-card"]');
+if (charmCard) {
+  click(charmCard.querySelector('button') ?? charmCard);
+  await wait(500);
+  const detailText = document.querySelector('[data-testid="ego-detail"]')?.textContent ?? '';
+  check('a callback effect is shown as the game describes it', detailText.includes('游戏说明'), detailText.slice(0, 200));
+  check('the effect section is present without expanding anything', detailText.includes('效果'));
+}
+
+console.log('\nartifact page');
+await go('#/artifacts', 3500);
+const artifactText = text();
+check('artifacts page renders the census', /共\s*\d+\s*件/.test(artifactText), artifactText.slice(0, 140));
+const artifactCards = document.querySelectorAll('[data-testid="artifact-card"]');
+check('artifacts page lists items', artifactCards.length > 100, `${artifactCards.length} cards`);
+check(
+  'artifact cards carry a native icon or a category fallback',
+  artifactCards.length > 0 &&
+    [...artifactCards].every((card) => card.querySelector('img') || card.querySelector('div')),
+);
+
+if (artifactCards.length) {
+  const card = artifactCards[0].querySelector('button') ?? artifactCards[0];
+  click(card);
+  await wait(600);
+  const detail = document.querySelector('[data-testid="artifact-detail"]');
+  const detailText = detail ? (detail.textContent ?? '') : '';
+  check('artifact detail opens', Boolean(detail));
+  check('artifact detail shows the equipment body section', detailText.includes('装备本体属性'), detailText.slice(0, 120));
+  check('artifact detail keeps the weapon/wearer distinction explicit', detailText.includes('不是穿戴者获得的属性'));
+  check('artifact detail lists acquisition / source info', detailText.includes('获取与出处'));
+  check(
+    'the equipment / non-equipment tags are independent, not a radio pair',
+    document.querySelectorAll('aside button[aria-pressed]').length >= 2
+      && [...document.querySelectorAll('aside button[aria-pressed]')].some((b) => (b.textContent ?? '').includes('可装备'))
+      && [...document.querySelectorAll('aside button[aria-pressed]')].some((b) => (b.textContent ?? '').includes('非装备')),
+  );
+  // No simulation controls: the pages must never ask the reader to tune a
+  // character in order to read a fixed artifact.
+  check('no simulation sliders on the artifact page', document.querySelectorAll('input[type="range"]').length === 0);
+}
 
 // ---------------------------------------------------------------------------
 
