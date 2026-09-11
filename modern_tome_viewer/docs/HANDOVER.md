@@ -87,10 +87,23 @@ e2e 里有两条几何断言（面板顶部、标题顶部都在 header 底边�
    字段（是 `slots` 数组），对象展开让 TS 不做多余属性检查，于是这个点击**静默无效**。
    现在按池反查槽位分类。
 
+### 已部署并线上验证（2026-09-11）
+
+三个提交推到 `main`（`65560ce` 数据管线 / `e15ca1a` 两个页面 / `c23f018` 测试与文档），
+Actions `Deploy to GitHub Pages` 的 build 与 deploy 两步都 success。
+线上 <http://old.ovideros.site/modern_tome_viewer/> 实测：608 张词缀卡片全部有效果行、
+`balanced` 显示 `+5~+15`、详情面板顶部（82px）在 header 底边（55px）之下、
+`ml=1` 收敛到 `+20~+28`、416 件神器、**460 个图标全部 200**、
+0 控制台报错 / 0 失败请求。线上 bundle 哈希与本地构建一致。
+
+推之前还做了一次「只用提交内容」的构建验证：`git archive HEAD` 解到临时目录
+（软链 node_modules，避免重复安装），`npm run build:pages` + `smoke` + `verify` +
+`test:items` 全通过，产物哈希与本地一致——确认 CI 的干净 checkout 能构建。
+
 ### 验证
 
 `typecheck` · `test:items` 63 · `test:monsters` 51 · `test:scaling` 45 · `verify` 90 ·
-`smoke` 109 · `e2e` 283+ — 全绿，零控制台错误。
+`smoke` 109 · `e2e` 292 — 全绿，零控制台错误。
 新增断言：卡片都有非空效果行、没有「打开详情」、`balanced` 的区间是 `+5~+15`、
 材料等级是单选且换级会改数值、点第二次取消、详情「游戏说明」区块、
 以及详情面板顶部必须在 header 之下。
@@ -324,7 +337,7 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 | 项 | 值 |
 | --- | --- |
 | 仓库 | <https://github.com/ovideros/modern_tome_viewer>（public） |
-| 默认分支 | `main`，发布提交 `cb27214` |
+| 默认分支 | `main`，发布提交 `c23f018`（上一版 `cb27214`） |
 | 线上地址 | <https://ovideros.github.io/modern_tome_viewer/> |
 | 自定义域名 | <http://old.ovideros.site/modern_tome_viewer/>（见下方「账号级自定义域名」） |
 | 工作流 | `.github/workflows/deploy-pages.yml`（push `main` 触发；`build` + `deploy` 均成功） |

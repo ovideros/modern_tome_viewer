@@ -1,6 +1,6 @@
 # 部署到 GitHub Pages
 
-**当前状态：已上线**（2026-09-11，发布提交 `cb27214`）
+**当前状态：已上线**（2026-09-11，发布提交 `c23f018`，含装备词缀与固定神器两页）
 
 | 项 | 地址 |
 | --- | --- |
@@ -20,6 +20,24 @@
 Vite 用 `base: './'`，所以构建产物既可以放在仓库根，也可以放在
 `/modern_tome_viewer/` 这样的子路径下，不需要为 Pages 改配置。页面是 hash 路由
 （`#/monsters`），深链接不依赖服务端重写。
+
+## 线上验证记录（2026-09-11，发布 `c23f018`）
+
+在 <http://old.ovideros.site/modern_tome_viewer/>（`github.io` 域名 301 到这个账号级
+自定义域名）用真实浏览器跑过：
+
+- 部署产物与本地构建**逐字节同版**：线上 `index.html` 引用 `assets/index-B6Z1ua2A.js`
+  与 `index-B9zOLPy8.css`，与本地 `npm run build:pages` 输出同名。
+- `#/egos` 列出 608 条词缀，**608 张卡片全部有非空效果行**；
+  `balanced` 显示 `免疫 缴械 +20%~+50%` / `命中 +5~+15` / `闪避 +5~+15`
+  （与玩家词缀表的 `5-15命中闪避/20-50缴械免疫` 一致，旧版是错读参数方向的 `15~35`）。
+- 详情面板顶部 82px、header 底边 55px —— 面板起始于横幅之下，没有被挡住。
+- `#/egos?q=of+carrying&ml=1` 把「随材料等级变化」的属性收敛到 1 级：`+20~+28`。
+- `#/artifacts` 列出 416 件可装备神器；`public/img/object/**` 的 **460 个图标全部
+  返回 200**（`curl` 逐个复核），列表里的 3 件缺图按既定策略走类别文字兜底。
+- 四个新数据集（`egos` / `artifacts` / `items-report` / `ego-community`）线上都是 200，
+  且 `egos.json` 里已带 `materialRanges`、`notes`、`labels.actorTypes`。
+- **0 个控制台报错、0 个失败请求（4xx/5xx 为 0）。**
 
 ## 线上验证记录（2026-09-10）
 
