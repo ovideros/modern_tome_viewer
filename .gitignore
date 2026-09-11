@@ -33,3 +33,10 @@ starsapphirex.github.io/**/*.*
 *.swp
 *.swo
 *~
+
+# --- others/ ---
+# 只入库社区词缀表（`npm run data:items` 的社区补充层要读它）。
+# 同目录的 tome-mod-descriptions 插件包是第三方插件，仅作为展示组织的参考、
+# 构建不读取，因此不入库（注意该文件在磁盘上的真实文件名是一个空格）。
+others/*
+!others/物品词缀表（1.7.6版本适用）.xlsx
