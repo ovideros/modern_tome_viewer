@@ -16,6 +16,8 @@ const NAV = [
   { name: 'classes', label: '职业' },
   { name: 'races', label: '种族' },
   { name: 'monsters', label: '怪物' },
+  { name: 'egos', label: '装备词缀' },
+  { name: 'artifacts', label: '固定神器' },
   { name: 'favorites', label: '收藏' },
 ];
 
