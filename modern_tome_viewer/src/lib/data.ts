@@ -71,7 +71,11 @@ interface WireAcronym {
   /** Text the export wraps around the numbers: a leading sign, a trailing unit. */
   pre?: string;
   tail?: string;
-  f: Acronym['family'];
+  /**
+   * Fitted formula family, or null when the value only has a Lua expression (or
+   * nothing but the export's own ladder). It is *not* a validity marker.
+   */
+  f: Acronym['family'] | null;
   b: number | null;
   m: number | null;
   t: number;
@@ -79,11 +83,25 @@ interface WireAcronym {
   l?: Acronym['lua'];
 }
 
-/** Expand one compact acronym object into the shape the UI works with. */
+/**
+ * Expand one compact acronym object into the shape the UI works with.
+ *
+ * Every entry the export wrote must survive: the renderer pairs the `<acronym>`
+ * placeholders in the description with this array **by position**, so dropping
+ * one silently moves every later value onto the wrong sentence. That is what
+ * `if (!wire.f) return null` used to do — 295 values across 219 talents have a
+ * Lua expression but no fitted family (法术亲和's cooldown reduction, for one),
+ * and losing them made its cooldown clause show the spell-power ladder of the
+ * sentence below it, without the `%`.
+ */
 function expandAcronym(raw: unknown): Acronym | null {
   if (!raw || typeof raw !== 'object') return null;
   const wire = raw as WireAcronym;
-  if (!wire.f) return null;
+  // Keep anything with a number to show: a Lua formula, a fitted family, or the
+  // export's own ladder. (Nothing in the current data lacks all three; the guard
+  // only rejects a malformed entry, which is what a placeholder count mismatch
+  // would otherwise hide.)
+  if (!wire.l && !wire.f && !(Array.isArray(wire.d) && wire.d.length)) return null;
   const { c: className, d: displayed, s: suffix, pre: prefix, tail, f: family, b: base, m: max, t: mastery, p: params } = wire;
   const expanded: ScalingParam[] = Array.isArray(params)
     ? params.map((entry) => {
@@ -115,7 +133,7 @@ function expandAcronym(raw: unknown): Acronym | null {
     suffix: suffix ?? '',
     prefix: prefix ?? '',
     tail: tail ?? '',
-    family,
+    family: family ?? null,
     base: base ?? null,
     max: max ?? null,
     mastery: typeof mastery === 'number' ? mastery : 1,

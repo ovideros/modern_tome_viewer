@@ -90,7 +90,7 @@ curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.g
 | 命令 | 干净克隆（无游戏媒体） | 本机完整源码 |
 | --- | --- | --- |
 | `npm run build:pages` | ✅ 直接可用（已提交产物） | ✅ |
-| `npm run smoke` / `verify` / `test:monsters` | ✅（3 项需要图集/语言表的用例会显示 skip） | ✅ monsters 51/51 · verify 87/87 · smoke 70/70 |
+| `npm run smoke` / `verify` / `test:monsters` | ✅（3 项需要图集/语言表的用例会显示 skip） | ✅ monsters 51/51 · verify 90/90 · smoke 73/73 |
 | `npm run e2e` | ✅（需先 `npm run serve`） | ✅ |
 | `npm run data` | ❌ 缺 gfx 图集与语言表 | ✅ |
 

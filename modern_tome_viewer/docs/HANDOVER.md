@@ -11,7 +11,7 @@
 > | 手写覆盖层 | `data/lua-expressions.json` **1053 条**，构建时按三套渲染重校验 1053/1053 通过 |
 > | 怪物图鉴 | **812 个可遇模板**（普通 447 / 精英 176 / 史诗 49 / 固定Boss 98 / 精英Boss 36 / 神级 6），另有 130 个抽象 BASE 模板不计入；`type` 20 个大类 / `subtype` 89 个亚类，侧栏可按大类→亚类两级中文筛选 |
 > | 线上站点 | <https://ovideros.github.io/modern_tome_viewer/> · 仓库 <https://github.com/ovideros/modern_tome_viewer> · 发布提交 `cb27214` |
-> | 测试基线 | typecheck 无错 · monsters **51/51** · scaling **45/45** · verify **87/87** · smoke **70/70** · e2e **247/247** |
+> | 测试基线 | typecheck 无错 · monsters **51/51** · scaling **45/45** · verify **90/90** · smoke **73/73** · e2e **247/247** |
 > | 剩余失败原因 | `reference mismatch` 11 · `source unavailable` 70 · `unsupported input dimensions` 9 · `Multiple local assignment` 10 |
 >
 > 本轮的逐条进展见 §0「最近一轮变更」；数值覆盖的来龙去脉见
@@ -195,7 +195,7 @@ node scripts/try-formula.mjs --overlay data/lua-expressions.json   # 覆盖层�
 
 | 环境 | 结果 |
 | --- | --- |
-| 完整源码机器（最新，含 §0.4 / §0.5） | typecheck 无错 · monsters 51/51 · scaling 45/45 · verify 87/87 · smoke 70/70 · e2e 247/247 |
+| 完整源码机器（最新，含 §0.4–§0.8） | typecheck 无错 · monsters 51/51 · scaling 45/45 · verify 90/90 · smoke 73/73 · e2e 247/247 |
 | 干净克隆（无 gfx 图集 / 语言表 / DLC 源码） | 上一轮实测：`build:pages` ✅ · smoke 61/61 · verify 87/87 · e2e 222/222 · monsters **40 通过 + 3 skip**；§0.4 新增的用例不依赖游戏源码，推算为 **48 通过 + 3 skip**（本轮未在干净克隆上重跑） |
 
 那 3 项 skip 是需要图集或语言表的用例，测试里用 `skipArt` / `hasLocaleTables` /
@@ -446,6 +446,78 @@ npm run e2e            # 247/247
 
 ---
 
+## 0.8 追加：技能说明的数值被放到了错误的句子上（法术亲和）
+
+**现象**（用户报告）：法术亲和（`T_SPELLCRAFT`）默认状态显示
+"你学会巧妙控制和调谐你的法术，降低 49, 66, 79, 90, 100 法术冷却时间。"
+——既没有百分号，数值也大得不像话（游戏里这个减冷却上限只有 30%）。
+
+**结论：确实是显示错误，而且是两层问题叠出来的。**
+
+### 根因
+
+1. `src/lib/data.ts` 的 `expandAcronym` 用 `if (!wire.f) return null` 把
+   **没拟合出公式族（family）** 的词条整个丢掉。但 `family` 只服务于
+   "用 base/max 反推" 的兜底路径；**有 Lua 表达式**的词条根本不需要它，
+   而 Lua 表达式是最强的来源。实测全库 3750 条里有 **295 条**属于这种
+   （分布在 **219 个技能**），全部被丢掉，数组因此变短。
+2. `src/components/VariableText.tsx` 的 `buildNodes` 把描述里的 `<acronym>`
+   占位符与这个数组**按位置**配对，于是丢掉一条，后面所有数值整体前移一句：
+   法术亲和的减冷却句拿到了下一句的"额外法术强度"阶梯（49…100，本来就没有
+   `%`），而后面的句子退化成导出原文（没有 tooltip、不参与模拟）。
+   顺带解释用户看到的"没有百分比"：**不是百分号丢了**，是那一格换成了别的值。
+3. 另有 2 个技能（护甲掌握 `T_GOLEM_ARMOUR`、鲁莽冲撞 `T_RECKLESS_CHARGE`）
+   的占位符是**词阶梯**（"降低护甲/增加护甲"、"Small/Medium-sized/Big"），
+   构建侧本来就不为它生成数值条目，位置同样错位。
+
+### 修法
+
+| 位置 | 改动 |
+| --- | --- |
+| `expandAcronym` | 只有词条"既无 Lua、又无 family、又无导出阶梯"时才丢；`family` 类型改为允许 `null`（`scaling.ts` 与 `scaling-core.d.ts` 同步） |
+| `buildNodes` | 改为**按占位符自己显示的数字**配对（相同阶梯优先取第一个未用的）；没有数字的占位符保留导出原文且**不消耗**数值；匹配不上时退回"下一个未用"（＝原来的位置配对） |
+| 不变 | 数值本身没错，`public/data/talents.json` 不需要重新生成 |
+
+按内容配对是严格改进：数据对齐时它与位置配对**完全等价**（同一阶梯序列
+一一对应），只有在位置已经漂移时才纠正。
+
+### 结果（真实浏览器实测）
+
+| 技能 | 修前 | 修后 |
+| --- | --- | --- |
+| 法术亲和 | 降低 **49, 66, 79, 90, 100** 法术冷却时间（无 %） | 降低 **6%, 13%, 20%, 26%, 30%** 法术冷却时间；下一句"获得 49, 66, 79, 90, 100 额外法术强度加成" |
+| 护甲掌握 | 词阶梯后三个数值整体前移 | "降低护甲, …, 增加护甲 **-2, -1, 0, 1, 2** 点，护甲强度 **-10%…**，减少 **-3%…** 被暴击率" |
+| 鲁莽冲撞 | 体型词换成攻击次数 | "Small, …, Big 体型…" 保留，攻击次数 **2, 3, 4, 5, 6** 归位 |
+| 意志之力 | 整句退化为导出原文（无模拟） | "增加武器伤害 **29%, 42%, 51%, 59%, 66%**"，可模拟 |
+
+> 法术强度那条在**搜索页**默认是 49,66,79,90,100，导出原文（系数 1.5）是
+> 58,79,95,109,122：搜索页没有职业上下文，滑条默认系数 1.0；职业页按该职业
+> 掌握度取值，tooltip 里「当前条件 / 导出条件」并列可对照。这是既有设计，
+> 本次未改。
+
+### 回归测试
+
+- `scripts/verify.mjs` 新增 3 项不变量（对全库 1834 个技能）：
+  ① 每个导出值都活过 reader；② 每个**含数字**的占位符都有自己的值
+  （词阶梯豁免）；③ 法术亲和三条值的顺序与后缀。
+  这两条不变量正是本次失败模式：修改前 ① 报 219 个技能、② 报 2 个技能。
+- `scripts/smoke.mjs` 新增 3 项渲染断言（真实产物 + 真实数据）：
+  法术亲和的减冷却句含 `6%, 13%, …%`、强度阶梯不在减冷却句里、
+  护甲掌握的词阶梯不吃掉后面的数值。
+
+### 验证
+
+```bash
+npm run typecheck      # 无错
+npm run test:monsters  # 51/51
+npm run test:scaling   # 45/45
+npm run verify         # 90/90（新增 3 项）
+npm run smoke          # 73/73（新增 3 项）
+npm run e2e            # 247/247
+```
+
+---
+
 ## 1. 项目是什么
 
 一个 **Tales of Maj'Eyal (ToME4) 技能查看器的网页版**，替代原站点
@@ -510,8 +582,8 @@ npm run e2e -- http://127.0.0.1:4173/        # 真实浏览器 e2e（需先 npm 
 npm run typecheck   → 无错误
 npm run test:monsters → 51/51
 npm run test:scaling → 45/45
-npm run verify      → 87/87
-npm run smoke       → 70/70
+npm run verify      → 90/90
+npm run smoke       → 73/73
 npm run e2e         → 247/247  （需 PLAYWRIGHT_BROWSERS_PATH=<仓库>/.pw-browsers）
 npm run data        → 覆盖层 1053/1053 accepted；manifest.scaling.source = 3650/3750
 ```

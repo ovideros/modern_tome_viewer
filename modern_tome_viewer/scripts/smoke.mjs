@@ -409,6 +409,37 @@ console.log('\ncompare page');
 await go('#/compare', 300);
 check('empty compare page explains itself', text().includes('对比列表为空'));
 
+// A description's values must sit next to their own sentence. The renderer pairs
+// the `<acronym>` placeholders with the exported values, and dropping one used to
+// move every later value onto the wrong clause: 法术亲和 showed its spell-power
+// ladder as its cooldown reduction, without the "%". Values are dropped when the
+// export has no fitted formula family for them — and four out of five of them are
+// still fully simulatable, because they carry a Lua expression.
+console.log('\ntalent description values');
+await go('#/search?talent=T_SPELLCRAFT', 1200);
+const spellcraftText = (document.querySelector('[data-testid="talent-detail"]')?.textContent ?? '').replace(/\s+/g, ' ');
+check(
+  '法术亲和 renders its cooldown reduction in the cooldown sentence, as a percent',
+  /降低 6%, 13%, 20%, 26%, 30% 法术冷却时间/.test(spellcraftText),
+  spellcraftText.slice(0, 120),
+);
+check(
+  '法术亲和 keeps the spell-power ladder in its own sentence',
+  /额外法术强度加成/.test(spellcraftText) && !/降低 49, 66/.test(spellcraftText),
+  spellcraftText.slice(0, 200),
+);
+
+// A placeholder that shows *words* (a size or armour word ladder) has no value
+// to substitute; the export text must stay, and the numeric values after it must
+// still land in their own clauses.
+await go('#/search?talent=T_GOLEM_ARMOUR', 1200);
+const golemText = (document.querySelector('[data-testid="talent-detail"]')?.textContent ?? '').replace(/\s+/g, ' ');
+check(
+  'a word placeholder keeps its text and does not steal the next value',
+  /降低护甲, 降低护甲, 增加护甲, 增加护甲, 增加护甲 -2, -1, 0, 1, 2 点/.test(golemText),
+  golemText.slice(0, 160),
+);
+
 // ---------------------------------------------------------------------------
 
 console.log(`\n${checks - failures}/${checks} checks passed`);

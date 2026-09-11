@@ -93,6 +93,38 @@ check('超越永恒 carries its fixed cooldown', timeless?.cooldown.fixed === tr
 const frenzy = talents.find((t) => t.id === 'T_DREM_FRENZY');
 check('a fixed cooldown may still be a level ladder', frenzy?.cooldown.fixed === true && frenzy?.cooldown.values.length === 5, JSON.stringify(frenzy?.cooldown));
 
+// The description renders `<acronym>` placeholders by pairing them with
+// `talent.acronyms` **by position**, so the reader must keep every entry the
+// export wrote. It used to drop the ones without a fitted formula family, which
+// moved every later value onto the wrong sentence (法术亲和's cooldown clause
+// showed its spell-power ladder and lost the "%"). 295 values across 219 talents
+// carry a Lua expression but no fitted family.
+const wireAcronyms = new Map(wire.trees.flatMap((tree) => (tree.talents ?? []).map((t) => [t.id, (t.acronyms ?? []).length])));
+const dropped = talents
+  .filter((t) => (wireAcronyms.get(t.id) ?? 0) !== t.acronyms.length)
+  .map((t) => `${t.id} ${wireAcronyms.get(t.id)}->${t.acronyms.length}`);
+check('every exported value survives the reader', dropped.length === 0, dropped.slice(0, 5).join(', '));
+// Count only the placeholders that actually show numbers: a *word* placeholder
+// (降低护甲/增加护甲, 体型词) has no value to pair with, and the reader keeps the
+// export's own text for it. The title carries `<br>`, so parse the tag properly
+// instead of scanning for the next ">".
+const numericPlaceholders = (text) =>
+  [...String(text ?? '').matchAll(/<acronym class="([^"]+)" title="([^"]*)">([^<]*)<\/acronym>/g)]
+    .filter((match) => /\d/.test(match[3])).length;
+const unpaired = talents
+  .filter((t) => numericPlaceholders(t.text) !== t.acronyms.length)
+  .map((t) => `${t.id} numeric=${numericPlaceholders(t.text)} values=${t.acronyms.length}`);
+check('every numeric placeholder has its own value', unpaired.length === 0, unpaired.slice(0, 5).join(', '));
+const spellcraft = talents.find((t) => t.id === 'T_SPELLCRAFT');
+check(
+  '法术亲和 keeps its cooldown, chance and spell-power values in order',
+  spellcraft?.acronyms.length === 3
+    && spellcraft.acronyms[0].suffix === '%'
+    && spellcraft.acronyms[0].lua?.expr?.[0] === '*'
+    && spellcraft.acronyms[2].suffix === '',
+  JSON.stringify(spellcraft?.acronyms.map((a) => ({ d: a.displayed, s: a.suffix, f: a.family }))),
+);
+
 // ---------------------------------------------------------------------------
 // Tokenizer
 // ---------------------------------------------------------------------------

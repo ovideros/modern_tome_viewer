@@ -55,6 +55,29 @@ export function hasSimulatableValues(acronyms: Acronym[]): boolean {
   return acronyms.some((acronym) => Boolean(acronym.lua) || (acronym.base !== null && acronym.max !== null));
 }
 
+/** A value's own numbers, read back out of a placeholder. */
+const NUMBER_PATTERN = /-?\d+(?:\.\d+)?/g;
+
+function numbersOf(text: string): number[] {
+  return [...text.matchAll(NUMBER_PATTERN)].map((match) => Number(match[0]));
+}
+
+/** Same ladder, allowing for the export's own rounding of a decimal. */
+function sameLadder(a: number[], b: number[]): boolean {
+  return a.length === b.length && a.every((value, i) => Math.abs(value - b[i]) <= Math.max(1e-9, Math.abs(b[i]) * 1e-9));
+}
+
+/**
+ * Pair each `<acronym>` placeholder with the value that belongs to it.
+ *
+ * Matching is by the numbers the placeholder itself shows, not by position
+ * alone, because a description can contain a placeholder that carries **no**
+ * numbers: a word ladder such as 护甲掌握's 降低护甲/增加护甲 or 鲁莽冲撞's
+ * 体型词. The build emits no value for those, and counting them as one shifted
+ * every later sentence onto the wrong number. When nothing matches — the export
+ * and the extracted values disagree — this falls back to the next unused value,
+ * which is exactly the old positional pairing.
+ */
 function buildNodes(
   html: string,
   acronyms: Acronym[],
@@ -65,23 +88,31 @@ function buildNodes(
 
   const nodes: ReactNode[] = [];
   const pattern = /<acronym class="([^"]+)" title="([^"]*)">([^<]*)<\/acronym>/g;
+  const used = new Set<number>();
   let cursor = 0;
-  let index = 0;
 
   for (const match of html.matchAll(pattern)) {
     const start = match.index ?? 0;
     if (start > cursor) {
-      nodes.push(<span key={`t${index}`} dangerouslySetInnerHTML={{ __html: html.slice(cursor, start) }} />);
+      nodes.push(<span key={`t${start}`} dangerouslySetInnerHTML={{ __html: html.slice(cursor, start) }} />);
     }
-    const acronym = acronyms[index];
-    index += 1;
-    if (!acronym) {
-      nodes.push(<span key={`x${index}`} dangerouslySetInnerHTML={{ __html: match[0] }} />);
-      cursor = start + match[0].length;
+    cursor = start + match[0].length;
+
+    const shown = numbersOf(match[3]);
+    if (!shown.length) {
+      // A word ladder has nothing to substitute; keep the export's own text.
+      nodes.push(<span key={`w${start}`} dangerouslySetInnerHTML={{ __html: match[0] }} />);
       continue;
     }
-    nodes.push(<ValueSpan key={`v${index}`} acronym={acronym} sim={sim} display={display} />);
-    cursor = start + match[0].length;
+
+    let index = acronyms.findIndex((acronym, i) => !used.has(i) && sameLadder(acronym.displayed, shown));
+    if (index < 0) index = acronyms.findIndex((_, i) => !used.has(i));
+    if (index < 0) {
+      nodes.push(<span key={`x${start}`} dangerouslySetInnerHTML={{ __html: match[0] }} />);
+      continue;
+    }
+    used.add(index);
+    nodes.push(<ValueSpan key={`v${index}`} acronym={acronyms[index]} sim={sim} display={display} />);
   }
   if (cursor < html.length) {
     nodes.push(<span key="tail" dangerouslySetInnerHTML={{ __html: html.slice(cursor) }} />);

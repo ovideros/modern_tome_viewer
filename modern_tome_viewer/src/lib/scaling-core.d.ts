@@ -25,7 +25,8 @@ export interface AcronymCore {
   prefix?: string;
   tail?: string;
   params: ScalingParamCore[];
-  family: 'talentScale' | 'spellDamage' | 'mindDamage' | 'physicalDamage' | 'steamDamage' | 'statDamage' | 'talentLimit' | 'weaponDamage' | 'statScale';
+  /** Null when the value is only described by its Lua expression (`lua`). */
+  family: 'talentScale' | 'spellDamage' | 'mindDamage' | 'physicalDamage' | 'steamDamage' | 'statDamage' | 'talentLimit' | 'weaponDamage' | 'statScale' | null;
   base: number | null;
   max: number | null;
   precision?: number;

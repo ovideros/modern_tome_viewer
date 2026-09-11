@@ -66,7 +66,12 @@ export interface Acronym {
   /** Sentence punctuation the export left after the last number, e.g. ".". */
   tail?: string;
   params: ScalingParam[];
-  family: FormulaFamily;
+  /**
+   * Fitted formula family, or null when the value is only described by its Lua
+   * expression (`lua`). A null family is normal and does not make the value
+   * unsimulatable — `lua` is the stronger source.
+   */
+  family: FormulaFamily | null;
   base: number | null;
   max: number | null;
   mastery: number;
