@@ -4,6 +4,8 @@ import { writeHash } from '../lib/filters';
 import type { SubraceMeta, Talent, TalentEntry } from '../lib/types';
 import { GameText } from '../components/Highlight';
 import { PortraitStrip, StatChips, TalentTreePanel } from '../components/ClassBits';
+import { MobileBrowsePicker } from '../components/MobileBrowsePicker';
+import { MobileSheet } from '../components/MobileSheet';
 import { TalentDetail } from '../components/TalentDetail';
 
 interface RacesPageProps {
@@ -28,6 +30,7 @@ export function RacesPage({
   const [raceId, setRaceId] = useState(initial);
   const [filter, setFilter] = useState('');
   const [selected, setSelected] = useState<{ talent: Talent; treeName: string; mastery: number } | null>(null);
+  const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
     const fromHash = params.get('race');
@@ -62,6 +65,16 @@ export function RacesPage({
   }, [races, filter]);
 
   const race = races.find((r) => r.id === raceId) ?? races[0];
+  const pickerGroups = useMemo(
+    () =>
+      visible.map((item) => ({
+        id: item.id,
+        name: item.name,
+        childCount: item.subraces.length,
+        children: item.subraces.map((sub) => ({ id: sub.id, name: sub.name })),
+      })),
+    [visible],
+  );
   // Every race talent tree lives under the "race/" category.
   const raceTreeIds = useMemo(
     () => data.trees.filter((tree) => tree.category === 'race').map((tree) => tree.id),
@@ -70,6 +83,22 @@ export function RacesPage({
 
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-3">
+      <div className="mb-3 flex items-center gap-2 lg:hidden">
+        <MobileBrowsePicker
+          title="种族"
+          childLabel="亚种"
+          currentName={race?.name ?? '—'}
+          filter={filter}
+          onFilterChange={setFilter}
+          groups={pickerGroups}
+          selectedId={race?.id}
+          onSelect={selectRace}
+          onSelectChild={scrollToSubrace}
+          open={showPicker}
+          onOpenChange={setShowPicker}
+          emptyLabel="没有匹配的种族"
+        />
+      </div>
       <div className="flex gap-3">
         <aside className="hidden w-[220px] shrink-0 lg:block">
           <div className="panel sticky top-[calc(var(--header-h)+2px)] flex h-[calc(100vh-var(--header-h)-12px)] flex-col overflow-hidden">
@@ -171,29 +200,25 @@ export function RacesPage({
       </div>
 
       {selected && (
-        // Bounded flex column so the sheet scrolls itself instead of clipping
-        // the panel and letting the page behind scroll (docs/HANDOVER.md §0.6).
-        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[70vh] flex-col xl:hidden">
-          <div className="animate-fade-in mx-2 mb-2 flex max-h-[70vh] min-h-0 flex-col overflow-hidden">
-            <TalentDetail
-              talent={asEntry(selected.talent, selected.treeName)}
-              tree={data.byTree.get(selected.talent.tree)}
-              meta={data.meta}
-              terms={[]}
-              onClose={() => setSelected(null)}
-              onJumpToTree={() => undefined}
-              onAddFlag={() => undefined}
-              onSelectClass={() => undefined}
-              favorite={false}
-              onToggleFavorite={() => undefined}
-              inCompare={false}
-              onToggleCompare={() => onOpenTalent(selected.talent)}
-              compareFull={false}
-              mastery={selected.mastery}
-              compact
-            />
-          </div>
-        </div>
+        <MobileSheet onClose={() => setSelected(null)} testId="race-talent-sheet">
+          <TalentDetail
+            talent={asEntry(selected.talent, selected.treeName)}
+            tree={data.byTree.get(selected.talent.tree)}
+            meta={data.meta}
+            terms={[]}
+            onClose={() => setSelected(null)}
+            onJumpToTree={() => undefined}
+            onAddFlag={() => undefined}
+            onSelectClass={() => undefined}
+            favorite={false}
+            onToggleFavorite={() => undefined}
+            inCompare={false}
+            onToggleCompare={() => onOpenTalent(selected.talent)}
+            compareFull={false}
+            mastery={selected.mastery}
+            compact
+          />
+        </MobileSheet>
       )}
     </div>
   );

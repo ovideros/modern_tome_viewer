@@ -20,6 +20,7 @@ import { Highlight } from '../components/Highlight';
 import { MonsterArtwork, CategoryBadge, TypeChip } from '../components/MonsterBits';
 import { MonsterTypeTree } from '../components/MonsterTypeTree';
 import { MonsterDetail } from '../components/MonsterDetail';
+import { MobileSheet } from '../components/MobileSheet';
 import { TalentDetail } from '../components/TalentDetail';
 
 interface MonstersPageProps {
@@ -525,47 +526,55 @@ export function MonstersPage({
         // the scroll container. With only `max-h` the panel grows to its content
         // and is clipped — the sheet looks unscrollable and a drag scrolls the
         // list behind it (see docs/HANDOVER.md §0.6).
-        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[75vh] flex-col xl:hidden" data-testid="monster-detail-sheet">
-          <div className="animate-fade-in mx-2 mb-2 flex max-h-[75vh] min-h-0 flex-col overflow-hidden">
-            <MonsterDetail
-              monster={selected}
-              talentOf={talentOf}
-              terms={terms}
-              onClose={() => {
-                setSelectedId(null);
-                setSelectedTalentId(null);
-              }}
-              onSelectTalent={selectTalent}
-              selectedTalentId={selectedTalentId}
-              compact
-            />
-          </div>
-        </div>
+        <MobileSheet
+          maxHeight="75vh"
+          onClose={() => {
+            setSelectedId(null);
+            setSelectedTalentId(null);
+          }}
+          testId="monster-detail-sheet"
+        >
+          <MonsterDetail
+            monster={selected}
+            talentOf={talentOf}
+            terms={terms}
+            onClose={() => {
+              setSelectedId(null);
+              setSelectedTalentId(null);
+            }}
+            onSelectTalent={selectTalent}
+            selectedTalentId={selectedTalentId}
+            compact
+          />
+        </MobileSheet>
       )}
 
       {selected && selectedTalent && (
-        <div className="fixed inset-x-0 bottom-0 z-50 flex max-h-[85vh] flex-col xl:hidden" data-testid="monster-talent-sheet">
-          <div className="animate-fade-in mx-2 mb-2 flex max-h-[85vh] min-h-0 flex-col overflow-hidden">
-            <TalentDetail
-              talent={selectedTalent}
-              tree={data.byTree.get(selectedTalent.tree)}
-              meta={data.meta}
-              terms={[]}
-              onClose={() => setSelectedTalentId(null)}
-              onJumpToTree={() => undefined}
-              onAddFlag={() => undefined}
-              onSelectClass={() => undefined}
-              favorite={favoriteHas(selectedTalent.id)}
-              onToggleFavorite={onToggleFavorite}
-              inCompare={compareHas(selectedTalent.id)}
-              onToggleCompare={onToggleCompare}
-              compareFull={compareFull}
-              compact
-              embedded
-              closeLabel={narrowViewport ? '返回怪物' : '关闭'}
-            />
-          </div>
-        </div>
+        <MobileSheet
+          maxHeight="85vh"
+          zIndex="z-50"
+          onClose={() => setSelectedTalentId(null)}
+          testId="monster-talent-sheet"
+        >
+          <TalentDetail
+            talent={selectedTalent}
+            tree={data.byTree.get(selectedTalent.tree)}
+            meta={data.meta}
+            terms={[]}
+            onClose={() => setSelectedTalentId(null)}
+            onJumpToTree={() => undefined}
+            onAddFlag={() => undefined}
+            onSelectClass={() => undefined}
+            favorite={favoriteHas(selectedTalent.id)}
+            onToggleFavorite={onToggleFavorite}
+            inCompare={compareHas(selectedTalent.id)}
+            onToggleCompare={onToggleCompare}
+            compareFull={compareFull}
+            compact
+            embedded
+            closeLabel={narrowViewport ? '返回怪物' : '关闭'}
+          />
+        </MobileSheet>
       )}
     </div>
   );

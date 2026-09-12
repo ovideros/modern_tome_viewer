@@ -464,9 +464,9 @@ check('ego filter rail has no dropdowns', egoRailSelects.length === 0, `${egoRai
 check('適用部位 is expanded by default', text().includes('近战武器') && text().includes('锄头'));
 
 // Ordering: the normal tier comes first, the greater tier after it.
-const cardState = [...document.querySelectorAll('[data-testid="ego-card"]')].map((card) => ({
-  greater: (card.textContent ?? '').includes('高级词缀'),
-  recommend: Number(/推荐\s*(\d+)/.exec(card.textContent ?? '')?.[1] ?? -1),
+const cardState = [...document.querySelectorAll('[data-testid="ego-row"]')].map((row) => ({
+  greater: (row.textContent ?? '').includes('高级词缀'),
+  recommend: Number(row.querySelector('td:nth-child(7)')?.textContent ?? '') || -1,
 }));
 const firstGreater = cardState.findIndex((state) => state.greater);
 const normalTier = firstGreater === -1 ? cardState : cardState.slice(0, firstGreater);
@@ -475,7 +475,7 @@ check(
   'within a tier, affixes sort by community recommendation descending',
   normalTier.every((state, index) => index === 0 || normalTier[index - 1].recommend >= state.recommend),
 );
-check('the community recommendation is visible on the card', cardState.some((state) => state.recommend > 0));
+check('the community recommendation is visible in the table', cardState.some((state) => state.recommend > 0));
 
 if (egoCards.length) {
   const card = egoCards[0].querySelector('button') ?? egoCards[0];
@@ -506,8 +506,8 @@ check('no card ends up with no readable effect', !effectLines.some((line) => lin
 // The value model, pinned: `balanced` is `combat_atk = mbonus_material(10, 5)`
 // with `disarm_immune = mbonus_material(30, 20, v=v/100)`, which the community
 // sheet lists as `5-15命中闪避/20-50缴械免疫`. It used to render `15~35`.
-const balancedCard = findCardByText('balanced');
-const balancedText = balancedCard?.textContent ?? '';
+const balancedRow = findByText('[data-testid="ego-row"]', 'balanced');
+const balancedText = balancedRow?.textContent ?? '';
 check(
   'affix values use the engine formula (add .. add + max)',
   balancedText.includes('+5~+15') && balancedText.includes('+20%~+50%'),
@@ -525,10 +525,10 @@ click(materialTags[0]);
 await wait(300);
 check('selecting a material level narrows the shown range', window.location.hash.includes('ml=1'), window.location.hash);
 check('the card states which material level is shown', text().includes('材料 1 级'));
-const levelOneText = findCardByText('of carrying')?.textContent ?? '';
+const levelOneText = findByText('[data-testid="ego-row"]', 'of carrying')?.textContent ?? '';
 click(materialTags[1]);
 await wait(300);
-const levelTwoText = findCardByText('of carrying')?.textContent ?? '';
+const levelTwoText = findByText('[data-testid="ego-row"]', 'of carrying')?.textContent ?? '';
 check(
   'the same affix shows a different range at a different level',
   levelOneText.includes('+20~+28') && levelTwoText.includes('+20~+36'),
@@ -538,7 +538,7 @@ check('the material level is a single choice', [...document.querySelectorAll('as
 click(materialTags[1]);
 await wait(300);
 check('clicking the active level again clears it', !window.location.hash.includes('ml='), window.location.hash);
-const clearedText = findCardByText('of carrying')?.textContent ?? '';
+const clearedText = findByText('[data-testid="ego-row"]', 'of carrying')?.textContent ?? '';
 check('clearing the level restores the full range', clearedText.includes('+20~+60'), clearedText.slice(0, 120));
 
 // ---------------------------------------------------------------------------

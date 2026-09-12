@@ -4,6 +4,8 @@ import { writeHash } from '../lib/filters';
 import type { SubclassMeta, Talent, TalentEntry, TreeRef } from '../lib/types';
 import { GameText } from '../components/Highlight';
 import { PortraitStrip, StatChips, TalentTreePanel } from '../components/ClassBits';
+import { MobileBrowsePicker } from '../components/MobileBrowsePicker';
+import { MobileSheet } from '../components/MobileSheet';
 import { TalentDetail } from '../components/TalentDetail';
 
 interface ClassesPageProps {
@@ -28,6 +30,7 @@ export function ClassesPage({
   const [classId, setClassId] = useState(initial);
   const [filter, setFilter] = useState('');
   const [selected, setSelected] = useState<{ talent: Talent; treeName: string; mastery: number } | null>(null);
+  const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
     const fromHash = params.get('class');
@@ -64,9 +67,34 @@ export function ClassesPage({
   }, [classes, filter]);
 
   const cls = classes.find((c) => c.id === classId) ?? classes[0];
+  const pickerGroups = useMemo(
+    () =>
+      visibleClasses.map((item) => ({
+        id: item.id,
+        name: item.name,
+        childCount: item.subclasses.length,
+        children: item.subclasses.map((sub) => ({ id: sub.id, name: sub.name })),
+      })),
+    [visibleClasses],
+  );
 
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-3">
+      <div className="mb-3 flex items-center gap-2 lg:hidden">
+        <MobileBrowsePicker
+          title="职业"
+          currentName={cls?.name ?? '—'}
+          filter={filter}
+          onFilterChange={setFilter}
+          groups={pickerGroups}
+          selectedId={cls?.id}
+          onSelect={selectClass}
+          onSelectChild={scrollToSubclass}
+          open={showPicker}
+          onOpenChange={setShowPicker}
+          emptyLabel="没有匹配的职业"
+        />
+      </div>
       <div className="flex gap-3">
         <aside className="hidden w-[240px] shrink-0 lg:block">
           <div className="panel sticky top-[calc(var(--header-h)+2px)] flex h-[calc(100vh-var(--header-h)-12px)] flex-col overflow-hidden">
@@ -168,29 +196,25 @@ export function ClassesPage({
       </div>
 
       {selected && (
-        // Bounded flex column so the sheet scrolls itself instead of clipping
-        // the panel and letting the page behind scroll (docs/HANDOVER.md §0.6).
-        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[70vh] flex-col xl:hidden">
-          <div className="animate-fade-in mx-2 mb-2 flex max-h-[70vh] min-h-0 flex-col overflow-hidden">
-            <TalentDetail
-              talent={asEntry(selected.talent, selected.treeName)}
-              tree={data.byTree.get(selected.talent.tree)}
-              meta={data.meta}
-              terms={[]}
-              onClose={() => setSelected(null)}
-              onJumpToTree={() => undefined}
-              onAddFlag={() => undefined}
-              onSelectClass={() => undefined}
-              favorite={false}
-              onToggleFavorite={() => undefined}
-              inCompare={false}
-              onToggleCompare={() => onOpenTalent(selected.talent)}
-              compareFull={false}
-              mastery={selected.mastery}
-              compact
-            />
-          </div>
-        </div>
+        <MobileSheet onClose={() => setSelected(null)} testId="class-talent-sheet">
+          <TalentDetail
+            talent={asEntry(selected.talent, selected.treeName)}
+            tree={data.byTree.get(selected.talent.tree)}
+            meta={data.meta}
+            terms={[]}
+            onClose={() => setSelected(null)}
+            onJumpToTree={() => undefined}
+            onAddFlag={() => undefined}
+            onSelectClass={() => undefined}
+            favorite={false}
+            onToggleFavorite={() => undefined}
+            inCompare={false}
+            onToggleCompare={() => onOpenTalent(selected.talent)}
+            compareFull={false}
+            mastery={selected.mastery}
+            compact
+          />
+        </MobileSheet>
       )}
     </div>
   );

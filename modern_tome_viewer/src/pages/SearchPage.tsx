@@ -13,6 +13,7 @@ import type { TalentEntry } from '../lib/types';
 import { FilterPanel } from '../components/FilterPanel';
 import { ResultsList } from '../components/ResultsList';
 import { SearchBar } from '../components/SearchBar';
+import { MobileSheet } from '../components/MobileSheet';
 import { TalentDetail } from '../components/TalentDetail';
 
 interface SearchPageProps {
@@ -229,25 +230,23 @@ export function SearchPage({
           bounded flex column so the sheet scrolls itself rather than clipping
           the panel and scrolling the results behind it (HANDOVER §0.6). */}
       {selected && (
-        <div className="fixed inset-x-0 bottom-0 z-40 flex max-h-[70vh] flex-col xl:hidden">
-          <div className="animate-fade-in mx-2 mb-2 flex max-h-[70vh] min-h-0 flex-col overflow-hidden">
-            <TalentDetail
-              talent={selected}
-              tree={data.byTree.get(selected.tree)}
-              meta={data.meta}
-              terms={terms}
-              onClose={closeTalent}
-              onJumpToTree={jumpToTree}
-              onAddFlag={addFlag}
-              onSelectClass={selectClass}
-              favorite={favoriteHas(selected.id)}
-              onToggleFavorite={onToggleFavorite}
-              inCompare={compareHas(selected.id)}
-              onToggleCompare={onToggleCompare}
-              compareFull={compareFull}
-            />
-          </div>
-        </div>
+        <MobileSheet onClose={closeTalent} testId="search-talent-sheet">
+          <TalentDetail
+            talent={selected}
+            tree={data.byTree.get(selected.tree)}
+            meta={data.meta}
+            terms={terms}
+            onClose={closeTalent}
+            onJumpToTree={jumpToTree}
+            onAddFlag={addFlag}
+            onSelectClass={selectClass}
+            favorite={favoriteHas(selected.id)}
+            onToggleFavorite={onToggleFavorite}
+            inCompare={compareHas(selected.id)}
+            onToggleCompare={onToggleCompare}
+            compareFull={compareFull}
+          />
+        </MobileSheet>
       )}
     </div>
   );

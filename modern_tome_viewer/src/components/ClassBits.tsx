@@ -112,7 +112,7 @@ export function TalentTreePanel({
       </header>
 
       {talents.length ? (
-        <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-4 gap-1">
           {talents.map((talent) => (
             <button
               key={talent.id}

@@ -899,6 +899,44 @@ if (await classSearchButton.count()) {
   check('class-filtered search shows results', ((await resultCount()) ?? 0) > 0);
 }
 
+// Mobile class browsing uses the same data as the desktop sidebar, but moves
+// it into a bottom picker so the class/subclass list remains reachable.
+await page.setViewportSize({ width: 420, height: 900 });
+await page.goto(`${url}#/classes`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(800);
+const mobileClassTrigger = page.locator('[data-testid="mobile-browse-trigger"]:visible');
+check('mobile class picker is available', (await mobileClassTrigger.count()) === 1);
+check('desktop class sidebar is hidden on mobile', (await page.locator('aside:visible').count()) === 0);
+await mobileClassTrigger.click();
+await page.waitForTimeout(250);
+const classPicker = page.locator('[role="dialog"][aria-label="职业选择"]');
+check('mobile class picker opens as a dialog', await classPicker.isVisible());
+await classPicker.locator('input').fill('法师');
+await page.waitForTimeout(250);
+check('mobile class picker filters class names', (await classPicker.innerText()).includes('法师系'));
+await classPicker.locator('button').filter({ hasText: /^法师系/ }).first().click();
+await page.waitForTimeout(500);
+check('mobile class picker selects a class', page.url().includes('class=MAGE'), page.url());
+
+// Four talents stay on one line even at phone width.
+const mobileClassTree = page.locator('[data-testid="tree-panel"]').first();
+const classTalentRows = await mobileClassTree.locator('[data-testid="talent-card"]').evaluateAll((cards) => {
+  const firstFour = cards.slice(0, 4).map((card) => Math.round(card.getBoundingClientRect().top));
+  return { count: cards.length, rows: [...new Set(firstFour)].length };
+});
+check('mobile class tree keeps four talents on one row', classTalentRows.count >= 4 && classTalentRows.rows === 1, JSON.stringify(classTalentRows));
+
+const mobileClassTalent = page.locator('[data-testid="talent-card"]').first();
+if (await mobileClassTalent.count()) {
+  await mobileClassTalent.click();
+  await page.waitForTimeout(350);
+  check('mobile class talent opens a bottom sheet', await page.locator('[data-testid="class-talent-sheet"]:visible').count() === 1);
+  await page.mouse.click(8, 150);
+  await page.waitForTimeout(250);
+  check('clicking outside closes the mobile class sheet', await page.locator('[data-testid="class-talent-sheet"]:visible').count() === 0);
+}
+await page.setViewportSize({ width: 1500, height: 950 });
+
 // ---------------------------------------------------------------------------
 section('races page');
 await page.goto(`${url}#/races`, { waitUntil: 'domcontentloaded' });
@@ -954,6 +992,37 @@ if (await raceTalent.count()) {
     check('race page tooltip escapes its panel', box?.inside === true && box?.confined === false, JSON.stringify(box));
   }
 }
+
+// The race page follows the same mobile picker and outside-dismiss behaviour.
+await page.setViewportSize({ width: 420, height: 900 });
+if (await page.locator('[data-testid="race-talent-sheet"]:visible').count()) {
+  await page.mouse.click(8, 150);
+  await page.waitForTimeout(250);
+}
+await page.goto(`${url}#/races`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(800);
+const mobileRaceTrigger = page.locator('[data-testid="mobile-browse-trigger"]:visible');
+check('mobile race picker is available', (await mobileRaceTrigger.count()) === 1);
+await mobileRaceTrigger.click();
+await page.waitForTimeout(250);
+const racePicker = page.locator('[role="dialog"][aria-label="种族选择"]');
+check('mobile race picker opens as a dialog', await racePicker.isVisible());
+await racePicker.locator('input').fill('精灵');
+await page.waitForTimeout(250);
+check('mobile race picker filters race names', (await racePicker.innerText()).includes('精灵'));
+await racePicker.locator('button').filter({ hasText: /^精灵/ }).first().click();
+await page.waitForTimeout(500);
+check('mobile race picker selects a race', page.url().includes('race=ELF'), page.url());
+const mobileRaceTalent = page.locator('[data-testid="talent-card"]').first();
+if (await mobileRaceTalent.count()) {
+  await mobileRaceTalent.click();
+  await page.waitForTimeout(350);
+  check('mobile race talent opens a bottom sheet', await page.locator('[data-testid="race-talent-sheet"]:visible').count() === 1);
+  await page.mouse.click(8, 150);
+  await page.waitForTimeout(250);
+  check('clicking outside closes the mobile race sheet', await page.locator('[data-testid="race-talent-sheet"]:visible').count() === 0);
+}
+await page.setViewportSize({ width: 1500, height: 950 });
 
 // ---------------------------------------------------------------------------
 section('monsters page');
@@ -1450,6 +1519,32 @@ const egosBody = await page.locator('body').innerText();
 const egoCardCount = await page.locator('[data-testid="ego-card"]').count();
 check('ego list renders', egoCardCount > 100, `${egoCardCount} cards`);
 check('ego census is stated', /共\s*608\s*条词缀/.test(egosBody), /共[^\n]*/.exec(egosBody)?.[0]);
+check('egos page uses one row per affix', (await page.locator('[data-testid="ego-row"]').count()) === egoCardCount);
+
+// Keep the table readable on a phone by preserving its columns and allowing
+// the table viewport to scroll horizontally.
+await page.setViewportSize({ width: 420, height: 900 });
+await page.goto(`${url}#/egos`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-row"]', { timeout: 30000 });
+await page.waitForTimeout(500);
+const mobileEgoTable = await page.locator('[data-testid="ego-table"]').evaluate((table) => ({
+  clientWidth: table.clientWidth,
+  scrollWidth: table.scrollWidth,
+}));
+check('mobile ego table scrolls horizontally', mobileEgoTable.scrollWidth > mobileEgoTable.clientWidth, JSON.stringify(mobileEgoTable));
+await page.locator('[data-testid="ego-column-filter-name"]').click();
+await page.locator('[data-testid="ego-column-filter-panel"] input').fill('of carrying');
+await page.waitForTimeout(500);
+const nameFilteredEgos = await page.locator('[data-testid="ego-row"]').count();
+check('a table column filter narrows the affixes', nameFilteredEgos > 0 && nameFilteredEgos < 608, String(nameFilteredEgos));
+check('the column filter is written to the URL', page.url().includes('nq='), page.url().split('#')[1]);
+await page.locator('[data-testid="ego-column-filter-panel"] button', { hasText: '清除本列' }).click();
+await page.waitForTimeout(400);
+check('clearing a table column filter restores the rows', (await page.locator('[data-testid="ego-row"]').count()) === 608);
+await page.setViewportSize({ width: 1500, height: 950 });
+await page.goto(`${url}#/egos`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="ego-card"]', { timeout: 30000 });
+await page.waitForTimeout(500);
 
 // Search must be punctuation-insensitive: the stun-immunity property is
 // labelled 震慑/冰冻免疫, and a reader types 震慑免疫.
@@ -1490,10 +1585,10 @@ check('the slot selection survives a reload', restoredSlots === shieldOnly, `${r
 // recommendation descending.
 await page.locator('button', { hasText: '清空全部条件' }).first().click();
 await page.waitForTimeout(600);
-const egoOrder = await page.locator('[data-testid="ego-card"]').evaluateAll((cards) =>
-  cards.map((card) => ({
-    greater: (card.textContent ?? '').includes('高级词缀'),
-    recommend: Number(/推荐\s*(\d+)/.exec(card.textContent ?? '')?.[1] ?? -1),
+const egoOrder = await page.locator('[data-testid="ego-row"]').evaluateAll((rows) =>
+  rows.map((row) => ({
+    greater: (row.textContent ?? '').includes('高级词缀'),
+    recommend: Number(row.querySelector('td:nth-child(7)')?.textContent ?? '') || -1,
   })),
 );
 const firstGreaterIndex = egoOrder.findIndex((entry) => entry.greater);
@@ -1505,14 +1600,14 @@ check(
 );
 // The greater marker must be visually distinct, not another grey chip.
 const greaterColour = await page
-  .locator('[data-testid="ego-card"] span', { hasText: '高级词缀' })
+  .locator('[data-testid="ego-row"] span', { hasText: '高级词缀' })
   .first()
-  .evaluate((el) => getComputedStyle(el).color);
-const chipColour = await page
-  .locator('[data-testid="ego-card"] span.chip')
-  .first()
-  .evaluate((el) => getComputedStyle(el).color);
-check('the greater-tier marker is colour-coded apart from ordinary chips', greaterColour !== chipColour, `${greaterColour} vs ${chipColour}`);
+  .getAttribute('class');
+check(
+  'the greater-tier marker is colour-coded',
+  Boolean(greaterColour && /text-amber-(800|300)/.test(greaterColour)),
+  greaterColour ?? '',
+);
 await shot('10b-egos-ordering');
 
 // A shared ego pool: the chainsaw loads both the melee weapon and shield pools,
@@ -1524,6 +1619,7 @@ const sharedText = await page.locator('body').innerText();
 check('shared ego pool is labelled, not hidden', sharedText.includes('共享词缀池'));
 
 // Deep link: selection survives a reload.
+await page.evaluate(() => window.scrollTo(0, 0));
 await page.locator('[data-testid="ego-card"]').first().click();
 await page.waitForTimeout(400);
 const egoShare = page.url();
@@ -1539,6 +1635,7 @@ check('ego selection survives a reload', true, egoShare.split('#')[1]?.slice(0, 
 // ---------------------------------------------------------------------------
 await page.goto(`${url}#/egos?q=${encodeURIComponent('of carrying')}`, { waitUntil: 'domcontentloaded' });
 await page.waitForSelector('[data-testid="ego-card"]', { timeout: 20000 });
+await page.evaluate(() => window.scrollTo(0, 0));
 await page.locator('[data-testid="ego-card"]').first().click();
 await page.waitForSelector('[data-testid="ego-detail"]:visible', { timeout: 15000 });
 const headerBox = await page.locator('header.sticky').boundingBox();
@@ -1579,6 +1676,7 @@ check('material level 1 narrows the range', ironRange.includes('+20~+28'), ironR
 check('material level 5 restores the widest range', voratunRange.includes('+20~+60'), voratunRange.replace(/\n/g, ' | '));
 await page.goto(`${url}#/egos?q=evasive&ml=1`, { waitUntil: 'domcontentloaded' });
 await page.waitForSelector('[data-testid="ego-card"]', { timeout: 20000 });
+await page.evaluate(() => window.scrollTo(0, 0));
 await page.locator('[data-testid="ego-card"]').first().click();
 await page.waitForSelector('[data-testid="ego-detail"]:visible', { timeout: 15000 });
 await page.waitForTimeout(300);

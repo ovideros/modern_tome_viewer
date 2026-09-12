@@ -18,6 +18,7 @@ import { TalentDetail } from '../components/TalentDetail';
 import { writeHash } from '../lib/filters';
 import {
   loadEgoData,
+  normalizeSearchText,
   searchTerms,
   type Ego,
   type LoadedEgos,
@@ -48,6 +49,10 @@ interface EgosPageProps {
  */
 interface EgoFilters {
   query: string;
+  /** Column-specific text filters; the general query remains an all-fields search. */
+  nameQuery: string;
+  effectQuery: string;
+  noteQuery: string;
   /** Slot group ids from `EGO_SLOT_GROUPS`. */
   slots: string[];
   positions: ('prefix' | 'suffix')[];
@@ -56,6 +61,9 @@ interface EgoFilters {
   sources: string[];
   /** Effect tags derived from the structured properties, not from prose. */
   tags: string[];
+  rarityMin: number | null;
+  rarityMax: number | null;
+  recommendations: number[];
   /**
    * Item material level (1–5), or null for "every level".
    *
@@ -70,11 +78,17 @@ interface EgoFilters {
 
 const EMPTY_FILTERS: EgoFilters = {
   query: '',
+  nameQuery: '',
+  effectQuery: '',
+  noteQuery: '',
   slots: [],
   positions: [],
   tiers: [],
   sources: [],
   tags: [],
+  rarityMin: null,
+  rarityMax: null,
+  recommendations: [],
   materialLevel: null,
 };
 
@@ -185,13 +199,27 @@ function hasKey(ego: Ego, key: string): boolean {
 
 function paramsToFilters(params: URLSearchParams): EgoFilters {
   const rawLevel = Number(params.get('ml'));
+  const readNumber = (key: string): number | null => {
+    const raw = params.get(key);
+    if (raw === null || raw.trim() === '') return null;
+    const value = Number(raw);
+    return Number.isFinite(value) ? value : null;
+  };
   return {
     query: params.get('q') ?? '',
+    nameQuery: params.get('nq') ?? '',
+    effectQuery: params.get('eq') ?? '',
+    noteQuery: params.get('noteq') ?? '',
     slots: readList(params, 'slot'),
     positions: readList(params, 'pos').filter((value): value is 'prefix' | 'suffix' => value === 'prefix' || value === 'suffix'),
     tiers: readList(params, 'tier').filter((value): value is 'normal' | 'greater' => value === 'normal' || value === 'greater'),
     sources: readList(params, 'src'),
     tags: readList(params, 'tags').filter((tag) => EFFECT_TAGS.some((spec) => spec.id === tag)),
+    rarityMin: readNumber('rmin'),
+    rarityMax: readNumber('rmax'),
+    recommendations: readList(params, 'rec')
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value >= 1 && value <= 5),
     // A level outside 1–5 (a stale link) is treated as "not chosen" rather than
     // as an error, which keeps the page usable.
     materialLevel: (MATERIAL_LEVELS as readonly number[]).includes(rawLevel) ? rawLevel : null,
@@ -201,11 +229,17 @@ function paramsToFilters(params: URLSearchParams): EgoFilters {
 function filtersToParams(filters: EgoFilters, egoId: string | null): URLSearchParams {
   const next = new URLSearchParams();
   if (filters.query.trim()) next.set('q', filters.query.trim());
+  if (filters.nameQuery.trim()) next.set('nq', filters.nameQuery.trim());
+  if (filters.effectQuery.trim()) next.set('eq', filters.effectQuery.trim());
+  if (filters.noteQuery.trim()) next.set('noteq', filters.noteQuery.trim());
   if (filters.slots.length) next.set('slot', filters.slots.join(','));
   if (filters.positions.length) next.set('pos', filters.positions.join(','));
   if (filters.tiers.length) next.set('tier', filters.tiers.join(','));
   if (filters.sources.length) next.set('src', filters.sources.join(','));
   if (filters.tags.length) next.set('tags', filters.tags.join(','));
+  if (filters.rarityMin !== null) next.set('rmin', String(filters.rarityMin));
+  if (filters.rarityMax !== null) next.set('rmax', String(filters.rarityMax));
+  if (filters.recommendations.length) next.set('rec', filters.recommendations.join(','));
   if (filters.materialLevel !== null) next.set('ml', String(filters.materialLevel));
   if (egoId) next.set('e', egoId);
   return next;
@@ -214,6 +248,19 @@ function filtersToParams(filters: EgoFilters, egoId: string | null): URLSearchPa
 /** Toggle one value inside a facet list; an empty list means "no restriction". */
 function toggleIn<T extends string>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
+}
+
+function queryMatches(text: string, query: string): boolean {
+  const terms = searchTerms(query);
+  if (!terms.length) return true;
+  const haystack = normalizeSearchText(text);
+  return terms.every((term) => haystack.includes(term));
+}
+
+function parseOptionalNumber(value: string): number | null {
+  if (value.trim() === '') return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
 }
 
 /**
@@ -344,6 +391,370 @@ function TagButton({
 export const GREATER_TAG_CLASS =
   'inline-flex items-center rounded-full border border-amber-500/50 bg-amber-500/15 px-1.5 text-[10.5px] font-semibold text-amber-800 dark:text-amber-300';
 
+type EgoColumn = 'name' | 'slot' | 'position' | 'tier' | 'effect' | 'rarity' | 'recommendation' | 'note';
+
+const EGO_COLUMN_LABELS: Record<EgoColumn, string> = {
+  name: '词缀名',
+  slot: '适用部位',
+  position: '前 / 后缀',
+  tier: '普通 / 高级',
+  effect: '效果',
+  rarity: '稀有度',
+  recommendation: '推荐度',
+  note: '备注',
+};
+
+const EGO_COLUMNS: EgoColumn[] = ['name', 'slot', 'position', 'tier', 'effect', 'rarity', 'recommendation', 'note'];
+
+function ColumnHeader({
+  column,
+  active,
+  open,
+  onClick,
+}: {
+  column: EgoColumn;
+  active: boolean;
+  open: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <span>{EGO_COLUMN_LABELS[column]}</span>
+      <button
+        type="button"
+        className={`rounded px-1.5 py-0.5 text-[11px] ${active ? 'bg-accent-soft text-accent-strong' : 'text-subtle hover:bg-hover'}`}
+        aria-label={`筛选${EGO_COLUMN_LABELS[column]}`}
+        aria-expanded={open}
+        aria-pressed={active}
+        data-testid={`ego-column-filter-${column}`}
+        onClick={onClick}
+        title={`筛选${EGO_COLUMN_LABELS[column]}`}
+      >
+        {active ? '●' : '▽'}
+      </button>
+    </div>
+  );
+}
+
+function ColumnChoice({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}) {
+  return (
+    <label className="flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-[12px] hover:bg-hover">
+      <input type="checkbox" className="accent-[var(--accent)]" checked={checked} onChange={onChange} />
+      <span className="truncate">{label}</span>
+    </label>
+  );
+}
+
+function columnFilterActive(column: EgoColumn, filters: EgoFilters): boolean {
+  switch (column) {
+    case 'name':
+      return Boolean(filters.nameQuery.trim());
+    case 'slot':
+      return filters.slots.length > 0;
+    case 'position':
+      return filters.positions.length > 0;
+    case 'tier':
+      return filters.tiers.length > 0;
+    case 'effect':
+      return Boolean(filters.effectQuery.trim()) || filters.tags.length > 0;
+    case 'rarity':
+      return filters.rarityMin !== null || filters.rarityMax !== null;
+    case 'recommendation':
+      return filters.recommendations.length > 0;
+    case 'note':
+      return Boolean(filters.noteQuery.trim());
+  }
+}
+
+interface EgoTableRow {
+  ego: Ego;
+  recommendation: number | undefined;
+  community: import('../lib/items').CommunityRow | null;
+  effect: string[];
+  slots: string[];
+  nameText: string;
+  effectText: string;
+  noteText: string;
+}
+
+interface EgoTableProps {
+  loaded: LoadedEgos;
+  rows: EgoTableRow[];
+  filters: EgoFilters;
+  openColumn: EgoColumn | null;
+  onOpenColumn: (column: EgoColumn | null) => void;
+  setFilters: (update: (current: EgoFilters) => EgoFilters) => void;
+  clearColumnFilter: (column: EgoColumn) => void;
+  toggleTag: (id: string) => void;
+  toggleSlot: (id: string) => void;
+  togglePosition: (value: 'prefix' | 'suffix') => void;
+  toggleTier: (value: 'normal' | 'greater') => void;
+  toggleRecommendation: (value: number) => void;
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+}
+
+function EgoTable({
+  loaded,
+  rows,
+  filters,
+  openColumn,
+  onOpenColumn,
+  setFilters,
+  clearColumnFilter,
+  toggleTag,
+  toggleSlot,
+  togglePosition,
+  toggleTier,
+  toggleRecommendation,
+  selectedId,
+  onSelect,
+}: EgoTableProps) {
+  return (
+    <>
+      <div className="mb-2 flex flex-wrap items-center gap-1.5">
+        <span className="mr-1 text-[11.5px] text-subtle">列筛选：</span>
+        {EGO_COLUMNS.map((column) => (
+          <button
+            key={column}
+            type="button"
+            className={`btn px-2 py-0.5 text-[11px] ${columnFilterActive(column, filters) ? 'border-accent text-accent-strong' : ''}`}
+            aria-pressed={openColumn === column}
+            onClick={() => onOpenColumn(openColumn === column ? null : column)}
+          >
+            {EGO_COLUMN_LABELS[column]}
+            {columnFilterActive(column, filters) && <span className="text-accent-strong">●</span>}
+          </button>
+        ))}
+      </div>
+
+      {openColumn && (
+        <div className="panel mb-2 max-w-2xl p-2.5" data-testid="ego-column-filter-panel">
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <h3 className="text-[12.5px] font-semibold">筛选{EGO_COLUMN_LABELS[openColumn]}</h3>
+            <button type="button" className="btn px-2 py-0.5 text-[11px]" onClick={() => clearColumnFilter(openColumn)}>
+              清除本列
+            </button>
+          </div>
+
+          {openColumn === 'name' && (
+            <input
+              autoFocus
+              className="input max-w-md"
+              placeholder="中文名 / 英文名 / ID"
+              value={filters.nameQuery}
+              onChange={(event) => setFilters((current) => ({ ...current, nameQuery: event.target.value }))}
+            />
+          )}
+
+          {openColumn === 'slot' && (
+            <div className="grid max-h-52 grid-cols-2 gap-0.5 overflow-y-auto sm:grid-cols-3">
+              {loaded.slots.map((slot) => (
+                <ColumnChoice
+                  key={slot.id}
+                  label={`${slot.label} (${slot.count})`}
+                  checked={filters.slots.includes(slot.id)}
+                  onChange={() => toggleSlot(slot.id)}
+                />
+              ))}
+            </div>
+          )}
+
+          {openColumn === 'position' && (
+            <div className="flex flex-wrap gap-1">
+              <ColumnChoice
+                label="前缀"
+                checked={filters.positions.includes('prefix')}
+                onChange={() => togglePosition('prefix')}
+              />
+              <ColumnChoice
+                label="后缀"
+                checked={filters.positions.includes('suffix')}
+                onChange={() => togglePosition('suffix')}
+              />
+            </div>
+          )}
+
+          {openColumn === 'tier' && (
+            <div className="flex flex-wrap gap-1">
+              <ColumnChoice
+                label="普通"
+                checked={filters.tiers.includes('normal')}
+                onChange={() => toggleTier('normal')}
+              />
+              <ColumnChoice
+                label="高级"
+                checked={filters.tiers.includes('greater')}
+                onChange={() => toggleTier('greater')}
+              />
+            </div>
+          )}
+
+          {openColumn === 'effect' && (
+            <div className="space-y-2">
+              <input
+                autoFocus
+                className="input max-w-md"
+                placeholder="搜索效果文字，例如 震慑免疫"
+                value={filters.effectQuery}
+                onChange={(event) => setFilters((current) => ({ ...current, effectQuery: event.target.value }))}
+              />
+              <div className="flex flex-wrap gap-1">
+                {EFFECT_TAGS.map((tag) => (
+                  <TagButton
+                    key={tag.id}
+                    label={tag.label}
+                    pressed={filters.tags.includes(tag.id)}
+                    onClick={() => toggleTag(tag.id)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {openColumn === 'rarity' && (
+            <div className="flex max-w-md items-center gap-2">
+              <input
+                type="number"
+                className="input"
+                placeholder="最小"
+                value={filters.rarityMin ?? ''}
+                onChange={(event) => setFilters((current) => ({ ...current, rarityMin: parseOptionalNumber(event.target.value) }))}
+                aria-label="稀有度下限"
+              />
+              <span className="text-subtle">–</span>
+              <input
+                type="number"
+                className="input"
+                placeholder="最大"
+                value={filters.rarityMax ?? ''}
+                onChange={(event) => setFilters((current) => ({ ...current, rarityMax: parseOptionalNumber(event.target.value) }))}
+                aria-label="稀有度上限"
+              />
+            </div>
+          )}
+
+          {openColumn === 'recommendation' && (
+            <div className="flex flex-wrap gap-1">
+              {[1, 2, 3, 4, 5].map((value) => (
+                <ColumnChoice
+                  key={value}
+                  label={`${value} 分`}
+                  checked={filters.recommendations.includes(value)}
+                  onChange={() => toggleRecommendation(value)}
+                />
+              ))}
+            </div>
+          )}
+
+          {openColumn === 'note' && (
+            <input
+              autoFocus
+              className="input max-w-md"
+              placeholder="搜索社区备注"
+              value={filters.noteQuery}
+              onChange={(event) => setFilters((current) => ({ ...current, noteQuery: event.target.value }))}
+            />
+          )}
+        </div>
+      )}
+
+      <div className="overflow-x-auto rounded-lg border border-line bg-surface" data-testid="ego-table">
+        <table className="w-full min-w-[1080px] border-collapse text-left text-[12px]">
+          <thead className="bg-surface-raised text-[11.5px] text-muted">
+            <tr>
+              {EGO_COLUMNS.map((column) => (
+                <th
+                  key={column}
+                  className={`border-b border-line px-2.5 py-2 font-semibold ${
+                    column === 'name' ? 'min-w-[160px]' : column === 'effect' ? 'min-w-[390px]' : 'min-w-[100px]'
+                  }`}
+                >
+                  <ColumnHeader
+                    column={column}
+                    active={columnFilterActive(column, filters)}
+                    open={openColumn === column}
+                    onClick={() => onOpenColumn(openColumn === column ? null : column)}
+                  />
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const { ego, recommendation, effect, slots, noteText } = row;
+              const selectEgo = () => onSelect(ego.id);
+              return (
+                <tr
+                  key={ego.id}
+                  data-testid="ego-row"
+                  aria-selected={selectedId === ego.id}
+                  onClick={selectEgo}
+                  className={`scroll-mt-[calc(var(--header-h)+12px)] border-b border-line/70 align-top last:border-b-0 ${
+                    selectedId === ego.id ? 'bg-accent-soft' : 'hover:bg-hover/70'
+                  }`}
+                >
+                  <td className="px-2.5 py-2">
+                    <button
+                      type="button"
+                      data-testid="ego-card"
+                      className="w-full text-left"
+                      aria-pressed={selectedId === ego.id}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        selectEgo();
+                      }}
+                    >
+                      <span className="block font-medium">
+                        <Highlight text={ego.name.zh ?? ego.name.clean} terms={searchTerms(filters.query)} />
+                      </span>
+                      <span className="mt-0.5 block text-[10.5px] text-subtle">{ego.name.clean}</span>
+                    </button>
+                  </td>
+                  <td className="whitespace-nowrap px-2.5 py-2 text-muted">{slots.length ? slots.join('、') : '—'}</td>
+                  <td className="whitespace-nowrap px-2.5 py-2">
+                    {ego.position === 'prefix' ? '前缀' : ego.position === 'suffix' ? '后缀' : '—'}
+                  </td>
+                  <td className="whitespace-nowrap px-2.5 py-2">
+                    {ego.greater ? <span className={GREATER_TAG_CLASS}>高级词缀</span> : '普通'}
+                  </td>
+                  <td className="px-2.5 py-2" data-testid="ego-effect">
+                    <div className="max-w-[48rem] space-y-0.5">
+                      {effect.length > 0 ? (
+                        effect.map((line) => (
+                          <p key={line} className="line-clamp-2 leading-snug text-muted">
+                            {line}
+                          </p>
+                        ))
+                      ) : (
+                        <p className="leading-snug text-subtle">源码回调效果，暂无可静态读取的数值。</p>
+                      )}
+                      {filters.materialLevel !== null && (
+                        <span className="chip" title="数值按该材料等级换算">材料 {filters.materialLevel} 级</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap px-2.5 py-2 tabular-nums text-muted">{ego.rarity ?? '—'}</td>
+                  <td className="whitespace-nowrap px-2.5 py-2 tabular-nums text-muted">{recommendation ?? '—'}</td>
+                  <td className="min-w-[200px] px-2.5 py-2 leading-snug text-muted">{noteText || '—'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
 export function EgosPage({
   data,
   params,
@@ -360,6 +771,7 @@ export function EgosPage({
   const [selectedId, setSelectedId] = useState<string | null>(() => params.get('e'));
   const [selectedTalentId, setSelectedTalentId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [openColumn, setOpenColumn] = useState<EgoColumn | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -391,7 +803,7 @@ export function EgosPage({
     writeHash('egos', new URLSearchParams(next));
   }, [filters, selectedId, onParamsChange]);
 
-  const results = useMemo(() => (loaded ? filterEgos(loaded, filters) : []), [loaded, filters]);
+  const baseResults = useMemo(() => (loaded ? filterEgos(loaded, filters) : []), [loaded, filters]);
   const selected = selectedId && loaded ? loaded.byId.get(selectedId) ?? null : null;
   const missingSelection = selectedId && loaded && !selected ? selectedId : null;
 
@@ -445,6 +857,46 @@ export function EgosPage({
     return out;
   }, [loaded]);
 
+  const results = useMemo(() => {
+    if (!loaded) return [];
+    return baseResults
+      .map((ego) => {
+        const recommendation = loaded.recommendations.get(ego.id);
+        const community = loaded.community?.byEgoId[ego.id] ?? null;
+        const effect = egoSummaryLines(
+          ego,
+          loaded.dataset.fieldMeta,
+          damageTypes,
+          filters.materialLevel,
+          labelOf,
+          6,
+        );
+        const slots = [...new Set(ego.pools.map((pool) => poolLabels[pool] ?? pool))];
+        return {
+          ego,
+          recommendation,
+          community,
+          effect,
+          slots,
+          nameText: [ego.name.zh, ego.name.clean, ego.id, ego.keyword].filter(Boolean).join(' '),
+          effectText: [...effect, ego.desc ?? ''].join(' '),
+          noteText: community?.note ?? '',
+        };
+      })
+      .filter((row) => {
+        if (!queryMatches(row.nameText, filters.nameQuery)) return false;
+        if (!queryMatches(row.effectText, filters.effectQuery)) return false;
+        if (!queryMatches(row.noteText, filters.noteQuery)) return false;
+        if (filters.rarityMin !== null && (row.ego.rarity === null || row.ego.rarity < filters.rarityMin)) return false;
+        if (filters.rarityMax !== null && (row.ego.rarity === null || row.ego.rarity > filters.rarityMax)) return false;
+        if (
+          filters.recommendations.length &&
+          (row.recommendation === undefined || !filters.recommendations.includes(row.recommendation))
+        ) return false;
+        return true;
+      });
+  }, [baseResults, damageTypes, filters, labelOf, loaded, poolLabels]);
+
   const selectedTalent = useMemo(() => {
     if (!selectedTalentId) return null;
     const entry = data.byId.get(selectedTalentId);
@@ -466,6 +918,37 @@ export function EgosPage({
   /** Single choice; clicking the active level again clears it back to "全部等级". */
   const toggleMaterialLevel = (level: number) =>
     setFilters((current) => ({ ...current, materialLevel: current.materialLevel === level ? null : level }));
+  const toggleRecommendation = (value: number) =>
+    setFilters((current) => ({
+      ...current,
+      recommendations: current.recommendations.includes(value)
+        ? current.recommendations.filter((item) => item !== value)
+        : [...current.recommendations, value],
+    }));
+
+  const clearColumnFilter = (column: EgoColumn) => {
+    setFilters((current) => {
+      switch (column) {
+        case 'name':
+          return { ...current, nameQuery: '' };
+        case 'slot':
+          return { ...current, slots: [] };
+        case 'position':
+          return { ...current, positions: [] };
+        case 'tier':
+          return { ...current, tiers: [] };
+        case 'effect':
+          return { ...current, effectQuery: '', tags: [] };
+        case 'rarity':
+          return { ...current, rarityMin: null, rarityMax: null };
+        case 'recommendation':
+          return { ...current, recommendations: [] };
+        case 'note':
+          return { ...current, noteQuery: '' };
+      }
+    });
+    setOpenColumn(null);
+  };
 
   /**
    * Filter the list down to the slot groups a pool belongs to.
@@ -682,90 +1165,33 @@ export function EgosPage({
             ))}
           </div>
 
-          {results.length === 0 ? (
-            <div className="panel px-4 py-8 text-center">
+          <EgoTable
+            loaded={loaded}
+            rows={results}
+            filters={filters}
+            openColumn={openColumn}
+            onOpenColumn={setOpenColumn}
+            setFilters={setFilters}
+            clearColumnFilter={clearColumnFilter}
+            toggleTag={toggleTag}
+            toggleSlot={toggleSlot}
+            togglePosition={togglePosition}
+            toggleTier={toggleTier}
+            toggleRecommendation={toggleRecommendation}
+            selectedId={selectedId}
+            onSelect={(id) => {
+              setSelectedId(id);
+              setSelectedTalentId(null);
+            }}
+          />
+          {results.length === 0 && (
+            <div className="panel mt-2 px-4 py-8 text-center">
               <p className="text-[13px] font-medium">没有匹配的词缀</p>
               <p className="mt-1 text-[12px] text-subtle">试试减少筛选条件，或清空全部条件。</p>
               <button type="button" className="btn mt-3" onClick={clearFilters}>
                 清空全部条件
               </button>
             </div>
-          ) : (
-            <ul className="grid grid-cols-1 gap-1.5 md:grid-cols-2 2xl:grid-cols-3">
-              {results.map((ego) => {
-                const recommendation = loaded.recommendations.get(ego.id);
-                const effect = egoSummaryLines(ego, loaded.dataset.fieldMeta, damageTypes, filters.materialLevel, labelOf);
-                return (
-                <li key={ego.id}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedId(ego.id);
-                      setSelectedTalentId(null);
-                    }}
-                    aria-pressed={selectedId === ego.id}
-                    className={`w-full rounded-lg border px-2.5 py-2 text-left transition-colors ${
-                      selectedId === ego.id
-                        ? 'border-accent bg-accent-soft'
-                        : 'border-line bg-surface hover:bg-hover'
-                    }`}
-                    data-testid="ego-card"
-                  >
-                    <div className="flex flex-wrap items-baseline gap-x-1.5">
-                      <span className="text-[13px] font-medium">
-                        <Highlight text={ego.name.zh ?? ego.name.clean} terms={searchTerms(filters.query)} />
-                      </span>
-                      <span className="text-[11px] text-subtle">{ego.name.clean}</span>
-                      {/*
-                        The greater tier is the single most important thing to
-                        spot in a list, so it is colour-coded rather than a plain
-                        chip that reads like every other tag.
-                      */}
-                      {ego.greater && (
-                        <span className={GREATER_TAG_CLASS} title="greater_ego：同一词缀的高级档">
-                          高级词缀
-                        </span>
-                      )}
-                      {recommendation !== undefined && (
-                        <span
-                          className="ml-auto shrink-0 rounded-full border border-line bg-chip px-1.5 text-[10.5px] text-muted"
-                          title="玩家词缀表的推荐度（社区评价，不是游戏数据）"
-                        >
-                          推荐 {recommendation}
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-1">
-                      <span className="chip">{ego.position === 'prefix' ? '前缀' : ego.position === 'suffix' ? '后缀' : '—'}</span>
-                      <span className="chip">{poolLabels[ego.pool] ?? ego.pool}</span>
-                      {ego.rarity !== null && <span className="chip" title="相对生成权重">权重 {ego.rarity}</span>}
-                      {filters.materialLevel !== null && (
-                        <span className="chip" title="数值按该材料等级换算">材料 {filters.materialLevel} 级</span>
-                      )}
-                    </div>
-                    {/*
-                      The effect line. It used to be a dump of raw property codes
-                      (`FIRE 10~15`) or, for a callback affix, "打开详情查看" —
-                      which is exactly what the list should not have to say.
-                    */}
-                    <div className="mt-1 space-y-0.5" data-testid="ego-effect">
-                      {effect.length > 0 ? (
-                        effect.map((line) => (
-                          <p key={line} className="line-clamp-2 text-[11.5px] leading-snug text-muted">
-                            {line}
-                          </p>
-                        ))
-                      ) : (
-                        <p className="text-[11.5px] leading-snug text-subtle">
-                          源码中这条词缀的效果由运行时回调实现，没有可静态读取的数值。
-                        </p>
-                      )}
-                    </div>
-                  </button>
-                </li>
-                );
-              })}
-            </ul>
           )}
         </div>
       </div>
