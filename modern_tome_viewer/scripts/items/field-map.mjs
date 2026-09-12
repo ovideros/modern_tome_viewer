@@ -219,6 +219,7 @@ export const MANUAL_FIELDS = [
   { key: 'burst_on_hit', area: 'combat', kind: 'table', label: 'Burst on hit', zh: '命中时爆裂' },
   { key: 'burst_on_crit', area: 'combat', kind: 'table', label: 'Burst on crit', zh: '暴击时爆裂' },
   { key: 'accuracy_effect', area: 'combat', kind: 'scalar', label: 'Accuracy effect', zh: '命中系数类型' },
+  { key: 'accuracy_effect_scale', area: 'combat', kind: 'scalar', label: 'Accuracy effect scale', zh: '命中效果倍率：', note: '命中后附加效果的倍率；0.5 表示按 50% 计算。' },
   { key: 'talented', area: 'combat', kind: 'scalar', label: 'Talent category', zh: '关联技能系' },
   { key: 'is_greater', area: 'combat', kind: 'flag', label: 'Greater ego weapon', zh: '高级词缀武器' },
   { key: 'use_resources', area: 'combat', kind: 'table', label: 'Use resources', zh: '使用消耗' },
@@ -228,6 +229,8 @@ export const MANUAL_FIELDS = [
   // --- Orcs DLC (Embers of Rage): steam stats -------------------------------
   { key: 'combat_steampower', area: 'combat', kind: 'scalar', label: 'Steampower: ', zh: '蒸汽强度：' },
   { key: 'combat_steamcrit', area: 'combat', kind: 'scalar', label: 'Steam crit. chance: ', zh: '蒸汽暴击几率：' },
+  { key: 'max_steam', area: 'wielder', kind: 'scalar', label: 'Maximum steam: ', zh: '蒸汽上限：' },
+  { key: 'steam_boots_on_move', area: 'wielder', kind: 'scalar', label: 'Steam on movement: ', zh: '移动时蒸汽回复：' },
 
   // --- desc_wielder: telepathy (esp / esp_all), computed per actor-type key ---
   { key: 'esp', area: 'wielder', kind: 'table', label: 'Grants telepathy: ', zh: '获得心灵感应：' },

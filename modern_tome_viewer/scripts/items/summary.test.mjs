@@ -23,7 +23,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { scanItemFile } from './lua-entities.mjs';
-import { egoNotes, CALLBACK_NOTES, placeholderize } from './summary.mjs';
+import { egoNotes, egoRandomOptions, CALLBACK_NOTES, placeholderize } from './summary.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..', '..');
@@ -178,6 +178,14 @@ test('every hand-written note names its source expression', () => {
       assert.ok(spec.values?.[match[1]], `${id} references {${match[1]}} with no value spec`);
     }
   }
+});
+
+test('the imbued staff exposes the source-defined weighted talent pool', () => {
+  const options = egoRandomOptions('tome:staves:imbued:greater');
+  assert.equal(options.length, 29);
+  assert.equal(options.reduce((total, option) => total + option.weight, 0), 155);
+  assert.deepEqual(options[0], { talentId: 'T_FLAME', weight: 10 });
+  assert.deepEqual(options.at(-1), { talentId: 'T_ENTROPY', weight: 1 });
 });
 
 test('placeholderize keeps an escaped percent and numbers the specs', () => {

@@ -18,6 +18,7 @@ const NAV = [
   { name: 'monsters', label: '怪物' },
   { name: 'egos', label: '装备词缀' },
   { name: 'artifacts', label: '固定神器' },
+  { name: 'sets', label: '套装' },
   { name: 'favorites', label: '收藏' },
 ];
 

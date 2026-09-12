@@ -461,11 +461,8 @@ export function MonstersPage({
           )}
         </main>
 
-        {selected && (
-          // While the skill column is open the monster column hands 20px back
-          // to the list — the difference between "three panes fit at 1280px"
-          // and "the list collapses to a sliver".
-          <div className={`hidden shrink-0 xl:block ${selectedTalent ? 'w-[340px]' : 'w-[360px]'}`}>
+        <aside className="hidden w-[360px] shrink-0 xl:block" aria-hidden={!selected}>
+          {selected && (
             <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <MonsterDetail
                 monster={selected}
@@ -479,8 +476,8 @@ export function MonstersPage({
                 selectedTalentId={selectedTalentId}
               />
             </div>
-          </div>
-        )}
+          )}
+        </aside>
 
         {/* From `xl` up the talent opens in its own column beside the monster
             instead of replacing it — the monster's skill list stays visible, so

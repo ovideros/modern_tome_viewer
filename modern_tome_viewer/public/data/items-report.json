@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-11T13:55:17.895Z",
+ "generatedAt": "2026-09-12T13:30:06.630Z",
  "files": [
   "tome-src-full/data/general/objects/2haxes.lua",
   "tome-src-full/data/general/objects/2hmaces.lua",
@@ -334,6 +334,7 @@
   "artifacts": 496,
   "artifactsIncluded": 416,
   "artifactsNonEquipment": 80,
+  "sets": 17,
   "artifactsWithImage": 493,
   "artifactsResolverImage": 0,
   "artifactsWithoutImage": 3
@@ -412,10 +413,6 @@
   },
   {
    "key": "of_breaching",
-   "count": 2
-  },
-  {
-   "key": "accuracy_effect_scale",
    "count": 2
   },
   {
@@ -583,10 +580,6 @@
    "count": 1
   },
   {
-   "key": "max_steam",
-   "count": 1
-  },
-  {
    "key": "ignore_bleed",
    "count": 1
   },
@@ -674,10 +667,6 @@
   },
   {
    "label": "of_breaching",
-   "count": 2
-  },
-  {
-   "label": "accuracy_effect_scale",
    "count": 2
   },
   {
@@ -842,10 +831,6 @@
   },
   {
    "label": "suppress_steam_generator_straps",
-   "count": 1
-  },
-  {
-   "label": "max_steam",
    "count": 1
   },
   {

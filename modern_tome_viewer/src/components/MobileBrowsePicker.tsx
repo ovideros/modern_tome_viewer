@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { MobileSheet } from './MobileSheet';
 
 export interface BrowsePickerGroup {
   id: string;
@@ -36,15 +36,6 @@ export function MobileBrowsePicker({
   emptyLabel,
   childLabel = `子${title}`,
 }: MobileBrowsePickerProps) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onOpenChange(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, onOpenChange]);
-
   return (
     <>
       <button
@@ -58,20 +49,14 @@ export function MobileBrowsePicker({
       </button>
 
       {open && (
-        <div
-          className="fixed inset-0 z-40 lg:hidden"
-          onClick={() => onOpenChange(false)}
-          role="presentation"
+        <MobileSheet
+          onClose={() => onOpenChange(false)}
+          maxHeight="85vh"
+          breakpoint="lg"
+          ariaLabel={`${title}选择`}
+          testId="mobile-browse-sheet"
         >
-          <div className="absolute inset-0 bg-slate-950/35" aria-hidden="true" />
-          <div
-            className="absolute inset-x-0 bottom-0 flex max-h-[78vh] flex-col"
-            onClick={(event) => event.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${title}选择`}
-          >
-            <div className="animate-fade-in mx-2 mb-2 flex min-h-0 flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-panel">
+          <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden">
               <div className="flex items-center justify-between gap-2 border-b border-line px-3 py-2.5">
                 <h2 className="text-[14px] font-semibold">选择{title}</h2>
                 <button type="button" className="btn-ghost btn px-2 py-1" onClick={() => onOpenChange(false)}>
@@ -121,9 +106,8 @@ export function MobileBrowsePicker({
                 ))}
                 {!groups.length && <p className="px-3 py-5 text-center text-[12px] text-subtle">{emptyLabel}</p>}
               </div>
-            </div>
           </div>
-        </div>
+        </MobileSheet>
       )}
     </>
   );

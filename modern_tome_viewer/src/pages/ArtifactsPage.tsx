@@ -16,6 +16,8 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Highlight } from '../components/Highlight';
 import { ArtifactDetail } from '../components/ArtifactDetail';
 import { TalentDetail } from '../components/TalentDetail';
+import { MobileSheet } from '../components/MobileSheet';
+import { navigate } from '../hooks/useHashRoute';
 import { makeCodeLabeler } from '../lib/item-labels';
 import { writeHash } from '../lib/filters';
 import {
@@ -37,6 +39,7 @@ interface ArtifactsPageProps {
   compareHas: (id: string) => boolean;
   onToggleCompare: (id: string) => void;
   compareFull: boolean;
+  onOpenTalent: (id: string) => void;
 }
 
 /**
@@ -243,6 +246,7 @@ export function ArtifactsPage({
   compareHas,
   onToggleCompare,
   compareFull,
+  onOpenTalent,
 }: ArtifactsPageProps) {
   const [loaded, setLoaded] = useState<LoadedArtifacts | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -375,7 +379,7 @@ export function ArtifactsPage({
         </p>
       </header>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_minmax(0,1fr)_28rem]">
         {/* --- Filter rail: tag toggles, matching the advanced-search panel --- */}
         <aside className={`${showFilters ? 'block' : 'hidden'} xl:block`}>
           <div className="panel divide-y divide-line px-3">
@@ -484,7 +488,7 @@ export function ArtifactsPage({
           </div>
         </aside>
 
-        <div className="min-w-0">
+        <div className="min-w-0" data-testid="artifact-list-main">
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <button type="button" className="btn xl:hidden" onClick={() => setShowFilters((v) => !v)}>
               {showFilters ? '收起筛选' : '筛选'}
@@ -549,12 +553,58 @@ export function ArtifactsPage({
             </ul>
           )}
         </div>
+        <aside className="hidden min-w-0 xl:block" aria-hidden={!selected}>
+          {selected && (
+            <div className="panel sticky top-[calc(var(--header-h)+2px)] max-h-[calc(100vh-var(--header-h)-12px)] overflow-y-auto p-3 pb-16">
+              <ArtifactDetail
+                artifact={selected}
+                dataset={loaded.dataset}
+                report={loaded.report}
+                terms={searchTerms(filters.query)}
+                damageTypes={damageTypes}
+                labelResolver={labelOf}
+                talentOf={talentOf}
+                onSelectTalent={(talent) =>
+                  setSelectedTalentId((current) => (current === talent.id ? null : talent.id))
+                }
+                selectedTalentId={selectedTalentId}
+                onClose={() => setSelectedId(null)}
+                onOpenSet={(id) => navigate('sets', { set: id })}
+                onOpenTalent={onOpenTalent}
+                onOpenTree={(id) => navigate('search', { trees: id })}
+                treeOf={(id) => data.byTree.get(id)}
+              />
+              {selectedTalent && (
+                <div className="mt-4 border-t border-line pt-3">
+                  <TalentDetail
+                    talent={selectedTalent}
+                    tree={data.byTree.get(selectedTalent.tree)}
+                    meta={data.meta}
+                    terms={[]}
+                    onClose={() => setSelectedTalentId(null)}
+                    onJumpToTree={() => undefined}
+                    onAddFlag={() => undefined}
+                    onSelectClass={() => undefined}
+                    favorite={favoriteHas(selectedTalent.id)}
+                    onToggleFavorite={onToggleFavorite}
+                    inCompare={compareHas(selectedTalent.id)}
+                    onToggleCompare={onToggleCompare}
+                    compareFull={compareFull}
+                    compact
+                    embedded
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </aside>
       </div>
 
       {selected && (
         <>
-          <div className="mt-4 xl:hidden">
-            <div className="panel p-3">
+          <MobileSheet onClose={() => setSelectedId(null)} testId="artifact-detail-sheet" ariaLabel="固定神器详情">
+            <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3">
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <ArtifactDetail
                 artifact={selected}
                 dataset={loaded.dataset}
@@ -568,39 +618,20 @@ export function ArtifactsPage({
                 }
                 selectedTalentId={selectedTalentId}
                 onClose={() => setSelectedId(null)}
+                onOpenSet={(id) => navigate('sets', { set: id })}
+                onOpenTalent={onOpenTalent}
+                onOpenTree={(id) => navigate('search', { trees: id })}
+                treeOf={(id) => data.byTree.get(id)}
               />
+              </div>
             </div>
-          </div>
-          {/*
-            Pinned to the viewport, so it has to start below the sticky header.
-            `top: 0` put the item's name and the close button underneath it,
-            which is the one part of the panel a reader needs first.
-          */}
-          <div className="pointer-events-none fixed bottom-0 right-0 top-[calc(var(--header-h)+2px)] z-20 hidden w-[28rem] p-3 xl:block">
-            {/* `pb-16` keeps the last row out from under the compare tray, which
-                is fixed to the viewport bottom at a higher z-index. */}
-            <div className="pointer-events-auto panel h-full overflow-y-auto p-3 pb-16">
-              <ArtifactDetail
-                artifact={selected}
-                dataset={loaded.dataset}
-                report={loaded.report}
-                terms={searchTerms(filters.query)}
-                damageTypes={damageTypes}
-                labelResolver={labelOf}
-                talentOf={talentOf}
-                onSelectTalent={(talent) =>
-                  setSelectedTalentId((current) => (current === talent.id ? null : talent.id))
-                }
-                selectedTalentId={selectedTalentId}
-                onClose={() => setSelectedId(null)}
-              />
-            </div>
-          </div>
+          </MobileSheet>
         </>
       )}
 
       {selectedTalent && (
-        <div className="panel mt-4 p-3">
+        <>
+        <MobileSheet onClose={() => setSelectedTalentId(null)} zIndex="z-50" testId="artifact-talent-sheet" ariaLabel="技能详情">
           <TalentDetail
             talent={selectedTalent}
             tree={data.byTree.get(selectedTalent.tree)}
@@ -618,7 +649,8 @@ export function ArtifactsPage({
             compact
             embedded
           />
-        </div>
+        </MobileSheet>
+        </>
       )}
 
       {missingSelection && (

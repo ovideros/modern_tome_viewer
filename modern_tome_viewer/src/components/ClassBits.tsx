@@ -112,7 +112,10 @@ export function TalentTreePanel({
       </header>
 
       {talents.length ? (
-        <div className="grid grid-cols-4 gap-1">
+        <div
+          className="flex min-w-full max-w-full snap-x justify-between gap-1 overflow-x-auto overscroll-x-contain pb-1"
+          aria-label={`${treeRef.name}技能列表`}
+        >
           {talents.map((talent) => (
             <button
               key={talent.id}
@@ -120,7 +123,7 @@ export function TalentTreePanel({
               data-testid="talent-card"
               onClick={() => onSelectTalent(talent, treeRef.name, treeRef.mastery)}
               title={`${talent.plainName} · ${talent.shortName}`}
-              className={`flex flex-col items-center gap-1 rounded border border-transparent px-1 py-1.5 text-center hover:border-accent hover:bg-hover ${
+              className={`flex w-[68px] min-w-[68px] shrink-0 snap-start flex-col items-center gap-1 rounded border border-transparent px-0.5 py-1.5 text-center hover:border-accent hover:bg-hover sm:w-[72px] sm:min-w-[72px] ${
                 locked ? 'grayscale-[0.35]' : ''
               }`}
             >

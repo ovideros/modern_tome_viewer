@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { CompareBar } from './components/CompareBar';
 import { Header } from './components/Header';
+import { Breadcrumbs, homeBreadcrumb } from './components/Breadcrumbs';
 import { useDataset } from './hooks/useDataset';
 import { useHeaderHeight } from './hooks/useHeaderHeight';
 import { useHashRoute, navigate } from './hooks/useHashRoute';
@@ -15,10 +16,23 @@ import { EgosPage } from './pages/EgosPage';
 import { MonstersPage } from './pages/MonstersPage';
 import { RacesPage } from './pages/RacesPage';
 import { SearchPage } from './pages/SearchPage';
+import { SetsPage } from './pages/SetsPage';
 import type { Talent, TalentEntry } from './lib/types';
 
-const ROUTES = ['search', 'classes', 'races', 'monsters', 'egos', 'artifacts', 'favorites', 'compare'] as const;
+const ROUTES = ['search', 'classes', 'races', 'monsters', 'egos', 'artifacts', 'sets', 'favorites', 'compare'] as const;
 type RouteName = (typeof ROUTES)[number];
+
+const ROUTE_LABELS: Record<RouteName, string> = {
+  search: '高级搜索',
+  classes: '职业',
+  races: '种族',
+  monsters: '怪物',
+  egos: '装备词缀',
+  artifacts: '固定神器',
+  sets: '套装',
+  favorites: '收藏',
+  compare: '技能对比',
+};
 
 function Loading({ progress, building }: { progress: number; building: boolean }) {
   return (
@@ -68,6 +82,12 @@ export default function App() {
     navigate('search', next);
   }, []);
 
+  const openTalentId = useCallback((talentId: string) => {
+    const next = filtersToParams(emptyFilters());
+    next.set('talent', talentId);
+    navigate('search', next);
+  }, []);
+
   /** Filter the search page down to a single talent tree. */
   const openTree = useCallback((treeId: string) => {
     const next = filtersToParams(emptyFilters());
@@ -104,6 +124,7 @@ export default function App() {
         favoriteCount={favorites.ids.length}
         compareCount={compare.ids.length}
       />
+      <Breadcrumbs items={[homeBreadcrumb(), { label: ROUTE_LABELS[routeName] }]} />
 
       {error ? (
         <ErrorState message={error} />
@@ -159,6 +180,15 @@ export default function App() {
           compareHas={compare.has}
           onToggleCompare={compare.toggle}
           compareFull={compare.full}
+          onOpenTalent={openTalentId}
+        />
+      ) : routeName === 'sets' ? (
+        <SetsPage
+          params={effectiveParams}
+          talentOf={(id) => data.byId.get(id)}
+          treeOf={(id) => data.byTree.get(id)}
+          onOpenTalent={openTalentId}
+          onOpenTree={openTree}
         />
       ) : routeName === 'favorites' ? (
         <FavoritesPage

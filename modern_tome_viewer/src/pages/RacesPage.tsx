@@ -174,9 +174,9 @@ export function RacesPage({
           )}
         </main>
 
-        {selected && (
-          <div className="animate-fade-in hidden w-[340px] shrink-0 xl:block">
-            <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
+        <aside className="hidden w-[340px] shrink-0 xl:block" aria-hidden={!selected}>
+          {selected && (
+            <div className="animate-fade-in sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <TalentDetail
                 talent={asEntry(selected.talent, selected.treeName)}
                 tree={data.byTree.get(selected.talent.tree)}
@@ -195,8 +195,8 @@ export function RacesPage({
                 compact
               />
             </div>
-          </div>
-        )}
+          )}
+        </aside>
       </div>
 
       {selected && (

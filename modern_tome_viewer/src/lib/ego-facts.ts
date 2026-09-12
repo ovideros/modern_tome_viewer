@@ -63,7 +63,7 @@ export function formatRange(meta: ItemFieldMeta | undefined, range: ItemRange): 
  * The short tag for one value inside a grouped row (`火焰`, `力量`, `守护结界`).
  *
  * `known` distinguishes a name the page could resolve from a raw engine key it
- * had to print as-is (`on_kill`, `accuracy_effect_scale`). Callers drop unknown
+ * had to print as-is (for example an unrecognised callback member). Callers drop unknown
  * tags when there is no value to go with them: `on_kill` next to a note that
  * already describes the effect is noise, while the same key with a number is a
  * fact worth showing.

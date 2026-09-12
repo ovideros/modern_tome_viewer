@@ -168,6 +168,7 @@ export const STAT_TAGS: Record<string, string> = {
   STAT_WIL: '意志',
   STAT_CUN: '灵巧',
   STAT_LCK: '幸运',
+  all: '全部',
 };
 
 /** Area heading: what the effect applies to, kept separate from the groups. */

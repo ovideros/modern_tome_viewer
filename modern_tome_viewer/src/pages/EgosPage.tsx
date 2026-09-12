@@ -15,6 +15,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Highlight } from '../components/Highlight';
 import { EgoDetail } from '../components/EgoDetail';
 import { TalentDetail } from '../components/TalentDetail';
+import { MobileSheet } from '../components/MobileSheet';
 import { writeHash } from '../lib/filters';
 import {
   loadEgoData,
@@ -518,6 +519,67 @@ function EgoTable({
   selectedId,
   onSelect,
 }: EgoTableProps) {
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(() => new Set());
+  const tableScrollRef = useRef<HTMLDivElement | null>(null);
+  const [stickyHeader, setStickyHeader] = useState<{ left: number; width: number; scrollLeft: number; top: number } | null>(null);
+
+  const toggleExpanded = (id: string) => {
+    setExpandedRows((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    const scroll = tableScrollRef.current;
+    if (!scroll) return undefined;
+    const update = () => {
+      const rect = scroll.getBoundingClientRect();
+      const rawHeaderHeight = getComputedStyle(document.documentElement).getPropertyValue('--header-h');
+      const headerHeight = Number.parseFloat(rawHeaderHeight) || 57;
+      const shouldStick = rect.top <= headerHeight && rect.bottom > headerHeight + 1;
+      setStickyHeader(shouldStick ? { left: rect.left, width: rect.width, scrollLeft: scroll.scrollLeft, top: headerHeight } : null);
+    };
+    const onScroll = () => update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    scroll.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      scroll.removeEventListener('scroll', onScroll);
+    };
+  }, [openColumn]);
+
+  const renderHeader = () => (
+    <thead className="text-[11.5px] text-muted">
+      <tr>
+        {EGO_COLUMNS.map((column) => (
+          <th
+            key={column}
+            className={`border-b border-line bg-surface-raised px-2.5 py-2 font-semibold ${
+              column === 'name'
+                ? 'sticky left-0 z-30 min-w-[160px]'
+                : column === 'effect'
+                  ? 'min-w-[390px]'
+                  : 'min-w-[100px]'
+            }`}
+          >
+            <ColumnHeader
+              column={column}
+              active={columnFilterActive(column, filters)}
+              open={openColumn === column}
+              onClick={() => onOpenColumn(openColumn === column ? null : column)}
+            />
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+
   return (
     <>
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
@@ -664,30 +726,15 @@ function EgoTable({
               onChange={(event) => setFilters((current) => ({ ...current, noteQuery: event.target.value }))}
             />
           )}
-        </div>
+          </div>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-line bg-surface" data-testid="ego-table">
+      <p className="mb-1.5 text-[10.5px] text-subtle">
+        表头随页面纵向滚动固定 · 首列固定 · 表格可横向滚动
+      </p>
+      <div ref={tableScrollRef} className="overflow-x-auto rounded-lg border border-line bg-surface" data-testid="ego-table">
         <table className="w-full min-w-[1080px] border-collapse text-left text-[12px]">
-          <thead className="bg-surface-raised text-[11.5px] text-muted">
-            <tr>
-              {EGO_COLUMNS.map((column) => (
-                <th
-                  key={column}
-                  className={`border-b border-line px-2.5 py-2 font-semibold ${
-                    column === 'name' ? 'min-w-[160px]' : column === 'effect' ? 'min-w-[390px]' : 'min-w-[100px]'
-                  }`}
-                >
-                  <ColumnHeader
-                    column={column}
-                    active={columnFilterActive(column, filters)}
-                    open={openColumn === column}
-                    onClick={() => onOpenColumn(openColumn === column ? null : column)}
-                  />
-                </th>
-              ))}
-            </tr>
-          </thead>
+          {renderHeader()}
           <tbody>
             {rows.map((row) => {
               const { ego, recommendation, effect, slots, noteText } = row;
@@ -698,11 +745,15 @@ function EgoTable({
                   data-testid="ego-row"
                   aria-selected={selectedId === ego.id}
                   onClick={selectEgo}
-                  className={`scroll-mt-[calc(var(--header-h)+12px)] border-b border-line/70 align-top last:border-b-0 ${
+                  className={`group scroll-mt-[calc(var(--header-h)+12px)] border-b border-line/70 align-top last:border-b-0 ${
                     selectedId === ego.id ? 'bg-accent-soft' : 'hover:bg-hover/70'
                   }`}
                 >
-                  <td className="px-2.5 py-2">
+                  <td
+                    className={`sticky left-0 z-10 border-r border-line px-2.5 py-2 ${
+                      selectedId === ego.id ? 'bg-accent-soft' : 'bg-surface group-hover:bg-hover'
+                    }`}
+                  >
                     <button
                       type="button"
                       data-testid="ego-card"
@@ -730,7 +781,10 @@ function EgoTable({
                     <div className="max-w-[48rem] space-y-0.5">
                       {effect.length > 0 ? (
                         effect.map((line) => (
-                          <p key={line} className="line-clamp-2 leading-snug text-muted">
+                          <p
+                            key={line}
+                            className={`${expandedRows.has(ego.id) ? '' : 'line-clamp-2'} leading-snug text-muted`}
+                          >
                             {line}
                           </p>
                         ))
@@ -739,6 +793,18 @@ function EgoTable({
                       )}
                       {filters.materialLevel !== null && (
                         <span className="chip" title="数值按该材料等级换算">材料 {filters.materialLevel} 级</span>
+                      )}
+                      {effect.some((line) => line.length > 56) && (
+                        <button
+                          type="button"
+                          className="btn btn-ghost px-1.5 py-0 text-[10.5px]"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggleExpanded(ego.id);
+                          }}
+                        >
+                          {expandedRows.has(ego.id) ? '收起效果' : '展开效果'}
+                        </button>
                       )}
                     </div>
                   </td>
@@ -751,6 +817,19 @@ function EgoTable({
           </tbody>
         </table>
       </div>
+      {stickyHeader && (
+        <div
+          className="pointer-events-none fixed z-20 overflow-hidden border-x border-b border-line bg-surface shadow-panel"
+          data-testid="ego-sticky-header"
+          style={{ left: stickyHeader.left, top: stickyHeader.top, width: stickyHeader.width }}
+        >
+          <div className="pointer-events-auto" style={{ transform: `translateX(-${stickyHeader.scrollLeft}px)` }}>
+            <table className="w-full min-w-[1080px] border-collapse text-left text-[12px]">
+              {renderHeader()}
+            </table>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -1199,8 +1278,9 @@ export function EgosPage({
       {/* --- Detail: side panel on wide screens, sheet below --- */}
       {selected && (
         <>
-          <div className="mt-4 xl:hidden">
-            <div className="panel p-3">
+          <MobileSheet onClose={() => setSelectedId(null)} testId="ego-detail-sheet" ariaLabel="词缀详情">
+            <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3">
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <EgoDetail
                 ego={selected}
                 dataset={loaded.dataset}
@@ -1216,8 +1296,9 @@ export function EgosPage({
                 onSelectPool={selectPool}
                 onClose={() => setSelectedId(null)}
               />
+              </div>
             </div>
-          </div>
+          </MobileSheet>
           {/*
             The panel is pinned to the *viewport*, so it must start below the
             sticky header, not at `top: 0`: the header is a later sibling with a
@@ -1251,7 +1332,27 @@ export function EgosPage({
       )}
 
       {selectedTalent && (
-        <div className="panel mt-4 p-3">
+        <>
+        <MobileSheet onClose={() => setSelectedTalentId(null)} zIndex="z-50" testId="ego-talent-sheet" ariaLabel="技能详情">
+          <TalentDetail
+            talent={selectedTalent}
+            tree={data.byTree.get(selectedTalent.tree)}
+            meta={data.meta}
+            terms={[]}
+            onClose={() => setSelectedTalentId(null)}
+            onJumpToTree={() => undefined}
+            onAddFlag={() => undefined}
+            onSelectClass={() => undefined}
+            favorite={favoriteHas(selectedTalent.id)}
+            onToggleFavorite={onToggleFavorite}
+            inCompare={compareHas(selectedTalent.id)}
+            onToggleCompare={onToggleCompare}
+            compareFull={compareFull}
+            compact
+            embedded
+          />
+        </MobileSheet>
+        <div className="panel mt-4 hidden p-3 xl:block">
           <TalentDetail
             talent={selectedTalent}
             tree={data.byTree.get(selectedTalent.tree)}
@@ -1270,6 +1371,7 @@ export function EgosPage({
             embedded
           />
         </div>
+        </>
       )}
 
       {missingSelection && (

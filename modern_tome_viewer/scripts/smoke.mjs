@@ -584,7 +584,30 @@ if (artifactCards.length) {
   );
   // No simulation controls: the pages must never ask the reader to tune a
   // character in order to read a fixed artifact.
-  check('no simulation sliders on the artifact page', document.querySelectorAll('input[type="range"]').length === 0);
+check('no simulation sliders on the artifact page', document.querySelectorAll('input[type="range"]').length === 0);
+}
+
+console.log('\nartifact sets page');
+await go('#/sets', 1200);
+const setText = text();
+check('sets page renders the census', /共\s*\d+\s*套/.test(setText), setText.slice(0, 140));
+check('sets nav entry exists', setText.includes('套装'));
+const setCards = document.querySelectorAll('main button[aria-pressed]');
+check('sets page lists set cards', setCards.length >= 10, `${setCards.length} cards`);
+if (setCards.length) {
+  click(setCards[0]);
+  await wait(500);
+  const setDetail = document.querySelector('[data-testid="set-detail"]');
+  const setDetailText = setDetail?.textContent ?? '';
+  check('set detail opens', Boolean(setDetail));
+  check('set detail lists members and effects', setDetailText.includes('套装成员') && setDetailText.includes('套装效果'));
+  const artifactLink = [...(setDetail?.querySelectorAll('button') ?? [])].find((button) => (button.textContent ?? '').includes('查看神器'));
+  if (artifactLink) {
+    click(artifactLink);
+    await wait(500);
+    check('set member links to artifact detail', Boolean(document.querySelector('[data-testid="artifact-detail"]')));
+    check('artifact detail shows its set relationship', text().includes('所属套装'));
+  }
 }
 
 // ---------------------------------------------------------------------------

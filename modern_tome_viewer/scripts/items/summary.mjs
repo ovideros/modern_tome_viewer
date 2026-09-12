@@ -42,6 +42,54 @@ import { classifyValue, stripFormatColors } from './extract-items.mjs';
  * resolver arguments one-for-one (`mbonus_material(max, add, transform)`), so
  * the numbers stay tied to the source instead of being typed twice.
  */
+/**
+ * The explicit weighted pool used by `staves.lua` for the `imbued` ego.
+ *
+ * This is intentionally kept as data rather than only mentioning "random" in
+ * prose: the game builds a ticket list (one entry repeated `weight` times) and
+ * samples that list once per proc.  The current 1.7.6 source contains 29
+ * distinct talents and 155 tickets; it is neither a 22-item nor an equal-
+ * probability pool.
+ */
+export const RANDOM_TALENT_POOLS = {
+  'tome:staves:imbued': [
+    { talentId: 'T_FLAME', weight: 10 },
+    { talentId: 'T_LIGHTNING', weight: 10 },
+    { talentId: 'T_MANATHRUST', weight: 10 },
+    { talentId: 'T_GLACIAL_VAPOUR', weight: 10 },
+    { talentId: 'T_MOONLIGHT_RAY', weight: 10 },
+    { talentId: 'T_SUN_BEAM', weight: 10 },
+    { talentId: 'T_EARTHEN_MISSILES', weight: 10 },
+    { talentId: 'T_SOUL_ROT', weight: 8 },
+    { talentId: 'T_DRAIN', weight: 8 },
+    { talentId: 'T_TEMPORAL_BOLT', weight: 6 },
+    { talentId: 'T_DUST_TO_DUST', weight: 6 },
+    { talentId: 'T_RETHREAD', weight: 6 },
+    { talentId: 'T_EPIDEMIC', weight: 5 },
+    { talentId: 'T_ICE_SHARDS', weight: 5 },
+    { talentId: 'T_CHAIN_LIGHTNING', weight: 5 },
+    { talentId: 'T_FIREFLASH', weight: 5 },
+    { talentId: 'T_ARCANE_VORTEX', weight: 5 },
+    { talentId: 'T_CURSE_OF_DEFENSELESSNESS', weight: 3 },
+    { talentId: 'T_CURSE_OF_IMPOTENCE', weight: 3 },
+    { talentId: 'T_CURSE_OF_DEATH', weight: 3 },
+    { talentId: 'T_CURSE_OF_VULNERABILITY', weight: 3 },
+    { talentId: 'T_IMPENDING_DOOM', weight: 3 },
+    { talentId: 'T_FREEZE', weight: 3 },
+    { talentId: 'T_DISPLACEMENT_SHIELD', weight: 3 },
+    { talentId: 'T_SUNCLOAK', weight: 1 },
+    { talentId: 'T_BONE_SPEAR', weight: 1 },
+    { talentId: 'T_CHANNEL_STAFF', weight: 1 },
+    { talentId: 'T_EARTHQUAKE', weight: 1 },
+    { talentId: 'T_ENTROPY', weight: 1 },
+  ],
+};
+
+export function egoRandomOptions(egoId) {
+  const baseId = egoId.replace(/:greater$/, '');
+  return RANDOM_TALENT_POOLS[baseId]?.map((entry) => ({ ...entry })) ?? [];
+}
+
 export const CALLBACK_NOTES = {
   // --- charms: the `_modify_charm` numeric modifiers -------------------------
   // `rng.float` multipliers applied to the charm's own power/cooldown, so the
@@ -73,7 +121,7 @@ export const CALLBACK_NOTES = {
   },
   // --- staves: the "imbued" spell roll ---------------------------------------
   'tome:staves:imbued': {
-    text: '法术造成伤害时 10% 概率触发一项法术（从 22 项中随机抽取），触发等级 {0}',
+    text: '法术造成伤害时 10% 概率触发一项法术（从 29 项候选中按权重随机抽取），触发等级 {0}',
     values: { 0: { max: 5, add: 1, transform: null, expression: 'imbued_talent_level = resolvers.mbonus_material(5, 1)' } },
     from: 'staves.lua: talent_on_spell = {{chance=10, talent=<random>, level=e.imbued_talent_level}}',
   },

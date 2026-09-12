@@ -29,7 +29,7 @@ import {
   extractProps, findField, itemFileList, normalizeEgoPath, resolveEgoPools, scanItems,
   stripFormatColors,
 } from './extract-items.mjs';
-import { egoNotes } from './summary.mjs';
+import { egoNotes, egoRandomOptions } from './summary.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..', '..');
@@ -404,6 +404,7 @@ function buildEgo(record, context) {
     applicable,
     areas,
     notes,
+    randomOptions: egoRandomOptions(id),
     unmapped: [...new Set([...props.unmapped.keys()])],
   };
 }
@@ -558,7 +559,7 @@ function buildArtifact(record, resolved, context) {
     specialDesc: specialDescOf(record, locale),
     properties: areas,
     unlidded: [...new Set([...props.unmapped.keys()])],
-    sets: literalField(record, 'set_list') ?? null,
+    setIds: [],
   };
 }
 
@@ -668,6 +669,361 @@ function specialDescOf(record, locale) {
     return text ? { en: text, zh: locale.text(text), computed: true } : { computed: true, en: null, zh: null };
   }
   return null;
+}
+
+// ---------------------------------------------------------------------------
+// Fixed-artifact set extraction
+// ---------------------------------------------------------------------------
+
+/** Read a keyed value from an AST table without flattening its array entries. */
+function tableValue(node, key) {
+  if (node?.kind !== 'table') return null;
+  return node.map?.find((entry) => keyName(entry.key) === key)?.value ?? null;
+}
+
+/** Convert one `{"define_as", "OTHER_ITEM"}` condition to a wire condition. */
+function setCondition(node) {
+  if (node?.kind !== 'table' || (node.array?.length ?? 0) < 2) return null;
+  const key = literalOf(node.array[0]) ?? keyName(node.array[0]);
+  const value = literalOf(node.array[1]);
+  if (typeof key !== 'string' || value === undefined) return null;
+  if (key === 'define_as' && typeof value === 'string') return { kind: 'artifact', ref: value };
+  return { kind: 'flag', key, value };
+}
+
+/** Preserve `set_list = {...}` and `set_list = {multiple=true, branch={...}}`. */
+function setBranches(node) {
+  if (node?.kind !== 'table') return [];
+  const multiple = literalOf(tableValue(node, 'multiple')) === true;
+  if (!multiple) {
+    return [{ id: 'complete', conditions: (node.array ?? []).map(setCondition).filter(Boolean) }];
+  }
+  return (node.map ?? [])
+    .filter((entry) => keyName(entry.key) !== 'multiple')
+    .map((entry) => ({
+      id: keyName(entry.key) ?? 'unknown',
+      conditions: (entry.value?.array ?? []).map(setCondition).filter(Boolean),
+    }));
+}
+
+function quotedLiteral(raw) {
+  const text = raw.trim();
+  if (!text.startsWith('"') || !text.endsWith('"')) return null;
+  try { return JSON.parse(text); } catch { return text.slice(1, -1); }
+}
+
+/** Split a Lua call's arguments while respecting nested tables and strings. */
+function splitLuaArgs(text) {
+  const out = [];
+  let start = 0;
+  let depth = 0;
+  let quote = null;
+  let escaped = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (char === '\\') escaped = true;
+      else if (char === quote) quote = null;
+      continue;
+    }
+    if (char === '"' || char === "'") { quote = char; continue; }
+    if ('{[('.includes(char)) depth += 1;
+    else if ('}])'.includes(char)) depth -= 1;
+    else if (char === ',' && depth === 0) {
+      out.push(text.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  if (text.slice(start).trim()) out.push(text.slice(start).trim());
+  return out;
+}
+
+/** Find the argument text of every `self:specialSetAdd(...)`-style call. */
+function luaMethodCalls(body, method) {
+  const marker = `self:${method}(`;
+  const calls = [];
+  let cursor = 0;
+  while (cursor < body.length) {
+    const start = body.indexOf(marker, cursor);
+    if (start < 0) break;
+    let depth = 1;
+    let quote = null;
+    let escaped = false;
+    let end = start + marker.length;
+    for (; end < body.length; end += 1) {
+      const char = body[end];
+      if (quote) {
+        if (escaped) escaped = false;
+        else if (char === '\\') escaped = true;
+        else if (char === quote) quote = null;
+        continue;
+      }
+      if (char === '"' || char === "'") { quote = char; continue; }
+      if (char === '(') depth += 1;
+      else if (char === ')') {
+        depth -= 1;
+        if (depth === 0) break;
+      }
+    }
+    calls.push(body.slice(start + marker.length, end));
+    cursor = end + 1;
+  }
+  return calls;
+}
+
+function parseLuaPath(raw) {
+  const text = raw.trim();
+  const direct = quotedLiteral(text);
+  if (direct !== null) return [direct];
+  if (!text.startsWith('{')) return null;
+  return [...text.matchAll(/"((?:\\.|[^"])*)"/g)].map((match) => match[1].replace(/\\"/g, '"'));
+}
+
+function parseLuaValue(raw) {
+  const text = raw.trim();
+  const quoted = quotedLiteral(text);
+  if (quoted !== null) return { value: quoted };
+  if (text === 'true' || text === 'false') return { value: text === 'true' };
+  if (/^-?\d+(?:\.\d+)?$/.test(text)) return { value: Number(text) };
+  if (!text.startsWith('{')) return { value: null, raw: text };
+
+  const entries = [];
+  const pattern = /(?:\[\s*(?:"((?:\\.|[^"])*)"|(?:[A-Za-z_][\w]*\.)*([A-Za-z_][\w-]*))\s*\]|([A-Za-z_][\w-]*))\s*=\s*(-?\d+(?:\.\d+)?)/g;
+  for (const match of text.matchAll(pattern)) {
+    const key = (match[1] ?? match[2] ?? match[3] ?? '').replace(/\\"/g, '"');
+    entries.push({ key, value: Number(match[4]) });
+  }
+  return { value: null, entries, raw: text };
+}
+
+function setEffectFromCall(method, rawArgs, source) {
+  const args = splitLuaArgs(rawArgs);
+  if (args.length < 2) return null;
+  const target = parseLuaPath(args[0]);
+  const value = parseLuaValue(args[1]);
+  if (!target?.length) return null;
+  return {
+    kind: 'static',
+    method,
+    area: target.length > 1 ? target[0] : 'special',
+    key: target[target.length - 1],
+    value: value.entries?.length ? null : value.value,
+    entries: value.entries?.length ? value.entries : undefined,
+    text: `${target.join('.')} = ${value.entries?.length ? value.entries.map((entry) => `${entry.key}:${entry.value}`).join(', ') : value.value ?? value.raw ?? '?'}`,
+    source,
+  };
+}
+
+/** Chinese wording for the small source messages emitted when a set breaks. */
+const SET_RUNTIME_TEXT = {
+  'A time vortex briefly appears in front of you.': '时间漩涡短暂地出现在你面前。',
+  "Ureslak's remains seem more unsettled.": '乌尔斯拉克的遗骸似乎变得更加躁动。',
+  'The seasons no longer feel balanced.': '四季不再保持平衡。',
+  'You feel a lot smaller...': '你感觉自己变小了许多……',
+  'The spirit of Garkul fades away.': '加库尔的灵魂逐渐消散。',
+  'Time seems less perfect in your eyes as the blades are separated.': '随着两把武器分离，时间在你眼中不再那么完美。',
+  'The ominous glow dies down.': '不祥的光芒逐渐黯淡。',
+  "Your ring's power fades away.": '戒指的力量逐渐消退。',
+  'The arcane energies surrounding you dissipate.': '环绕你的奥术能量逐渐消散。',
+  'The fumes and fire fade away.': '烟雾与火焰逐渐消退。',
+  'The twin weapons of the Krogs de-power as you separate them.': '随着两把武器分离，克罗格双武器的力量逐渐消退。',
+  'The light from the two blades fades as they are separated.': '随着两把武器分离，双刃的光芒逐渐消退。',
+  'The powerful darkness aura you felt wanes away.': '你感受到的强大暗影光环逐渐减弱。',
+  "You feel the Sun's light vanish from within you.": '你感觉太阳之光从体内消失。',
+  'The unearthly glow fades away.': '超凡的光芒逐渐消退。',
+  'Your steam-powered armor disconnects from the other pieces.': '你的蒸汽动力装甲与其他部件断开连接。',
+};
+
+function effectTextFromBody(body, locale) {
+  const messages = [];
+  for (const match of body.matchAll(/game\.log\w*\([^,]+,\s*"((?:\\.|[^"])*)"\)/g)) {
+    const text = match[1].replace(/\\"/g, '"').replace(/#[A-Z_]+#/g, '').trim();
+    if (text) messages.push(locale.text(text) ?? SET_RUNTIME_TEXT[text] ?? text);
+  }
+  return messages;
+}
+
+/** Extract static additions plus explicit runtime markers from one callback. */
+function setEffectsOf(node, locale, source, broken = false) {
+  if (!node || node.kind !== 'function' || typeof node.bodyText !== 'string') return [];
+  const body = node.bodyText;
+  const effects = [];
+  for (const method of ['specialSetAdd', 'specialWearAdd']) {
+    for (const rawArgs of luaMethodCalls(body, method)) {
+      const effect = setEffectFromCall(method, rawArgs, source);
+      if (effect) effects.push(effect);
+    }
+  }
+
+  const talent = /self\.use_talent\s*=\s*\{([\s\S]*?)\}/.exec(body);
+  if (talent) {
+    const idMatch = /id\s*=\s*(?:(?:Talents\.)?([A-Za-z0-9_]+)|"([^"]+)")/.exec(talent[1]);
+    const talentId = idMatch?.[1] ?? idMatch?.[2] ?? null;
+    const level = /level\s*=\s*(-?\d+(?:\.\d+)?)/.exec(talent[1]);
+    effects.push({
+      kind: 'talent',
+      talentId,
+      text: `获得技能 ${talentId ?? '运行时技能'}${level ? `（等级 ${level[1]}）` : ''}`,
+      source,
+    });
+  }
+
+  for (const match of body.matchAll(/desc\s*=\s*_t\s*"((?:\\.|[^"])*)"/g)) {
+    const en = match[1].replace(/\\"/g, '"');
+    effects.push({ kind: 'runtime', text: locale.text(en) ?? en, source });
+  }
+
+  if (/special_on_(?:hit|crit|block)|talent_on_(?:hit|spell)/.test(body) && !effects.some((effect) => effect.kind === 'runtime')) {
+    effects.push({ kind: 'runtime', text: '包含命中/暴击/施法触发机制，实际结果取决于战斗过程。', source });
+  }
+  const messages = effectTextFromBody(body, locale);
+  if (broken && messages.length) {
+    effects.push(...messages.map((text) => ({ kind: 'runtime', text: `解除套装时：${text}`, source })));
+  }
+  if (!effects.length && /\b(?:self|who)\s*[.:]/.test(body) && !/function\([^)]*\)\s*\n?\s*end/.test(body)) {
+    effects.push({ kind: 'runtime', text: '包含运行时回调，无法仅从静态数据还原完整效果。', source });
+  }
+  return effects;
+}
+
+function setHintsOf(node, locale) {
+  if (node?.kind !== 'table') return [];
+  return (node.map ?? []).flatMap((entry) => {
+    const en = literalOfTranslationCall(entry.value) ?? literalOf(entry.value);
+    return typeof en === 'string' ? [{ key: keyName(entry.key) ?? 'set', en, zh: locale.text(en) }] : [];
+  });
+}
+
+function sameSetEffect(a, b) {
+  return a.kind === b.kind && a.method === b.method && a.area === b.area && a.key === b.key &&
+    a.value === b.value && JSON.stringify(a.entries ?? []) === JSON.stringify(b.entries ?? []) && a.text === b.text;
+}
+
+function uniqueSetEffects(effects) {
+  return effects.filter((effect, index) => effects.findIndex((other) => sameSetEffect(other, effect)) === index);
+}
+
+/** Build connected fixed-artifact sets from the source relationships. */
+function buildArtifactSets(records, artifacts, locale) {
+  const byKey = new Map();
+  const byDefineAs = new Map();
+  const sourceRank = { tome: 0, orcs: 1, ashes: 2, cults: 3 };
+  for (const artifact of artifacts) {
+    if (artifact.defineAs) {
+      byKey.set(`${artifact.source}:${artifact.defineAs}`, artifact);
+      const list = byDefineAs.get(artifact.defineAs) ?? [];
+      list.push(artifact);
+      byDefineAs.set(artifact.defineAs, list);
+    }
+  }
+  const resolveRef = (source, ref) => byKey.get(`${source}:${ref}`) ?? byDefineAs.get(ref)?.[0] ?? null;
+  const canonicalByDefine = new Map(
+    [...byDefineAs.entries()].map(([defineAs, candidates]) => [
+      defineAs,
+      [...candidates].sort((a, b) => (sourceRank[a.source] ?? 99) - (sourceRank[b.source] ?? 99))[0],
+    ]),
+  );
+  const canonicalArtifact = (artifact) => artifact?.defineAs ? canonicalByDefine.get(artifact.defineAs) ?? artifact : artifact;
+  const entries = [];
+  const parent = new Map();
+  const find = (id) => {
+    let root = id;
+    while (parent.get(root) && parent.get(root) !== root) root = parent.get(root);
+    while (parent.get(id) && parent.get(id) !== id) {
+      const next = parent.get(id);
+      parent.set(id, root);
+      id = next;
+    }
+    return root;
+  };
+  const union = (a, b) => {
+    if (!parent.has(a)) parent.set(a, a);
+    if (!parent.has(b)) parent.set(b, b);
+    const ar = find(a);
+    const br = find(b);
+    if (ar !== br) parent.set(br, ar);
+  };
+
+  for (const record of records) {
+    const self = record.defineAs ? resolveRef(record.source, record.defineAs) : null;
+    const setNode = readField(record, 'set_list');
+    if (!self || !setNode) continue;
+    parent.set(self.id, self.id);
+    const branches = setBranches(setNode);
+    entries.push({ record, self, branches });
+    for (const branch of branches) {
+      for (const condition of branch.conditions) {
+        if (condition.kind !== 'artifact') continue;
+        const other = resolveRef(record.source, condition.ref);
+        if (other) union(self.id, other.id);
+      }
+    }
+  }
+
+  const byComponent = new Map();
+  for (const entry of entries) {
+    const root = find(entry.self.id);
+    const list = byComponent.get(root) ?? [];
+    list.push(entry);
+    byComponent.set(root, list);
+  }
+
+  const sets = [];
+  const artifactToSetIds = new Map();
+  for (const componentEntries of byComponent.values()) {
+    const allMembers = [...new Map(componentEntries.map((entry) => [entry.self.id, entry.self])).values()];
+    const members = [...new Map(allMembers.map((member) => [member.defineAs ?? member.id, canonicalArtifact(member)])).values()]
+      .sort((a, b) => (a.nameZh ?? a.name).localeCompare(b.nameZh ?? b.name));
+    if (!members.length) continue;
+    const id = `set-${members.map((member) => member.id).sort().join('__').replace(/[^A-Za-z0-9_-]+/g, '-')}`;
+    const branchMap = new Map();
+    const hints = [];
+    for (const entry of componentEntries) {
+      const completeNode = readField(entry.record, 'on_set_complete');
+      const brokenNode = readField(entry.record, 'on_set_broken');
+      const completeMap = completeNode?.kind === 'table' && literalOf(tableValue(completeNode, 'multiple')) === true;
+      const brokenEffects = setEffectsOf(brokenNode, locale, { file: entry.self.file, line: entry.self.line }, true);
+      for (const hint of setHintsOf(readField(entry.record, 'set_desc'), locale)) {
+        hints.push({ memberId: entry.self.id, en: hint.en, zh: hint.zh });
+      }
+      for (const branch of entry.branches) {
+        const out = branchMap.get(branch.id) ?? { id: branch.id, conditions: [], effects: [], brokenEffects: [] };
+        for (const condition of branch.conditions) {
+          const next = condition.kind === 'artifact'
+            ? { ...condition, artifactId: canonicalArtifact(resolveRef(entry.record.source, condition.ref))?.id ?? null }
+            : condition;
+          const key = JSON.stringify(next);
+          if (!out.conditions.some((current) => JSON.stringify(current) === key)) out.conditions.push(next);
+        }
+        const effectNode = completeMap ? tableValue(completeNode, branch.id) : completeNode;
+        out.effects.push(...setEffectsOf(effectNode, locale, { file: entry.self.file, line: entry.self.line }));
+        out.brokenEffects.push(...brokenEffects);
+        branchMap.set(branch.id, out);
+      }
+    }
+    const first = members[0];
+    const set = {
+      id,
+      name: `套装：${members.map((member) => member.nameZh ?? member.name).join(' + ')}`,
+      memberIds: members.map((member) => member.id),
+      branches: [...branchMap.values()].map((branch) => ({
+        ...branch,
+        effects: uniqueSetEffects(branch.effects),
+        brokenEffects: uniqueSetEffects(branch.brokenEffects),
+      })),
+      hints: [...new Map(hints.map((hint) => [`${hint.memberId}:${hint.en}`, hint])).values()],
+      source: { file: first.file, line: first.line },
+    };
+    sets.push(set);
+    for (const member of allMembers) {
+      const list = artifactToSetIds.get(member.id) ?? [];
+      list.push(id);
+      artifactToSetIds.set(member.id, list);
+    }
+  }
+  sets.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+  return { sets, artifactToSetIds };
 }
 
 // ---------------------------------------------------------------------------
@@ -796,6 +1152,9 @@ async function main() {
   egos.sort((a, b) => (a.name.clean || '').localeCompare(b.name.clean || '') || a.id.localeCompare(b.id));
   artifacts.sort((a, b) => (a.name || '').localeCompare(b.name || '') || a.id.localeCompare(b.id));
 
+  const artifactSetData = buildArtifactSets(scan.records, artifacts, locale);
+  for (const artifact of artifacts) artifact.setIds = artifactSetData.artifactToSetIds.get(artifact.id) ?? [];
+
   const sourceCounts = {};
   for (const ego of egos) sourceCounts[ego.source] = (sourceCounts[ego.source] ?? 0) + 1;
   const artifactSourceCounts = {};
@@ -837,6 +1196,7 @@ async function main() {
       artifacts: artifacts.length,
       artifactsIncluded: artifacts.filter((a) => a.status === 'included').length,
       artifactsNonEquipment: artifacts.filter((a) => a.status === 'non-equipment').length,
+      sets: artifactSetData.sets.length,
     },
     sourceCounts,
     artifactSourceCounts,
@@ -876,6 +1236,7 @@ async function main() {
       fields: scan.fieldMap.fields.size,
       egos: egos.length,
       artifacts: artifacts.length,
+      sets: artifactSetData.sets.length,
     },
     sources: [
       { id: 'tome', label: '本体', version: '1.7.6' },
@@ -941,6 +1302,7 @@ async function main() {
     semantics: master.semantics,
     fieldMeta,
     artifacts,
+    sets: artifactSetData.sets,
   });
   writeJson(path.join(dataDir, 'items-report.json'), report);
 

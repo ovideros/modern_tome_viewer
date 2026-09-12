@@ -145,6 +145,12 @@ export interface EgoNote {
   refs?: string[];
 }
 
+/** One candidate in a source-defined weighted random talent pool. */
+export interface EgoRandomOption {
+  talentId: string;
+  weight: number;
+}
+
 export interface Ego {
   id: string;
   source: string;
@@ -168,6 +174,8 @@ export interface Ego {
   areas: ItemPropertyGroup[];
   /** Effects with no property table: charm procs, on-block effects, imbued spells. */
   notes?: EgoNote[];
+  /** Explicit candidates for a runtime random effect, when the source lists them. */
+  randomOptions?: EgoRandomOption[];
   /** Property keys with no field-map entry; surfaced, never hidden. */
   unmapped: string[];
   definitions: { file: number; line: number }[];
@@ -204,6 +212,48 @@ export interface ArtifactSpecialDesc {
   zh: string | null;
   /** Set when the text is assembled at runtime rather than being a literal. */
   computed?: boolean;
+}
+
+export interface ArtifactSetCondition {
+  kind: 'artifact' | 'flag';
+  ref?: string;
+  artifactId?: string | null;
+  key?: string;
+  value?: string | number | boolean;
+}
+
+export interface ArtifactSetEffect {
+  kind: 'static' | 'talent' | 'runtime';
+  method?: 'specialSetAdd' | 'specialWearAdd';
+  area?: string;
+  key?: string;
+  value?: number | string | null;
+  entries?: { key: string; value: number | string }[];
+  talentId?: string | null;
+  text: string;
+  source: { file: number; line: number };
+}
+
+export interface ArtifactSetBranch {
+  id: string;
+  conditions: ArtifactSetCondition[];
+  effects: ArtifactSetEffect[];
+  brokenEffects: ArtifactSetEffect[];
+}
+
+export interface ArtifactSetHint {
+  memberId: string;
+  en: string;
+  zh: string | null;
+}
+
+export interface ArtifactSet {
+  id: string;
+  name: string;
+  memberIds: string[];
+  branches: ArtifactSetBranch[];
+  hints: ArtifactSetHint[];
+  source: { file: number; line: number };
 }
 
 export interface Artifact {
@@ -244,7 +294,7 @@ export interface Artifact {
   specialDesc: ArtifactSpecialDesc | null;
   properties: ItemPropertyGroup[];
   unlidded: string[];
-  sets: string | null;
+  setIds: string[];
   status: 'included' | 'non-equipment';
   inclusionReason: string;
   definitions: { file: number; line: number; zone: string | null }[];
@@ -292,8 +342,9 @@ export interface EgoDataset extends ItemDatasetBase {
 }
 
 export interface ArtifactDataset extends ItemDatasetBase {
-  counts: { fields: number; egos: number; artifacts: number };
+  counts: { fields: number; egos: number; artifacts: number; sets: number };
   artifacts: Artifact[];
+  sets: ArtifactSet[];
 }
 
 /** Source paths, indexed by the `file` ids stored on rows. */
@@ -479,6 +530,7 @@ export interface LoadedArtifacts {
   haystack: Map<string, string>;
   types: string[];
   sources: string[];
+  bySetId: Map<string, ArtifactSet>;
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -619,12 +671,14 @@ export function buildArtifactData(dataset: ArtifactDataset, report: ItemsReport)
   const haystack = new Map<string, string>();
   const types = new Set<string>();
   const sources = new Set<string>();
+  const bySetId = new Map<string, ArtifactSet>();
   for (const artifact of dataset.artifacts) {
     byId.set(artifact.id, artifact);
     haystack.set(artifact.id, artifactHaystack(artifact, dataset.labels, dataset.fieldMeta));
     if (artifact.type) types.add(artifact.type);
     sources.add(artifact.source);
   }
+  for (const set of dataset.sets ?? []) bySetId.set(set.id, set);
   return {
     dataset,
     report,
@@ -632,6 +686,7 @@ export function buildArtifactData(dataset: ArtifactDataset, report: ItemsReport)
     haystack,
     types: [...types].sort(),
     sources: [...sources].sort(),
+    bySetId,
   };
 }
 

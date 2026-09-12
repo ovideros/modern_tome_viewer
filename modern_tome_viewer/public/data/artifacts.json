@@ -1,9 +1,10 @@
 {
- "generatedAt": "2026-09-11T13:55:17.895Z",
+ "generatedAt": "2026-09-12T13:30:06.630Z",
  "counts": {
-  "fields": 181,
+  "fields": 184,
   "egos": 608,
-  "artifacts": 496
+  "artifacts": 496,
+  "sets": 17
  },
  "labels": {
   "areas": {
@@ -1800,6 +1801,17 @@
    "scale": 1,
    "manualMapping": true
   },
+  "accuracy_effect_scale": {
+   "area": "combat",
+   "kind": "scalar",
+   "label": "Accuracy effect scale",
+   "labelZh": "命中效果倍率",
+   "format": null,
+   "unit": null,
+   "scale": 1,
+   "manualMapping": true,
+   "note": "命中后附加效果的倍率；0.5 表示按 50% 计算。"
+  },
   "talented": {
    "area": "combat",
    "kind": "scalar",
@@ -1855,6 +1867,26 @@
    "kind": "scalar",
    "label": "Steam crit. chance: ",
    "labelZh": "蒸汽暴击几率",
+   "format": null,
+   "unit": null,
+   "scale": 1,
+   "manualMapping": true
+  },
+  "max_steam": {
+   "area": "wielder",
+   "kind": "scalar",
+   "label": "Maximum steam: ",
+   "labelZh": "蒸汽上限",
+   "format": null,
+   "unit": null,
+   "scale": 1,
+   "manualMapping": true
+  },
+  "steam_boots_on_move": {
+   "area": "wielder",
+   "kind": "scalar",
+   "label": "Steam on movement: ",
+   "labelZh": "移动时蒸汽回复",
    "format": null,
    "unit": null,
    "scale": 1,
@@ -1960,7 +1992,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -2013,7 +2045,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -2066,7 +2098,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -2367,7 +2399,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -2620,7 +2652,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -2814,7 +2846,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -3148,7 +3180,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -3226,7 +3258,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -3552,7 +3584,7 @@
    "unlidded": [
     "damage_convert"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -3766,7 +3798,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -4004,7 +4036,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -4058,7 +4090,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -4260,7 +4292,7 @@
    "unlidded": [
     "siege_impact"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -4570,7 +4602,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -4837,7 +4869,7 @@
    "unlidded": [
     "inscriptions_stat_multiplier"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -5327,7 +5359,7 @@
    "unlidded": [
     "of_breaching"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -5469,7 +5501,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -5754,7 +5786,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -5837,7 +5869,7 @@
    "unlidded": [
     "moddable_tile_nude"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -6005,7 +6037,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -6346,7 +6378,9 @@
    "unlidded": [
     "forbid_nature"
    ],
-   "sets": {},
+   "setIds": [
+    "set-tome-BINDINGS_ETERNAL_NIGHT__tome-CROWN_ETERNAL_NIGHT"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -6500,7 +6534,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -6801,7 +6835,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -7009,7 +7043,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -7454,7 +7488,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -7780,7 +7814,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -7989,7 +8023,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -8327,7 +8361,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -8745,7 +8779,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -8799,7 +8833,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -8853,7 +8887,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -9213,7 +9247,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -9477,7 +9511,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -9572,7 +9606,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -9846,7 +9880,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -10123,7 +10157,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -10201,7 +10235,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -10464,7 +10498,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -10725,7 +10759,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -10988,7 +11022,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -11038,7 +11072,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -11086,7 +11120,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -11364,7 +11398,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -11648,7 +11682,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -11874,7 +11908,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -12100,7 +12134,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -12185,7 +12219,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -12519,7 +12553,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -12723,7 +12757,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -12782,7 +12816,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -13177,7 +13211,7 @@
    "unlidded": [
     "amplify_sun_beam"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -13543,12 +13577,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {
-    "multiple": true,
-    "kinchar": {},
-    "charther": {},
-    "resonating": {}
-   },
+   "setIds": [
+    "set-tome-CHARGED_FOCUS__tome-KINETIC_FOCUS__tome-THERMAL_FOCUS"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -13680,7 +13711,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -14079,7 +14110,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -14304,7 +14335,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -14442,7 +14473,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -14721,7 +14752,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -14866,7 +14897,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -15174,7 +15205,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -15492,7 +15523,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -15977,7 +16008,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -16312,7 +16343,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -16543,7 +16574,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -16874,7 +16905,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -17251,7 +17282,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -17492,7 +17523,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -17731,7 +17762,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -17869,7 +17900,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-BINDINGS_ETERNAL_NIGHT__tome-CROWN_ETERNAL_NIGHT"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -18221,7 +18254,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -18496,7 +18529,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -18629,7 +18662,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -18762,7 +18795,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -19073,7 +19106,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -19537,7 +19570,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -19784,7 +19817,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -20045,7 +20078,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -20151,7 +20184,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -20541,7 +20574,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-ART_PAIR_TWDAG__tome-ART_PAIR_TWSWORD"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -20934,7 +20969,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -21089,7 +21124,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -21527,7 +21562,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SHIELD_UNSETTING__tome-SWORD_DAWN"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -21916,7 +21953,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -22037,7 +22074,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -22266,7 +22303,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-cults-ART_PAIR_DEDICATION__cults-ART_PAIR_PERSEVERANCE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -22510,7 +22549,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -22706,7 +22745,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -23115,7 +23154,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -23484,7 +23523,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -23734,7 +23773,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-HELM_KROLTAR__tome-SCALE_MAIL_KROLTAR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -23987,7 +24028,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -24258,7 +24299,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -24583,7 +24624,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -24768,7 +24809,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -25015,7 +25056,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -25185,7 +25226,7 @@
    "unlidded": [
     "enhance_meditate"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -25467,7 +25508,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -25873,7 +25914,7 @@
    "unlidded": [
     "staff_power"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -26038,7 +26079,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -26230,7 +26271,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -26434,7 +26475,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -26645,7 +26686,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -26883,7 +26924,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -27131,7 +27172,7 @@
    "unlidded": [
     "elemental_mastery"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -27182,7 +27223,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27233,7 +27274,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27284,7 +27325,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27335,7 +27376,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27386,7 +27427,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27437,7 +27478,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27488,7 +27529,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27539,7 +27580,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27590,7 +27631,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27641,7 +27682,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27692,7 +27733,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27743,7 +27784,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27794,7 +27835,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -27959,7 +28000,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -28194,7 +28235,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -28415,7 +28456,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -28715,7 +28756,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -29018,7 +29059,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -29336,7 +29377,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -29571,7 +29612,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -29973,7 +30014,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -30273,11 +30314,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {
-    "multiple": true,
-    "seasons": {},
-    "harmonious": {}
-   },
+   "setIds": [
+    "set-tome-EYE_OF_SUMMER__tome-EYE_OF_WINTER"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -30433,7 +30472,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -30706,7 +30745,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -31086,7 +31125,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -31652,7 +31691,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -31952,11 +31991,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {
-    "multiple": true,
-    "seasons": {},
-    "harmonious": {}
-   },
+   "setIds": [
+    "set-tome-EYE_OF_SUMMER__tome-EYE_OF_WINTER"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -32155,7 +32192,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -32391,7 +32428,7 @@
    "unlidded": [
     "death_dialog"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -32445,7 +32482,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -32624,7 +32661,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -32783,7 +32820,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -33041,7 +33078,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -33369,7 +33406,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -33628,7 +33665,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -34066,7 +34103,9 @@
    "unlidded": [
     "demonblood_dam"
    ],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_ARMOR_MASOCHISM__tome-SET_GLOVE_DESTROYER"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -34495,7 +34534,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -34860,7 +34899,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -35009,7 +35048,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -35323,7 +35362,7 @@
    "unlidded": [
     "wil_attack"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -35377,7 +35416,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -35431,7 +35470,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -35485,7 +35524,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -35539,7 +35578,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -35593,7 +35632,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -35825,7 +35864,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -36055,7 +36094,7 @@
    "unlidded": [
     "cold_freezes"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -36312,7 +36351,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -36593,7 +36632,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -36834,7 +36873,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -37040,7 +37079,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -37361,7 +37400,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -37691,7 +37730,7 @@
    "unlidded": [
     "arcane_dynamo"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -37838,7 +37877,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -38054,7 +38093,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-HELM_OF_GARKUL__tome-SET_GARKUL_TEETH"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -38365,7 +38406,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -38682,7 +38723,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -38834,7 +38875,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -39029,7 +39070,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -39300,7 +39341,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -39640,7 +39681,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -39956,7 +39997,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -40301,7 +40342,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -40474,7 +40515,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -40702,7 +40743,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -41017,7 +41058,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -41448,7 +41489,7 @@
    "unlidded": [
     "wild_summon"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -41750,7 +41791,7 @@
    "unlidded": [
     "sawwheel_speed"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -42012,7 +42053,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -42452,7 +42493,7 @@
    "unlidded": [
     "hate_per_crit"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -42514,7 +42555,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -43017,7 +43058,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -43396,7 +43437,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -43583,7 +43624,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -43778,7 +43819,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -43946,7 +43987,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_HAT_CHANNELERS__tome-SET_STAFF_CHANNELERS"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -44291,7 +44334,7 @@
    "unlidded": [
     "base_dam"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -44499,7 +44542,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -44742,7 +44785,7 @@
    "unlidded": [
     "control_haste_doom"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -44968,7 +45011,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -45046,7 +45089,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -45253,7 +45296,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -45465,7 +45508,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -45518,7 +45561,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -45843,7 +45886,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -46199,7 +46242,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -46298,7 +46341,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -46494,7 +46537,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -46676,7 +46719,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -46727,7 +46770,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -47004,7 +47047,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -47136,7 +47179,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -47328,7 +47371,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -47620,7 +47663,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -47986,12 +48029,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {
-    "multiple": true,
-    "kinchar": {},
-    "kinther": {},
-    "resonating": {}
-   },
+   "setIds": [
+    "set-tome-CHARGED_FOCUS__tome-KINETIC_FOCUS__tome-THERMAL_FOCUS"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -48255,7 +48295,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -48605,7 +48645,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -48755,7 +48795,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -49054,7 +49094,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -49350,7 +49390,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -49401,7 +49441,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -49990,7 +50030,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -50294,7 +50334,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -50563,7 +50603,7 @@
     "ignore_bleed",
     "inscriptions_data"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -50851,7 +50891,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -51031,7 +51071,7 @@
    "unlidded": [
     "life"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -51216,7 +51256,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -51338,7 +51378,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -51502,7 +51542,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -51922,7 +51962,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -52265,7 +52305,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -52541,7 +52581,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -52857,7 +52897,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -53269,7 +53309,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -53352,7 +53392,7 @@
    "unlidded": [
     "moddable_tile_nude"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -53662,7 +53702,9 @@
    "unlidded": [
     "demonblood_def"
    ],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_ARMOR_MASOCHISM__tome-SET_GLOVE_DESTROYER"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -53872,7 +53914,7 @@
     "heal_factor",
     "inscriptions_data"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -53925,7 +53967,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -53978,7 +54020,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -54232,7 +54274,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -54409,7 +54451,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -54551,7 +54593,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_GIANT_WRAPS__tome-SET_MIGHTY_GIRDLE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -54605,7 +54649,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -54761,7 +54805,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -55084,7 +55128,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -55292,7 +55336,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -55810,7 +55854,7 @@
    "unlidded": [
     "combat_damage"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -56075,7 +56119,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -56307,7 +56351,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-ART_PAIR_MOON__tome-ART_PAIR_STAR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -56614,7 +56660,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -56696,7 +56742,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -56948,7 +56994,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -57076,7 +57122,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -57376,7 +57422,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -57586,7 +57632,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -57639,7 +57685,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -57792,7 +57838,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -58134,7 +58180,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -58338,7 +58384,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -58548,7 +58594,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -58803,7 +58849,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -59074,7 +59120,7 @@
    "unlidded": [
     "crushing_blow"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -59127,7 +59173,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -59395,7 +59441,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -59448,7 +59494,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -59831,7 +59877,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -60126,7 +60172,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -60296,7 +60342,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -60693,7 +60739,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -60933,7 +60979,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -61313,7 +61359,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -61607,7 +61653,7 @@
     "sound",
     "sound_miss"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -61845,7 +61891,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -62115,7 +62161,7 @@
    "unlidded": [
     "twilight_mastery"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -62446,7 +62492,7 @@
     "sentient",
     "staff_power"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -62723,7 +62769,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-cults-ART_PAIR_DEDICATION__cults-ART_PAIR_PERSEVERANCE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -62856,7 +62904,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -63103,7 +63151,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -63296,7 +63344,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -63589,7 +63637,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -63866,7 +63914,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -64096,7 +64144,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -64179,7 +64227,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -64511,7 +64559,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -64923,7 +64971,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -64977,7 +65025,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -65252,7 +65300,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -65401,7 +65449,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -65550,7 +65598,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -65725,7 +65773,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -65779,7 +65827,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -65833,7 +65881,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -66186,7 +66234,7 @@
    "unlidded": [
     "talent_on_spell"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -66314,7 +66362,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -66630,7 +66678,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -66845,7 +66893,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -67007,7 +67055,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -67173,7 +67221,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -67414,7 +67462,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -67676,7 +67724,7 @@
    "unlidded": [
     "tg_type"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -67940,7 +67988,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -68219,7 +68267,7 @@
    "unlidded": [
     "basedam"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -68495,7 +68543,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -68751,7 +68799,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69025,7 +69073,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69234,7 +69282,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69362,7 +69410,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69440,7 +69488,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69656,7 +69704,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_LICH_RING__tome-SET_SCEPTRE_LICH"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69810,7 +69860,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -69994,7 +70044,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -70275,7 +70325,7 @@
    "unlidded": [
     "damage_convert"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -70568,7 +70618,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -70864,7 +70914,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71214,7 +71264,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71361,7 +71411,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71423,7 +71473,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71507,7 +71557,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71938,7 +71988,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -71997,7 +72047,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -72198,7 +72248,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -72331,7 +72381,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -72384,7 +72434,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -72540,7 +72590,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -72594,7 +72644,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -72648,7 +72698,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -72701,7 +72751,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -72806,7 +72856,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -72907,7 +72957,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -73306,7 +73356,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -73571,7 +73621,7 @@
    "unlidded": [
     "combat_steamspeed"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -73921,7 +73971,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -74189,7 +74239,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-HELM_KROLTAR__tome-SCALE_MAIL_KROLTAR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -74418,7 +74470,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -74688,7 +74740,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_LICH_RING__tome-SET_SCEPTRE_LICH"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -74742,7 +74796,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -74796,7 +74850,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -74850,7 +74904,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -74904,7 +74958,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -74958,7 +75012,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -75012,7 +75066,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -75209,7 +75263,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -75472,7 +75526,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -75522,7 +75576,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -75896,7 +75950,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -76201,7 +76255,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -76430,7 +76484,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -76688,7 +76742,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -76843,7 +76897,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -77073,7 +77127,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -77411,7 +77465,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -77586,7 +77640,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -77786,7 +77840,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -77969,7 +78023,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -78134,7 +78188,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -78411,7 +78465,7 @@
     "no_stealth_break",
     "no_garrote"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -78706,7 +78760,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -79027,7 +79081,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -79228,7 +79282,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -79443,7 +79497,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -79693,7 +79747,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -80030,7 +80084,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -80376,7 +80430,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_GIANT_WRAPS__tome-SET_MIGHTY_GIRDLE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -80670,7 +80726,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -80853,7 +80909,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -81139,7 +81195,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -81287,7 +81343,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -81590,7 +81646,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -81867,7 +81923,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -82186,7 +82242,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -82613,7 +82669,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -82666,7 +82722,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -82719,7 +82775,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -82772,7 +82828,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -83094,7 +83150,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -83340,7 +83396,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -83504,7 +83560,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -83750,7 +83806,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_HAT_CHANNELERS__tome-SET_STAFF_CHANNELERS"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -84198,7 +84256,7 @@
     "melee_element",
     "sentient"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -84538,7 +84596,7 @@
     "melee_element",
     "sentient"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -84770,7 +84828,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-ART_PAIR_MOON__tome-ART_PAIR_STAR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -85010,7 +85070,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -85282,7 +85342,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -85432,8 +85492,7 @@
       {
        "key": "max_steam",
        "kind": "literal",
-       "separator": "",
-       "untranslatedLabel": true,
+       "separator": "：",
        "source": {
         "file": 245,
         "line": 136
@@ -85444,7 +85503,8 @@
        "meaning": null,
        "resolver": null,
        "text": null,
-       "ref": null
+       "ref": null,
+       "manualMapping": true
       },
       {
        "key": "combat_def",
@@ -85555,10 +85615,11 @@
     }
    ],
    "unlidded": [
-    "suppress_steam_generator_straps",
-    "max_steam"
+    "suppress_steam_generator_straps"
    ],
-   "sets": {},
+   "setIds": [
+    "set-orcs-STEAM_POWERED_BOOTS__orcs-STEAM_POWERED_GAUNTLETS__orcs-STEAM_POWERED_HELM__orcs-TINKER_POWER_ARMOUR5"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -85749,7 +85810,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-orcs-STEAM_POWERED_BOOTS__orcs-STEAM_POWERED_GAUNTLETS__orcs-STEAM_POWERED_HELM__orcs-TINKER_POWER_ARMOUR5"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -86091,7 +86154,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-orcs-STEAM_POWERED_BOOTS__orcs-STEAM_POWERED_GAUNTLETS__orcs-STEAM_POWERED_HELM__orcs-TINKER_POWER_ARMOUR5"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -86278,7 +86343,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-orcs-STEAM_POWERED_BOOTS__orcs-STEAM_POWERED_GAUNTLETS__orcs-STEAM_POWERED_HELM__orcs-TINKER_POWER_ARMOUR5"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -86485,7 +86552,7 @@
    "unlidded": [
     "steam_regen"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -86736,7 +86803,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-HELM_OF_GARKUL__tome-SET_GARKUL_TEETH"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -86892,7 +86961,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -87138,7 +87207,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -87611,7 +87680,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -88015,7 +88084,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -88355,7 +88424,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -88884,7 +88953,7 @@
     "sound",
     "sound_miss"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -89146,7 +89215,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -89403,7 +89472,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -90039,7 +90108,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -90215,7 +90284,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -90375,7 +90444,7 @@
    "unlidded": [
     "steam_regen"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -90579,7 +90648,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -90953,7 +91022,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-ART_PAIR_TWDAG__tome-ART_PAIR_TWSWORD"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -91304,7 +91375,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -91358,7 +91429,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -91411,7 +91482,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -91625,7 +91696,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -91811,7 +91882,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -91861,7 +91932,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -91911,7 +91982,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -92098,7 +92169,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -92707,7 +92778,7 @@
    "unlidded": [
     "sentient"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -92917,7 +92988,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-GEM_TELOS__tome-TELOS_BOTTOM_HALF__tome-TELOS_TOP_HALF"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -93127,7 +93200,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-GEM_TELOS__tome-TELOS_BOTTOM_HALF__tome-TELOS_TOP_HALF"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -93415,7 +93490,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-GEM_TELOS__tome-TELOS_BOTTOM_HALF__tome-TELOS_TOP_HALF"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -93850,7 +93927,9 @@
    "unlidded": [
     "sentient_telos"
    ],
-   "sets": {},
+   "setIds": [
+    "set-tome-GEM_TELOS__tome-TELOS_BOTTOM_HALF__tome-TELOS_TOP_HALF"
+   ],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -94150,7 +94229,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_TEMPORAL_FEZ__tome-SET_TEMPORAL_ROBE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -94543,7 +94624,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -94780,7 +94861,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -95047,7 +95128,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -95220,7 +95301,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -95402,7 +95483,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -95632,7 +95713,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -95909,7 +95990,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -96338,7 +96419,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -96503,7 +96584,7 @@
     "inc_dam",
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -96823,7 +96904,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -97177,7 +97258,7 @@
    "unlidded": [
     "artifact_power_obsidian"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -97339,7 +97420,7 @@
    "unlidded": [
     "mental_negative_status_effect_immune"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -97610,7 +97691,7 @@
    "unlidded": [
     "lightning_daze_tempest"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -97787,7 +97868,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -97894,7 +97975,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -98165,7 +98246,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -98455,7 +98536,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -98506,7 +98587,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -98730,7 +98811,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -98875,7 +98956,7 @@
    "unlidded": [
     "lightning_brainlocks"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -99060,7 +99141,7 @@
    "unlidded": [
     "tg_type"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -99354,7 +99435,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -99405,7 +99486,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -99455,7 +99536,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -99607,7 +99688,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -99658,7 +99739,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -99711,7 +99792,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -99927,7 +100008,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -100221,7 +100302,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -100369,7 +100450,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -100607,7 +100688,7 @@
    "unlidded": [
     "combat_mindresist"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -100841,7 +100922,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -101270,12 +101351,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {
-    "multiple": true,
-    "kinther": {},
-    "charther": {},
-    "resonating": {}
-   },
+   "setIds": [
+    "set-tome-CHARGED_FOCUS__tome-KINETIC_FOCUS__tome-THERMAL_FOCUS"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -101561,7 +101639,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -101897,7 +101975,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -102139,7 +102217,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -102369,7 +102447,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -102553,7 +102631,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -102729,7 +102807,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -102849,7 +102927,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -103105,7 +103183,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -103161,7 +103239,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -103217,7 +103295,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -103343,7 +103421,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -103583,7 +103661,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -103917,7 +103995,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -103970,7 +104048,7 @@
    "specialDesc": null,
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -104271,7 +104349,7 @@
    "unlidded": [
     "sawwheel_speed"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -104607,7 +104685,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -104974,7 +105052,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -105228,7 +105306,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -105459,7 +105537,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SET_TEMPORAL_FEZ__tome-SET_TEMPORAL_ROBE"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -105728,7 +105808,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -105941,7 +106021,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -106146,7 +106226,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -106470,7 +106550,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-SHIELD_UNSETTING__tome-SWORD_DAWN"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -106702,7 +106784,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -106902,7 +106984,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-URESLAK_CLOAK__tome-URESLAK_FEMUR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -107285,7 +107369,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -107531,7 +107615,9 @@
     }
    ],
    "unlidded": [],
-   "sets": {},
+   "setIds": [
+    "set-tome-URESLAK_CLOAK__tome-URESLAK_FEMUR"
+   ],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -107761,7 +107847,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -107902,7 +107988,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -108204,7 +108290,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -108399,7 +108485,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -108665,7 +108751,7 @@
    "unlidded": [
     "DM_Bonus"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -109036,7 +109122,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -109407,7 +109493,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -109654,7 +109740,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -109860,7 +109946,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -110035,7 +110121,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -110268,7 +110354,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -110442,7 +110528,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -110664,7 +110750,7 @@
    "unlidded": [
     "mindpower"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -111027,7 +111113,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -111093,7 +111179,7 @@
    },
    "properties": [],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -111440,7 +111526,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -111708,7 +111794,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -112117,7 +112203,7 @@
    "unlidded": [
     "obliterating_smash_wall"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -112386,7 +112472,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -112560,7 +112646,7 @@
    "unlidded": [
     "combat_ranged_def"
    ],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -112861,7 +112947,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "non-equipment",
    "inclusionReason": "non-equipment-item",
    "definitions": [
@@ -113251,7 +113337,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -113351,7 +113437,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -113615,7 +113701,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -113790,7 +113876,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -113977,7 +114063,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -114172,7 +114258,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -114465,7 +114551,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -114794,7 +114880,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -114949,7 +115035,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -115327,7 +115413,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -115468,7 +115554,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -115755,7 +115841,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -115999,7 +116085,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -116144,7 +116230,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -116294,7 +116380,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -116473,7 +116559,7 @@
     }
    ],
    "unlidded": [],
-   "sets": null,
+   "setIds": [],
    "status": "included",
    "inclusionReason": "equipment",
    "definitions": [
@@ -116485,6 +116571,3201 @@
    ],
    "imagePath": "img/object/artifact/amulet_zemekkys_broken_hourglass.png",
    "imageMatch": "exact"
+  }
+ ],
+ "sets": [
+  {
+   "id": "set-tome-SET_TEMPORAL_FEZ__tome-SET_TEMPORAL_ROBE",
+   "name": "套装：Un'fezan之帽 + 时空增益·引领时尚",
+   "memberIds": [
+    "tome:SET_TEMPORAL_FEZ",
+    "tome:SET_TEMPORAL_ROBE"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_TEMPORAL_FEZ",
+       "artifactId": "tome:SET_TEMPORAL_FEZ"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SET_TEMPORAL_ROBE",
+       "artifactId": "tome:SET_TEMPORAL_ROBE"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "paradox_reduce_anomalies",
+       "value": 20,
+       "text": "wielder.paradox_reduce_anomalies = 20",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "confusion_immune",
+       "value": 0.4,
+       "text": "wielder.confusion_immune = 0.4",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellspeed",
+       "value": 0.1,
+       "text": "wielder.combat_spellspeed = 0.1",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "TEMPORAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = TEMPORAL:10",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：时间漩涡短暂地出现在你面前。",
+       "source": {
+        "file": 99,
+        "line": 1505
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SET_TEMPORAL_ROBE",
+     "en": "Oddly it never produces a hat.",
+     "zh": "奇怪的是，它没有一顶帽子。"
+    },
+    {
+     "memberId": "tome:SET_TEMPORAL_FEZ",
+     "en": "Needs something equally stylish and cool to go with it.",
+     "zh": "需要一件同样时尚而炫酷的装备来搭配，"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 1505
+   }
+  },
+  {
+   "id": "set-tome-URESLAK_CLOAK__tome-URESLAK_FEMUR",
+   "name": "套装：乌尔斯拉克之皮 + 乌尔斯拉克的大腿",
+   "memberIds": [
+    "tome:URESLAK_CLOAK",
+    "tome:URESLAK_FEMUR"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "URESLAK_CLOAK",
+       "artifactId": "tome:URESLAK_CLOAK"
+      },
+      {
+       "kind": "artifact",
+       "ref": "URESLAK_FEMUR",
+       "artifactId": "tome:URESLAK_FEMUR"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "equilibrium_regen",
+       "value": -1,
+       "text": "wielder.equilibrium_regen = -1",
+       "source": {
+        "file": 99,
+        "line": 1956
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "ARCANE",
+         "value": 15
+        }
+       ],
+       "text": "wielder.resists = ARCANE:15",
+       "source": {
+        "file": 99,
+        "line": 1956
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_cap",
+       "value": null,
+       "entries": [
+        {
+         "key": "ARCANE",
+         "value": 15
+        }
+       ],
+       "text": "wielder.resists_cap = ARCANE:15",
+       "source": {
+        "file": 99,
+        "line": 1956
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：乌尔斯拉克的遗骸似乎变得更加躁动。",
+       "source": {
+        "file": 99,
+        "line": 1956
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:URESLAK_FEMUR",
+     "en": "What would happen if more of Ureslak's remains were reunited?",
+     "zh": "当乌尔斯拉克更多遗物聚集在一起时，会发生什么呢？"
+    },
+    {
+     "memberId": "tome:URESLAK_CLOAK",
+     "en": "It would go well with another part of Ureslak.",
+     "zh": "另一件乌尔斯拉克的遗物会增强它的能力。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 1956
+   }
+  },
+  {
+   "id": "set-tome-EYE_OF_SUMMER__tome-EYE_OF_WINTER",
+   "name": "套装：冬日之眼 + 夏日之眼",
+   "memberIds": [
+    "tome:EYE_OF_WINTER",
+    "tome:EYE_OF_SUMMER"
+   ],
+   "branches": [
+    {
+     "id": "seasons",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "EYE_OF_WINTER",
+       "artifactId": "tome:EYE_OF_WINTER"
+      },
+      {
+       "kind": "artifact",
+       "ref": "EYE_OF_SUMMER",
+       "artifactId": "tome:EYE_OF_SUMMER"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "COLD",
+         "value": 20
+        }
+       ],
+       "text": "wielder.resists = COLD:20",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 4,
+       "text": "wielder.combat_mindpower = 4",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 20
+        }
+       ],
+       "text": "wielder.resists = FIRE:20",
+       "source": {
+        "file": 99,
+        "line": 8115
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：四季不再保持平衡。",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      }
+     ]
+    },
+    {
+     "id": "harmonious",
+     "conditions": [
+      {
+       "kind": "flag",
+       "key": "ms_set_harmonious",
+       "value": true
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "COLD",
+         "value": 20
+        }
+       ],
+       "text": "wielder.resists = COLD:20",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 4,
+       "text": "wielder.combat_mindpower = 4",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 20
+        }
+       ],
+       "text": "wielder.resists = FIRE:20",
+       "source": {
+        "file": 99,
+        "line": 8115
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：四季不再保持平衡。",
+       "source": {
+        "file": 99,
+        "line": 8059
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:EYE_OF_SUMMER",
+     "en": "Nature requires balance in these matters.",
+     "zh": "自然需要平衡的灵晶。"
+    },
+    {
+     "memberId": "tome:EYE_OF_WINTER",
+     "en": "Nature requires balance in these matters.",
+     "zh": "自然需要平衡的灵晶。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 8115
+   }
+  },
+  {
+   "id": "set-tome-SET_GIANT_WRAPS__tome-SET_MIGHTY_GIRDLE",
+   "name": "套装：冰霜巨人护手 + 巨人腰带",
+   "memberIds": [
+    "tome:SET_GIANT_WRAPS",
+    "tome:SET_MIGHTY_GIRDLE"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_MIGHTY_GIRDLE",
+       "artifactId": "tome:SET_MIGHTY_GIRDLE"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SET_GIANT_WRAPS",
+       "artifactId": "tome:SET_GIANT_WRAPS"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_dam",
+       "value": 10,
+       "text": "wielder.combat_dam = 10",
+       "source": {
+        "file": 99,
+        "line": 1248
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_physresist",
+       "value": 10,
+       "text": "wielder.combat_physresist = 10",
+       "source": {
+        "file": 99,
+        "line": 1248
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_life",
+       "value": 60,
+       "text": "wielder.max_life = 60",
+       "source": {
+        "file": 99,
+        "line": 1286
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "size_category",
+       "value": 2,
+       "text": "wielder.size_category = 2",
+       "source": {
+        "file": 99,
+        "line": 1286
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "fatigue",
+       "value": -10,
+       "text": "wielder.fatigue = -10",
+       "source": {
+        "file": 99,
+        "line": 1286
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：你感觉自己变小了许多……",
+       "source": {
+        "file": 99,
+        "line": 1286
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SET_GIANT_WRAPS",
+     "en": "This would be great with a mighty matching belt.",
+     "zh": "如果有一条相衬的腰带就好了。"
+    },
+    {
+     "memberId": "tome:SET_MIGHTY_GIRDLE",
+     "en": "Some giant wraps would make you feel great.",
+     "zh": "如果有一对大些的手套就好了。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 1248
+   }
+  },
+  {
+   "id": "set-tome-HELM_OF_GARKUL__tome-SET_GARKUL_TEETH",
+   "name": "套装：加库尔的牙齿 + 加库尔的钢盔",
+   "memberIds": [
+    "tome:SET_GARKUL_TEETH",
+    "tome:HELM_OF_GARKUL"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_GARKUL_TEETH",
+       "artifactId": "tome:SET_GARKUL_TEETH"
+      },
+      {
+       "kind": "artifact",
+       "ref": "HELM_OF_GARKUL",
+       "artifactId": "tome:HELM_OF_GARKUL"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "special",
+       "key": "skullcracker_mult",
+       "value": 1,
+       "text": "skullcracker_mult = 1",
+       "source": {
+        "file": 6,
+        "line": 508
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "melee_project",
+       "value": null,
+       "entries": [
+        {
+         "key": "GARKUL_INVOKE",
+         "value": 5
+        }
+       ],
+       "text": "wielder.melee_project = GARKUL_INVOKE:5",
+       "source": {
+        "file": 6,
+        "line": 508
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "die_at",
+       "value": -100,
+       "text": "wielder.die_at = -100",
+       "source": {
+        "file": 99,
+        "line": 320
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：加库尔的灵魂逐渐消散。",
+       "source": {
+        "file": 99,
+        "line": 320
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:HELM_OF_GARKUL",
+     "en": "Another of Garkul's heirlooms would bring out his spirit.",
+     "zh": "另一件加库尔的遗物将唤醒他的英灵。"
+    },
+    {
+     "memberId": "tome:SET_GARKUL_TEETH",
+     "en": "Another of Garkul's heirlooms would bring out his spirit.",
+     "zh": "另一件加库尔的遗物将唤醒他的英灵。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 320
+   }
+  },
+  {
+   "id": "set-tome-CHARGED_FOCUS__tome-KINETIC_FOCUS__tome-THERMAL_FOCUS",
+   "name": "套装：动能之核 + 热能之核 + 电能之核",
+   "memberIds": [
+    "tome:KINETIC_FOCUS",
+    "tome:THERMAL_FOCUS",
+    "tome:CHARGED_FOCUS"
+   ],
+   "branches": [
+    {
+     "id": "kinchar",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "CHARGED_FOCUS",
+       "artifactId": "tome:CHARGED_FOCUS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "KINETIC_FOCUS",
+       "artifactId": "tome:KINETIC_FOCUS"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 6,
+       "text": "wielder.combat_mindpower = 6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 3,
+       "text": "wielder.combat_mindcrit = 3",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 6
+        }
+       ],
+       "text": "wielder.resists_pen = PHYSICAL:6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.resists = PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_on_crit",
+       "value": 1,
+       "text": "wielder.psi_on_crit = 1",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_physresist",
+       "value": 6,
+       "text": "wielder.combat_physresist = 6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/kinetic-mastery",
+         "value": 0.1
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/kinetic-mastery:0.1",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 2,
+       "text": "wielder.combat_mindpower = 2",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 1,
+       "text": "wielder.combat_mindcrit = 1",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = LIGHTNING:5",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = LIGHTNING:3",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = LIGHTNING:5",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_psi",
+       "value": 10,
+       "text": "wielder.max_psi = 10",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mentalresist",
+       "value": 3,
+       "text": "wielder.combat_mentalresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/charged-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/charged-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      }
+     ],
+     "brokenEffects": []
+    },
+    {
+     "id": "kinther",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "THERMAL_FOCUS",
+       "artifactId": "tome:THERMAL_FOCUS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "KINETIC_FOCUS",
+       "artifactId": "tome:KINETIC_FOCUS"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 6,
+       "text": "wielder.combat_mindpower = 6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 3,
+       "text": "wielder.combat_mindcrit = 3",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 6
+        }
+       ],
+       "text": "wielder.resists_pen = PHYSICAL:6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.resists = PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_on_crit",
+       "value": 1,
+       "text": "wielder.psi_on_crit = 1",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_physresist",
+       "value": 6,
+       "text": "wielder.combat_physresist = 6",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/kinetic-mastery",
+         "value": 0.1
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/kinetic-mastery:0.1",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 2,
+       "text": "wielder.combat_mindpower = 2",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 1,
+       "text": "wielder.combat_mindcrit = 1",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 3
+        },
+        {
+         "key": "COLD",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = FIRE:3, COLD:3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_regen",
+       "value": 1,
+       "text": "wielder.psi_regen = 1",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellresist",
+       "value": 3,
+       "text": "wielder.combat_spellresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/thermal-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/thermal-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      }
+     ],
+     "brokenEffects": []
+    },
+    {
+     "id": "resonating",
+     "conditions": [
+      {
+       "kind": "flag",
+       "key": "ms_set_resonating",
+       "value": true
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 2,
+       "text": "wielder.combat_mindpower = 2",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 1,
+       "text": "wielder.combat_mindcrit = 1",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = PHYSICAL:5",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = PHYSICAL:3",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "PHYSICAL",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = PHYSICAL:5",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_on_crit",
+       "value": 0.5,
+       "text": "wielder.psi_on_crit = 0.5",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_physresist",
+       "value": 3,
+       "text": "wielder.combat_physresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/kinetic-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/kinetic-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8318
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = LIGHTNING:5",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = LIGHTNING:3",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = LIGHTNING:5",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_psi",
+       "value": 10,
+       "text": "wielder.max_psi = 10",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mentalresist",
+       "value": 3,
+       "text": "wielder.combat_mentalresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/charged-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/charged-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 3
+        },
+        {
+         "key": "COLD",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = FIRE:3, COLD:3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_regen",
+       "value": 1,
+       "text": "wielder.psi_regen = 1",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellresist",
+       "value": 3,
+       "text": "wielder.combat_spellresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/thermal-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/thermal-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      }
+     ],
+     "brokenEffects": []
+    },
+    {
+     "id": "charther",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "THERMAL_FOCUS",
+       "artifactId": "tome:THERMAL_FOCUS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "CHARGED_FOCUS",
+       "artifactId": "tome:CHARGED_FOCUS"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 6,
+       "text": "wielder.combat_mindpower = 6",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 3,
+       "text": "wielder.combat_mindcrit = 3",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = LIGHTNING:10",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 6
+        }
+       ],
+       "text": "wielder.resists_pen = LIGHTNING:6",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHTNING",
+         "value": 10
+        }
+       ],
+       "text": "wielder.resists = LIGHTNING:10",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_psi",
+       "value": 20,
+       "text": "wielder.max_psi = 20",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mentalresist",
+       "value": 6,
+       "text": "wielder.combat_mentalresist = 6",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/charged-mastery",
+         "value": 0.1
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/charged-mastery:0.1",
+       "source": {
+        "file": 99,
+        "line": 8399
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindpower",
+       "value": 2,
+       "text": "wielder.combat_mindpower = 2",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mindcrit",
+       "value": 1,
+       "text": "wielder.combat_mindcrit = 1",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 3
+        },
+        {
+         "key": "COLD",
+         "value": 3
+        }
+       ],
+       "text": "wielder.resists_pen = FIRE:3, COLD:3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 5
+        },
+        {
+         "key": "COLD",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = FIRE:5, COLD:5",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "psi_regen",
+       "value": 1,
+       "text": "wielder.psi_regen = 1",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellresist",
+       "value": 3,
+       "text": "wielder.combat_spellresist = 3",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "psionic/thermal-mastery",
+         "value": 0.05
+        }
+       ],
+       "text": "wielder.talents_types_mastery = psionic/thermal-mastery:0.05",
+       "source": {
+        "file": 99,
+        "line": 8477
+       }
+      }
+     ],
+     "brokenEffects": []
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:KINETIC_FOCUS",
+     "en": "You feel two unconnected psionic channels on this item.",
+     "zh": "在这个物品里你感受到了两种不相关的能量。"
+    },
+    {
+     "memberId": "tome:CHARGED_FOCUS",
+     "en": "You feel two unconnected psionic channels on this item.",
+     "zh": "在这个物品里你感受到了两种不相关的能量。"
+    },
+    {
+     "memberId": "tome:THERMAL_FOCUS",
+     "en": "You feel two unconnected psionic channels on this item.",
+     "zh": "在这个物品里你感受到了两种不相关的能量。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 8318
+   }
+  },
+  {
+   "id": "set-tome-ART_PAIR_TWDAG__tome-ART_PAIR_TWSWORD",
+   "name": "套装：历练之匕 + 进化之剑",
+   "memberIds": [
+    "tome:ART_PAIR_TWDAG",
+    "tome:ART_PAIR_TWSWORD"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_TWDAG",
+       "artifactId": "tome:ART_PAIR_TWDAG"
+      },
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_TWSWORD",
+       "artifactId": "tome:ART_PAIR_TWSWORD"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "TEMPORAL",
+         "value": 5
+        },
+        {
+         "key": "PHYSICAL",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = TEMPORAL:5, PHYSICAL:10",
+       "source": {
+        "file": 99,
+        "line": 2047
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "10% 几率降低目标对所有伤害的抗性。",
+       "source": {
+        "file": 99,
+        "line": 2047
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "TEMPORAL",
+         "value": 15
+        }
+       ],
+       "text": "wielder.resists_pen = TEMPORAL:15",
+       "source": {
+        "file": 99,
+        "line": 2103
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "10% 将目标退回到婴儿状态。",
+       "source": {
+        "file": 99,
+        "line": 2103
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "包含命中/暴击/施法触发机制，实际结果取决于战斗过程。",
+       "source": {
+        "file": 99,
+        "line": 2047
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "解除套装时：随着两把武器分离，时间在你眼中不再那么完美。",
+       "source": {
+        "file": 99,
+        "line": 2047
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:ART_PAIR_TWSWORD",
+     "en": "In the past there was a dagger with it.",
+     "zh": "过去有柄匕首和它成套"
+    },
+    {
+     "memberId": "tome:ART_PAIR_TWDAG",
+     "en": "Potentially it would go with a sword in the future.",
+     "zh": "未来可能有把剑和它成套"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 2103
+   }
+  },
+  {
+   "id": "set-tome-SET_ARMOR_MASOCHISM__tome-SET_GLOVE_DESTROYER",
+   "name": "套装：受虐狂 + 毁灭者之拳",
+   "memberIds": [
+    "tome:SET_ARMOR_MASOCHISM",
+    "tome:SET_GLOVE_DESTROYER"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_ARMOR_MASOCHISM",
+       "artifactId": "tome:SET_ARMOR_MASOCHISM"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SET_GLOVE_DESTROYER",
+       "artifactId": "tome:SET_GLOVE_DESTROYER"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "demonblood_dam",
+       "value": 0.02,
+       "text": "wielder.demonblood_dam = 0.02",
+       "source": {
+        "file": 99,
+        "line": 7238
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 15
+        },
+        {
+         "key": "DARKNESS",
+         "value": 15
+        },
+        {
+         "key": "all",
+         "value": 5
+        }
+       ],
+       "text": "wielder.inc_damage = FIRE:15, DARKNESS:15, all:5",
+       "source": {
+        "file": 99,
+        "line": 7238
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "demonblood_def",
+       "value": 0.03,
+       "text": "wielder.demonblood_def = 0.03",
+       "source": {
+        "file": 99,
+        "line": 7288
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "FIRE",
+         "value": 15
+        },
+        {
+         "key": "DARKNESS",
+         "value": 15
+        },
+        {
+         "key": "all",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = FIRE:15, DARKNESS:15, all:5",
+       "source": {
+        "file": 99,
+        "line": 7288
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：不祥的光芒逐渐黯淡。",
+       "source": {
+        "file": 99,
+        "line": 7238
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SET_GLOVE_DESTROYER",
+     "en": "Only the masochistic can unlock its full power.",
+     "zh": "只有受虐狂才能解锁它的能量"
+    },
+    {
+     "memberId": "tome:SET_ARMOR_MASOCHISM",
+     "en": "With a better grip it would be the destroyer of your enemies.",
+     "zh": "如果有更好的掌控力，它将摧毁敌人。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 7288
+   }
+  },
+  {
+   "id": "set-tome-SET_LICH_RING__tome-SET_SCEPTRE_LICH",
+   "name": "套装：大巫妖之戒 + 死灵权杖",
+   "memberIds": [
+    "tome:SET_LICH_RING",
+    "tome:SET_SCEPTRE_LICH"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_LICH_RING",
+       "artifactId": "tome:SET_LICH_RING"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SET_SCEPTRE_LICH",
+       "artifactId": "tome:SET_SCEPTRE_LICH"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellpower",
+       "value": 10,
+       "text": "wielder.combat_spellpower = 10",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 14
+        }
+       ],
+       "text": "wielder.inc_damage = DARKNESS:14",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 5
+        }
+       ],
+       "text": "wielder.resists = DARKNESS:5",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_add_levels",
+       "value": null,
+       "entries": [
+        {
+         "key": "T_CALL_OF_THE_CRYPT",
+         "value": 1
+        },
+        {
+         "key": "T_CALL_OF_THE_MAUSOLEUM",
+         "value": 1
+        },
+        {
+         "key": "T_DREAD",
+         "value": 1
+        },
+        {
+         "key": "T_RIME_WRAITH",
+         "value": 1
+        },
+        {
+         "key": "T_BONEYARD",
+         "value": 1
+        }
+       ],
+       "text": "wielder.talents_add_levels = T_CALL_OF_THE_CRYPT:1, T_CALL_OF_THE_MAUSOLEUM:1, T_DREAD:1, T_RIME_WRAITH:1, T_BONEYARD:1",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      },
+      {
+       "kind": "talent",
+       "talentId": "T_IMPENDING_DOOM",
+       "text": "获得技能 T_IMPENDING_DOOM（等级 2）",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：戒指的力量逐渐消退。",
+       "source": {
+        "file": 99,
+        "line": 6533
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SET_SCEPTRE_LICH",
+     "en": "It desires to be surrounded by undeath.",
+     "zh": "它渴望被亡灵围绕。"
+    },
+    {
+     "memberId": "tome:SET_LICH_RING",
+     "en": "It desires to be surrounded by undeath.",
+     "zh": "它渴望被亡灵围绕。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 6533
+   }
+  },
+  {
+   "id": "set-tome-SET_HAT_CHANNELERS__tome-SET_STAFF_CHANNELERS",
+   "name": "套装：奥术理解之帽 + 至尊法杖",
+   "memberIds": [
+    "tome:SET_HAT_CHANNELERS",
+    "tome:SET_STAFF_CHANNELERS"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SET_HAT_CHANNELERS",
+       "artifactId": "tome:SET_HAT_CHANNELERS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SET_STAFF_CHANNELERS",
+       "artifactId": "tome:SET_STAFF_CHANNELERS"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_mana",
+       "value": 100,
+       "text": "wielder.max_mana = 100",
+       "source": {
+        "file": 98,
+        "line": 1018
+       }
+      },
+      {
+       "kind": "talent",
+       "talentId": "T_METAFLOW",
+       "text": "获得技能 T_METAFLOW（等级 3）",
+       "source": {
+        "file": 98,
+        "line": 1062
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：环绕你的奥术能量逐渐消散。",
+       "source": {
+        "file": 98,
+        "line": 1062
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SET_STAFF_CHANNELERS",
+     "en": "A true understanding of the arcane is needed to release its full power.",
+     "zh": "只有理解奥术才能完全使用它的力量。"
+    },
+    {
+     "memberId": "tome:SET_HAT_CHANNELERS",
+     "en": "Only supremacy of the arcane can release its full power.",
+     "zh": "只有奥术至尊才能完全发挥它的力量。"
+    }
+   ],
+   "source": {
+    "file": 98,
+    "line": 1062
+   }
+  },
+  {
+   "id": "set-tome-HELM_KROLTAR__tome-SCALE_MAIL_KROLTAR",
+   "name": "套装：库洛塔的龙盔 + 库洛塔的龙鳞甲",
+   "memberIds": [
+    "tome:HELM_KROLTAR",
+    "tome:SCALE_MAIL_KROLTAR"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SCALE_MAIL_KROLTAR",
+       "artifactId": "tome:SCALE_MAIL_KROLTAR"
+      },
+      {
+       "kind": "artifact",
+       "ref": "HELM_KROLTAR",
+       "artifactId": "tome:HELM_KROLTAR"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "special",
+       "key": "skullcracker_mult",
+       "value": 1,
+       "text": "skullcracker_mult = 1",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellresist",
+       "value": 15,
+       "text": "wielder.combat_spellresist = 15",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mentalresist",
+       "value": 15,
+       "text": "wielder.combat_mentalresist = 15",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_physresist",
+       "value": 15,
+       "text": "wielder.combat_physresist = 15",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_stats",
+       "value": null,
+       "entries": [
+        {
+         "key": "STAT_LCK",
+         "value": 14
+        }
+       ],
+       "text": "wielder.inc_stats = STAT_LCK:14",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_life",
+       "value": 120,
+       "text": "wielder.max_life = 120",
+       "source": {
+        "file": 99,
+        "line": 1770
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "fatigue",
+       "value": -8,
+       "text": "wielder.fatigue = -8",
+       "source": {
+        "file": 99,
+        "line": 1770
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_def",
+       "value": 10,
+       "text": "wielder.combat_def = 10",
+       "source": {
+        "file": 99,
+        "line": 1770
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：烟雾与火焰逐渐消退。",
+       "source": {
+        "file": 99,
+        "line": 1087
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:HELM_KROLTAR",
+     "en": "Kroltar's power resides in his scales.",
+     "zh": "库洛塔的力量隐藏在他的鳞片里。"
+    },
+    {
+     "memberId": "tome:SCALE_MAIL_KROLTAR",
+     "en": "Kroltar's head would turn up the heat.",
+     "zh": "库洛塔的头会被这热量唤醒。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 1087
+   }
+  },
+  {
+   "id": "set-cults-ART_PAIR_DEDICATION__cults-ART_PAIR_PERSEVERANCE",
+   "name": "套装：忠诚 + 毅力",
+   "memberIds": [
+    "cults:ART_PAIR_DEDICATION",
+    "cults:ART_PAIR_PERSEVERANCE"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_DEDICATION",
+       "artifactId": "cults:ART_PAIR_DEDICATION"
+      },
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_PERSEVERANCE",
+       "artifactId": "cults:ART_PAIR_PERSEVERANCE"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "talent",
+       "talentId": "T_WHIRLWIND",
+       "text": "获得技能 T_WHIRLWIND（等级 2）",
+       "source": {
+        "file": 297,
+        "line": 654
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "包含运行时回调，无法仅从静态数据还原完整效果。",
+       "source": {
+        "file": 297,
+        "line": 707
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：随着两把武器分离，克罗格双武器的力量逐渐消退。",
+       "source": {
+        "file": 297,
+        "line": 654
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "包含运行时回调，无法仅从静态数据还原完整效果。",
+       "source": {
+        "file": 297,
+        "line": 707
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "cults:ART_PAIR_PERSEVERANCE",
+     "en": "It is said perseverance comes hand in hand with dedication.",
+     "zh": "人们说毅力之剑与忠诚之锤配合。"
+    },
+    {
+     "memberId": "cults:ART_PAIR_DEDICATION",
+     "en": "It is said perseverance comes hand in hand with dedication.",
+     "zh": "人们说毅力之剑与忠诚之锤配合。"
+    }
+   ],
+   "source": {
+    "file": 297,
+    "line": 707
+   }
+  },
+  {
+   "id": "set-tome-ART_PAIR_MOON__tome-ART_PAIR_STAR",
+   "name": "套装：星 + 月",
+   "memberIds": [
+    "tome:ART_PAIR_STAR",
+    "tome:ART_PAIR_MOON"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_STAR",
+       "artifactId": "tome:ART_PAIR_STAR"
+      },
+      {
+       "kind": "artifact",
+       "ref": "ART_PAIR_MOON",
+       "artifactId": "tome:ART_PAIR_MOON"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "lite",
+       "value": 2,
+       "text": "wielder.lite = 2",
+       "source": {
+        "file": 99,
+        "line": 866
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 25
+        }
+       ],
+       "text": "wielder.inc_damage = DARKNESS:25",
+       "source": {
+        "file": 99,
+        "line": 866
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 25
+        }
+       ],
+       "text": "wielder.resists_pen = DARKNESS:25",
+       "source": {
+        "file": 99,
+        "line": 866
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHT",
+         "value": 25
+        }
+       ],
+       "text": "wielder.inc_damage = LIGHT:25",
+       "source": {
+        "file": 99,
+        "line": 921
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "resists_pen",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHT",
+         "value": 25
+        }
+       ],
+       "text": "wielder.resists_pen = LIGHT:25",
+       "source": {
+        "file": 99,
+        "line": 921
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：随着两把武器分离，双刃的光芒逐渐消退。",
+       "source": {
+        "file": 99,
+        "line": 866
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:ART_PAIR_MOON",
+     "en": "The moon shines alone in a starless sky.",
+     "zh": "没有星星的天空里，月亮显得非常孤单。"
+    },
+    {
+     "memberId": "tome:ART_PAIR_STAR",
+     "en": "The star shines alone in a moonless sky.",
+     "zh": "没有月亮的天空里，星星显得非常孤单。"
+    }
+   ],
+   "source": {
+    "file": 99,
+    "line": 921
+   }
+  },
+  {
+   "id": "set-tome-BINDINGS_ETERNAL_NIGHT__tome-CROWN_ETERNAL_NIGHT",
+   "name": "套装：永夜王冠 + 永夜绷带",
+   "memberIds": [
+    "tome:CROWN_ETERNAL_NIGHT",
+    "tome:BINDINGS_ETERNAL_NIGHT"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "CROWN_ETERNAL_NIGHT",
+       "artifactId": "tome:CROWN_ETERNAL_NIGHT"
+      },
+      {
+       "kind": "artifact",
+       "ref": "BINDINGS_ETERNAL_NIGHT",
+       "artifactId": "tome:BINDINGS_ETERNAL_NIGHT"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "talent",
+       "talentId": "T_ABYSSAL_SHROUD",
+       "text": "获得技能 T_ABYSSAL_SHROUD（等级 2）",
+       "source": {
+        "file": 103,
+        "line": 35
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "lite",
+       "value": -1,
+       "text": "wielder.lite = -1",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "confusion_immune",
+       "value": 0.3,
+       "text": "wielder.confusion_immune = 0.3",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "knockback_immune",
+       "value": 0.3,
+       "text": "wielder.knockback_immune = 0.3",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_mentalresist",
+       "value": 15,
+       "text": "wielder.combat_mentalresist = 15",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_spellresist",
+       "value": 15,
+       "text": "wielder.combat_spellresist = 15",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "flat_damage_armor",
+       "value": null,
+       "entries": [
+        {
+         "key": "all",
+         "value": 20
+        }
+       ],
+       "text": "wielder.flat_damage_armor = all:20",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_stats",
+       "value": null,
+       "entries": [
+        {
+         "key": "STAT_CUN",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_stats = STAT_CUN:10",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "melee_project",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 40
+        }
+       ],
+       "text": "wielder.melee_project = DARKNESS:40",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "DARKNESS",
+         "value": 20
+        }
+       ],
+       "text": "wielder.inc_damage = DARKNESS:20",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "talents_types_mastery",
+       "value": null,
+       "entries": [
+        {
+         "key": "cunning/stealth",
+         "value": 0.1
+        }
+       ],
+       "text": "wielder.talents_types_mastery = cunning/stealth:0.1",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      },
+      {
+       "kind": "talent",
+       "talentId": "T_RETCH",
+       "text": "获得技能 T_RETCH（等级 2）",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "包含运行时回调，无法仅从静态数据还原完整效果。",
+       "source": {
+        "file": 103,
+        "line": 35
+       }
+      },
+      {
+       "kind": "runtime",
+       "text": "解除套装时：你感受到的强大暗影光环逐渐减弱。",
+       "source": {
+        "file": 103,
+        "line": 79
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:BINDINGS_ETERNAL_NIGHT",
+     "en": "A complementing item would be your crowning glory.",
+     "zh": "能与其匹敌的只有永夜无上的荣耀。"
+    },
+    {
+     "memberId": "tome:CROWN_ETERNAL_NIGHT",
+     "en": "You need to find something to bind its powers.",
+     "zh": "你需要找到一样东西来给予它力量。"
+    }
+   ],
+   "source": {
+    "file": 103,
+    "line": 79
+   }
+  },
+  {
+   "id": "set-tome-SHIELD_UNSETTING__tome-SWORD_DAWN",
+   "name": "套装：永恒光辉 + 黎明之刃",
+   "memberIds": [
+    "tome:SHIELD_UNSETTING",
+    "tome:SWORD_DAWN"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "SWORD_DAWN",
+       "artifactId": "tome:SWORD_DAWN"
+      },
+      {
+       "kind": "artifact",
+       "ref": "SHIELD_UNSETTING",
+       "artifactId": "tome:SHIELD_UNSETTING"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "life_regen",
+       "value": 5,
+       "text": "wielder.life_regen = 5",
+       "source": {
+        "file": 97,
+        "line": 77
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "lite",
+       "value": 1,
+       "text": "wielder.lite = 1",
+       "source": {
+        "file": 97,
+        "line": 77
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "combat",
+       "key": "melee_project",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHT",
+         "value": 15
+        },
+        {
+         "key": "FIRE",
+         "value": 15
+        }
+       ],
+       "text": "combat.melee_project = LIGHT:15, FIRE:15",
+       "source": {
+        "file": 97,
+        "line": 338
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "inc_damage",
+       "value": null,
+       "entries": [
+        {
+         "key": "LIGHT",
+         "value": 12
+        },
+        {
+         "key": "FIRE",
+         "value": 10
+        }
+       ],
+       "text": "wielder.inc_damage = LIGHT:12, FIRE:10",
+       "source": {
+        "file": 97,
+        "line": 338
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：你感觉太阳之光从体内消失。",
+       "source": {
+        "file": 97,
+        "line": 338
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "tome:SHIELD_UNSETTING",
+     "en": "Glows brightly in the light of dawn.",
+     "zh": "在黎明下闪耀光芒。"
+    },
+    {
+     "memberId": "tome:SWORD_DAWN",
+     "en": "If the sun doesn't set, dawn's power lasts forever.",
+     "zh": "如果太阳永不落山，黎明的光辉将永恒。"
+    }
+   ],
+   "source": {
+    "file": 97,
+    "line": 77
+   }
+  },
+  {
+   "id": "set-tome-GEM_TELOS__tome-TELOS_BOTTOM_HALF__tome-TELOS_TOP_HALF",
+   "name": "套装：泰勒斯的法杖（上半部） + 泰勒斯的法杖（下半部） + 泰勒斯的法杖水晶",
+   "memberIds": [
+    "tome:TELOS_TOP_HALF",
+    "tome:TELOS_BOTTOM_HALF",
+    "tome:GEM_TELOS"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "TELOS_BOTTOM_HALF",
+       "artifactId": "tome:TELOS_BOTTOM_HALF"
+      },
+      {
+       "kind": "artifact",
+       "ref": "GEM_TELOS",
+       "artifactId": "tome:GEM_TELOS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "TELOS_TOP_HALF",
+       "artifactId": "tome:TELOS_TOP_HALF"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "spell_cooldown_reduction",
+       "value": 0.1,
+       "text": "wielder.spell_cooldown_reduction = 0.1",
+       "source": {
+        "file": 98,
+        "line": 716
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialWearAdd",
+       "area": "wielder",
+       "key": "melee_project",
+       "value": null,
+       "entries": [
+        {
+         "key": "DRAINLIFE",
+         "value": 50
+        }
+       ],
+       "text": "wielder.melee_project = DRAINLIFE:50",
+       "source": {
+        "file": 98,
+        "line": 716
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：超凡的光芒逐渐消退。",
+       "source": {
+        "file": 98,
+        "line": 716
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [],
+   "source": {
+    "file": 6,
+    "line": 810
+   }
+  },
+  {
+   "id": "set-orcs-STEAM_POWERED_BOOTS__orcs-STEAM_POWERED_GAUNTLETS__orcs-STEAM_POWERED_HELM__orcs-TINKER_POWER_ARMOUR5",
+   "name": "套装：蒸汽动力头盔 + 蒸汽动力手套 + 蒸汽动力装甲 + 蒸汽动力鞋",
+   "memberIds": [
+    "orcs:STEAM_POWERED_HELM",
+    "orcs:STEAM_POWERED_GAUNTLETS",
+    "orcs:TINKER_POWER_ARMOUR5",
+    "orcs:STEAM_POWERED_BOOTS"
+   ],
+   "branches": [
+    {
+     "id": "complete",
+     "conditions": [
+      {
+       "kind": "artifact",
+       "ref": "STEAM_POWERED_BOOTS",
+       "artifactId": "orcs:STEAM_POWERED_BOOTS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "STEAM_POWERED_HELM",
+       "artifactId": "orcs:STEAM_POWERED_HELM"
+      },
+      {
+       "kind": "artifact",
+       "ref": "STEAM_POWERED_GAUNTLETS",
+       "artifactId": "orcs:STEAM_POWERED_GAUNTLETS"
+      },
+      {
+       "kind": "artifact",
+       "ref": "TINKER_POWER_ARMOUR5",
+       "artifactId": "orcs:TINKER_POWER_ARMOUR5"
+      }
+     ],
+     "effects": [
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_dam",
+       "value": 22,
+       "text": "wielder.combat_dam = 22",
+       "source": {
+        "file": 245,
+        "line": 115
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "combat_steampower",
+       "value": 22,
+       "text": "wielder.combat_steampower = 22",
+       "source": {
+        "file": 245,
+        "line": 115
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "max_steam",
+       "value": 5,
+       "text": "wielder.max_steam = 5",
+       "source": {
+        "file": 245,
+        "line": 115
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "pin_immune",
+       "value": 0.5,
+       "text": "wielder.pin_immune = 0.5",
+       "source": {
+        "file": 248,
+        "line": 52
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "special",
+       "key": "steam_boots_on_move",
+       "value": 4,
+       "text": "steam_boots_on_move = 4",
+       "source": {
+        "file": 248,
+        "line": 52
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "blind_immune",
+       "value": 0.5,
+       "text": "wielder.blind_immune = 0.5",
+       "source": {
+        "file": 248,
+        "line": 86
+       }
+      },
+      {
+       "kind": "static",
+       "method": "specialSetAdd",
+       "area": "wielder",
+       "key": "disarm_immune",
+       "value": 0.5,
+       "text": "wielder.disarm_immune = 0.5",
+       "source": {
+        "file": 248,
+        "line": 110
+       }
+      }
+     ],
+     "brokenEffects": [
+      {
+       "kind": "runtime",
+       "text": "解除套装时：你的蒸汽动力装甲与其他部件断开连接。",
+       "source": {
+        "file": 245,
+        "line": 115
+       }
+      }
+     ]
+    }
+   ],
+   "hints": [
+    {
+     "memberId": "orcs:TINKER_POWER_ARMOUR5",
+     "en": "The more steam the better!",
+     "zh": "蒸汽越多越好！"
+    },
+    {
+     "memberId": "orcs:STEAM_POWERED_BOOTS",
+     "en": "The more steam the better!",
+     "zh": "蒸汽越多越好！"
+    },
+    {
+     "memberId": "orcs:STEAM_POWERED_HELM",
+     "en": "The more steam the better!",
+     "zh": "蒸汽越多越好！"
+    },
+    {
+     "memberId": "orcs:STEAM_POWERED_GAUNTLETS",
+     "en": "The more steam the better!",
+     "zh": "蒸汽越多越好！"
+    }
+   ],
+   "source": {
+    "file": 248,
+    "line": 86
+   }
   }
  ]
 }

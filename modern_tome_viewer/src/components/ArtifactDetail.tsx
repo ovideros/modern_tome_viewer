@@ -14,10 +14,11 @@
 import { useState } from 'react';
 import { Highlight } from './Highlight';
 import { ItemProperties } from './ItemProperties';
-import type { Artifact, ArtifactDataset, ItemsReport } from '../lib/items';
+import type { Artifact, ArtifactDataset, ArtifactSet, ItemsReport } from '../lib/items';
 import { formatPropValue, sourceLabel, sourcePath } from '../lib/items';
+import { ArtifactSetSummary } from './ArtifactSetBits';
 import { assetUrl } from '../lib/data';
-import type { TalentEntry } from '../lib/types';
+import type { TalentEntry, TalentTree } from '../lib/types';
 
 interface ArtifactDetailProps {
   artifact: Artifact;
@@ -36,6 +37,10 @@ interface ArtifactDetailProps {
   onSelectTalent: (talent: TalentEntry) => void;
   selectedTalentId: string | null;
   onClose: () => void;
+  onOpenSet?: (id: string) => void;
+  onOpenTalent?: (id: string) => void;
+  onOpenTree?: (id: string) => void;
+  treeOf?: (id: string) => TalentTree | undefined;
 }
 
 /** Chinese names for the item's power source, which the game shows as a tag. */
@@ -139,6 +144,10 @@ export function ArtifactDetail({
   onSelectTalent,
   selectedTalentId,
   onClose,
+  onOpenSet,
+  onOpenTalent,
+  onOpenTree,
+  treeOf,
 }: ArtifactDetailProps) {
   const [showLua, setShowLua] = useState(false);
   const talent = artifact.useTalent ? talentOf(artifact.useTalent.talentId) : undefined;
@@ -220,6 +229,20 @@ export function ArtifactDetail({
           这件物品没有静态属性面板。
         </p>
       )}
+
+      {artifact.setIds?.map((setId) => dataset.sets?.find((set) => set.id === setId))
+        .filter((set): set is ArtifactSet => Boolean(set)).map((set) => (
+        <ArtifactSetSummary
+          key={set.id}
+          set={set}
+          dataset={dataset}
+          onOpenSet={onOpenSet}
+          talentOf={talentOf}
+          treeOf={treeOf}
+          onOpenTalent={onOpenTalent}
+          onOpenTree={onOpenTree}
+        />
+      ))}
 
       {/* --- Active ability --- */}
       {(artifact.useTalent || artifact.usePower) && (

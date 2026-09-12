@@ -78,6 +78,7 @@ export function EgoDetail({
   const facts = egoFactLines(ego, dataset.fieldMeta, damageTypes, materialLevel, labelResolver);
   const notes = egoNoteLines(ego, materialLevel);
   const hasEffect = facts.length > 0 || notes.length > 0;
+  const randomWeightTotal = (ego.randomOptions ?? []).reduce((total, option) => total + option.weight, 0);
 
   // Group applicability by the pool it comes from, so a shared pool can be
   // shown as such instead of being flattened into one list of slots.
@@ -256,6 +257,26 @@ export function EgoDetail({
           该词缀的效果写在运行时回调里，源码中没有可以静态读取的属性表，
           社区词缀表也没有对应的效果记录，因此这里不做猜测。
         </p>
+      )}
+
+      {ego.randomOptions && ego.randomOptions.length > 0 && (
+        <section className="rounded-lg border border-line bg-surface-raised/60 px-3 py-2.5" data-testid="ego-random-options">
+          <h3 className="mb-1.5 flex flex-wrap items-baseline gap-2 text-[13px] font-semibold">
+            随机技能池
+            <span className="chip">{ego.randomOptions.length} 个候选</span>
+          </h3>
+          <p className="mb-2 text-[11.5px] leading-relaxed text-subtle">
+            每次触发时从下列技能中按权重抽取 1 项；权重越大，被选中的机会越高。总权重 {randomWeightTotal}，不是等概率抽取。
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {ego.randomOptions.map((option) => (
+              <span key={option.talentId} className="chip" title={`抽取权重 ${option.weight}`}>
+                {labelResolver?.(option.talentId) ?? '未翻译技能'}
+                <span className="ml-1 text-[10px] text-subtle">×{option.weight}</span>
+              </span>
+            ))}
+          </div>
+        </section>
       )}
 
       {ego.areas.length > 0 && (
