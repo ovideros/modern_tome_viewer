@@ -121,6 +121,20 @@ test('swarm: on_die is a script, not a talent', { skip }, () => {
   );
 });
 
+test('speed fields: inherited global and explicit combat multipliers are preserved', { skip }, () => {
+  const bee = one('bee swarm');
+  assert.equal(bee.resolved.fields.global_speed_base, 2, 'bee swarm inherits 200% global speed from BASE_NPC_INSECT');
+
+  const blade = one('blade horror');
+  assert.equal(blade.resolved.fields.combat_physspeed, 4, 'blade horror has 400% physical combat speed');
+
+  const saw = one('saw horror');
+  assert.equal(saw.resolved.fields.combat_physspeed, 5, 'saw horror has 500% physical combat speed');
+
+  const carpenter = one('giant carpenter ant');
+  assert.equal(carpenter.resolved.fields.movement_speed, 1.3, 'giant carpenter ant has 130% movement speed');
+});
+
 test('skill: base=0 growth keeps its starting point', { skip }, () => {
   const necromancer = one('orc necromancer');
   const desolate = necromancer.talents.fixed.find((talent) => talent.id === 'T_DESOLATE_WASTE');
@@ -397,6 +411,22 @@ test('dataset: census is internally consistent', { skip: !hasBuild }, () => {
   assert.ok(census.abstract > 0, 'abstract BASE templates are counted but excluded');
   assert.equal(monsters.filter((monster) => monster.nameStatus === 'exact').length, census.withChineseName);
   assert.equal(monsters.filter((monster) => monster.image).length, census.withImage);
+});
+
+test('dataset: speed profiles are complete and preserve known source examples', { skip: !hasBuild }, () => {
+  const dataset = JSON.parse(fs.readFileSync(path.join(outDir, 'data/monsters.json'), 'utf8'));
+  const keys = ['global', 'movement', 'combat', 'spell', 'mind'];
+  for (const monster of dataset.monsters) {
+    assert.ok(monster.speed && typeof monster.speed === 'object', `${monster.id} has a speed profile`);
+    for (const key of keys) {
+      const value = monster.speed[key];
+      assert.ok(value === null || (Number.isFinite(value) && value > 0), `${monster.id} ${key}=${value}`);
+    }
+  }
+  assert.equal(dataset.monsters.find((monster) => monster.name === 'bee swarm')?.speed.global, 2);
+  assert.equal(dataset.monsters.find((monster) => monster.name === 'blade horror')?.speed.combat, 4);
+  assert.equal(dataset.monsters.find((monster) => monster.name === 'saw horror')?.speed.combat, 5);
+  assert.equal(dataset.census.withSpeed, dataset.monsters.filter((monster) => keys.some((key) => monster.speed[key] !== null)).length);
 });
 
 test('dataset: ids are globally unique even for re-declared define_as', { skip: !hasBuild }, () => {

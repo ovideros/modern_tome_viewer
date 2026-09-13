@@ -91,22 +91,22 @@ export function MonstersPage({
   compareFull,
 }: MonstersPageProps) {
   // Where the talent opens:
-  //  - `xl` (1280px) and up: a third column, beside the monster panel. The
+  //  - `lg` (1024px) and up: a third column, beside the monster panel. The
   //    third column is paid for by the list, not by the viewport: while a
   //    talent is open the list's card columns follow the list's *own* width
   //    (container query), so it drops to one column whenever three panes would
   //    squeeze it, and goes back to two as soon as there is room. The two side
   //    panels also give 20px each back to the list.
-  //  - below `xl`: a bottom sheet, sharing one slot with the monster sheet.
+  //  - below `lg`: a bottom sheet, sharing one slot with the monster sheet.
   //
-  // Below `xl` the talent sheet takes the same slot as the monster sheet, so the
+  // Below `lg` the talent sheet takes the same slot as the monster sheet, so the
   // monster sheet is suppressed while a talent is open and its close button
   // reads 返回怪物. That keeps the phone layout to one focused sheet at a time
   // instead of stacking two drawers on top of each other.
   // Only the *bottom sheet* variant needs the JS answer; the side columns stay
-  // CSS-driven (`xl:block`). `fallback: true` means an environment without
+  // CSS-driven (`lg:block`). `fallback: true` means an environment without
   // `matchMedia` keeps the desktop layout rather than losing a panel.
-  const narrowViewport = !useMediaQuery('(min-width: 1280px)', true);
+  const narrowViewport = !useMediaQuery('(min-width: 1024px)', true);
 
   const [monsterData, setMonsterData] = useState<MonsterData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -461,7 +461,7 @@ export function MonstersPage({
           )}
         </main>
 
-        <aside className="hidden w-[360px] shrink-0 xl:block" aria-hidden={!selected}>
+        <aside className="hidden w-[300px] shrink-0 lg:block xl:w-[360px]" aria-hidden={!selected}>
           {selected && (
             <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <MonsterDetail
@@ -479,13 +479,13 @@ export function MonstersPage({
           )}
         </aside>
 
-        {/* From `xl` up the talent opens in its own column beside the monster
+        {/* From `lg` up the talent opens in its own column beside the monster
             instead of replacing it — the monster's skill list stays visible, so
             comparing its skills does not need a round trip through the search
             page. This used to need 1800px; the list giving up its second column
             (and the narrower panels above) is what pays for it. */}
         {selected && selectedTalent && (
-          <div className="animate-fade-in hidden w-[340px] shrink-0 xl:block" data-testid="monster-talent-column">
+          <div className="animate-fade-in hidden w-[300px] shrink-0 lg:block xl:w-[340px]" data-testid="monster-talent-column">
             <div className="sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <TalentDetail
                 talent={selectedTalent}
@@ -510,9 +510,9 @@ export function MonstersPage({
       </div>
 
       {/*
-        Below `xl` both details are bottom sheets, and they share one slot. While
+        Below `lg` both details are bottom sheets, and they share one slot. While
         a talent is open the monster sheet is therefore not rendered at all —
-        toggling a `hidden` class instead would lose to `xl:hidden` on
+        toggling a `hidden` class instead would lose to `lg:hidden` on
         specificity and leave the monster sheet permanently hidden after the
         talent closed.
       */}
@@ -524,6 +524,7 @@ export function MonstersPage({
         // and is clipped — the sheet looks unscrollable and a drag scrolls the
         // list behind it (see docs/HANDOVER.md §0.6).
         <MobileSheet
+          breakpoint="lg"
           maxHeight="75vh"
           onClose={() => {
             setSelectedId(null);
@@ -548,6 +549,7 @@ export function MonstersPage({
 
       {selected && selectedTalent && (
         <MobileSheet
+          breakpoint="lg"
           maxHeight="85vh"
           zIndex="z-50"
           onClose={() => setSelectedTalentId(null)}

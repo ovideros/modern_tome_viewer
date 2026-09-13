@@ -201,7 +201,7 @@ export function SearchPage({
         </div>
 
         {selected && (
-          <div className="animate-fade-in hidden w-[380px] shrink-0 xl:block">
+          <div className="animate-fade-in hidden w-[380px] shrink-0 lg:block">
             <div
               className="sticky h-[calc(100vh-var(--header-h)-var(--searchbar-h)-20px)]"
               style={{ top: 'calc(var(--header-h) + var(--searchbar-h) + 8px)' }}
@@ -230,7 +230,7 @@ export function SearchPage({
           bounded flex column so the sheet scrolls itself rather than clipping
           the panel and scrolling the results behind it (HANDOVER §0.6). */}
       {selected && (
-        <MobileSheet onClose={closeTalent} testId="search-talent-sheet">
+        <MobileSheet onClose={closeTalent} breakpoint="lg" testId="search-talent-sheet">
           <TalentDetail
             talent={selected}
             tree={data.byTree.get(selected.tree)}

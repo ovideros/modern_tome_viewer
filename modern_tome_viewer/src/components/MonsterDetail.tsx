@@ -143,6 +143,26 @@ function mechanicNotes(monster: Monster): { text: string; source: string }[] {
   return notes;
 }
 
+const SPEED_LABELS: { key: keyof Monster['speed']; label: string; description: string }[] = [
+  { key: 'global', label: '全局速度', description: '整体行动与时间流逝速度' },
+  { key: 'movement', label: '移动速度', description: '移动行动的速度' },
+  { key: 'combat', label: '战斗速度', description: '物理攻击与武器行动的速度' },
+  { key: 'spell', label: '法术速度', description: '施法行动的速度' },
+  { key: 'mind', label: '精神速度', description: '精神能力行动的速度' },
+];
+
+function speedEntries(monster: Monster): { key: keyof Monster['speed']; label: string; description: string; value: number }[] {
+  return SPEED_LABELS.flatMap((entry) => {
+    const value = monster.speed[entry.key];
+    return value === null ? [] : [{ ...entry, value }];
+  });
+}
+
+function formatSpeed(value: number) {
+  const percentage = value * 100;
+  return `${Number.isInteger(percentage) ? percentage : percentage.toFixed(1)}%`;
+}
+
 export function MonsterDetail({
   monster,
   talentOf,
@@ -157,6 +177,7 @@ export function MonsterDetail({
   const typeLabels = monsterTypeLabels(monster);
   const description = monster.descZh ?? monster.desc;
   const notes = useMemo(() => mechanicNotes(monster), [monster]);
+  const speeds = useMemo(() => speedEntries(monster), [monster]);
 
   const hasRandom = monster.rngSets.length > 0 || monster.rngPools.length > 0;
 
@@ -224,6 +245,26 @@ export function MonsterDetail({
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {speeds.length > 0 && (
+          <div className="mb-3 rounded-md border border-line bg-raised p-2" data-testid="monster-speed-profile">
+            <h3 className="mb-1 text-[11.5px] font-semibold text-muted">速度</h3>
+            <div className="flex flex-wrap gap-1">
+              {speeds.map((speed) => (
+                <span
+                  key={speed.key}
+                  className="chip"
+                  title={`${speed.description}；100% 为引擎基准。模板值可能还会被装备、技能、状态或难度修正改变。`}
+                >
+                  {speed.label} {formatSpeed(speed.value)}
+                </span>
+              ))}
+            </div>
+            <p className="mt-1 text-[10.5px] leading-relaxed text-subtle">
+              这里显示的是源码模板中的基础倍率；未列出的速度按 100% 基准处理。全局速度会影响行动节奏，移动速度只影响移动，战斗／法术／精神速度分别影响对应行动的耗时。战斗速度还会与武器或具体攻击自带的速度共同决定实际间隔。
+            </p>
           </div>
         )}
 

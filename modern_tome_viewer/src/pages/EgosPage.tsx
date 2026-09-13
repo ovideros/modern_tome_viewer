@@ -1076,9 +1076,9 @@ export function EgosPage({
         </p>
       </header>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_minmax(0,1fr)]">
         {/* --- Filter rail: tag toggles, matching the advanced-search panel --- */}
-        <aside className={`${showFilters ? 'block' : 'hidden'} xl:block`}>
+        <aside className={`${showFilters ? 'block' : 'hidden'} lg:block`}>
           <div className="panel divide-y divide-line px-3">
             <div className="py-2.5">
               <label className="mb-1 block text-[12.5px] font-semibold" htmlFor="ego-query">
@@ -1231,7 +1231,7 @@ export function EgosPage({
         {/* --- Results --- */}
         <div className="min-w-0">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <button type="button" className="btn xl:hidden" onClick={() => setShowFilters((v) => !v)}>
+            <button type="button" className="btn lg:hidden" onClick={() => setShowFilters((v) => !v)}>
               {showFilters ? '收起筛选' : '筛选'}
             </button>
             <span className="text-[12px] text-muted">
@@ -1278,7 +1278,7 @@ export function EgosPage({
       {/* --- Detail: side panel on wide screens, sheet below --- */}
       {selected && (
         <>
-          <MobileSheet onClose={() => setSelectedId(null)} testId="ego-detail-sheet" ariaLabel="词缀详情">
+          <MobileSheet onClose={() => setSelectedId(null)} breakpoint="lg" testId="ego-detail-sheet" ariaLabel="词缀详情">
             <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3">
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <EgoDetail
@@ -1307,7 +1307,7 @@ export function EgosPage({
             is kept in sync with the real header height by `useHeaderHeight`,
             because the header wraps to two rows on narrow viewports.
           */}
-          <div className="pointer-events-none fixed bottom-0 right-0 top-[calc(var(--header-h)+2px)] z-20 hidden w-[26rem] p-3 xl:block">
+          <div className="pointer-events-none fixed bottom-0 right-0 top-[calc(var(--header-h)+2px)] z-20 hidden w-[26rem] p-3 lg:block">
             {/* `pb-16` keeps the last row out from under the compare tray, which
                 is fixed to the viewport bottom at a higher z-index. */}
             <div className="pointer-events-auto panel h-full overflow-y-auto p-3 pb-16">
@@ -1333,7 +1333,7 @@ export function EgosPage({
 
       {selectedTalent && (
         <>
-        <MobileSheet onClose={() => setSelectedTalentId(null)} zIndex="z-50" testId="ego-talent-sheet" ariaLabel="技能详情">
+        <MobileSheet onClose={() => setSelectedTalentId(null)} breakpoint="lg" zIndex="z-50" testId="ego-talent-sheet" ariaLabel="技能详情">
           <TalentDetail
             talent={selectedTalent}
             tree={data.byTree.get(selectedTalent.tree)}
@@ -1352,7 +1352,7 @@ export function EgosPage({
             embedded
           />
         </MobileSheet>
-        <div className="panel mt-4 hidden p-3 xl:block">
+        <div className="panel mt-4 hidden p-3 lg:block">
           <TalentDetail
             talent={selectedTalent}
             tree={data.byTree.get(selectedTalent.tree)}

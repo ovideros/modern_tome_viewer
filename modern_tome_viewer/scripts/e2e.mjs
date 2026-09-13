@@ -243,6 +243,17 @@ check('URL carries the talent id', page.url().includes('talent='), page.url());
 check('an ordinary cooldown is not marked fixed', (await page.locator('[data-testid="fixed-cooldown"]').count()) === 0);
 await shot('05-detail');
 
+// iPad Pro-width viewports keep the search detail beside the results.
+await page.setViewportSize({ width: 1024, height: 900 });
+await page.waitForTimeout(300);
+check(
+  '1024px search detail stays in a side panel',
+  (await page.locator('[data-testid="talent-detail"]:visible').count()) === 1 &&
+    (await page.locator('[data-testid="search-talent-sheet"]:visible').count()) === 0,
+);
+await page.setViewportSize({ width: 1500, height: 950 });
+await page.waitForTimeout(250);
+
 // `fixed_cooldown = true` (Actor.lua:6872 — "Can not touch this cooldown"):
 // 超越永恒's 50 turns cannot be shortened by any effect, and the character sheet
 // spells that out. The card must too.
@@ -870,6 +881,15 @@ if (await talentCard.count()) {
   const sideText = await side.innerText();
   check('side panel shows the talent text', sideText.includes('技能说明'));
   check('side panel shows the same sections as the search page', ['使用模式', '冷却时间', '升级需求', '技能标记', '数据来源'].every((s) => sideText.includes(s)));
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.waitForTimeout(300);
+  check(
+    '1024px class talent stays in a side panel',
+    (await page.locator('[data-testid="talent-detail"]:visible').count()) === 1 &&
+      (await page.locator('[data-testid="class-talent-sheet"]:visible').count()) === 0,
+  );
+  await page.setViewportSize({ width: 1500, height: 950 });
+  await page.waitForTimeout(250);
   await shot('10b-class-talent');
 }
 
@@ -925,6 +945,33 @@ const classTalentRows = await mobileClassTree.locator('[data-testid="talent-card
   return { count: cards.length, rows: [...new Set(firstFour)].length };
 });
 check('mobile class tree keeps four talents on one row', classTalentRows.count >= 4 && classTalentRows.rows === 1, JSON.stringify(classTalentRows));
+
+// At 300px the four-card layout should still fit without requiring the user
+// to pan sideways. Below the compact content floor, only the skill row should
+// scroll, while the cards remain on one line.
+await page.setViewportSize({ width: 300, height: 900 });
+await page.goto(`${url}#/classes?class=MAGE`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(700);
+const compactClassTree = page.locator('[data-testid="tree-panel"]').first();
+const compactClassRow = compactClassTree.locator('[aria-label$="技能列表"]');
+const compactClassMetrics = await compactClassRow.evaluate((row) => {
+  const cards = [...row.querySelectorAll('[data-testid="talent-card"]')].slice(0, 4);
+  return {
+    rowWidth: Math.round(row.clientWidth),
+    rowScrollWidth: Math.round(row.scrollWidth),
+    rows: new Set(cards.map((card) => Math.round(card.getBoundingClientRect().top))).size,
+    count: cards.length,
+  };
+});
+check(
+  '300px four-card tree fits one row without scrolling',
+  compactClassMetrics.count === 4 && compactClassMetrics.rows === 1 && compactClassMetrics.rowScrollWidth <= compactClassMetrics.rowWidth + 1,
+  JSON.stringify(compactClassMetrics),
+);
+await page.setViewportSize({ width: 260, height: 900 });
+await page.waitForTimeout(300);
+const narrowClassMetrics = await compactClassRow.evaluate((row) => ({ client: row.clientWidth, scroll: row.scrollWidth }));
+check('260px skill row scrolls horizontally instead of wrapping', narrowClassMetrics.scroll > narrowClassMetrics.client, JSON.stringify(narrowClassMetrics));
 
 const mobileClassTalent = page.locator('[data-testid="talent-card"]').first();
 if (await mobileClassTalent.count()) {
@@ -991,6 +1038,15 @@ if (await raceTalent.count()) {
     });
     check('race page tooltip escapes its panel', box?.inside === true && box?.confined === false, JSON.stringify(box));
   }
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.waitForTimeout(300);
+  check(
+    '1024px race talent stays in a side panel',
+    (await page.locator('[data-testid="talent-detail"]:visible').count()) === 1 &&
+      (await page.locator('[data-testid="race-talent-sheet"]:visible').count()) === 0,
+  );
+  await page.setViewportSize({ width: 1500, height: 950 });
+  await page.waitForTimeout(250);
 }
 
 // The race page follows the same mobile picker and outside-dismiss behaviour.
@@ -1022,6 +1078,31 @@ if (await mobileRaceTalent.count()) {
   await page.waitForTimeout(250);
   check('clicking outside closes the mobile race sheet', await page.locator('[data-testid="race-talent-sheet"]:visible').count() === 0);
 }
+
+// Race trees use the same four-card compact layout as class trees.
+await page.setViewportSize({ width: 300, height: 900 });
+await page.goto(`${url}#/races?race=ELF`, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(700);
+const compactRaceTree = page.locator('[data-testid="tree-panel"]').first();
+const compactRaceRow = compactRaceTree.locator('[aria-label$="技能列表"]');
+const compactRaceMetrics = await compactRaceRow.evaluate((row) => {
+  const cards = [...row.querySelectorAll('[data-testid="talent-card"]')].slice(0, 4);
+  return {
+    rowWidth: Math.round(row.clientWidth),
+    rowScrollWidth: Math.round(row.scrollWidth),
+    rows: new Set(cards.map((card) => Math.round(card.getBoundingClientRect().top))).size,
+    count: cards.length,
+  };
+});
+check(
+  '300px race four-card tree fits one row without scrolling',
+  compactRaceMetrics.count === 4 && compactRaceMetrics.rows === 1 && compactRaceMetrics.rowScrollWidth <= compactRaceMetrics.rowWidth + 1,
+  JSON.stringify(compactRaceMetrics),
+);
+await page.setViewportSize({ width: 260, height: 900 });
+await page.waitForTimeout(300);
+const narrowRaceMetrics = await compactRaceRow.evaluate((row) => ({ client: row.clientWidth, scroll: row.scrollWidth }));
+check('260px race skill row scrolls horizontally instead of wrapping', narrowRaceMetrics.scroll > narrowRaceMetrics.client, JSON.stringify(narrowRaceMetrics));
 await page.setViewportSize({ width: 1500, height: 950 });
 
 // ---------------------------------------------------------------------------
@@ -1106,6 +1187,16 @@ await typeRow('all').click();
 await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 812, null, { timeout: 15000 });
 check('clearing the type filter restores the full list', (await monsterCardCount()) === 812, String(await monsterCardCount()));
 
+// Speed is a static template fact, so verify the detail panel exposes a
+// concrete inherited example rather than only checking that the panel opens.
+await monsterCards().filter({ hasText: '蜜蜂群' }).first().click();
+await page.waitForTimeout(400);
+const beeDetail = page.locator('section[aria-label$="的详情"]:visible').first();
+const beeDetailText = await beeDetail.innerText();
+check('monster detail shows the source speed profile', beeDetailText.includes('全局速度') && beeDetailText.includes('200%'), beeDetailText.slice(0, 240));
+await beeDetail.locator('button[aria-label="关闭详情"]').click();
+await page.waitForTimeout(250);
+
 // The filter is part of the shareable URL.
 await page.goto(`${url}#/monsters?type=horror&sub=eldritch`, { waitUntil: 'domcontentloaded' });
 await page.waitForFunction(() => document.querySelectorAll('main div.grid > button').length === 61, null, { timeout: 15000 });
@@ -1148,7 +1239,7 @@ await visibleTalentPanel().first().locator('button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 check('closing the talent panel keeps the monster open', (await visibleTalentPanel().count()) === 0 && (await detailPanel.isVisible()));
 
-// From 1280px up the talent is a third column, and the list pays for it by
+// From 1024px up the talent is a third column, and the list pays for it by
 // dropping to a single card column. It used to need 1800px.
 await page.setViewportSize({ width: 1500, height: 950 });
 await page.waitForTimeout(300);
@@ -1191,18 +1282,18 @@ check('1500px drops the list to one card column to make room', state.cardColumns
 await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 
-// 1280px is the low end of the three-pane layout.
-await page.setViewportSize({ width: 1280, height: 900 });
+// 1024px is the low end of the three-pane layout, matching iPad Pro landscape.
+await page.setViewportSize({ width: 1024, height: 900 });
 await page.waitForTimeout(400);
 await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
 await page.waitForTimeout(700);
 state = await sheetState();
 check(
-  '1280px still shows monster + talent side by side',
+  '1024px still shows monster + talent side by side',
   state.column === true && state.talentPanels === 1 && state.monsterSections === 1,
   JSON.stringify(state),
 );
-check('1280px keeps the list usable as a single column', state.cardColumns === 1 && state.listWidth > 240, JSON.stringify(state));
+check('1024px keeps the list usable as a single column', state.cardColumns === 1 && state.listWidth > 60, JSON.stringify(state));
 await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 
@@ -1220,8 +1311,25 @@ check(
 await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
 await page.waitForTimeout(500);
 
-// Below xl the talent sheet replaces the monster sheet, with a way back.
-for (const width of [1200, 900, 420, 360]) {
+// iPad Pro widths keep details in side columns rather than turning them into
+// a popup.  The phone-sized widths below continue to use bottom sheets.
+for (const width of [1194, 1024]) {
+  await page.setViewportSize({ width, height: 900 });
+  await page.waitForTimeout(350);
+  await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
+  await page.waitForTimeout(700);
+  state = await sheetState();
+  check(
+    `${width}px keeps the talent in a side column`,
+    state.column && state.sheet === false && state.talentPanels === 1 && state.monsterSections === 1,
+    JSON.stringify(state),
+  );
+  check(`${width}px does not show a bottom-sheet back control`, (await page.locator('[data-testid="talent-detail"]:visible button[aria-label="返回怪物"]').count()) === 0);
+  await page.locator('[data-testid="monster-talent-column"] button[title^="关闭"]').click();
+  await page.waitForTimeout(500);
+}
+
+for (const width of [900, 420, 360]) {
   await page.setViewportSize({ width, height: 900 });
   await page.waitForTimeout(350);
   await page.locator('section[aria-label$="的详情"]:visible button[title*="技能栏"]').first().click();
@@ -1651,6 +1759,15 @@ check(
   headerBox !== null && panelName !== null && panelName.y >= headerBox.y + headerBox.height - 1,
   `name at ${panelName ? Math.round(panelName.y) : '?'}`,
 );
+await page.setViewportSize({ width: 1024, height: 900 });
+await page.waitForTimeout(300);
+check(
+  '1024px affix detail stays in a side panel',
+  (await page.locator('[data-testid="ego-detail"]:visible').count()) === 1 &&
+    (await page.locator('[data-testid="ego-detail-sheet"]:visible').count()) === 0,
+);
+await page.setViewportSize({ width: 1500, height: 950 });
+await page.waitForTimeout(250);
 await shot('10c-egos-detail-below-header');
 
 // The effect is on the card, not only in the panel: a callback affix (a charm
@@ -1753,9 +1870,40 @@ check('equipment requirements are kept complete', /装备需求[\s\S]{0,40}力�
 check('a talent ability links into the shared talent library', billText.includes('T_SHATTERING_BLOW'));
 check('flavour text is not the effect list', billText.includes('风味描述'));
 
+await page.setViewportSize({ width: 1024, height: 900 });
+await page.waitForTimeout(300);
+check(
+  '1024px artifact detail stays in a side panel',
+  (await page.locator('[data-testid="artifact-detail"]:visible').count()) === 1 &&
+    (await page.locator('[data-testid="artifact-detail-sheet"]:visible').count()) === 0,
+);
+
+// Set details follow the same iPad side-panel rule as the other encyclopedia
+// pages, while the phone remains a bottom sheet.
+await page.setViewportSize({ width: 1024, height: 900 });
+await page.goto(`${url}#/sets`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('main button', { timeout: 20000 });
+await page.locator('main button').first().click();
+await page.waitForTimeout(500);
+check(
+  '1024px set detail stays in a side panel',
+  (await page.locator('[data-testid="set-detail"]:visible').count()) === 1 &&
+    (await page.locator('[data-testid="set-detail-sheet"]:visible').count()) === 0,
+);
+await page.setViewportSize({ width: 420, height: 900 });
+await page.waitForTimeout(300);
+check(
+  '420px set detail becomes a bottom sheet',
+  (await page.locator('[data-testid="set-detail-sheet"]:visible').count()) === 1,
+);
+
 // Narrow-screen layout: the detail must stay readable without horizontal
 // scrolling, which is where the grouped rows would break first.
 await page.setViewportSize({ width: 390, height: 844 });
+await page.goto(`${url}#/artifacts?q=${encodeURIComponent('比尔的树干')}`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('[data-testid="artifact-card"]', { timeout: 20000 });
+await page.locator('[data-testid="artifact-card"]').first().click();
+await page.waitForSelector('[data-testid="artifact-detail"]:visible', { timeout: 15000 });
 await page.waitForTimeout(500);
 const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 check('artifact detail does not force horizontal scrolling on a phone', overflow <= 2, `${overflow}px overflow`);

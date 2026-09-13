@@ -250,6 +250,16 @@ async function main() {
       expWorth: typeof fields.exp_worth === 'number' ? fields.exp_worth : null,
       canMultiply: typeof fields.can_multiply === 'number' ? fields.can_multiply : null,
       faction: typeof fields.faction === 'string' ? fields.faction : null,
+      // These are the resolved template multipliers. A missing field means
+      // the engine default of 1.0 (100%); keeping null here lets the UI say
+      // which speeds are actually declared or inherited by the template.
+      speed: {
+        global: typeof fields.global_speed_base === 'number' ? fields.global_speed_base : null,
+        movement: typeof fields.movement_speed === 'number' ? fields.movement_speed : null,
+        combat: typeof fields.combat_physspeed === 'number' ? fields.combat_physspeed : null,
+        spell: typeof fields.combat_spellspeed === 'number' ? fields.combat_spellspeed : null,
+        mind: typeof fields.combat_mindspeed === 'number' ? fields.combat_mindspeed : null,
+      },
       autoClasses: normalizeAutoClasses(fields.auto_classes, classNames),
       desc: descRaw,
       descZh: descZh && descZh.status !== 'missing' ? descZh.text : null,
@@ -335,6 +345,7 @@ async function main() {
     withChineseType: monsters.filter((m) => m.typeZh).length,
     withChineseSubtype: monsters.filter((m) => m.subtypeZh).length,
     withSubtype: monsters.filter((m) => m.subtype).length,
+    withSpeed: monsters.filter((m) => Object.values(m.speed).some((value) => value !== null)).length,
     namedLikeBase: monsters.filter((m) => /^BASE_/.test(m.defineAs ?? '')).length,
   };
   for (const monster of monsters) {

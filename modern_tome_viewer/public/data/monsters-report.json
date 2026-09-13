@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-11T03:00:15.847Z",
+  "builtAt": "2026-09-13T07:28:48.457Z",
   "census": {
     "templates": 942,
     "abstract": 130,
@@ -64,6 +64,7 @@
     "withChineseType": 812,
     "withChineseSubtype": 811,
     "withSubtype": 811,
+    "withSpeed": 175,
     "namedLikeBase": 0
   },
   "files": [
@@ -1723,5 +1724,5 @@
       "childCount": 0
     }
   ],
-  "elapsedMs": 735
+  "elapsedMs": 829
 }

@@ -174,7 +174,7 @@ export function RacesPage({
           )}
         </main>
 
-        <aside className="hidden w-[340px] shrink-0 xl:block" aria-hidden={!selected}>
+        <aside className="hidden w-[340px] shrink-0 lg:block" aria-hidden={!selected}>
           {selected && (
             <div className="animate-fade-in sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <TalentDetail
@@ -200,7 +200,7 @@ export function RacesPage({
       </div>
 
       {selected && (
-        <MobileSheet onClose={() => setSelected(null)} testId="race-talent-sheet">
+        <MobileSheet onClose={() => setSelected(null)} breakpoint="lg" testId="race-talent-sheet">
           <TalentDetail
             talent={asEntry(selected.talent, selected.treeName)}
             tree={data.byTree.get(selected.talent.tree)}

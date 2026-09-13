@@ -176,6 +176,10 @@ const LITERAL_FIELD_KEYS = new Set([
   'can_multiply', 'summon_time', 'on_die', 'on_acquire', 'no_drops', 'female',
   'male', 'never_move', 'immovable', 'fixed_rating', 'max_life', 'tall', 'wide',
   'nice_tile', 'randboss', 'no_difficulty_random_class', 'body', 'resists',
+  // Actor speed fields. These are literal template properties, so they can be
+  // safely inherited and displayed without trying to execute Lua callbacks.
+  'global_speed_base', 'movement_speed', 'combat_physspeed', 'combat_spellspeed',
+  'combat_mindspeed',
 ]);
 
 /**

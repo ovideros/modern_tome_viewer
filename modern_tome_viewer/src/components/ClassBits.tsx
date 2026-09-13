@@ -83,6 +83,13 @@ export function TalentTreePanel({
 }) {
   const locked = !treeRef.unlocked;
   const talents = tree?.talents ?? [];
+  // Four-talent trees are the common compact case. A four-column grid keeps
+  // the cards evenly distributed without asking each card to retain the
+  // desktop 68/72px minimum. Below the grid's 220px content floor, the outer
+  // scroller takes over instead of allowing the tree to wrap or overflow the
+  // page. Larger trees keep a fixed card width and scroll as needed.
+  const compactFour = talents.length === 4;
+  const compactGrid = compactFour ? 'grid min-w-[220px] grid-cols-4 gap-0' : null;
 
   return (
     <section
@@ -113,24 +120,26 @@ export function TalentTreePanel({
 
       {talents.length ? (
         <div
-          className="flex min-w-full max-w-full snap-x justify-between gap-1 overflow-x-auto overscroll-x-contain pb-1"
+          className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain pb-1"
           aria-label={`${treeRef.name}技能列表`}
         >
-          {talents.map((talent) => (
-            <button
-              key={talent.id}
-              type="button"
-              data-testid="talent-card"
-              onClick={() => onSelectTalent(talent, treeRef.name, treeRef.mastery)}
-              title={`${talent.plainName} · ${talent.shortName}`}
-              className={`flex w-[68px] min-w-[68px] shrink-0 snap-start flex-col items-center gap-1 rounded border border-transparent px-0.5 py-1.5 text-center hover:border-accent hover:bg-hover sm:w-[72px] sm:min-w-[72px] ${
-                locked ? 'grayscale-[0.35]' : ''
-              }`}
-            >
-              <TalentIcon talent={talent} size={32} iconSize={48} />
-              <span className="line-clamp-2 w-full text-[11px] leading-tight">{talent.plainName}</span>
-            </button>
-          ))}
+          <div className={compactGrid ?? 'flex min-w-full justify-between gap-0.5'}>
+            {talents.map((talent) => (
+              <button
+                key={talent.id}
+                type="button"
+                data-testid="talent-card"
+                onClick={() => onSelectTalent(talent, treeRef.name, treeRef.mastery)}
+                title={`${talent.plainName} · ${talent.shortName}`}
+                className={`flex w-[56px] min-w-[56px] shrink-0 snap-start flex-col items-center gap-1 rounded border border-transparent px-0.5 py-1.5 text-center hover:border-accent hover:bg-hover sm:w-[72px] sm:min-w-[72px] ${
+                  compactFour ? 'max-w-[72px] justify-self-center' : ''
+                } ${locked ? 'grayscale-[0.35]' : ''}`}
+              >
+                <TalentIcon talent={talent} size={32} iconSize={48} />
+                <span className="line-clamp-2 w-full text-[11px] leading-tight">{talent.plainName}</span>
+              </button>
+            ))}
+          </div>
         </div>
       ) : (
         <p className="px-1 py-1 text-[11px] text-subtle">该大系暂无技能数据</p>

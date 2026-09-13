@@ -170,7 +170,7 @@ export function ClassesPage({
           )}
         </main>
 
-        <aside className="hidden w-[340px] shrink-0 xl:block" aria-hidden={!selected}>
+        <aside className="hidden w-[340px] shrink-0 lg:block" aria-hidden={!selected}>
           {selected && (
             <div className="animate-fade-in sticky top-[calc(var(--header-h)+2px)] h-[calc(100vh-var(--header-h)-12px)]">
               <TalentDetail
@@ -196,7 +196,7 @@ export function ClassesPage({
       </div>
 
       {selected && (
-        <MobileSheet onClose={() => setSelected(null)} testId="class-talent-sheet">
+        <MobileSheet onClose={() => setSelected(null)} breakpoint="lg" testId="class-talent-sheet">
           <TalentDetail
             talent={asEntry(selected.talent, selected.treeName)}
             tree={data.byTree.get(selected.talent.tree)}

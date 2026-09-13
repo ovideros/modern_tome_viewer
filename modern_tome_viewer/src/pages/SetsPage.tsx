@@ -189,7 +189,7 @@ export function SetsPage({ params, talentOf, treeOf, onOpenTalent, onOpenTree }:
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_28rem]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_28rem]">
         <main className="min-w-0">
           <p className="mb-2 text-[11.5px] text-muted">匹配 {results.length} 套</p>
           {results.length ? (
@@ -226,7 +226,7 @@ export function SetsPage({ params, talentOf, treeOf, onOpenTalent, onOpenTree }:
           )}
         </main>
 
-        <aside className="hidden min-w-0 xl:block" aria-hidden={!selected}>
+        <aside className="hidden min-w-0 lg:block" aria-hidden={!selected}>
           {selected && (
             <div className="panel sticky top-[calc(var(--header-h)+2px)] max-h-[calc(100vh-var(--header-h)-12px)] overflow-y-auto p-3">
               <SetDetail
@@ -245,7 +245,7 @@ export function SetsPage({ params, talentOf, treeOf, onOpenTalent, onOpenTree }:
       </div>
 
       {selected && (
-        <MobileSheet onClose={() => selectSet(null)} testId="set-detail-sheet" ariaLabel="套装详情">
+        <MobileSheet onClose={() => selectSet(null)} breakpoint="lg" testId="set-detail-sheet" ariaLabel="套装详情">
           <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3">
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <SetDetail

@@ -47,6 +47,24 @@ export interface MonsterClassRef {
   name: string | null;
 }
 
+/**
+ * Literal speed multipliers resolved from the monster template inheritance
+ * chain. `null` means that the template does not override the engine default
+ * of 1.0; it does not mean zero speed.
+ */
+export interface MonsterSpeedProfile {
+  /** `global_speed_base`: overall action / time-flow rate. */
+  global: number | null;
+  /** `movement_speed`: movement action rate. */
+  movement: number | null;
+  /** `combat_physspeed`: physical weapon / combat rate. */
+  combat: number | null;
+  /** `combat_spellspeed`: spell-casting rate. */
+  spell: number | null;
+  /** `combat_mindspeed`: mind-power / mental action rate. */
+  mind: number | null;
+}
+
 export interface Monster {
   id: string;
   defineAs: string | null;
@@ -77,6 +95,8 @@ export interface Monster {
   expWorth: number | null;
   canMultiply: number | null;
   faction: string | null;
+  /** Resolved literal speed fields from the NPC template. */
+  speed: MonsterSpeedProfile;
   autoClasses: MonsterClassRef[] | null;
   desc: string | null;
   descZh: string | null;
@@ -133,6 +153,8 @@ export interface MonsterCensus {
   withChineseType?: number;
   withChineseSubtype?: number;
   withSubtype?: number;
+  /** How many concrete templates explicitly declare or inherit an actor speed override. */
+  withSpeed?: number;
 }
 
 export interface MonsterDataset {

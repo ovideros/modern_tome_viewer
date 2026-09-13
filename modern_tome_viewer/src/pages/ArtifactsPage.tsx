@@ -379,9 +379,9 @@ export function ArtifactsPage({
         </p>
       </header>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_minmax(0,1fr)_28rem]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_28rem]">
         {/* --- Filter rail: tag toggles, matching the advanced-search panel --- */}
-        <aside className={`${showFilters ? 'block' : 'hidden'} xl:block`}>
+        <aside className={`${showFilters ? 'block' : 'hidden'} lg:block`}>
           <div className="panel divide-y divide-line px-3">
             <div className="py-2.5">
               <label className="mb-1 block text-[12.5px] font-semibold" htmlFor="artifact-query">
@@ -490,7 +490,7 @@ export function ArtifactsPage({
 
         <div className="min-w-0" data-testid="artifact-list-main">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <button type="button" className="btn xl:hidden" onClick={() => setShowFilters((v) => !v)}>
+            <button type="button" className="btn lg:hidden" onClick={() => setShowFilters((v) => !v)}>
               {showFilters ? '收起筛选' : '筛选'}
             </button>
             <span className="text-[12px] text-muted">
@@ -553,7 +553,7 @@ export function ArtifactsPage({
             </ul>
           )}
         </div>
-        <aside className="hidden min-w-0 xl:block" aria-hidden={!selected}>
+        <aside className="hidden min-w-0 lg:block" aria-hidden={!selected}>
           {selected && (
             <div className="panel sticky top-[calc(var(--header-h)+2px)] max-h-[calc(100vh-var(--header-h)-12px)] overflow-y-auto p-3 pb-16">
               <ArtifactDetail
@@ -602,7 +602,7 @@ export function ArtifactsPage({
 
       {selected && (
         <>
-          <MobileSheet onClose={() => setSelectedId(null)} testId="artifact-detail-sheet" ariaLabel="固定神器详情">
+          <MobileSheet onClose={() => setSelectedId(null)} breakpoint="lg" testId="artifact-detail-sheet" ariaLabel="固定神器详情">
             <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3">
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <ArtifactDetail
@@ -631,7 +631,7 @@ export function ArtifactsPage({
 
       {selectedTalent && (
         <>
-        <MobileSheet onClose={() => setSelectedTalentId(null)} zIndex="z-50" testId="artifact-talent-sheet" ariaLabel="技能详情">
+        <MobileSheet onClose={() => setSelectedTalentId(null)} breakpoint="lg" zIndex="z-50" testId="artifact-talent-sheet" ariaLabel="技能详情">
           <TalentDetail
             talent={selectedTalent}
             tree={data.byTree.get(selectedTalent.tree)}
